@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { apiFetch } from "@/lib/api";
 
 type ContentPiece = {
@@ -14,20 +14,35 @@ type ContentPiece = {
 
 export default function AprovacaoPage() {
   const { pautaId } = useParams<{ pautaId: string }>();
+  const router = useRouter();
   const [pieces, setPieces] = useState<ContentPiece[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     apiFetch("/content/gerar", {
       method: "POST",
       body: JSON.stringify({ pauta_id: pautaId }),
     })
-      .then((r) => r.json())
-      .then((data) => {
+      .then(async (response) => {
+        if (response.status === 401) {
+          router.push("/login");
+          return;
+        }
+        if (!response.ok) {
+          setLoading(false);
+          setError("Erro ao gerar conteúdo. Tente novamente.");
+          return;
+        }
+        const data = await response.json();
         setPieces(data);
         setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+        setError("Erro ao gerar conteúdo. Tente novamente.");
       });
-  }, [pautaId]);
+  }, [pautaId, router]);
 
   async function atualizarStatus(pieceId: string, status: string) {
     const response = await apiFetch(`/content/${pieceId}`, {
@@ -51,6 +66,10 @@ export default function AprovacaoPage() {
 
   if (loading) {
     return <p style={{ margin: 40 }}>Gerando conteúdo...</p>;
+  }
+
+  if (error) {
+    return <p style={{ margin: 40, color: "red" }}>{error}</p>;
   }
 
   return (
