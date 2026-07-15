@@ -1,3 +1,4 @@
+import uuid
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -108,3 +109,49 @@ async def gerar_conteudo(
     for p in pieces:
         await db.refresh(p)
     return pieces
+
+
+@router.patch("/{piece_id}", response_model=ContentPieceOut)
+async def atualizar_content_piece(
+    piece_id: str,
+    payload: ContentPieceUpdate,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)],
+) -> ContentPiece:
+    try:
+        piece_uuid = uuid.UUID(piece_id)
+    except ValueError:
+        raise HTTPException(status_code=422, detail="Invalid piece_id format")
+
+    result = await db.execute(
+        select(ContentPiece).where(
+            ContentPiece.id == piece_uuid, ContentPiece.tenant_id == current_user.tenant_id
+        )
+    )
+    piece = result.scalar_one_or_none()
+    if piece is None:
+        raise HTTPException(status_code=404, detail="Content piece not found")
+
+    if payload.corpo is not None:
+        piece.corpo = payload.corpo
+    if payload.status is not None:
+        piece.status = payload.status
+
+    if payload.status == "aprovado":
+        pauta_result = await db.execute(select(Pauta).where(Pauta.id == piece.pauta_id))
+        pauta = pauta_result.scalar_one()
+        db.add(
+            MarketingMemory(
+                tenant_id=current_user.tenant_id,
+                content_piece_id=piece.id,
+                tema=pauta.titulo,
+                angulo=pauta.angulo,
+                formato=piece.tipo,
+                metricas={},
+                aprendizado=None,
+            )
+        )
+
+    await db.commit()
+    await db.refresh(piece)
+    return piece
