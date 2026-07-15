@@ -7,8 +7,10 @@ describes a stale light theme.
 """
 import asyncio
 
+from app.core.security import hash_password
 from app.db import SessionLocal
 from app.models.tenant import Tenant, TenantConfig
+from app.models.user import User
 
 VOZ = {
     "principios": [
@@ -98,6 +100,15 @@ async def seed_leticia() -> None:
             canais=CANAIS,
         )
         session.add(config)
+
+        user = User(
+            tenant_id=tenant.id,
+            email="leticia@advogadaleticiabarros.com.br",
+            nome="Advogada Letícia Barros",
+            hashed_password=hash_password("leticia-123"),
+            role="owner",
+        )
+        session.add(user)
         await session.commit()
         print(f"Seeded tenant {tenant.slug} ({tenant.id})")
 
