@@ -6,6 +6,7 @@ copy values from squads/design-system/_memory in blogautomaticoleticia, which
 describes a stale light theme.
 """
 import asyncio
+import os
 
 from app.core.security import hash_password
 from app.db import SessionLocal
@@ -82,6 +83,10 @@ CANAIS = {"blog": True, "instagram": "@adv.leticiabarros2"}
 
 
 async def seed_leticia() -> None:
+    seed_password = os.environ.get("SEED_OWNER_PASSWORD")
+    if not seed_password:
+        raise SystemExit("Defina a variável de ambiente SEED_OWNER_PASSWORD antes de rodar o seed.")
+
     async with SessionLocal() as session:
         tenant = Tenant(
             nome="Advogada Letícia Barros",
@@ -105,7 +110,7 @@ async def seed_leticia() -> None:
             tenant_id=tenant.id,
             email="leticia@advogadaleticiabarros.com.br",
             nome="Advogada Letícia Barros",
-            hashed_password=hash_password("leticia-123"),
+            hashed_password=hash_password(seed_password),
             role="owner",
         )
         session.add(user)
