@@ -1,10 +1,8 @@
-from fastapi.testclient import TestClient
-
-from app.main import app
+import pytest
 
 
-def test_health_returns_ok():
-    client = TestClient(app)
-    response = client.get("/health")
+@pytest.mark.anyio
+async def test_health_returns_ok(client):
+    response = await client.get("/health")
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
