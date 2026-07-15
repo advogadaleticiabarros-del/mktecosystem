@@ -54,7 +54,6 @@ async def test_login_rejects_wrong_password(client, db_session):
     assert response.status_code == 401
 
 
-@pytest.mark.skip(reason="pautas router added in Task 10")
 @pytest.mark.anyio
 async def test_protected_route_rejects_missing_token(client):
     response = await client.get("/pautas")
