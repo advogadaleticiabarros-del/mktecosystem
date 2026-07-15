@@ -118,11 +118,7 @@ async def atualizar_content_piece(
     db: Annotated[AsyncSession, Depends(get_db)],
     current_user: Annotated[User, Depends(get_current_user)],
 ) -> ContentPiece:
-    try:
-        piece_uuid = uuid.UUID(piece_id)
-    except ValueError:
-        raise HTTPException(status_code=422, detail="Invalid piece_id format")
-
+    piece_uuid = uuid.UUID(piece_id)
     result = await db.execute(
         select(ContentPiece).where(
             ContentPiece.id == piece_uuid, ContentPiece.tenant_id == current_user.tenant_id

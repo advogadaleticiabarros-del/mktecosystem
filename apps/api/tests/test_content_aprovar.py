@@ -72,3 +72,22 @@ async def test_rejecting_a_piece_does_not_write_marketing_memory(client, db_sess
         select(MarketingMemory).where(MarketingMemory.content_piece_id == piece.id)
     )
     assert result.scalar_one_or_none() is None
+
+
+@pytest.mark.anyio
+async def test_partial_corpo_update_does_not_write_marketing_memory(client, db_session):
+    tenant, user, pauta, piece = await _setup(db_session)
+    token = create_access_token(user.id)
+
+    response = await client.patch(
+        f"/content/{piece.id}",
+        json={"corpo": {"titulo": "updated"}},
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 200
+    assert response.json()["corpo"]["titulo"] == "updated"
+
+    result = await db_session.execute(
+        select(MarketingMemory).where(MarketingMemory.content_piece_id == piece.id)
+    )
+    assert result.scalar_one_or_none() is None
