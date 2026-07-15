@@ -55,7 +55,7 @@ export default function PlanejamentoPage() {
   }
 
   function escolherPauta(pautaId: string) {
-    router.push(`/aprovacao/${pautaId}`);
+    router.push(`/aprovacao?pautaId=${pautaId}`);
   }
 
   return (

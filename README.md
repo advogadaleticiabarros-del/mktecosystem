@@ -31,11 +31,34 @@ Design completo: `docs/superpowers/specs/2026-07-14-marketing-os-v1-design.md`
 
 ## Deploy
 
-- API + Postgres: Railway (`railway.json` + `apps/api/Procfile`).
-- Web: Vercel, root directory `apps/web`, env var `NEXT_PUBLIC_API_URL` pointing
-  to the Railway API URL.
+**API + Postgres:** Railway (`railway.json` + `apps/api/Procfile`).
+O `DATABASE_URL` que o Railway gera automaticamente para o serviço Postgres vem
+como `postgresql://...` — o app precisa do driver assíncrono, então defina
+manualmente na aba Variables do serviço da API:
+
+    DATABASE_URL=postgresql+asyncpg://${{Postgres.PGUSER}}:${{Postgres.PGPASSWORD}}@${{Postgres.PGHOST}}:${{Postgres.PGPORT}}/${{Postgres.PGDATABASE}}
+
+**Web — hospedagem compartilhada (Hostinger ou similar, sem Node.js):**
+`apps/web/next.config.mjs` está configurado com `output: "export"`, então
+`npm run build` gera um diretório `apps/web/out/` com HTML/CSS/JS 100% estáticos
+— sem servidor Node necessário. Fluxo:
+
+    cd apps/web
+    echo "NEXT_PUBLIC_API_URL=https://sua-api.up.railway.app" > .env.local
+    npm run build
+
+O env var precisa estar definido *antes* do build (fica embutido nos arquivos
+gerados, não é lido em tempo de execução). Envie o conteúdo de `apps/web/out/`
+por SFTP para a pasta pública do domínio/subdomínio escolhido — mesmo fluxo já
+usado para publicar o blog da Letícia.
+
+**Web — alternativa com Node.js (Vercel ou similar):** o mesmo build também
+funciona em uma plataforma que rode Node.js normalmente; root directory
+`apps/web`, env var `NEXT_PUBLIC_API_URL` apontando para a URL da API no Railway.
 
 Variáveis de ambiente necessárias em produção: `DATABASE_URL`, `JWT_SECRET`,
-`GEMINI_API_KEY`, `CORS_ORIGINS` (lista separada por vírgula com a origem do
-frontend, ex.: `https://marketing-os.vercel.app`). `SEED_OWNER_PASSWORD` é
-necessária apenas ao rodar o seed (`app.seed.seed_leticia`), não em runtime.
+`GEMINI_API_KEY`, `CORS_ORIGINS` (lista separada por vírgula com a origem real
+do frontend, ex.: `https://app.advogadaleticiabarros.com.br`). `ENVIRONMENT`
+deve ser `production` — sem isso, a API recusa subir se `JWT_SECRET` ainda
+estiver no valor padrão de desenvolvimento. `SEED_OWNER_PASSWORD` é necessária
+apenas ao rodar o seed (`app.seed.seed_leticia`), não em runtime.

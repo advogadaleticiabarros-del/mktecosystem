@@ -1,8 +1,8 @@
-// apps/web/app/aprovacao/[pautaId]/page.tsx
+// apps/web/app/aprovacao/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { apiFetch } from "@/lib/api";
 
 type ContentPiece = {
@@ -12,14 +12,21 @@ type ContentPiece = {
   status: string;
 };
 
-export default function AprovacaoPage() {
-  const { pautaId } = useParams<{ pautaId: string }>();
+function AprovacaoContent() {
+  const searchParams = useSearchParams();
+  const pautaId = searchParams.get("pautaId");
   const router = useRouter();
   const [pieces, setPieces] = useState<ContentPiece[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!pautaId) {
+      setLoading(false);
+      setError("Nenhuma pauta selecionada.");
+      return;
+    }
+
     apiFetch("/content/gerar", {
       method: "POST",
       body: JSON.stringify({ pauta_id: pautaId }),
@@ -99,5 +106,13 @@ export default function AprovacaoPage() {
         </section>
       ))}
     </main>
+  );
+}
+
+export default function AprovacaoPage() {
+  return (
+    <Suspense fallback={<p style={{ margin: 40 }}>Carregando...</p>}>
+      <AprovacaoContent />
+    </Suspense>
   );
 }
