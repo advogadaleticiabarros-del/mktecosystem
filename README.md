@@ -14,6 +14,7 @@ Design completo: `docs/superpowers/specs/2026-07-14-marketing-os-v1-design.md`
     pip install -e ".[dev]"
     cp .env.example .env   # preencher GEMINI_API_KEY e DATABASE_URL
     alembic upgrade head
+    export SEED_OWNER_PASSWORD=<escolha-uma-senha>   # Windows (PowerShell): $env:SEED_OWNER_PASSWORD="<escolha-uma-senha>"
     python -m app.seed.seed_leticia
     uvicorn app.main:app --reload
 
@@ -35,4 +36,6 @@ Design completo: `docs/superpowers/specs/2026-07-14-marketing-os-v1-design.md`
   to the Railway API URL.
 
 Variáveis de ambiente necessárias em produção: `DATABASE_URL`, `JWT_SECRET`,
-`GEMINI_API_KEY`.
+`GEMINI_API_KEY`, `CORS_ORIGINS` (lista separada por vírgula com a origem do
+frontend, ex.: `https://marketing-os.vercel.app`). `SEED_OWNER_PASSWORD` é
+necessária apenas ao rodar o seed (`app.seed.seed_leticia`), não em runtime.

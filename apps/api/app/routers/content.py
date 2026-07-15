@@ -138,7 +138,12 @@ async def atualizar_content_piece(
         piece.status = payload.status
 
     if payload.status == "aprovado":
-        pauta_result = await db.execute(select(Pauta).where(Pauta.id == piece.pauta_id))
+        pauta_result = await db.execute(
+            select(Pauta).where(
+                Pauta.id == piece.pauta_id,
+                Pauta.tenant_id == current_user.tenant_id,
+            )
+        )
         pauta = pauta_result.scalar_one()
         db.add(
             MarketingMemory(
