@@ -29,6 +29,10 @@ completa do ciclo `pesquisar → planejar → gerar → revisar/aprovar → guar
 4. **Revisar/Aprovar:** tela de edição inline, aprovar/rejeitar/regenerar.
 5. **Guardar:** peça aprovada persistida; linha embrionária gravada na memória de
    marketing (sem métricas ainda).
+6. **Resumo Jurídico Diário:** segunda leitura do mesmo material buscado no passo 1,
+   sem o filtro de "potencial de virar conteúdo" — mostra tudo que foi encontrado
+   nas áreas de prática da tenant, para ela se manter informada como advogada,
+   independente de virar post ou não. Reusa a mesma busca; não é uma fonte nova.
 
 **Fora do escopo v1 (deliberadamente adiado):**
 - Publicação automática (blog ou redes sociais) e agendamento.
@@ -84,7 +88,9 @@ tenant_config      → tudo que hoje é "config da Letícia" vira dado
 
 pautas             → banco de temas, buscados ou manuais
   id, tenant_id, titulo, angulo, area, origem ('buscada' | 'manual'),
-  fonte (texto, ex. "STJ - Informativo 812"), status, criado_em
+  fonte (texto, ex. "STF - Informativo 1150", "CNJ", "TST - Informativo n. 894"),
+  relevante_para_conteudo (bool — true entra em Planejar, false só no Resumo
+  Jurídico Diário), status, criado_em
 
 content_pieces      → cada peça gerada
   id, tenant_id, pauta_id, tipo (artigo|carrossel|legenda|stories),
@@ -103,18 +109,38 @@ users               → 1 usuário (você) na v1. JWT simples.
 ## Fluxo detalhado (pipeline v1)
 
 **1. Pesquisar (sob demanda)**
-Usuário clica "Buscar sugestões de hoje". O backend busca, em páginas públicas
-estruturadas:
-- Informativos de Jurisprudência (STJ, STF, TST)
-- Jurisprudência em Teses (STJ)
-- Súmulas e temas novos
+Usuário clica "Buscar sugestões de hoje". O backend busca, nas fontes abaixo —
+**cada uma verificada por acesso HTTP real antes de entrar neste documento**, não
+por suposição:
 
-*Deliberadamente fora:* DJe/Diário Oficial (ruído, publicações brutas sem valor
-editorial direto) — confirmado pelo usuário como não relevante.
+| Fonte | Status verificado | Como é acessada |
+|---|---|---|
+| Informativo STF | ✅ Acessível (200 OK) | `GET https://portal.stf.jus.br/textos/verTexto.asp?servico=informativoSTF` com header `User-Agent` de navegador (sem ele, bloqueia) |
+| Informativo TST | ✅ Acessível (200 OK) | Feed Atom OpenSearch do JusLaboris: `GET https://juslaboris.tst.jus.br/open-search/discover?query=<termo>&format=atom` — XML estruturado, não precisa parsing de HTML |
+| CNJ (notícias do Judiciário) | ✅ Acessível (200 OK) | `GET https://www.cnj.jus.br/agencia-cnj/noticias-do-judiciario/` — site WordPress, HTML estático com `schema.org` |
+| Informativo/Jurisprudência em Teses STJ | ❌ Bloqueado nesta rede | `scon.stj.jus.br` deu timeout completo em toda tentativa (com e sem header de navegador). **Fora do pipeline automático da v1.** Pautas de STJ entram manualmente até validarmos acesso a partir do servidor de produção (Railway pode ter saída de rede diferente). |
 
-A IA lê o material buscado e filtra/ranqueia por: tema simples de explicar,
-trabalhista (linha de maior volume/facilidade), potencial de captar cliente. O
-resultado é gravado em `pautas` com `origem='buscada'`.
+*Deliberadamente fora, mesmo sendo acessíveis:*
+- **DJe do STJ** (`stj.jus.br/.../Diario-da-Justica-Eletronico`) — confirmado acessível
+  (200 OK), mas o conteúdo é publicação processual bruta, o mesmo tipo de ruído que a
+  Jurisprudência em Teses/Informativos evitam. Não entra nem no pipeline de conteúdo
+  nem no Resumo Jurídico Diário.
+- **Diário Oficial de Vitória/ES** — acessível (200 OK), mas é um formulário
+  ASP.NET com postback (`__doPostBack`), não um link direto — exigiria simular
+  submissão de formulário, não apenas buscar uma URL. Além disso é diário
+  **municipal** (atos da prefeitura), baixa relevância para as áreas de prática da
+  tenant (trabalhista/previdenciário/família/consumidor). Fica fora da v1.
+
+Duas leituras do mesmo material buscado:
+1. **Para conteúdo:** a IA filtra/ranqueia por tema simples de explicar, trabalhista
+   (linha de maior volume/facilidade), potencial de captar cliente. Marcado como
+   candidato a virar pauta de post.
+2. **Para o Resumo Jurídico Diário:** todo o material buscado é mostrado, sem esse
+   filtro — a tenant vê tudo que foi encontrado em suas áreas de prática.
+
+O resultado é gravado em `pautas` com `origem='buscada'` e um campo
+`relevante_para_conteudo` (booleano) marcando qual leitura se aplica — a mesma
+linha serve às duas telas.
 
 **2. Planejar**
 Tela lista as pautas sugeridas (mais recentes primeiro) + campo livre para tema
@@ -209,6 +235,36 @@ skills, comandos). Papel na v1:
 - **Anotado para o futuro (não usado na v1):** a skill `social-publisher`
   (integração com o serviço SocialClaw) é candidata a poupar a construção manual
   de integrações com 8+ redes sociais quando o módulo de publicação for desenhado.
+
+## Uso das squads ExpxAgents (instaladas em `blogautomaticoleticia/squads/`)
+
+A tenant já usa o CLI `expxagents` para produção manual de conteúdo. 11 de 12
+squads pedidas foram instaladas com sucesso (`@thulio/instagram-benchmark` falhou
+duas vezes com pacote corrompido no registro — não é um problema local,
+republicar do lado de quem mantém o pacote). O papel delas na v1 é o mesmo do
+ECC: **fonte de metodologia para os prompts do módulo Gerar, não dependência de
+runtime** — não há API do expxagents para o backend FastAPI chamar; squads são
+executadas interativamente via Claude Code, então "usar o conhecimento" significa
+incorporar a metodologia delas nos prompts que o `integrations/ai` monta.
+
+**Relevante para a v1 (Gerar):**
+- `_expxagents/core/best-practices/instagram-feed.md`, `instagram-stories.md`,
+  `blog-post.md`, `blog-seo.md`, `copywriting.md` — guias prontos, referência
+  direta na construção dos prompts de artigo/carrossel/stories.
+- `@community/storytelling` (`beat-sheet-writer.agent.md`, `story-editor.agent.md`)
+  — método de gancho/narrativa, reforça o Passo 3 do PLAYBOOK (gancho distinto da
+  headline).
+- `@expxagents/copy-funil` (`revisor-editorial.md`) — reforça o Passo 3 do
+  PLAYBOOK (revisão editorial antes de publicar).
+
+**Fora da v1, mapeado para módulos futuros:**
+- `@gabriel/squad-editor` (agentes de edição de vídeo/reels, templates de
+  animação GSAP) → módulo de Vídeo.
+- `@expx/instagram-advisor` (scripts de benchmark e análise de conta) → módulo
+  de Analytics.
+- `@thulio/meta-ads-squad`, `@expxagents/copy-trafego` → módulo de Tráfego Pago.
+- `@community/movement` (manifesto, posicionamento de marca) → uso pontual em
+  onboarding de tenant novo, não recorrente.
 
 ## Roadmap de módulos seguintes (fora do escopo deste documento)
 
