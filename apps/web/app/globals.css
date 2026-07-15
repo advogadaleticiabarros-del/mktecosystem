@@ -1,0 +1,12 @@
+:root {
+  --fundo-escuro: #231e1a;
+  --dourado: #c9a962;
+  --areia: #e8ded1;
+}
+
+body {
+  background: var(--fundo-escuro);
+  color: var(--areia);
+  font-family: "Inter", sans-serif;
+  margin: 0;
+}
