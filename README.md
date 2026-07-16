@@ -31,7 +31,12 @@ Design completo: `docs/superpowers/specs/2026-07-14-marketing-os-v1-design.md`
 
 ## Deploy
 
-**API + Postgres:** Railway (`apps/api/railway.json` + `apps/api/Procfile`).
+**API + Postgres:** Railway (`apps/api/railway.json` — não use um `Procfile`
+junto: o builder Nixpacks interpreta a linha `release:` de um Procfile como um
+passo de build, rodando `alembic upgrade head` **durante a construção da
+imagem**, antes do Postgres estar acessível pela rede interna — causa erro de
+conexão. O `deploy.startCommand` do `railway.json` já roda a migração na hora
+certa, depois do build, com o banco disponível).
 
 **Root Directory do serviço da API precisa ser `apps/api`** (não a raiz do
 repositório) — é assim que o Nixpacks/Railpack detecta que é um projeto Python
