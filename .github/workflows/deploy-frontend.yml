@@ -43,6 +43,7 @@ jobs:
         run: |
           lftp -c "
           set sftp:auto-confirm yes;
+          set sftp:connect-program \"ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null\";
           open -u \"\$SFTP_USER\",\"\$SFTP_PASS\" -p \"\$SFTP_PORT\" sftp://\$SFTP_HOST;
           mirror -R --delete --verbose ./apps/web/out \"\$REMOTE_PATH\"
           "
