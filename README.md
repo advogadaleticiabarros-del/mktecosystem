@@ -31,7 +31,16 @@ Design completo: `docs/superpowers/specs/2026-07-14-marketing-os-v1-design.md`
 
 ## Deploy
 
-**API + Postgres:** Railway (`railway.json` + `apps/api/Procfile`).
+**API + Postgres:** Railway (`apps/api/railway.json` + `apps/api/Procfile`).
+
+**Root Directory do serviço da API precisa ser `apps/api`** (não a raiz do
+repositório) — é assim que o Nixpacks/Railpack detecta que é um projeto Python
+(pelo `pyproject.toml` dentro de `apps/api/`) e provisiona `pip` antes do build.
+Deixar em branco faz o build falhar com `pip: command not found`, porque o
+builder escaneia a raiz do repo, não encontra nada de Python lá, e não
+instala o toolchain. Configure em: serviço da API → Settings → Source → Root
+Directory → `apps/api`.
+
 O `DATABASE_URL` que o Railway gera automaticamente para o serviço Postgres vem
 como `postgresql://...` — o app precisa do driver assíncrono, então defina
 manualmente na aba Variables do serviço da API:
