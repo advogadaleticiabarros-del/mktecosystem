@@ -30,20 +30,18 @@ jobs:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
         run: npm run build
 
-      - name: Install lftp
-        run: sudo apt-get update && sudo apt-get install -y lftp
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install paramiko
+        run: pip install --quiet paramiko
 
       - name: Deploy via SFTP
         env:
-          SFTP_HOST: ${{ secrets.HOSTINGER_SFTP_HOST }}
-          SFTP_PORT: ${{ secrets.HOSTINGER_SFTP_PORT }}
-          SFTP_USER: ${{ secrets.HOSTINGER_SFTP_USER }}
-          SFTP_PASS: ${{ secrets.HOSTINGER_SFTP_PASSWORD }}
-          REMOTE_PATH: ${{ secrets.HOSTINGER_REMOTE_PATH }}
-        run: |
-          lftp -c "
-          set sftp:auto-confirm yes;
-          set sftp:connect-program \"ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null\";
-          open -u \"\$SFTP_USER\",\"\$SFTP_PASS\" -p \"\$SFTP_PORT\" sftp://\$SFTP_HOST;
-          mirror -R --delete --verbose ./apps/web/out \"\$REMOTE_PATH\"
-          "
+          HOSTINGER_SFTP_HOST: ${{ secrets.HOSTINGER_SFTP_HOST }}
+          HOSTINGER_SFTP_PORT: ${{ secrets.HOSTINGER_SFTP_PORT }}
+          HOSTINGER_SFTP_USER: ${{ secrets.HOSTINGER_SFTP_USER }}
+          HOSTINGER_SFTP_PASSWORD: ${{ secrets.HOSTINGER_SFTP_PASSWORD }}
+          HOSTINGER_REMOTE_PATH: ${{ secrets.HOSTINGER_REMOTE_PATH }}
+        run: python scripts/deploy_hostinger.py
