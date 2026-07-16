@@ -2,14 +2,14 @@ import xml.etree.ElementTree as ET
 
 import httpx
 
-from app.integrations.sources.base import BROWSER_USER_AGENT, SourceDocument
+from app.integrations.sources.base import BROWSER_USER_AGENT, TLS_VERIFY, SourceDocument
 
 JUSLABORIS_URL = "https://juslaboris.tst.jus.br/open-search/discover"
 ATOM_NS = {"atom": "http://www.w3.org/2005/Atom"}
 
 
 async def fetch_tst(query: str = "informativo") -> SourceDocument:
-    async with httpx.AsyncClient(timeout=20) as client:
+    async with httpx.AsyncClient(timeout=20, verify=TLS_VERIFY) as client:
         response = await client.get(
             JUSLABORIS_URL,
             params={"query": query, "format": "atom"},

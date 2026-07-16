@@ -25,6 +25,7 @@ dependencies = [
     "bcrypt<5",
     "google-genai>=0.3",
     "email-validator>=2.0",
+    "certifi>=2024.0",
 ]
 
 [project.optional-dependencies]
