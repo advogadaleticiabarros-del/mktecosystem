@@ -39,6 +39,7 @@ jobs:
 
       - name: Deploy via SFTP
         env:
+          PYTHONUNBUFFERED: "1"
           HOSTINGER_SFTP_HOST: ${{ secrets.HOSTINGER_SFTP_HOST }}
           HOSTINGER_SFTP_PORT: ${{ secrets.HOSTINGER_SFTP_PORT }}
           HOSTINGER_SFTP_USER: ${{ secrets.HOSTINGER_SFTP_USER }}
