@@ -2,6 +2,7 @@ __pycache__/
 *.pyc
 .env
 *.db
+*.egg-info/
 node_modules/
 .next/
 apps/web/.env*.local
