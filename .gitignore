@@ -6,3 +6,6 @@ __pycache__/
 node_modules/
 .next/
 apps/web/.env*.local
+apps/web/out/
+.claude/settings.json
+graphify-out/
