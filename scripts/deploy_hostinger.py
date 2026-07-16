@@ -57,6 +57,45 @@ def remove_remote_dir(sftp: paramiko.SFTPClient, remote_dir: str) -> None:
     sftp.rmdir(remote_dir)
 
 
+def verify_landmark(host: str, port: int, user: str, password: str, remote_path: str) -> None:
+    """Re-connect fresh and byte-compare one real file against the server.
+
+    Found by hand on 2026-07-16: multiple GitHub Actions runs printed
+    "enviado" for every file and exited 0, but the live site kept serving
+    stale content for over two hours — sftp.put() reported success while
+    Hostinger silently didn't persist the write, for reasons never
+    confirmed (suspected flaky handling of GitHub's shared runner IPs).
+    A fresh connection + real byte comparison is the only way to catch
+    that failure mode instead of trusting the upload loop's own reports.
+    """
+    landmark = "login/index.html"
+    local_file = os.path.join(LOCAL_DIR, landmark)
+    with open(local_file, "rb") as f:
+        local_bytes = f.read()
+
+    transport = paramiko.Transport((host, port))
+    transport.banner_timeout = 20
+    transport.connect(username=user, password=password)
+    sftp = paramiko.SFTPClient.from_transport(transport)
+    try:
+        with sftp.open(f"{remote_path}/{landmark}", "rb") as f:
+            remote_bytes = f.read()
+    finally:
+        sftp.close()
+        transport.close()
+
+    if remote_bytes != local_bytes:
+        print(
+            f"FALHA NA VERIFICAÇÃO: {landmark} no servidor não bate com o "
+            f"arquivo local ({len(remote_bytes)} bytes remotos vs "
+            f"{len(local_bytes)} bytes locais). O upload reportou sucesso "
+            "mas não persistiu de verdade — rode o deploy de novo.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+    print(f"Verificação ok: {landmark} no servidor bate byte a byte com o build local.")
+
+
 def main() -> None:
     host = os.environ["HOSTINGER_SFTP_HOST"]
     port = int(os.environ["HOSTINGER_SFTP_PORT"])
@@ -78,7 +117,9 @@ def main() -> None:
     upload_dir(sftp, LOCAL_DIR, remote_path)
     sftp.close()
     transport.close()
-    print("Deploy concluído.")
+    print("Deploy concluído. Verificando...")
+
+    verify_landmark(host, port, user, password, remote_path)
 
 
 if __name__ == "__main__":
