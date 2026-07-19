@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bell, ClipboardList, Home, Newspaper, ShieldCheck } from "lucide-react";
+import { Bell, ClipboardList, Home, Mail, Newspaper, ShieldCheck } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +15,7 @@ const NAV_ITEMS = [
   // when the user is on that route. Clicking it from elsewhere sends them
   // to Planejamento, where they pick a pauta to generate content for.
   { href: "/planejamento", label: "Aprovação", icon: ShieldCheck, matchPrefix: "/aprovacao" },
+  { href: "/emails", label: "E-mails", icon: Mail },
 ] as const;
 
 export function AppShell({
