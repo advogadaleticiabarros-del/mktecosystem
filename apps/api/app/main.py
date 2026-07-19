@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -9,7 +11,21 @@ if settings.ENVIRONMENT != "development" and settings.JWT_SECRET == "dev-secret-
         "JWT_SECRET must be set via environment variable in non-development environments."
     )
 
-app = FastAPI(title="Marketing OS API")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    scheduler = None
+    if settings.ENABLE_SCHEDULER:
+        from app.scheduler import criar_scheduler
+
+        scheduler = criar_scheduler()
+        scheduler.start()
+    yield
+    if scheduler is not None:
+        scheduler.shutdown(wait=False)
+
+
+app = FastAPI(title="Marketing OS API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
