@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routers import auth, content, pautas
+from app.routers import auth, content, pautas, public
 
 if settings.ENVIRONMENT != "development" and settings.JWT_SECRET == "dev-secret-change-in-production":
     raise RuntimeError(
@@ -22,6 +22,7 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(pautas.router)
 app.include_router(content.router)
+app.include_router(public.router)
 
 
 @app.get("/health")
