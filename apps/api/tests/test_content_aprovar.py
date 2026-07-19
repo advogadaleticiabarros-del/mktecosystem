@@ -49,11 +49,16 @@ async def test_approving_a_piece_writes_marketing_memory(client, db_session):
     result = await db_session.execute(
         select(MarketingMemory).where(MarketingMemory.content_piece_id == piece.id)
     )
-    memory = result.scalar_one()
-    assert memory.tema == "Tema X"
-    assert memory.formato == "artigo"
-    assert memory.metricas == {}
-    assert memory.aprendizado is None
+    memories = result.scalars().all()
+    # duas memórias: a edição do corpo (aprendizado) + a aprovação
+    aprovacao = [m for m in memories if m.metricas == {}]
+    edicao = [m for m in memories if m.metricas == {"tipo_evento": "edicao"}]
+    assert len(aprovacao) == 1
+    assert len(edicao) == 1
+    assert aprovacao[0].tema == "Tema X"
+    assert aprovacao[0].formato == "artigo"
+    assert aprovacao[0].aprendizado is None
+    assert edicao[0].aprendizado is not None
 
 
 @pytest.mark.anyio
@@ -75,7 +80,8 @@ async def test_rejecting_a_piece_does_not_write_marketing_memory(client, db_sess
 
 
 @pytest.mark.anyio
-async def test_partial_corpo_update_does_not_write_marketing_memory(client, db_session):
+async def test_partial_corpo_update_writes_edit_memory_only(client, db_session):
+    """Editar o corpo registra a lição da edição (cérebro), sem memória de aprovação."""
     tenant, user, pauta, piece = await _setup(db_session)
     token = create_access_token(user.id)
 
@@ -90,4 +96,6 @@ async def test_partial_corpo_update_does_not_write_marketing_memory(client, db_s
     result = await db_session.execute(
         select(MarketingMemory).where(MarketingMemory.content_piece_id == piece.id)
     )
-    assert result.scalar_one_or_none() is None
+    memory = result.scalar_one()
+    assert memory.metricas == {"tipo_evento": "edicao"}
+    assert memory.aprendizado is not None
