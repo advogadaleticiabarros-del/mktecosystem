@@ -120,6 +120,23 @@ async def gerar_conteudo(
     return pieces
 
 
+@router.get("", response_model=list[ContentPieceOut])
+async def listar_content_pieces(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)],
+    tipo: str | None = None,
+    status: str | None = None,
+) -> list[ContentPiece]:
+    query = select(ContentPiece).where(ContentPiece.tenant_id == current_user.tenant_id)
+    if tipo is not None:
+        query = query.where(ContentPiece.tipo == tipo)
+    if status is not None:
+        query = query.where(ContentPiece.status == status)
+    query = query.order_by(ContentPiece.criado_em.desc())
+    result = await db.execute(query)
+    return list(result.scalars().all())
+
+
 @router.patch("/{piece_id}", response_model=ContentPieceOut)
 async def atualizar_content_piece(
     piece_id: str,

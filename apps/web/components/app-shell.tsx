@@ -2,12 +2,21 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bell, ClipboardList, Home, Mail, Newspaper, ShieldCheck } from "lucide-react";
+import {
+  Bell,
+  CalendarDays,
+  ClipboardList,
+  Home,
+  ImageIcon,
+  Mail,
+  Newspaper,
+  ShieldCheck,
+} from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
-  { href: "/planejamento", label: "Início", icon: Home },
+  { href: "/visao-geral", label: "Visão geral", icon: Home },
   { href: "/planejamento", label: "Planejamento", icon: ClipboardList },
   { href: "/resumo-diario", label: "Resumo Jurídico Diário", icon: Newspaper },
   // Aprovação requires a ?pautaId= query param to be meaningful — it isn't
@@ -15,6 +24,8 @@ const NAV_ITEMS = [
   // when the user is on that route. Clicking it from elsewhere sends them
   // to Planejamento, where they pick a pauta to generate content for.
   { href: "/planejamento", label: "Aprovação", icon: ShieldCheck, matchPrefix: "/aprovacao" },
+  { href: "/calendario", label: "Calendário editorial", icon: CalendarDays },
+  { href: "/criativos", label: "Estúdio de criativos", icon: ImageIcon },
   { href: "/emails", label: "E-mails", icon: Mail },
 ] as const;
 
