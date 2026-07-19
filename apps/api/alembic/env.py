@@ -13,6 +13,7 @@ from app.models import (  # noqa: F401
     email_send,
     marketing_memory,
     pauta,
+    scheduled_post,
     tenant,
     user,
 )

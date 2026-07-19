@@ -16,6 +16,8 @@ from app.models.pauta import Pauta
 from app.models.tenant import TenantConfig
 from app.models.user import User
 from app.schemas.content_piece import ContentPieceOut, ContentPieceUpdate, GerarRequest
+from app.services.agenda import agendar_conteudo_aprovado
+from app.services.cerebro import memorias_de_edicao, registrar_edicao
 
 router = APIRouter(prefix="/content", tags=["content"])
 
@@ -88,11 +90,18 @@ async def gerar_conteudo(
         oab=voz_data.get("oab", ""),
     )
 
+    licoes = await memorias_de_edicao(db, current_user.tenant_id)
+
     pieces = []
     for tipo, template in PROMPTS.items():
         prompt = template.format(
             titulo=pauta.titulo, angulo=pauta.angulo, area=pauta.area, voz=voz_block
         )
+        if licoes:
+            prompt += (
+                "\n\nLIÇÕES DE EDIÇÕES ANTERIORES (a cliente corrigiu estes pontos "
+                "em conteúdos passados — evite repetir):\n" + licoes
+            )
         corpo = await ai_client.generate_json(prompt)
         piece = ContentPiece(
             tenant_id=current_user.tenant_id,
@@ -132,7 +141,8 @@ async def atualizar_content_piece(
     if piece is None:
         raise HTTPException(status_code=404, detail="Content piece not found")
 
-    if payload.corpo is not None:
+    if payload.corpo is not None and payload.corpo != piece.corpo:
+        await registrar_edicao(db, piece, payload.corpo)
         piece.corpo = payload.corpo
     if payload.status is not None:
         piece.status = payload.status
@@ -156,6 +166,7 @@ async def atualizar_content_piece(
                 aprendizado=None,
             )
         )
+        await agendar_conteudo_aprovado(db, piece)
 
     await db.commit()
     await db.refresh(piece)
