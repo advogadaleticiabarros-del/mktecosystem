@@ -6,7 +6,16 @@ from sqlalchemy.ext.asyncio import create_async_engine
 
 from app.config import settings
 from app.db import Base
-from app.models import tenant, user, pauta, content_piece, marketing_memory  # noqa: F401
+from app.models import (  # noqa: F401
+    contact,
+    content_piece,
+    email_campaign,
+    email_send,
+    marketing_memory,
+    pauta,
+    tenant,
+    user,
+)
 
 config = context.config
 if config.config_file_name is not None:
