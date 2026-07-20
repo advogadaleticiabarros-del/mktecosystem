@@ -7,6 +7,8 @@ import {
   CalendarClock,
   Camera,
   FileText,
+  Lightbulb,
+  Loader2,
   Mail,
   MapPin,
   Users,
@@ -111,9 +113,23 @@ const FONTES_FUTURAS = [
   { nome: "Google Meu Negócio", icone: MapPin, detalhe: "Buscas locais, ligações, rotas" },
 ];
 
+type Dica = { titulo: string; diagnostico: string; acao: string };
+
 export default function VisaoGeralPage() {
   const [resumo, setResumo] = useState<Resumo | null>(null);
+  const [dicas, setDicas] = useState<Dica[] | null>(null);
+  const [gerandoDicas, setGerandoDicas] = useState(false);
   const router = useRouter();
+
+  async function analisar() {
+    setGerandoDicas(true);
+    try {
+      const resp = await apiFetch("/dashboard/insights", { method: "POST" });
+      if (resp.ok) setDicas((await resp.json()).dicas);
+    } finally {
+      setGerandoDicas(false);
+    }
+  }
 
   useEffect(() => {
     apiFetch("/dashboard/resumo").then(async (resp) => {
@@ -211,6 +227,47 @@ export default function VisaoGeralPage() {
           </div>
         </Card>
       </div>
+
+      <Card className="mt-8 p-5">
+        <div className="flex items-center justify-between">
+          <h2 className="flex items-center gap-2 font-display text-base font-semibold">
+            <Lightbulb className="h-4 w-4 text-primary" />
+            Dicas para melhorar o desempenho
+          </h2>
+          <button
+            type="button"
+            onClick={analisar}
+            disabled={gerandoDicas}
+            className="flex items-center gap-2 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground disabled:opacity-60"
+          >
+            {gerandoDicas && <Loader2 className="h-4 w-4 animate-spin" />}
+            {gerandoDicas ? "Analisando..." : dicas ? "Analisar de novo" : "Analisar agora"}
+          </button>
+        </div>
+        {!dicas && !gerandoDicas && (
+          <p className="mt-3 text-sm text-muted-foreground">
+            A IA cruza produção, aprovações, edições e e-mail das últimas 4 semanas e
+            devolve o que fazer para melhorar — em ordem de impacto.
+          </p>
+        )}
+        {dicas && (
+          <div className="mt-4 space-y-4">
+            {dicas.map((dica, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.08 }}
+                className="border-l-2 border-primary/60 pl-4"
+              >
+                <p className="text-sm font-medium">{dica.titulo}</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">{dica.diagnostico}</p>
+                <p className="mt-1 text-xs text-primary">→ {dica.acao}</p>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </Card>
 
       <h2 className="mb-3 mt-8 font-display text-base font-semibold text-muted-foreground">
         Conectar fontes de desempenho

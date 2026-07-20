@@ -5,16 +5,33 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.config import settings
 from app.core.deps import get_current_user
 from app.db import get_db
+from app.integrations.ai.base import AIClient
+from app.integrations.ai.gemini import GeminiClient
 from app.models.contact import Contact
 from app.models.content_piece import ContentPiece
 from app.models.email_send import EmailSend
 from app.models.pauta import Pauta
 from app.models.scheduled_post import ScheduledPost
 from app.models.user import User
+from app.services.insights import gerar_insights
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
+
+
+def get_ai_client() -> AIClient:
+    return GeminiClient(api_key=settings.GEMINI_API_KEY)
+
+
+@router.post("/insights")
+async def insights(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)],
+) -> dict:
+    dicas = await gerar_insights(db, current_user.tenant_id, get_ai_client())
+    return {"dicas": dicas}
 
 
 @router.get("/resumo")
