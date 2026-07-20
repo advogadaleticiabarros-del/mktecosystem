@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routers import auth, calendario, content, dashboard, email, pautas, public
+from app.routers import auth, calendario, content, dashboard, email, integracoes, pautas, public
 
 if settings.ENVIRONMENT != "development" and settings.JWT_SECRET == "dev-secret-change-in-production":
     raise RuntimeError(
@@ -42,6 +42,7 @@ app.include_router(public.router)
 app.include_router(email.router)
 app.include_router(calendario.router)
 app.include_router(dashboard.router)
+app.include_router(integracoes.router)
 
 
 @app.get("/health")
