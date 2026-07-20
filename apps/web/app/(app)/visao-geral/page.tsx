@@ -18,6 +18,7 @@ import { apiFetch } from "@/lib/api";
 import { AppShell } from "@/components/app-shell";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 
 type Resumo = {
   instagram: { seguidores: number; alcance_7d: number } | null;
@@ -121,6 +122,10 @@ export default function VisaoGeralPage() {
   const [dicas, setDicas] = useState<Dica[] | null>(null);
   const [gerandoDicas, setGerandoDicas] = useState(false);
   const [conexoes, setConexoes] = useState<Conexao[]>([]);
+  const [mostrarCampoToken, setMostrarCampoToken] = useState(false);
+  const [tokenManual, setTokenManual] = useState("");
+  const [conectando, setConectando] = useState(false);
+  const [erroConexao, setErroConexao] = useState<string | null>(null);
   const router = useRouter();
 
   async function analisar() {
@@ -146,6 +151,28 @@ export default function VisaoGeralPage() {
   async function desconectarInstagram() {
     await apiFetch("/integracoes/instagram", { method: "DELETE" });
     setConexoes((prev) => prev.filter((c) => c.plataforma !== "instagram"));
+  }
+
+  async function conectarComTokenManual() {
+    setConectando(true);
+    setErroConexao(null);
+    try {
+      const resp = await apiFetch("/integracoes/instagram/token", {
+        method: "POST",
+        body: JSON.stringify({ access_token: tokenManual.trim() }),
+      });
+      if (!resp.ok) {
+        const body = await resp.json().catch(() => null);
+        setErroConexao(body?.detail ?? "Não foi possível conectar com esse token.");
+        return;
+      }
+      const nova = await resp.json();
+      setConexoes((prev) => [...prev.filter((c) => c.plataforma !== "instagram"), nova]);
+      setMostrarCampoToken(false);
+      setTokenManual("");
+    } finally {
+      setConectando(false);
+    }
   }
 
   useEffect(() => {
@@ -306,13 +333,53 @@ export default function VisaoGeralPage() {
               ? `@${instagramConectado.nome_conta}${resumo.instagram ? ` · ${resumo.instagram.seguidores} seguidores` : ""}`
               : "Alcance, seguidores, melhores posts"}
           </p>
-          <button
-            type="button"
-            onClick={instagramConectado ? desconectarInstagram : conectarInstagram}
-            className="mt-3 text-xs font-medium text-primary hover:underline"
-          >
-            {instagramConectado ? "Desconectar" : "Conectar"}
-          </button>
+          {!instagramConectado && (
+            <div className="mt-3 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={conectarInstagram}
+                className="text-xs font-medium text-primary hover:underline"
+              >
+                Conectar
+              </button>
+              <button
+                type="button"
+                onClick={() => setMostrarCampoToken((v) => !v)}
+                className="text-xs text-muted-foreground hover:underline"
+              >
+                {mostrarCampoToken ? "Cancelar" : "Colar token"}
+              </button>
+            </div>
+          )}
+          {instagramConectado && (
+            <button
+              type="button"
+              onClick={desconectarInstagram}
+              className="mt-3 text-xs font-medium text-primary hover:underline"
+            >
+              Desconectar
+            </button>
+          )}
+          {mostrarCampoToken && !instagramConectado && (
+            <div className="mt-3 space-y-2">
+              <Input
+                placeholder="Token do usuário do sistema (EAA...)"
+                value={tokenManual}
+                onChange={(e) => setTokenManual(e.target.value)}
+                className="h-8 text-xs"
+              />
+              <button
+                type="button"
+                onClick={conectarComTokenManual}
+                disabled={conectando || !tokenManual.trim()}
+                className="flex items-center gap-1.5 rounded-md bg-primary px-2.5 py-1 text-xs font-medium text-primary-foreground disabled:opacity-60"
+              >
+                {conectando && <Loader2 className="h-3 w-3 animate-spin" />}
+                {conectando ? "Conectando..." : "Confirmar"}
+              </button>
+              {erroConexao && <p className="text-xs text-destructive">{erroConexao}</p>}
+            </div>
+          )}
         </Card>
         {FONTES_FUTURAS.map((fonte) => (
           <Card key={fonte.nome} className="p-5 opacity-70">

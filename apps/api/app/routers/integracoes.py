@@ -5,6 +5,7 @@ from urllib.parse import urlencode
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import RedirectResponse
+from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -65,6 +66,40 @@ async def iniciar_conexao_instagram(
     return RedirectResponse(f"https://www.facebook.com/v21.0/dialog/oauth?{urlencode(params)}")
 
 
+async def _salvar_conexao_a_partir_da_pagina(
+    db: AsyncSession,
+    tenant_id: uuid.UUID,
+    client: MetaClient,
+    pagina: dict,
+    expira_em: datetime | None,
+) -> SocialConnection:
+    conta_ig = await client.buscar_conta_instagram(pagina["id"], pagina["access_token"])
+    if conta_ig is None:
+        raise HTTPException(status_code=422, detail="Essa Página não tem uma conta Instagram Business vinculada")
+
+    nome_conta = await client.buscar_nome_conta_instagram(conta_ig["id"], pagina["access_token"])
+
+    existente = await db.execute(
+        select(SocialConnection).where(
+            SocialConnection.tenant_id == tenant_id, SocialConnection.plataforma == "instagram"
+        )
+    )
+    conexao = existente.scalar_one_or_none()
+    if conexao is None:
+        conexao = SocialConnection(tenant_id=tenant_id, plataforma="instagram")
+        db.add(conexao)
+
+    conexao.page_id = pagina["id"]
+    conexao.ig_user_id = conta_ig["id"]
+    conexao.nome_conta = nome_conta or pagina["name"]
+    conexao.access_token_encrypted = encrypt_token(pagina["access_token"])
+    conexao.expira_em = expira_em
+    conexao.status = "ativo"
+
+    await db.commit()
+    return conexao
+
+
 @router.get("/instagram/callback")
 async def callback_instagram(
     db: Annotated[AsyncSession, Depends(get_db)],
@@ -88,33 +123,34 @@ async def callback_instagram(
     if not paginas:
         raise HTTPException(status_code=422, detail="Nenhuma Página do Facebook encontrada para esta conta")
 
-    pagina = paginas[0]
-    conta_ig = await client.buscar_conta_instagram(pagina["id"], pagina["access_token"])
-    if conta_ig is None:
-        raise HTTPException(status_code=422, detail="Essa Página não tem uma conta Instagram Business vinculada")
-
-    nome_conta = await client.buscar_nome_conta_instagram(conta_ig["id"], pagina["access_token"])
     expira_em = datetime.now(timezone.utc) + timedelta(seconds=token_longo.get("expires_in", 5184000))
-
-    existente = await db.execute(
-        select(SocialConnection).where(
-            SocialConnection.tenant_id == user.tenant_id, SocialConnection.plataforma == "instagram"
-        )
-    )
-    conexao = existente.scalar_one_or_none()
-    if conexao is None:
-        conexao = SocialConnection(tenant_id=user.tenant_id, plataforma="instagram")
-        db.add(conexao)
-
-    conexao.page_id = pagina["id"]
-    conexao.ig_user_id = conta_ig["id"]
-    conexao.nome_conta = nome_conta or pagina["name"]
-    conexao.access_token_encrypted = encrypt_token(pagina["access_token"])
-    conexao.expira_em = expira_em
-    conexao.status = "ativo"
-
-    await db.commit()
+    await _salvar_conexao_a_partir_da_pagina(db, user.tenant_id, client, paginas[0], expira_em)
     return RedirectResponse(f"{settings.FRONTEND_URL}/visao-geral?conectado=instagram")
+
+
+class TokenManualIn(BaseModel):
+    access_token: str
+
+
+@router.post("/instagram/token", response_model=SocialConnectionOut)
+async def conectar_com_token_manual(
+    payload: TokenManualIn,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)],
+) -> SocialConnection:
+    """Conecta usando um token de usuário do sistema gerado no Gerenciador de
+    Negócios — alternativa ao fluxo OAuth quando o app ainda não tem os
+    escopos avançados liberados pela revisão da Meta."""
+    client = get_meta_client()
+    paginas = await client.buscar_paginas(payload.access_token)
+    if not paginas:
+        raise HTTPException(
+            status_code=422,
+            detail="Nenhuma Página do Facebook encontrada para esse token. Confirme que o usuário "
+            "do sistema tem a Página atribuída com controle total.",
+        )
+    # Tokens de usuário do sistema não expiram; sem data de expiração conhecida.
+    return await _salvar_conexao_a_partir_da_pagina(db, current_user.tenant_id, client, paginas[0], None)
 
 
 @router.delete("/instagram", status_code=204)
