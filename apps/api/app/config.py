@@ -16,6 +16,11 @@ class Settings(BaseSettings):
     RESEND_WEBHOOK_SECRET: str = ""
     PUBLIC_API_URL: str = "http://localhost:8000"
     ENABLE_SCHEDULER: bool = False
+    ENCRYPTION_KEY: str = "SV3ckJiDIf0XnoXjm-CJt6qXS3Ia-6S69PKds0L8sX4="
+    META_APP_ID: str = ""
+    META_APP_SECRET: str = ""
+    META_REDIRECT_URI: str = "http://localhost:8000/integracoes/instagram/callback"
+    FRONTEND_URL: str = "http://localhost:3000"
 
 
 settings = Settings()

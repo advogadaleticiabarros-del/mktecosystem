@@ -14,6 +14,8 @@ from app.models import (  # noqa: F401
     marketing_memory,
     pauta,
     scheduled_post,
+    social_connection,
+    social_metric,
     tenant,
     user,
 )
