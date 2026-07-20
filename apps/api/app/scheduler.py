@@ -16,6 +16,7 @@ from app.integrations.email.resend_client import ResendClient
 from app.models.tenant import Tenant
 from app.services.email_campaigns import gerar_rascunho_newsletter
 from app.services.email_sender import processar_boas_vindas, processar_fila_newsletter
+from app.services.instagram_publisher import publicar_agendamentos_prontos
 
 logger = logging.getLogger(__name__)
 
@@ -29,8 +30,9 @@ async def job_envios() -> None:
         resend = _resend()
         bv = await processar_boas_vindas(db, resend)
         nl = await processar_fila_newsletter(db, resend)
-        if bv or nl:
-            logger.info("Envios: %d boas-vindas, %d newsletter.", bv, nl)
+        ig = await publicar_agendamentos_prontos(db)
+        if bv or nl or ig:
+            logger.info("Envios: %d boas-vindas, %d newsletter, %d Instagram.", bv, nl, ig)
 
 
 async def job_rascunho_newsletter() -> None:
