@@ -20,6 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 
 type Resumo = {
+  instagram: { seguidores: number; alcance_7d: number } | null;
   conteudos_por_status: Record<string, number>;
   contatos_por_origem: Record<string, number>;
   contatos_ativos: number;
@@ -108,17 +109,18 @@ function BarrasSemanais({ dados }: { dados: Resumo["producao_semanal"] }) {
 }
 
 const FONTES_FUTURAS = [
-  { nome: "Instagram", icone: Camera, detalhe: "Alcance, seguidores, melhores posts" },
   { nome: "Google Analytics", icone: BarChart3, detalhe: "Tráfego e conversões do site" },
   { nome: "Google Meu Negócio", icone: MapPin, detalhe: "Buscas locais, ligações, rotas" },
 ];
 
 type Dica = { titulo: string; diagnostico: string; acao: string };
+type Conexao = { id: string; plataforma: string; nome_conta: string; status: string };
 
 export default function VisaoGeralPage() {
   const [resumo, setResumo] = useState<Resumo | null>(null);
   const [dicas, setDicas] = useState<Dica[] | null>(null);
   const [gerandoDicas, setGerandoDicas] = useState(false);
+  const [conexoes, setConexoes] = useState<Conexao[]>([]);
   const router = useRouter();
 
   async function analisar() {
@@ -131,6 +133,21 @@ export default function VisaoGeralPage() {
     }
   }
 
+  const instagramConectado = conexoes.find(
+    (c) => c.plataforma === "instagram" && c.status === "ativo",
+  );
+
+  function conectarInstagram() {
+    const base = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+    const token = localStorage.getItem("token") ?? "";
+    window.location.href = `${base}/integracoes/instagram/iniciar?token=${encodeURIComponent(token)}`;
+  }
+
+  async function desconectarInstagram() {
+    await apiFetch("/integracoes/instagram", { method: "DELETE" });
+    setConexoes((prev) => prev.filter((c) => c.plataforma !== "instagram"));
+  }
+
   useEffect(() => {
     apiFetch("/dashboard/resumo").then(async (resp) => {
       if (resp.status === 401) {
@@ -138,6 +155,9 @@ export default function VisaoGeralPage() {
         return;
       }
       setResumo(await resp.json());
+    });
+    apiFetch("/integracoes").then(async (resp) => {
+      if (resp.ok) setConexoes(await resp.json());
     });
   }, [router]);
 
@@ -273,6 +293,27 @@ export default function VisaoGeralPage() {
         Conectar fontes de desempenho
       </h2>
       <div className="grid gap-4 sm:grid-cols-3">
+        <Card className="p-5">
+          <div className="flex items-center justify-between">
+            <Camera className="h-5 w-5 text-primary" />
+            <Badge className={instagramConectado ? "bg-primary/15 text-primary" : undefined} variant={instagramConectado ? undefined : "secondary"}>
+              {instagramConectado ? "Conectado" : "Não conectado"}
+            </Badge>
+          </div>
+          <p className="mt-3 text-sm font-medium">Instagram</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {instagramConectado
+              ? `@${instagramConectado.nome_conta}${resumo.instagram ? ` · ${resumo.instagram.seguidores} seguidores` : ""}`
+              : "Alcance, seguidores, melhores posts"}
+          </p>
+          <button
+            type="button"
+            onClick={instagramConectado ? desconectarInstagram : conectarInstagram}
+            className="mt-3 text-xs font-medium text-primary hover:underline"
+          >
+            {instagramConectado ? "Desconectar" : "Conectar"}
+          </button>
+        </Card>
         {FONTES_FUTURAS.map((fonte) => (
           <Card key={fonte.nome} className="p-5 opacity-70">
             <div className="flex items-center justify-between">
