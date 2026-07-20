@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { margin: 0; }
+  .slide {
+    width: 1080px; height: 1350px;
+    background: {{ fundo }};
+    color: {{ areia }};
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 96px; font-family: Inter, sans-serif; position: relative; overflow: hidden;
+  }
+  .texto { font-size: {{ tamanho_fonte }}px; line-height: 1.25; font-weight: {{ peso_fonte }}; }
+  .rodape { display: flex; justify-content: space-between; border-top: 1px solid {{ dourado }}44; padding-top: 32px; }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div style="width:40px;height:40px;border-radius:50%;border:2px solid {{ dourado }};display:flex;align-items:center;justify-content:center;">
+        <div style="width:14px;height:14px;border-radius:50%;background:{{ dourado }};"></div>
+      </div>
+      <span style="font-size:26px;letter-spacing:2px;color:{{ dourado }};">{{ nome_conta }}</span>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;">
+      <p class="texto">{{ texto }}</p>
+    </div>
+    <div class="rodape">
+      <span style="font-size:24px;color:{{ dourado }};">{{ instagram }}</span>
+      <span style="font-size:22px;color:{{ areia }}99;">{{ rodape_direita }}</span>
+    </div>
+  </div>
+</body>
+</html>
