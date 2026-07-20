@@ -15,6 +15,7 @@ from app.models.content_piece import ContentPiece
 from app.models.email_send import EmailSend
 from app.models.pauta import Pauta
 from app.models.scheduled_post import ScheduledPost
+from app.models.social_metric import SocialMetric
 from app.models.user import User
 from app.services.insights import gerar_insights
 
@@ -106,7 +107,18 @@ async def resumo(
         .all()
     )
 
+    ultima_metrica = (
+        await db.execute(
+            select(SocialMetric)
+            .where(SocialMetric.tenant_id == tenant_id, SocialMetric.tipo == "conta")
+            .order_by(SocialMetric.coletado_em.desc())
+            .limit(1)
+        )
+    ).scalar_one_or_none()
+    instagram = ultima_metrica.metricas if ultima_metrica else None
+
     return {
+        "instagram": instagram,
         "conteudos_por_status": conteudos_por_status,
         "contatos_por_origem": contatos_por_origem,
         "contatos_ativos": sum(contatos_por_origem.values()),

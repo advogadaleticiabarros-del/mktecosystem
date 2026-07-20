@@ -16,6 +16,7 @@ from app.integrations.email.resend_client import ResendClient
 from app.models.tenant import Tenant
 from app.services.email_campaigns import gerar_rascunho_newsletter
 from app.services.email_sender import processar_boas_vindas, processar_fila_newsletter
+from app.services.instagram_metrics import coletar_metricas_diarias
 from app.services.instagram_publisher import publicar_agendamentos_prontos
 
 logger = logging.getLogger(__name__)
@@ -33,6 +34,13 @@ async def job_envios() -> None:
         ig = await publicar_agendamentos_prontos(db)
         if bv or nl or ig:
             logger.info("Envios: %d boas-vindas, %d newsletter, %d Instagram.", bv, nl, ig)
+
+
+async def job_metricas_instagram() -> None:
+    async with SessionLocal() as db:
+        n = await coletar_metricas_diarias(db)
+        if n:
+            logger.info("Métricas do Instagram coletadas para %d tenant(s).", n)
 
 
 async def job_rascunho_newsletter() -> None:
@@ -53,4 +61,5 @@ def criar_scheduler() -> AsyncIOScheduler:
     scheduler.add_job(job_envios, CronTrigger(minute=15))
     # Segunda 11:00 UTC = 08:00 em Brasília
     scheduler.add_job(job_rascunho_newsletter, CronTrigger(day_of_week="mon", hour=11))
+    scheduler.add_job(job_metricas_instagram, CronTrigger(hour=6))
     return scheduler
