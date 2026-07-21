@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 
 
 class LoginRequest(BaseModel):
@@ -9,3 +9,8 @@ class LoginRequest(BaseModel):
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+
+class TrocarSenhaRequest(BaseModel):
+    senha_atual: str
+    senha_nova: str = Field(min_length=8)

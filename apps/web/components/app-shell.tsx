@@ -10,6 +10,7 @@ import {
   ImageIcon,
   Mail,
   Newspaper,
+  Settings,
   ShieldCheck,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -27,6 +28,7 @@ const NAV_ITEMS = [
   { href: "/calendario", label: "Calendário editorial", icon: CalendarDays },
   { href: "/criativos", label: "Estúdio de criativos", icon: ImageIcon },
   { href: "/emails", label: "E-mails", icon: Mail },
+  { href: "/configuracoes", label: "Configurações", icon: Settings },
 ] as const;
 
 export function AppShell({
