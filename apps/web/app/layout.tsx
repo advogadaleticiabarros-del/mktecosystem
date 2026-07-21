@@ -1,8 +1,9 @@
 import "./globals.css";
-import { Space_Grotesk, Inter } from "next/font/google";
+import { Chakra_Petch, Inter, JetBrains_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/theme-provider";
 
-const spaceGrotesk = Space_Grotesk({
+const chakraPetch = Chakra_Petch({
   subsets: ["latin"],
   variable: "--font-display",
   weight: ["500", "600", "700"],
@@ -13,14 +14,38 @@ const inter = Inter({
   variable: "--font-sans",
 });
 
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["400", "500", "600"],
+});
+
 export const metadata = {
   title: "Orbit — The Marketing Operating System",
 };
 
+const THEME_SCRIPT = `
+(function () {
+  try {
+    var tema = localStorage.getItem("orbit-theme") || "dourado";
+    document.documentElement.setAttribute("data-theme", tema);
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={cn("font-sans", spaceGrotesk.variable, inter.variable)}>
-      <body>{children}</body>
+    <html
+      lang="pt-BR"
+      data-theme="dourado"
+      className={cn("font-sans", chakraPetch.variable, inter.variable, jetbrainsMono.variable)}
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

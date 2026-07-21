@@ -19,8 +19,8 @@
 }
 
 body {
-  background: var(--color-fundo-escuro);
-  color: var(--color-areia);
+  background: var(--background);
+  color: var(--foreground);
   font-family: "Inter", sans-serif;
   margin: 0;
 }
@@ -29,6 +29,7 @@ body {
   --font-heading: var(--font-display);
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -69,10 +70,12 @@ body {
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Orbit is always dark/gold — no light-mode toggle, so :root and .dark
-   carry identical values instead of the shadcn-generated light defaults. */
+/* Orbit é sempre dark — 4 temas de cor trocáveis via [data-theme] no <html>,
+   aplicado pelo ThemeProvider (persistido em localStorage). O bloco :root
+   sem atributo é o fallback de build-time (= dourado) usado até o script
+   inline do layout.tsx rodar. */
 :root,
-.dark {
+:root[data-theme="dourado"] {
   --background: #231e1a;
   --foreground: #e8ded1;
   --card: #352e26;
@@ -105,6 +108,111 @@ body {
   --sidebar-accent-foreground: #c9a962;
   --sidebar-border: rgba(201, 169, 98, 0.25);
   --sidebar-ring: #c9a962;
+}
+
+:root[data-theme="esmeralda"] {
+  --background: #131b18;
+  --foreground: #dcece3;
+  --card: #1c2925;
+  --card-foreground: #dcece3;
+  --popover: #1c2925;
+  --popover-foreground: #dcece3;
+  --primary: #34c98a;
+  --primary-foreground: #0d1a15;
+  --secondary: #17211d;
+  --secondary-foreground: #dcece3;
+  --muted: #17211d;
+  --muted-foreground: #a9c2b6;
+  --accent: #1c2925;
+  --accent-foreground: #34c98a;
+  --destructive: #e57373;
+  --border: rgba(52, 201, 138, 0.22);
+  --input: rgba(52, 201, 138, 0.22);
+  --ring: #34c98a;
+  --chart-1: #34c98a;
+  --chart-2: #5fd9a6;
+  --chart-3: #22a36e;
+  --chart-4: #dcece3;
+  --chart-5: #17211d;
+  --radius: 0.75rem;
+  --sidebar: #0e1613;
+  --sidebar-foreground: #dcece3;
+  --sidebar-primary: #34c98a;
+  --sidebar-primary-foreground: #0d1a15;
+  --sidebar-accent: #1c2925;
+  --sidebar-accent-foreground: #34c98a;
+  --sidebar-border: rgba(52, 201, 138, 0.22);
+  --sidebar-ring: #34c98a;
+}
+
+:root[data-theme="azul"] {
+  --background: #10161f;
+  --foreground: #dde6f2;
+  --card: #182233;
+  --card-foreground: #dde6f2;
+  --popover: #182233;
+  --popover-foreground: #dde6f2;
+  --primary: #4d8fe0;
+  --primary-foreground: #0a121c;
+  --secondary: #16202e;
+  --secondary-foreground: #dde6f2;
+  --muted: #16202e;
+  --muted-foreground: #a7b7cc;
+  --accent: #182233;
+  --accent-foreground: #4d8fe0;
+  --destructive: #e57373;
+  --border: rgba(77, 143, 224, 0.24);
+  --input: rgba(77, 143, 224, 0.24);
+  --ring: #4d8fe0;
+  --chart-1: #4d8fe0;
+  --chart-2: #7fb0ec;
+  --chart-3: #3568b3;
+  --chart-4: #dde6f2;
+  --chart-5: #16202e;
+  --radius: 0.75rem;
+  --sidebar: #0b121b;
+  --sidebar-foreground: #dde6f2;
+  --sidebar-primary: #4d8fe0;
+  --sidebar-primary-foreground: #0a121c;
+  --sidebar-accent: #182233;
+  --sidebar-accent-foreground: #4d8fe0;
+  --sidebar-border: rgba(77, 143, 224, 0.24);
+  --sidebar-ring: #4d8fe0;
+}
+
+:root[data-theme="violeta"] {
+  --background: #181420;
+  --foreground: #e6dff2;
+  --card: #241d30;
+  --card-foreground: #e6dff2;
+  --popover: #241d30;
+  --popover-foreground: #e6dff2;
+  --primary: #a874e0;
+  --primary-foreground: #180f24;
+  --secondary: #211a2b;
+  --secondary-foreground: #e6dff2;
+  --muted: #211a2b;
+  --muted-foreground: #c0b3cf;
+  --accent: #241d30;
+  --accent-foreground: #a874e0;
+  --destructive: #e57373;
+  --border: rgba(168, 116, 224, 0.24);
+  --input: rgba(168, 116, 224, 0.24);
+  --ring: #a874e0;
+  --chart-1: #a874e0;
+  --chart-2: #c29eea;
+  --chart-3: #8a54c2;
+  --chart-4: #e6dff2;
+  --chart-5: #211a2b;
+  --radius: 0.75rem;
+  --sidebar: #120e19;
+  --sidebar-foreground: #e6dff2;
+  --sidebar-primary: #a874e0;
+  --sidebar-primary-foreground: #180f24;
+  --sidebar-accent: #241d30;
+  --sidebar-accent-foreground: #a874e0;
+  --sidebar-border: rgba(168, 116, 224, 0.24);
+  --sidebar-ring: #a874e0;
 }
 
 @layer base {
