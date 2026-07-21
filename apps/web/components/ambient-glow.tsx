@@ -1,3 +1,7 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+
 type OrbitNodeProps = {
   ring: number;
   size: number;
@@ -34,8 +38,16 @@ function OrbitNode({ ring, size, duration, reverse, offset = 0, tether }: OrbitN
 }
 
 export function AmbientGlow() {
+  const reduzirMovimento = useReducedMotion();
+
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+    <motion.div
+      className="pointer-events-none absolute inset-0 overflow-hidden"
+      aria-hidden="true"
+      initial={reduzirMovimento ? false : { opacity: 0, scale: 0.85 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.9, ease: "easeOut" }}
+    >
       <style>{`
         @keyframes orbit-spin {
           from { transform: rotate(0deg); }
@@ -47,30 +59,35 @@ export function AmbientGlow() {
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
-            width: 46,
-            height: 46,
-            background: "radial-gradient(circle at 35% 30%, var(--color-dourado-light, #d4bc7d), var(--primary) 60%, var(--color-dourado-dark, #b8943f) 100%)",
-            boxShadow: "0 0 60px 14px color-mix(in srgb, var(--primary) 45%, transparent)",
+            width: 64,
+            height: 64,
+            background: "radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--primary) 70%, white), var(--primary) 60%, color-mix(in srgb, var(--primary) 70%, black) 100%)",
+            boxShadow: "0 0 90px 22px color-mix(in srgb, var(--primary) 50%, transparent)",
           }}
         />
 
         <div
-          className="absolute left-1/2 top-1/2 h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/25"
+          className="absolute left-1/2 top-1/2 h-[260px] w-[260px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/30"
         />
         <div
-          className="absolute left-1/2 top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/15"
+          className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20"
         />
         <div
-          className="absolute left-1/2 top-1/2 h-[540px] w-[540px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/10"
+          className="absolute left-1/2 top-1/2 h-[580px] w-[580px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/12"
+        />
+        <div
+          className="absolute left-1/2 top-1/2 h-[720px] w-[720px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/8"
         />
 
-        <OrbitNode ring={220} size={8} duration={22} offset={20} tether />
-        <OrbitNode ring={220} size={4} duration={26} offset={190} reverse />
-        <OrbitNode ring={380} size={5} duration={38} offset={80} reverse />
-        <OrbitNode ring={380} size={3} duration={34} offset={250} />
-        <OrbitNode ring={540} size={6} duration={55} offset={140} tether />
-        <OrbitNode ring={540} size={3.5} duration={48} offset={320} reverse />
+        <OrbitNode ring={260} size={9} duration={20} offset={20} tether />
+        <OrbitNode ring={260} size={5} duration={24} offset={190} reverse />
+        <OrbitNode ring={420} size={6} duration={34} offset={80} reverse />
+        <OrbitNode ring={420} size={4} duration={30} offset={250} />
+        <OrbitNode ring={580} size={7} duration={48} offset={140} tether />
+        <OrbitNode ring={580} size={4} duration={42} offset={320} reverse />
+        <OrbitNode ring={720} size={5} duration={64} offset={60} />
+        <OrbitNode ring={720} size={3.5} duration={58} offset={210} reverse tether />
       </div>
-    </div>
+    </motion.div>
   );
 }
