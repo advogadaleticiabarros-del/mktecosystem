@@ -26,6 +26,10 @@ class SFTPClient:
         async with self._sftp.open(caminho_remoto, "wb") as arquivo:
             await arquivo.write(conteudo)
 
+    async def garantir_diretorio(self, caminho_remoto: str) -> None:
+        await self._ensure_conn()
+        await self._sftp.makedirs(caminho_remoto, exist_ok=True)
+
     async def download(self, caminho_remoto: str) -> bytes:
         await self._ensure_conn()
         async with self._sftp.open(caminho_remoto, "rb") as arquivo:

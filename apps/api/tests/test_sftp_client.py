@@ -42,3 +42,17 @@ async def test_download_le_arquivo_remoto():
         conteudo = await cliente.download("sitemap.xml")
 
         assert conteudo == b"conteudo atual"
+
+
+@pytest.mark.anyio
+async def test_garantir_diretorio_cria_diretorio_remoto():
+    with patch("app.integrations.publish.sftp_client.asyncssh.connect", new=AsyncMock()) as mock_connect:
+        conn = mock_connect.return_value
+        sftp = AsyncMock()
+        conn.start_sftp_client = AsyncMock(return_value=sftp)
+        sftp.makedirs = AsyncMock()
+
+        cliente = SFTPClient(host="h", port=65002, user="u", password="p")
+        await cliente.garantir_diretorio("blog/capas")
+
+        sftp.makedirs.assert_awaited_once_with("blog/capas", exist_ok=True)
