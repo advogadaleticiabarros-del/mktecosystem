@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
 const NAV_ITEMS = [
   { href: "/visao-geral", label: "Visão geral", icon: Home },
@@ -76,6 +77,9 @@ export function AppShell({
             );
           })}
         </nav>
+        <div className="mt-auto">
+          <ThemeSwitcher />
+        </div>
       </aside>
 
       <div className="flex flex-1 flex-col">
