@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     META_APP_SECRET: str = ""
     META_REDIRECT_URI: str = "http://localhost:8000/integracoes/instagram/callback"
     FRONTEND_URL: str = "http://localhost:3000"
+    GOOGLE_CLIENT_ID: str = ""
+    GOOGLE_CLIENT_SECRET: str = ""
+    GOOGLE_REDIRECT_URI: str = "http://localhost:8000/integracoes/google-business/callback"
 
 
 settings = Settings()
