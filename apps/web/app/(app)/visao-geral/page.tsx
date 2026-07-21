@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 
 type Resumo = {
   instagram: { seguidores: number; alcance_7d: number } | null;
+  google_business: { buscas: number; chamadas: number; pedidos_rota: number; visualizacoes: number } | null;
   conteudos_por_status: Record<string, number>;
   contatos_por_origem: Record<string, number>;
   contatos_ativos: number;
@@ -111,7 +112,6 @@ function BarrasSemanais({ dados }: { dados: Resumo["producao_semanal"] }) {
 
 const FONTES_FUTURAS = [
   { nome: "Google Analytics", icone: BarChart3, detalhe: "Tráfego e conversões do site" },
-  { nome: "Google Meu Negócio", icone: MapPin, detalhe: "Buscas locais, ligações, rotas" },
 ];
 
 type Dica = { titulo: string; diagnostico: string; acao: string };
@@ -151,6 +151,21 @@ export default function VisaoGeralPage() {
   async function desconectarInstagram() {
     await apiFetch("/integracoes/instagram", { method: "DELETE" });
     setConexoes((prev) => prev.filter((c) => c.plataforma !== "instagram"));
+  }
+
+  const googleBusinessConectado = conexoes.find(
+    (c) => c.plataforma === "google_business" && c.status === "ativo",
+  );
+
+  function conectarGoogleBusiness() {
+    const base = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+    const token = localStorage.getItem("token") ?? "";
+    window.location.href = `${base}/integracoes/google-business/iniciar?token=${encodeURIComponent(token)}`;
+  }
+
+  async function desconectarGoogleBusiness() {
+    await apiFetch("/integracoes/google-business", { method: "DELETE" });
+    setConexoes((prev) => prev.filter((c) => c.plataforma !== "google_business"));
   }
 
   async function conectarComTokenManual() {
@@ -380,6 +395,32 @@ export default function VisaoGeralPage() {
               {erroConexao && <p className="text-xs text-destructive">{erroConexao}</p>}
             </div>
           )}
+        </Card>
+        <Card className="p-5">
+          <div className="flex items-center justify-between">
+            <MapPin className="h-5 w-5 text-primary" />
+            <Badge
+              className={googleBusinessConectado ? "bg-primary/15 text-primary" : undefined}
+              variant={googleBusinessConectado ? undefined : "secondary"}
+            >
+              {googleBusinessConectado ? "Conectado" : "Não conectado"}
+            </Badge>
+          </div>
+          <p className="mt-3 text-sm font-medium">Google Meu Negócio</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {googleBusinessConectado
+              ? resumo.google_business
+                ? `${resumo.google_business.chamadas} ligações · ${resumo.google_business.pedidos_rota} rotas (7d)`
+                : googleBusinessConectado.nome_conta
+              : "Buscas locais, ligações, rotas"}
+          </p>
+          <button
+            type="button"
+            onClick={googleBusinessConectado ? desconectarGoogleBusiness : conectarGoogleBusiness}
+            className="mt-3 text-xs font-medium text-primary hover:underline"
+          >
+            {googleBusinessConectado ? "Desconectar" : "Conectar"}
+          </button>
         </Card>
         {FONTES_FUTURAS.map((fonte) => (
           <Card key={fonte.nome} className="p-5 opacity-70">

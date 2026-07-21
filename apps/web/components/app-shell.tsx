@@ -12,6 +12,7 @@ import {
   Newspaper,
   Settings,
   ShieldCheck,
+  Star,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
@@ -29,6 +30,7 @@ const NAV_ITEMS = [
   { href: "/criativos", label: "Estúdio de criativos", icon: ImageIcon },
   { href: "/emails", label: "E-mails", icon: Mail },
   { href: "/configuracoes", label: "Configurações", icon: Settings },
+  { href: "/avaliacoes", label: "Avaliações", icon: Star },
 ] as const;
 
 export function AppShell({
