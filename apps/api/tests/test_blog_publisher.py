@@ -73,6 +73,7 @@ async def test_publica_agendamento_pronto(db_session):
         instancia = MockSFTP.return_value
         instancia.download = AsyncMock(side_effect=[INDEX_FIXTURE.encode(), SITEMAP_FIXTURE.encode()])
         instancia.upload = AsyncMock()
+        instancia.garantir_diretorio = AsyncMock()
         instancia.close = AsyncMock()
 
         publicados = await publicar_agendamentos_prontos(db_session)
@@ -83,6 +84,7 @@ async def test_publica_agendamento_pronto(db_session):
     assert agendamento.platform_post_id == "https://advogadaleticiabarros.com.br/blog/carga-horaria-maxima-clt.html"
     # 4 uploads: HTML do artigo, capa, index.html, sitemap.xml
     assert instancia.upload.await_count == 4
+    instancia.garantir_diretorio.assert_awaited_once_with("capas")
     instancia.close.assert_awaited_once()
 
 

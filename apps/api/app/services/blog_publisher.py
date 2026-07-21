@@ -5,7 +5,6 @@ renderizar/publicar. Faz upload do HTML do artigo, da capa, do índice
 atualizado e do sitemap atualizado via SFTP.
 """
 import logging
-import uuid
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -77,15 +76,17 @@ async def publicar_agendamentos_prontos(db: AsyncSession) -> int:
 
         try:
             titulo = piece.corpo["titulo"]
-            slug = gerar_slug(titulo)
+            slug = gerar_slug(titulo) or "artigo"
             categoria_slug = gerar_slug(categoria)
             url_artigo = f"{BLOG_BASE_URL}{slug}.html"
+            meta_description = piece.corpo.get("meta_description", "")
+            resumo = piece.corpo.get("resumo", "")
 
             html_artigo = renderizar_artigo_html(
                 titulo=titulo,
-                meta_description=piece.corpo["meta_description"],
+                meta_description=meta_description,
                 categoria=categoria,
-                resumo=piece.corpo["resumo"],
+                resumo=resumo,
                 corpo_html=piece.corpo["html"],
                 slug=slug,
                 data_publicacao=date.today(),
@@ -110,7 +111,7 @@ async def publicar_agendamentos_prontos(db: AsyncSession) -> int:
                 categoria=categoria,
                 categoria_slug=categoria_slug,
                 titulo=titulo,
-                resumo=piece.corpo["resumo"],
+                resumo=resumo,
                 tempo_leitura=estimar_tempo_leitura(piece.corpo["html"]),
             )
             sitemap_novo = inserir_sitemap_entry(
@@ -118,6 +119,7 @@ async def publicar_agendamentos_prontos(db: AsyncSession) -> int:
             )
 
             await sftp.upload(f"{settings.BLOG_SFTP_PATH}{slug}.html", html_artigo.encode("utf-8"))
+            await sftp.garantir_diretorio(f"{settings.BLOG_SFTP_PATH}capas")
             await sftp.upload(f"{settings.BLOG_SFTP_PATH}capas/{slug}.png", capa_bytes)
             await sftp.upload(f"{settings.BLOG_SFTP_PATH}index.html", index_novo.encode("utf-8"))
             await sftp.upload(f"{settings.BLOG_SFTP_PATH}../sitemap.xml", sitemap_novo.encode("utf-8"))
