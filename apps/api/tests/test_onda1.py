@@ -82,6 +82,36 @@ async def test_aprovar_duas_vezes_nao_duplica_agenda(client, db_session):
 
 
 @pytest.mark.anyio
+async def test_aprovar_artigo_agenda_no_canal_blog(client, db_session):
+    tenant, user, pauta, _ = await _setup(db_session)
+    token = create_access_token(user.id)
+
+    artigo = ContentPiece(
+        tenant_id=tenant.id,
+        pauta_id=pauta.id,
+        tipo="artigo",
+        corpo={"titulo": "Direitos da gestante", "html": "<p>...</p>"},
+    )
+    db_session.add(artigo)
+    await db_session.commit()
+
+    resp = await client.patch(
+        f"/content/{artigo.id}",
+        json={"status": "aprovado"},
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert resp.status_code == 200
+
+    agendado = (
+        await db_session.execute(
+            select(ScheduledPost).where(ScheduledPost.content_piece_id == artigo.id)
+        )
+    ).scalar_one()
+    assert agendado.canal == "blog"
+    assert agendado.formato == "artigo"
+
+
+@pytest.mark.anyio
 async def test_editar_corpo_registra_licao(client, db_session):
     tenant, user, pauta, piece = await _setup(db_session)
     token = create_access_token(user.id)

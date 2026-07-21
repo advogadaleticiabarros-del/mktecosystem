@@ -81,6 +81,27 @@ async def test_sem_conexao_pula_silenciosamente(db_session):
 
 
 @pytest.mark.anyio
+async def test_formato_sem_publicador_nao_e_tentado(db_session):
+    """Legenda/stories ainda não têm caminho de publicação — não devem ser
+    selecionados, para não estourar tentativas/erro tentando montar um
+    carrossel sem imagens."""
+    tenant, agendamento = await _setup(db_session)
+    agendamento.formato = "post"  # como uma "legenda" seria agendada hoje
+    await db_session.commit()
+
+    with patch("app.services.instagram_publisher.InstagramAPI") as MockAPI:
+        instancia = MockAPI.return_value
+        instancia.publicar_carrossel = AsyncMock(return_value="post_123")
+        publicados = await publicar_agendamentos_prontos(db_session)
+
+    assert publicados == 0
+    instancia.publicar_carrossel.assert_not_awaited()
+    await db_session.refresh(agendamento)
+    assert agendamento.status == "pronto"
+    assert agendamento.tentativas == 0
+
+
+@pytest.mark.anyio
 async def test_falha_incrementa_tentativas_e_marca_erro_apos_3(db_session):
     tenant, agendamento = await _setup(db_session)
     agendamento.tentativas = 2

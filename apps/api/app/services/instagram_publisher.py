@@ -26,11 +26,16 @@ LIMITE_TENTATIVAS = 3
 
 
 async def _agendamentos_prontos(db: AsyncSession) -> list[ScheduledPost]:
+    # Só "carrossel" tem publicador implementado hoje (renderiza slides e
+    # monta o carrossel via Graph API). Legenda ("post") e stories ainda não
+    # têm asset visual próprio — nunca selecionar, pra não tentar montar um
+    # carrossel vazio e estourar tentativas à toa.
     agora = datetime.now(timezone.utc)
     hoje = agora.date()
     resultado = await db.execute(
         select(ScheduledPost).where(
             ScheduledPost.canal == "instagram",
+            ScheduledPost.formato == "carrossel",
             ScheduledPost.status == "pronto",
             ScheduledPost.data_agendada <= hoje,
         )
