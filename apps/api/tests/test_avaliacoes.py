@@ -98,3 +98,42 @@ async def test_listar_avaliacoes_sem_conexao_retorna_422(client, db_session):
 
     resp = await client.get("/avaliacoes", headers={"Authorization": f"Bearer {token}"})
     assert resp.status_code == 422
+
+
+@pytest.mark.anyio
+async def test_listar_avaliacoes_inclui_urgencia_e_ordena(client, db_session):
+    tenant, user = await _setup(db_session)
+    token = create_access_token(user.id)
+
+    mock_google = AsyncMock()
+    mock_google.renovar_access_token.return_value = "access_novo"
+    mock_google.listar_avaliacoes.return_value = [
+        {
+            "name": "locations/456/reviews/1",
+            "reviewer": {"displayName": "A"},
+            "starRating": "FIVE",
+            "comment": "Ótimo",
+        },
+        {
+            "name": "locations/456/reviews/2",
+            "reviewer": {"displayName": "B"},
+            "starRating": "ONE",
+            "comment": "Péssimo",
+        },
+    ]
+
+    mock_groq = AsyncMock()
+    mock_groq.generate_json.side_effect = [
+        {"urgencia": "normal"},
+        {"urgencia": "urgente"},
+    ]
+
+    with patch("app.routers.avaliacoes.get_google_client", return_value=mock_google), patch(
+        "app.routers.avaliacoes.get_groq_client", return_value=mock_groq
+    ):
+        resp = await client.get("/avaliacoes", headers={"Authorization": f"Bearer {token}"})
+
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body[0]["name"] == "locations/456/reviews/2"
+    assert body[0]["urgencia"] == "urgente"
