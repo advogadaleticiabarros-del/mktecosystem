@@ -25,6 +25,11 @@ class Settings(BaseSettings):
     GOOGLE_CLIENT_SECRET: str = ""
     GOOGLE_REDIRECT_URI: str = "http://localhost:8000/integracoes/google-business/callback"
     GROQ_API_KEY: str = ""
+    BLOG_SFTP_HOST: str = ""
+    BLOG_SFTP_PORT: int = 22
+    BLOG_SFTP_USER: str = ""
+    BLOG_SFTP_PASSWORD: str = ""
+    BLOG_SFTP_PATH: str = ""
 
 
 settings = Settings()
