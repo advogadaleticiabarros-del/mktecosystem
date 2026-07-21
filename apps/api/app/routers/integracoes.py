@@ -14,6 +14,7 @@ from app.core.crypto import encrypt_token
 from app.core.deps import get_current_user
 from app.core.security import create_access_token, decode_access_token
 from app.db import get_db
+from app.integrations.social.google_business_client import GoogleBusinessClient
 from app.integrations.social.meta_client import MetaClient
 from app.models.social_connection import SocialConnection
 from app.models.user import User
@@ -161,6 +162,107 @@ async def desconectar_instagram(
     result = await db.execute(
         select(SocialConnection).where(
             SocialConnection.tenant_id == current_user.tenant_id, SocialConnection.plataforma == "instagram"
+        )
+    )
+    conexao = result.scalar_one_or_none()
+    if conexao is not None:
+        conexao.status = "desconectado"
+        await db.commit()
+
+
+GOOGLE_SCOPES = "https://www.googleapis.com/auth/business.manage"
+
+
+def get_google_client() -> GoogleBusinessClient:
+    return GoogleBusinessClient(
+        client_id=settings.GOOGLE_CLIENT_ID, client_secret=settings.GOOGLE_CLIENT_SECRET
+    )
+
+
+@router.get("/google-business/iniciar")
+async def iniciar_conexao_google_business(
+    token: Annotated[str, Query()],
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> RedirectResponse:
+    user_id = decode_access_token(token)
+    if user_id is None:
+        raise HTTPException(status_code=401, detail="Token inválido")
+    result = await db.execute(select(User).where(User.id == user_id))
+    current_user = result.scalar_one_or_none()
+    if current_user is None:
+        raise HTTPException(status_code=401, detail="Token inválido")
+
+    state = create_access_token(current_user.id)
+    params = {
+        "client_id": settings.GOOGLE_CLIENT_ID,
+        "redirect_uri": settings.GOOGLE_REDIRECT_URI,
+        "scope": GOOGLE_SCOPES,
+        "state": state,
+        "response_type": "code",
+        "access_type": "offline",
+        "prompt": "consent",
+    }
+    return RedirectResponse(f"https://accounts.google.com/o/oauth2/v2/auth?{urlencode(params)}")
+
+
+@router.get("/google-business/callback")
+async def callback_google_business(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    code: Annotated[str, Query()],
+    state: Annotated[str, Query()],
+) -> RedirectResponse:
+    user_id = decode_access_token(state)
+    if user_id is None:
+        raise HTTPException(status_code=400, detail="state inválido")
+    result = await db.execute(select(User).where(User.id == user_id))
+    user = result.scalar_one_or_none()
+    if user is None:
+        raise HTTPException(status_code=400, detail="usuário não encontrado")
+
+    client = get_google_client()
+    tokens = await client.trocar_code_por_tokens(code, settings.GOOGLE_REDIRECT_URI)
+
+    contas = await client.listar_contas(tokens["access_token"])
+    if not contas:
+        raise HTTPException(status_code=422, detail="Nenhuma conta do Google Meu Negócio encontrada")
+    conta = contas[0]
+
+    locais = await client.listar_locais(tokens["access_token"], conta["name"])
+    if not locais:
+        raise HTTPException(status_code=422, detail="Nenhum local encontrado nessa conta")
+    local = locais[0]
+
+    existente = await db.execute(
+        select(SocialConnection).where(
+            SocialConnection.tenant_id == user.tenant_id,
+            SocialConnection.plataforma == "google_business",
+        )
+    )
+    conexao = existente.scalar_one_or_none()
+    if conexao is None:
+        conexao = SocialConnection(tenant_id=user.tenant_id, plataforma="google_business")
+        db.add(conexao)
+
+    conexao.page_id = conta["name"]
+    conexao.ig_user_id = local["name"]
+    conexao.nome_conta = local.get("title", conta.get("accountName", ""))
+    conexao.access_token_encrypted = encrypt_token(tokens["refresh_token"])
+    conexao.expira_em = None
+    conexao.status = "ativo"
+
+    await db.commit()
+    return RedirectResponse(f"{settings.FRONTEND_URL}/visao-geral?conectado=google_business")
+
+
+@router.delete("/google-business", status_code=204)
+async def desconectar_google_business(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)],
+) -> None:
+    result = await db.execute(
+        select(SocialConnection).where(
+            SocialConnection.tenant_id == current_user.tenant_id,
+            SocialConnection.plataforma == "google_business",
         )
     )
     conexao = result.scalar_one_or_none()
