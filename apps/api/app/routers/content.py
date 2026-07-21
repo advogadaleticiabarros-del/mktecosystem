@@ -41,7 +41,9 @@ PROMPTS = {
         "Escreva um artigo de blog completo (1200-1800 palavras) sobre '{titulo}' "
         "(ângulo: {angulo}, área: {area}). Estrutura: gancho, H2s com keyword, "
         "Perguntas frequentes, Leia também, 1 caso típico do escritório, 2 CTAs.\n"
-        "{voz}\nResponda em JSON: {{\"titulo\": str, \"html\": str}}"
+        "{voz}\nResponda em JSON: {{\"titulo\": str, \"html\": str, "
+        "\"meta_description\": str (até 155 caracteres, resumindo o artigo para SEO), "
+        "\"resumo\": str (1-2 frases curtas, usadas como chamada nos cards do blog)}}"
     ),
     "carrossel": (
         "Crie um carrossel de 5 slides de Instagram resumindo o tema '{titulo}' "
