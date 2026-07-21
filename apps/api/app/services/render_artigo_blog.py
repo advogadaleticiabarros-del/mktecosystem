@@ -2,11 +2,14 @@ from datetime import date
 from pathlib import Path
 
 from bs4 import BeautifulSoup
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from playwright.async_api import async_playwright
 
 TEMPLATES_DIR = Path(__file__).parent.parent / "templates"
-_env = Environment(loader=FileSystemLoader(str(TEMPLATES_DIR)))
+_env = Environment(
+    loader=FileSystemLoader(str(TEMPLATES_DIR)),
+    autoescape=select_autoescape(["html"]),
+)
 
 MESES = [
     "janeiro", "fevereiro", "março", "abril", "maio", "junho",
@@ -43,6 +46,7 @@ def renderizar_artigo_html(
         resumo=resumo,
         corpo_html=corpo_html,
         canonical_url=f"{BLOG_BASE_URL}{slug}.html",
+        capa_url=f"{BLOG_BASE_URL}capas/{slug}.png",
         data_iso=data_publicacao.isoformat(),
         data_extenso=data_extenso,
         tempo_leitura=estimar_tempo_leitura(corpo_html),

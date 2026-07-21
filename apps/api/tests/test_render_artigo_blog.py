@@ -39,6 +39,27 @@ def test_renderiza_html_do_artigo_com_campos_principais():
     assert "Conteúdo do artigo" in html
     assert "carga-horaria-maxima-clt.html" in html
     assert "21 de julho de 2026" in html
+    assert (
+        '<meta property="og:image" '
+        'content="https://advogadaleticiabarros.com.br/blog/capas/carga-horaria-maxima-clt.png">'
+        in html
+    )
+
+
+def test_renderiza_html_escapa_titulo_com_caracteres_especiais():
+    html = renderizar_artigo_html(
+        titulo='Título <script>alert("x")</script> "perigoso"',
+        meta_description="Descrição para SEO",
+        categoria="Trabalhista",
+        resumo="Resumo curto",
+        corpo_html="<p>Conteúdo do artigo</p>",
+        slug="titulo-perigoso",
+        data_publicacao=date(2026, 7, 21),
+    )
+    assert "<script>alert(" not in html
+    assert "&lt;script&gt;" in html
+    # o corpo do artigo continua renderizado como HTML confiável (|safe)
+    assert "<p>Conteúdo do artigo</p>" in html
 
 
 @pytest.mark.anyio
