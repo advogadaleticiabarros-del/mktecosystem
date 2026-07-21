@@ -13,6 +13,7 @@ type Avaliacao = {
   starRating: string;
   comment?: string;
   reviewReply?: { comment: string };
+  urgencia: "urgente" | "normal" | null;
 };
 
 const ESTRELAS: Record<string, number> = {
@@ -77,9 +78,19 @@ export default function AvaliacoesPage() {
       )}
       <div className="space-y-4">
         {avaliacoes?.map((a) => (
-          <Card key={a.name} className="p-5">
+          <Card
+            key={a.name}
+            className={a.urgencia === "urgente" ? "border-l-2 border-destructive p-5" : "p-5"}
+          >
             <div className="flex items-center justify-between">
-              <p className="text-sm font-medium">{a.reviewer.displayName}</p>
+              <div className="flex items-center gap-2">
+                <p className="text-sm font-medium">{a.reviewer.displayName}</p>
+                {a.urgencia === "urgente" && (
+                  <span className="rounded-full bg-destructive/15 px-2 py-0.5 text-[10px] font-medium text-destructive">
+                    Urgente
+                  </span>
+                )}
+              </div>
               <div className="flex items-center gap-0.5">
                 {Array.from({ length: ESTRELAS[a.starRating] ?? 0 }).map((_, i) => (
                   <Star key={i} className="h-3.5 w-3.5 fill-primary text-primary" />
