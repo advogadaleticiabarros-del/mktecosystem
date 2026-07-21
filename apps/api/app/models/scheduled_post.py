@@ -24,7 +24,7 @@ class ScheduledPost(Base):
     data_agendada: Mapped[date] = mapped_column(Date)
     horario: Mapped[str] = mapped_column(String(5), default="11:00")
     status: Mapped[str] = mapped_column(String(20), default="planejado")
-    platform_post_id: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    platform_post_id: Mapped[str | None] = mapped_column(String(500), nullable=True)
     tentativas: Mapped[int] = mapped_column(Integer, default=0)
     criado_em: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
