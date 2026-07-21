@@ -117,8 +117,19 @@ async def resumo(
     ).scalar_one_or_none()
     instagram = ultima_metrica.metricas if ultima_metrica else None
 
+    ultima_metrica_gmb = (
+        await db.execute(
+            select(SocialMetric)
+            .where(SocialMetric.tenant_id == tenant_id, SocialMetric.tipo == "google_business")
+            .order_by(SocialMetric.coletado_em.desc())
+            .limit(1)
+        )
+    ).scalar_one_or_none()
+    google_business = ultima_metrica_gmb.metricas if ultima_metrica_gmb else None
+
     return {
         "instagram": instagram,
+        "google_business": google_business,
         "conteudos_por_status": conteudos_por_status,
         "contatos_por_origem": contatos_por_origem,
         "contatos_ativos": sum(contatos_por_origem.values()),
