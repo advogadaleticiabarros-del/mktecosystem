@@ -14,6 +14,7 @@ from app.db import SessionLocal
 from app.integrations.ai.gemini import GeminiClient
 from app.integrations.email.resend_client import ResendClient
 from app.models.tenant import Tenant
+from app.services.blog_publisher import publicar_agendamentos_prontos as publicar_blog_prontos
 from app.services.email_campaigns import gerar_rascunho_newsletter
 from app.services.email_sender import processar_boas_vindas, processar_fila_newsletter
 from app.services.google_business_metrics import coletar_metricas_google_business
@@ -33,8 +34,11 @@ async def job_envios() -> None:
         bv = await processar_boas_vindas(db, resend)
         nl = await processar_fila_newsletter(db, resend)
         ig = await publicar_agendamentos_prontos(db)
-        if bv or nl or ig:
-            logger.info("Envios: %d boas-vindas, %d newsletter, %d Instagram.", bv, nl, ig)
+        blog = await publicar_blog_prontos(db)
+        if bv or nl or ig or blog:
+            logger.info(
+                "Envios: %d boas-vindas, %d newsletter, %d Instagram, %d blog.", bv, nl, ig, blog
+            )
 
 
 async def job_metricas_fontes_externas() -> None:
