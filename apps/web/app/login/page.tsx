@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ShieldCheck } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, Lock, Mail, ShieldCheck } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { login } from "@/lib/api";
 import { AmbientGlow } from "@/components/ambient-glow";
@@ -14,9 +14,31 @@ const CAMPO_VARIANTS = {
   show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" as const } },
 };
 
+const LIGHT_INPUT_CLASSES =
+  "h-11 rounded-xl border-black/10 bg-[#f7f7fa] pl-10 text-[#1f2430] placeholder:text-[#a1a5b0] transition-shadow focus-visible:border-primary focus-visible:bg-white focus-visible:shadow-[0_0_0_4px_color-mix(in_srgb,var(--primary)_20%,transparent)] focus-visible:ring-0";
+
+function LogoMark({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 40 40" className={className} fill="none" aria-hidden="true">
+      <circle
+        cx="20"
+        cy="20"
+        r="16"
+        stroke="var(--primary)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeDasharray="82 18"
+        strokeDashoffset="4"
+      />
+      <circle cx="20" cy="4" r="2.6" fill="var(--primary)" />
+    </svg>
+  );
+}
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [mostrarSenha, setMostrarSenha] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -37,81 +59,108 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="grid min-h-screen grid-cols-1 bg-background text-foreground md:grid-cols-2">
-      <section className="relative hidden flex-col items-center justify-center overflow-hidden p-10 md:flex">
-        <AmbientGlow />
-        <div className="relative z-10 flex w-full max-w-md flex-col">
-          <div className="mb-10 flex items-center gap-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo/elemento-a.png"
-              alt="Orbit"
-              className="h-8 w-8 mix-blend-screen"
-            />
-            <div>
-              <p className="font-display text-lg font-semibold tracking-wide">ORBIT</p>
-              <p className="font-mono text-xs text-muted-foreground">The Marketing Operating System.</p>
-            </div>
+    <main className="relative grid min-h-screen grid-cols-1 overflow-hidden bg-[#f3f2f7] text-[#161a23] md:grid-cols-2">
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        aria-hidden="true"
+        style={{
+          backgroundImage: "radial-gradient(circle, color-mix(in srgb, var(--primary) 55%, transparent) 1px, transparent 1px)",
+          backgroundSize: "30px 30px",
+        }}
+      />
+
+      <section className="relative hidden flex-col justify-center overflow-hidden px-16 md:flex">
+        <AmbientGlow anchorLeft="88%" />
+        <div className="relative z-10 max-w-md">
+          <div className="mb-16 flex items-center gap-2.5">
+            <LogoMark className="h-8 w-8" />
+            <span className="font-display text-xl font-bold tracking-wide text-[#161a23]">ORBIT</span>
           </div>
-          <h1 className="font-display text-4xl font-semibold leading-tight">
+          <h1 className="font-display text-5xl font-bold leading-tight text-[#161a23]">
             O centro de <br />
             todo o seu <span className="text-primary">marketing.</span>
           </h1>
-          <p className="mt-4 text-muted-foreground">
+          <div className="mt-6 h-1 w-12 rounded-full bg-primary" />
+          <p className="mt-6 text-[#5b6270]">
             Inteligência, estratégia e automação trabalhando juntas para gerar
             resultados enquanto você foca no que importa.
           </p>
-          <p className="relative z-10 mt-16 font-mono text-xs text-muted-foreground">
+          <p className="relative z-10 mt-24 font-mono text-xs text-[#9a9fab]">
             © 2026 Orbit. Todos os direitos reservados.
           </p>
         </div>
       </section>
 
-      <section className="flex items-center justify-center p-6 py-16">
+      <section className="relative z-10 flex items-center justify-center p-6 py-16">
         <motion.div
-          className="w-full max-w-sm rounded-2xl border border-border bg-card p-8"
+          className="w-full max-w-sm rounded-3xl bg-white p-10 shadow-[0_24px_64px_-20px_rgba(30,20,10,0.28)] ring-1 ring-black/[0.04]"
           initial={reduzirMovimento ? false : "hidden"}
           animate="show"
           variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } } }}
         >
-          <motion.h2 variants={CAMPO_VARIANTS} className="font-display text-xl font-semibold">
+          <motion.div
+            variants={CAMPO_VARIANTS}
+            className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-2 border-primary/25 bg-primary/[0.06]"
+          >
+            <Lock className="h-6 w-6 text-primary" />
+          </motion.div>
+
+          <motion.h2
+            variants={CAMPO_VARIANTS}
+            className="mt-6 text-center font-display text-2xl font-bold text-[#161a23]"
+          >
             Bem-vinda de volta!
           </motion.h2>
-          <motion.p variants={CAMPO_VARIANTS} className="mt-1 text-sm text-muted-foreground">
+          <motion.p variants={CAMPO_VARIANTS} className="mt-1 text-center text-sm text-[#8b8f99]">
             Faça login para acessar sua plataforma
           </motion.p>
 
-          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <form onSubmit={handleSubmit} className="mt-8 space-y-5">
             <motion.div variants={CAMPO_VARIANTS}>
-              <label className="mb-1.5 block text-xs text-muted-foreground">E-mail</label>
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="transition-shadow focus-visible:shadow-[0_0_0_4px_color-mix(in_srgb,var(--primary)_25%,transparent)]"
-              />
-            </motion.div>
-            <motion.div variants={CAMPO_VARIANTS}>
-              <label className="mb-1.5 block text-xs text-muted-foreground">Senha</label>
-              <Input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="transition-shadow focus-visible:shadow-[0_0_0_4px_color-mix(in_srgb,var(--primary)_25%,transparent)]"
-              />
+              <label className="mb-1.5 block text-xs font-medium text-[#5b6270]">E-mail</label>
+              <div className="relative">
+                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#a1a5b0]" />
+                <Input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className={LIGHT_INPUT_CLASSES}
+                />
+              </div>
             </motion.div>
 
-            <motion.div variants={CAMPO_VARIANTS} className="flex items-center justify-between text-xs text-muted-foreground">
-              <label className="flex items-center gap-2 opacity-50">
-                <input type="checkbox" disabled className="h-3.5 w-3.5" />
+            <motion.div variants={CAMPO_VARIANTS}>
+              <label className="mb-1.5 block text-xs font-medium text-[#5b6270]">Senha</label>
+              <div className="relative">
+                <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#a1a5b0]" />
+                <Input
+                  type={mostrarSenha ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className={`${LIGHT_INPUT_CLASSES} pr-10`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setMostrarSenha((v) => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#a1a5b0] hover:text-[#5b6270]"
+                  aria-label={mostrarSenha ? "Ocultar senha" : "Mostrar senha"}
+                >
+                  {mostrarSenha ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </motion.div>
+
+            <motion.div variants={CAMPO_VARIANTS} className="flex items-center justify-between text-xs text-[#8b8f99]">
+              <label className="flex items-center gap-2 opacity-60">
+                <input type="checkbox" disabled className="h-3.5 w-3.5 rounded border-black/20" />
                 Lembrar de mim
               </label>
               <button
                 type="button"
                 disabled
-                className="cursor-not-allowed text-primary/50"
+                className="cursor-not-allowed font-medium text-primary/60"
                 title="Em breve"
               >
                 Esqueci minha senha
@@ -129,18 +178,27 @@ export default function LoginPage() {
             )}
 
             <motion.div variants={CAMPO_VARIANTS}>
-              <Button type="submit" disabled={loading} className="w-full transition-transform active:scale-[0.98]">
+              <Button
+                type="submit"
+                disabled={loading}
+                className="h-12 w-full gap-2 rounded-full bg-gradient-to-r from-[#e9c27a] to-[#c9922e] text-base font-semibold text-[#2a1c05] shadow-[0_10px_30px_-8px_color-mix(in_srgb,var(--primary)_60%,transparent)] transition-transform hover:brightness-[1.03] active:scale-[0.98]"
+              >
                 {loading ? "Entrando..." : "Entrar na plataforma"}
+                {!loading && <ArrowRight className="h-4 w-4" />}
               </Button>
             </motion.div>
           </form>
 
           <motion.div
             variants={CAMPO_VARIANTS}
-            className="mt-6 flex items-center justify-center gap-1.5 font-mono text-xs text-muted-foreground"
+            className="mt-8 flex items-center justify-center gap-3 font-mono text-xs text-[#a1a5b0]"
           >
-            <ShieldCheck className="h-3.5 w-3.5" />
-            Segurança de nível empresarial
+            <span className="h-px flex-1 bg-black/[0.06]" />
+            <span className="flex items-center gap-1.5 whitespace-nowrap">
+              <ShieldCheck className="h-3.5 w-3.5" />
+              Segurança de nível empresarial
+            </span>
+            <span className="h-px flex-1 bg-black/[0.06]" />
           </motion.div>
         </motion.div>
       </section>

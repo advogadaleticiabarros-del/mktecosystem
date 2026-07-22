@@ -42,7 +42,7 @@ function OrbitNode({ ring, size, duration, reverse, offset = 0, tether, reduzirM
   );
 }
 
-export function AmbientGlow() {
+export function AmbientGlow({ anchorLeft = "38%" }: { anchorLeft?: string }) {
   const reduzirMovimento = useReducedMotion() ?? false;
 
   return (
@@ -60,7 +60,7 @@ export function AmbientGlow() {
         }
       `}</style>
 
-      <div className="absolute left-[38%] top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ left: anchorLeft }}>
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
