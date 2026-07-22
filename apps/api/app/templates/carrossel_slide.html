@@ -26,6 +26,18 @@
       linear-gradient(160deg, var(--fundo) 0%, var(--fundo) 100%);
   }
 
+  .bg-foto {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: {{ foto_posicao|default('center') }};
+    z-index: 0;
+    filter: sepia(.35) saturate(1.25) brightness(.85);
+  }
+  .bg-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg,
+      {{ fundo }}66 0%, {{ fundo }}b3 48%, {{ fundo }}f2 88%);
+  }
+
   .slide::before {
     content: '';
     position: absolute;
@@ -78,6 +90,10 @@
 </head>
 <body>
   <div class="slide">
+    {% if foto_src %}
+      <img class="bg-foto" src="{{ foto_src }}" alt="">
+      <div class="bg-overlay"></div>
+    {% endif %}
     <div class="top">
       <div class="brand">
         <img src="{{ logo_src }}" alt="{{ nome_conta }}">

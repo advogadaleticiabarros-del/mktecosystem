@@ -18,6 +18,13 @@ def _logo_data_uri() -> str:
     return f"data:image/png;base64,{dados}"
 
 
+def _foto_data_uri(caminho_foto: str) -> str:
+    caminho = Path(caminho_foto)
+    mime = "image/png" if caminho.suffix.lower() == ".png" else "image/jpeg"
+    dados = base64.b64encode(caminho.read_bytes()).decode()
+    return f"data:{mime};base64,{dados}"
+
+
 def _aplicar_acabamento_dourado(caminho_imagem: str) -> None:
     """Compõe as barras de gradiente dourado (topo/rodapé) sobre a imagem final.
 
@@ -40,6 +47,8 @@ async def renderizar_slide(
     caminho_saida: str,
     nome_conta: str = "Letícia Barros",
     instagram: str = "@adv.leticiabarros2",
+    foto_path: str | None = None,
+    foto_posicao: str = "center",
 ) -> None:
     cores = identidade_visual.get("cores", {})
     capa = indice == 0
@@ -57,6 +66,8 @@ async def renderizar_slide(
         total=total,
         final=final,
         logo_src=_logo_data_uri(),
+        foto_src=_foto_data_uri(foto_path) if foto_path else None,
+        foto_posicao=foto_posicao,
     )
 
     async with async_playwright() as p:
