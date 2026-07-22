@@ -60,18 +60,30 @@ Fora de escopo (explicitamente, para não inflar):
 **Categorias** (genéricas por cena, reutilizáveis em qualquer área do direito —
 decisão explícita da usuária, não um banco por área jurídica):
 
-1. `escritorio` — pessoa em ambiente de trabalho/escritório, documentos, atendimento
-2. `familia` — família em casa, cotidiano doméstico
-3. `trabalho-braçal` — trabalhadores em obra/indústria/serviço
+1. `escritorio` — **a própria usuária** (a advogada), gerada a partir de foto de
+   referência real dela (não uma pessoa fictícia) — ver "Correção importante" abaixo.
+   Serve como fallback padrão por ser a mais universalmente aplicável.
+2. `familia` — família em casa, cotidiano doméstico (pessoas fictícias, representam
+   o público/clientes, não a usuária)
+3. `trabalho-braçal` — trabalhadores em obra/indústria/serviço (idem)
 4. `retrato-humano` — retratos de pessoas reais em contextos diversos (idoso,
-   gestante, jovem trabalhador), tom introspectivo/reflexivo
+   gestante, jovem trabalhador), tom introspectivo/reflexivo (idem)
 
 5 fotos por categoria = 20 imagens no lote inicial (prompts prontos entregues à
 usuária em artefato separado). Ficam em
-`apps/api/media/banco_fotos/<categoria>/foto-01.jpg` (a 04.jpg), formato retrato
+`apps/api/media/banco_fotos/<categoria>/foto-01.jpg` (a 05.jpg), formato retrato
 (proporção próxima de 4:5 ou 3:4), mínimo 1080px de largura. O serviço de render
 escolhe uma foto por peça dentro da categoria (round-robin por categoria, pra não
 repetir sempre a mesma foto em sequência).
+
+**Correção importante (feedback direto da usuária, 22/07):** a categoria
+`escritorio` NÃO é uma "advogada genérica" gerada do zero — é **a própria usuária**.
+Os 5 prompts dessa categoria são de geração por referência (image-to-image): a
+usuária anexa uma foto real dela no nano banana junto com cada prompt, e o modelo
+mantém fielmente rosto/identidade, só gerando uma cena/pose nova ao redor (escritório,
+rua, atendendo cliente, retrato fechado, corredor de fórum). As categorias 2-4
+continuam sendo pessoas fictícias (representam o público/clientes dela), o que é
+apropriado porque elas não têm a pretensão de ser uma pessoa real específica.
 
 **Representatividade:** o público real da usuária é majoritariamente formado por
 mulheres negras (confirmado ao analisar a grade real do Instagram dela) — todos os
@@ -79,9 +91,13 @@ prompts abaixo já embutem isso como padrão, não uma variação opcional.
 
 **Prompts para gerar no nano banana** (Gemini 2.5 Flash Image) — 20 prompts prontos
 (5 por categoria), entregues à usuária em artefato HTML separado com checklist de
-progresso (`banco-fotos-prompts.html`, publicado 2026-07-22). Todos os prompts já
-especificam pessoas negras como sujeito (não uma variação opcional — ver
-"Representatividade" acima) e seguem a mesma estrutura: cena da categoria, luz
+progresso (`banco-fotos-prompts.html`, publicado 2026-07-22, revisado no mesmo dia
+após feedback da usuária pra usar foto de referência na categoria 1 e deixar as
+descrições de cena mais naturais/brasileiras — detalhes concretos de lugar como
+azulejo de cozinha, varanda com cadeira de plástico, ponto de ônibus, tapume de obra,
+em vez de descrição genérica de "fotografia realista, luz dourada" repetida). As
+categorias 2-4 especificam pessoas negras como sujeito (não uma variação opcional —
+ver "Representatividade" acima) e seguem a mesma estrutura: cena da categoria, luz
 quente/dourada, enquadramento vertical com área neutra/escura de um lado pra
 sobrepor texto, sem texto/logo/marca d'água embutidos.
 
