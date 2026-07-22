@@ -9,9 +9,10 @@ type OrbitNodeProps = {
   reverse?: boolean;
   offset?: number;
   tether?: boolean;
+  reduzirMovimento?: boolean;
 };
 
-function OrbitNode({ ring, size, duration, reverse, offset = 0, tether }: OrbitNodeProps) {
+function OrbitNode({ ring, size, duration, reverse, offset = 0, tether, reduzirMovimento }: OrbitNodeProps) {
   return (
     <div
       className="absolute left-1/2 top-1/2"
@@ -19,7 +20,11 @@ function OrbitNode({ ring, size, duration, reverse, offset = 0, tether }: OrbitN
     >
       <div
         className="absolute inset-0"
-        style={{ animation: `orbit-spin ${duration}s linear infinite${reverse ? " reverse" : ""}` }}
+        style={
+          reduzirMovimento
+            ? undefined
+            : { animation: `orbit-spin ${duration}s linear infinite${reverse ? " reverse" : ""}` }
+        }
       >
         <div
           className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary"
@@ -38,7 +43,7 @@ function OrbitNode({ ring, size, duration, reverse, offset = 0, tether }: OrbitN
 }
 
 export function AmbientGlow() {
-  const reduzirMovimento = useReducedMotion();
+  const reduzirMovimento = useReducedMotion() ?? false;
 
   return (
     <motion.div
@@ -79,14 +84,14 @@ export function AmbientGlow() {
           className="absolute left-1/2 top-1/2 h-[720px] w-[720px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/8"
         />
 
-        <OrbitNode ring={260} size={9} duration={20} offset={20} tether />
-        <OrbitNode ring={260} size={5} duration={24} offset={190} reverse />
-        <OrbitNode ring={420} size={6} duration={34} offset={80} reverse />
-        <OrbitNode ring={420} size={4} duration={30} offset={250} />
-        <OrbitNode ring={580} size={7} duration={48} offset={140} tether />
-        <OrbitNode ring={580} size={4} duration={42} offset={320} reverse />
-        <OrbitNode ring={720} size={5} duration={64} offset={60} />
-        <OrbitNode ring={720} size={3.5} duration={58} offset={210} reverse tether />
+        <OrbitNode ring={260} size={9} duration={20} offset={20} tether reduzirMovimento={reduzirMovimento} />
+        <OrbitNode ring={260} size={5} duration={24} offset={190} reverse reduzirMovimento={reduzirMovimento} />
+        <OrbitNode ring={420} size={6} duration={34} offset={80} reverse reduzirMovimento={reduzirMovimento} />
+        <OrbitNode ring={420} size={4} duration={30} offset={250} reduzirMovimento={reduzirMovimento} />
+        <OrbitNode ring={580} size={7} duration={48} offset={140} tether reduzirMovimento={reduzirMovimento} />
+        <OrbitNode ring={580} size={4} duration={42} offset={320} reverse reduzirMovimento={reduzirMovimento} />
+        <OrbitNode ring={720} size={5} duration={64} offset={60} reduzirMovimento={reduzirMovimento} />
+        <OrbitNode ring={720} size={3.5} duration={58} offset={210} reverse tether reduzirMovimento={reduzirMovimento} />
       </div>
     </motion.div>
   );

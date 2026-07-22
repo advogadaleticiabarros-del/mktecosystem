@@ -27,7 +27,9 @@ export const metadata = {
 const THEME_SCRIPT = `
 (function () {
   try {
-    var tema = localStorage.getItem("orbit-theme") || "dourado";
+    var temasValidos = ["dourado", "esmeralda", "azul", "violeta"];
+    var tema = localStorage.getItem("orbit-theme");
+    if (temasValidos.indexOf(tema) === -1) tema = "dourado";
     document.documentElement.setAttribute("data-theme", tema);
   } catch (e) {}
 })();
@@ -38,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="pt-BR"
       data-theme="dourado"
+      suppressHydrationWarning
       className={cn("font-sans", chakraPetch.variable, inter.variable, jetbrainsMono.variable)}
     >
       <head>
