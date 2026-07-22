@@ -1,3 +1,4 @@
+import base64
 from datetime import date
 from pathlib import Path
 
@@ -10,6 +11,21 @@ _env = Environment(
     loader=FileSystemLoader(str(TEMPLATES_DIR)),
     autoescape=select_autoescape(["html"]),
 )
+
+ASSETS_DIR = Path(__file__).parent.parent / "assets"
+LOGO_PATH = ASSETS_DIR / "logo-leticia.png"
+
+
+def _logo_data_uri() -> str:
+    dados = base64.b64encode(LOGO_PATH.read_bytes()).decode()
+    return f"data:image/png;base64,{dados}"
+
+
+def _foto_data_uri(caminho_foto: str) -> str:
+    caminho = Path(caminho_foto)
+    mime = "image/png" if caminho.suffix.lower() == ".png" else "image/jpeg"
+    dados = base64.b64encode(caminho.read_bytes()).decode()
+    return f"data:{mime};base64,{dados}"
 
 MESES = [
     "janeiro", "fevereiro", "março", "abril", "maio", "junho",
@@ -61,6 +77,8 @@ async def renderizar_capa_artigo(
     categoria: str,
     identidade_visual: dict,
     caminho_saida: str,
+    foto_path: str | None = None,
+    nome_conta: str = "Letícia Barros",
 ) -> None:
     cores = identidade_visual.get("cores", {})
     html = _env.get_template("capa_artigo.html").render(
@@ -69,6 +87,9 @@ async def renderizar_capa_artigo(
         fundo=cores.get("fundo_escuro", "#231E1A"),
         dourado=cores.get("dourado", "#C9A962"),
         areia=cores.get("areia", "#E8DED1"),
+        logo_src=_logo_data_uri(),
+        nome_conta=nome_conta,
+        foto_src=_foto_data_uri(foto_path) if foto_path else None,
     )
     async with async_playwright() as p:
         browser = await p.chromium.launch()

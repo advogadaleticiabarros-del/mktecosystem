@@ -1,29 +1,88 @@
 <!doctype html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   body { margin: 0; }
+
   .capa {
     width: 1200px; height: 630px;
-    background: {{ fundo }};
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 56px 64px;
+    font-family: 'Inter', sans-serif;
     color: {{ areia }};
-    display: flex; flex-direction: column; justify-content: space-between;
-    padding: 80px; font-family: Inter, sans-serif; position: relative; overflow: hidden;
+    background:
+      radial-gradient(circle at 82% 10%, {{ dourado }}29, transparent 42%),
+      linear-gradient(160deg, {{ fundo }} 0%, {{ fundo }} 100%);
   }
-  .titulo { font-size: 56px; line-height: 1.2; font-weight: 700; max-width: 900px; }
-  .categoria { font-size: 22px; letter-spacing: 3px; color: {{ dourado }}; text-transform: uppercase; }
+
+  .bg-foto {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    z-index: 0;
+    filter: sepia(.35) saturate(1.25) brightness(.8);
+  }
+  .bg-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, {{ fundo }}4d 0%, {{ fundo }}a3 55%, {{ fundo }}f0 100%);
+  }
+
+  .capa::before {
+    content: '';
+    position: absolute;
+    inset: 22px;
+    border: 1.5px solid {{ dourado }}8c;
+    border-radius: 14px;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .top {
+    position: absolute; top: 44px; left: 64px; right: 64px; z-index: 3;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand img { width: 44px; height: 44px; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,.45)); }
+  .brand span { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; }
+
+  .categoria {
+    font-size: 15px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: {{ fundo }}; background: {{ dourado }};
+    padding: 8px 18px; border-radius: 999px;
+  }
+
+  .content { position: relative; z-index: 2; }
+  .titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px; font-weight: 800; line-height: 1.2;
+    max-width: 920px;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
 </style>
 </head>
 <body>
   <div class="capa">
-    <div style="display:flex;align-items:center;gap:16px;">
-      <div style="width:48px;height:48px;border-radius:50%;border:2px solid {{ dourado }};display:flex;align-items:center;justify-content:center;">
-        <div style="width:16px;height:16px;border-radius:50%;background:{{ dourado }};"></div>
+    {% if foto_src %}
+      <img class="bg-foto" src="{{ foto_src }}" alt="">
+      <div class="bg-overlay"></div>
+    {% endif %}
+
+    <div class="top">
+      <div class="brand">
+        <img src="{{ logo_src }}" alt="{{ nome_conta }}">
+        <span>{{ nome_conta }}</span>
       </div>
       <span class="categoria">{{ categoria }}</span>
     </div>
-    <p class="titulo">{{ titulo }}</p>
+
+    <div class="content">
+      <p class="titulo">{{ titulo }}</p>
+    </div>
   </div>
 </body>
 </html>
