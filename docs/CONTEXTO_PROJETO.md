@@ -3,7 +3,7 @@
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
 > (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-07-22**
-> (login redesenhado pra tema claro).
+> (tema claro virou o padrão de todo o app, não só o login).
 
 ## O que é o Orbit
 
@@ -101,14 +101,34 @@ Visão Geral também). Layout comum via `AppShell` (`components/app-shell.tsx`).
   fundo escuro** — `mix-blend-screen` lava a imagem inteira pra branco sobre fundo
   claro, por isso o Login (agora claro, ver abaixo) usa um mark SVG simples
   (`LogoMark` inline em `app/login/page.tsx`), não esse PNG.
-- **Login redesenhado pra tema claro (22/07)**, a pedido direto da usuária com
-  referência visual (fundo lavanda claro, card branco flutuante com sombra, ícones
-  nos campos, toggle de senha, botão gradiente). Diverge intencionalmente do sistema
-  de temas escuros (`ThemeProvider`/4 presets) — é hardcoded claro, não usa
-  `var(--background)` etc. Reaproveita `AmbientGlow` (ganhou prop `anchorLeft` pra
-  reposicionar o centro da órbita conforme o layout) pra manter o movimento.
-  **Sinal importante**: a usuária já indicou antes (print de dashboard claro) que
-  pode querer isso pro app inteiro na Fase 2 — não assumir que só o Login fica claro.
+- **Tema claro é agora o padrão de TODO o app (22/07)**, não só o login — a usuária
+  pediu explicitamente ("quero o SaaS inteiro mudado com esse tema, faça isso
+  agora"). Implementado como um **5º preset no sistema de tokens** já existente
+  (`[data-theme="claro"]` em `globals.css`, promovido a default no `ThemeProvider`,
+  no script anti-flash do `layout.tsx`, e no fallback do `<html>`) — os 4 temas
+  escuros (dourado/esmeralda/azul/violeta) continuam existindo e selecionáveis no
+  `ThemeSwitcher` (5 bolinhas agora), só não são mais o default. Como todo
+  componente compartilhado (`Card`, `Button`, `Input`, `AppShell`) já consumia os
+  tokens CSS (`var(--background)`, `var(--card)`, etc.) em vez de cor fixa, as 9
+  telas herdaram o tema claro automaticamente — **não foi necessário reescrever
+  cada página individualmente**, só o `globals.css` + provider + switcher.
+  Confirmado visualmente (Playwright) em login, visão geral e configurações.
+  - O logo do `AppShell` (PNG `elemento-a.png` com `mix-blend-screen`, que só
+    funciona sobre fundo escuro — vira invisível/lavado sobre fundo claro) foi
+    trocado pelo mesmo mark em SVG do login (`components/logo-mark.tsx`,
+    compartilhado). O PNG `public/logo/elemento-a.png` ficou sem uso no momento;
+    pode servir pra algo mais no futuro (ex.: favicon, splash) mas hoje não é
+    referenciado em nenhum lugar do código.
+  - Micromovimento padrão adicionado ao componente `Card` compartilhado
+    (`components/ui/card.tsx`): leve elevação + glow na cor do tema ativo no
+    hover. Aplica em todas as telas automaticamente, sem editar página por página
+    — foi a resposta ao pedido de "inclua micromovimentos, tire a cara de IA" na
+    escala de tempo disponível.
+  - Login ainda usa paleta clara **hardcoded** (não os tokens) — foi construído
+    antes dessa decisão virar "o app inteiro". As cores foram escolhidas pra bater
+    com o tema "claro" recém-criado, mas não são literalmente a mesma fonte; se o
+    tema "claro" for recalibrado no futuro, o login precisa ser ajustado à mão
+    também (candidato a refactor: migrar o login pra consumir os tokens).
 - **Como validei visualmente sem navegador interativo**: usei o Playwright já
   instalado no `apps/api` (Python) pra tirar screenshot real do build estático
   servido localmente (`npx serve out` + `page.goto(...).screenshot(...)`) e ler a
@@ -121,17 +141,17 @@ Visão Geral também). Layout comum via `AppShell` (`components/app-shell.tsx`).
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
-1. **Redesenho visual — Fase 2**: usuária pediu uma "revolução" mais ampla, mostrou
-   referência de um dashboard **claro** (fundo branco/cinza claro, cards brancos,
-   ícones coloridos) e já teve o Login refeito nesse estilo claro (22/07, ver "O que
-   está pronto"). Ainda coletando referências antes de fechar o escopo total das 7
-   telas restantes (Planejamento, Aprovação, Calendário, Criativos, E-mails,
-   Configurações, Avaliações). Skills de design pra usar: `shadcn-ui`, `taste-design`,
-   `ui-ux-pro-max-skill`, `stitch-design` (todas em `~/.claude/skills/`).
-   **Forte indício de que a direção é tema claro pro app inteiro**, não só cosmético
-   no Login — perguntar/confirmar explicitamente antes de converter as outras telas,
-   já que isso diverge do sistema de 4 temas escuros construído na Fase 1 (que
-   continua existindo/funcionando, só não é mais usado no Login).
+1. **Redesenho visual — polimento por página ainda falta**: o tema claro já é o
+   padrão de todo o app (22/07, ver "O que está pronto") — isso resolveu a cor/fundo/
+   cards de todas as 9 telas de uma vez, via tokens. O que **ainda não** foi feito é
+   o polimento bespoke que Login e Visão Geral receberam (ícones nos campos, stagger
+   de entrada próprio da tela, contadores animados, hover glow específico) — as
+   outras 6 telas (Planejamento, Aprovação, Calendário, Criativos, E-mails,
+   Avaliações; Configurações já foi conferida visualmente e está OK mas simples)
+   herdam só o básico (cores corretas + hover genérico do Card + transição de rota).
+   Se a usuária pedir mais polimento visual, é apply o mesmo tratamento página a
+   página, não mexer nos tokens de novo. Skills de design pra usar: `shadcn-ui`,
+   `taste-design`, `ui-ux-pro-max-skill`, `stitch-design` (`~/.claude/skills/`).
 2. **Estilo real dos criativos do Instagram**: Estúdio de Criativos hoje só gera
    texto-dourado-sobre-fundo-escuro; usuária quer o estilo real que ela usa (fotos de
    banco de imagens, formato "Me faça uma pergunta", formato "Segunda Jurídica",
