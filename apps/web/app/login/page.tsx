@@ -3,10 +3,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ShieldCheck } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { login } from "@/lib/api";
 import { AmbientGlow } from "@/components/ambient-glow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
+const CAMPO_VARIANTS = {
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" as const } },
+};
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -14,6 +20,7 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const reduzirMovimento = useReducedMotion();
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -40,7 +47,7 @@ export default function LoginPage() {
             </div>
             <div>
               <p className="font-display text-lg font-semibold tracking-wide">ORBIT</p>
-              <p className="text-xs text-muted-foreground">The Marketing Operating System.</p>
+              <p className="font-mono text-xs text-muted-foreground">The Marketing Operating System.</p>
             </div>
           </div>
           <h1 className="font-display text-4xl font-semibold leading-tight">
@@ -51,40 +58,49 @@ export default function LoginPage() {
             Inteligência, estratégia e automação trabalhando juntas para gerar
             resultados enquanto você foca no que importa.
           </p>
-          <p className="relative z-10 mt-16 text-xs text-muted-foreground">
+          <p className="relative z-10 mt-16 font-mono text-xs text-muted-foreground">
             © 2026 Orbit. Todos os direitos reservados.
           </p>
         </div>
       </section>
 
       <section className="flex items-center justify-center p-6 py-16">
-        <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-8">
-          <h2 className="font-display text-xl font-semibold">Bem-vinda de volta!</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
+        <motion.div
+          className="w-full max-w-sm rounded-2xl border border-border bg-card p-8"
+          initial={reduzirMovimento ? false : "hidden"}
+          animate="show"
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } } }}
+        >
+          <motion.h2 variants={CAMPO_VARIANTS} className="font-display text-xl font-semibold">
+            Bem-vinda de volta!
+          </motion.h2>
+          <motion.p variants={CAMPO_VARIANTS} className="mt-1 text-sm text-muted-foreground">
             Faça login para acessar sua plataforma
-          </p>
+          </motion.p>
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-            <div>
+            <motion.div variants={CAMPO_VARIANTS}>
               <label className="mb-1.5 block text-xs text-muted-foreground">E-mail</label>
               <Input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="transition-shadow focus-visible:shadow-[0_0_0_4px_color-mix(in_srgb,var(--primary)_25%,transparent)]"
               />
-            </div>
-            <div>
+            </motion.div>
+            <motion.div variants={CAMPO_VARIANTS}>
               <label className="mb-1.5 block text-xs text-muted-foreground">Senha</label>
               <Input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="transition-shadow focus-visible:shadow-[0_0_0_4px_color-mix(in_srgb,var(--primary)_25%,transparent)]"
               />
-            </div>
+            </motion.div>
 
-            <div className="flex items-center justify-between text-xs text-muted-foreground">
+            <motion.div variants={CAMPO_VARIANTS} className="flex items-center justify-between text-xs text-muted-foreground">
               <label className="flex items-center gap-2 opacity-50">
                 <input type="checkbox" disabled className="h-3.5 w-3.5" />
                 Lembrar de mim
@@ -97,20 +113,33 @@ export default function LoginPage() {
               >
                 Esqueci minha senha
               </button>
-            </div>
+            </motion.div>
 
-            {error && <p className="text-sm text-destructive">{error}</p>}
+            {error && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-sm text-destructive"
+              >
+                {error}
+              </motion.p>
+            )}
 
-            <Button type="submit" disabled={loading} className="w-full">
-              {loading ? "Entrando..." : "Entrar na plataforma"}
-            </Button>
+            <motion.div variants={CAMPO_VARIANTS}>
+              <Button type="submit" disabled={loading} className="w-full transition-transform active:scale-[0.98]">
+                {loading ? "Entrando..." : "Entrar na plataforma"}
+              </Button>
+            </motion.div>
           </form>
 
-          <div className="mt-6 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
+          <motion.div
+            variants={CAMPO_VARIANTS}
+            className="mt-6 flex items-center justify-center gap-1.5 font-mono text-xs text-muted-foreground"
+          >
             <ShieldCheck className="h-3.5 w-3.5" />
             Segurança de nível empresarial
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
     </main>
   );
