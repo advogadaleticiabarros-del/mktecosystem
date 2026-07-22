@@ -1,3 +1,4 @@
+import base64
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
@@ -7,7 +8,14 @@ from playwright.async_api import async_playwright
 TEMPLATES_DIR = Path(__file__).parent.parent / "templates"
 _env = Environment(loader=FileSystemLoader(str(TEMPLATES_DIR)))
 
-ACABAMENTO_DOURADO_PATH = Path(__file__).parent.parent / "assets" / "acabamento-dourado.png"
+ASSETS_DIR = Path(__file__).parent.parent / "assets"
+ACABAMENTO_DOURADO_PATH = ASSETS_DIR / "acabamento-dourado.png"
+LOGO_PATH = ASSETS_DIR / "logo-leticia.png"
+
+
+def _logo_data_uri() -> str:
+    dados = base64.b64encode(LOGO_PATH.read_bytes()).decode()
+    return f"data:image/png;base64,{dados}"
 
 
 def _aplicar_acabamento_dourado(caminho_imagem: str) -> None:
@@ -30,7 +38,7 @@ async def renderizar_slide(
     total: int,
     identidade_visual: dict,
     caminho_saida: str,
-    nome_conta: str = "LETÍCIA BARROS",
+    nome_conta: str = "Letícia Barros",
     instagram: str = "@adv.leticiabarros2",
 ) -> None:
     cores = identidade_visual.get("cores", {})
@@ -45,7 +53,10 @@ async def renderizar_slide(
         peso_fonte=700 if capa or final else 500,
         nome_conta=nome_conta,
         instagram=instagram,
-        rodape_direita="OAB/ES 39.948" if final else f"{indice + 1} / {total}",
+        indice=indice,
+        total=total,
+        final=final,
+        logo_src=_logo_data_uri(),
     )
 
     async with async_playwright() as p:

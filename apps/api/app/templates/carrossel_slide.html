@@ -1,35 +1,112 @@
 <!doctype html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; }
+  :root {
+    --dourado: {{ dourado }};
+    --dourado-claro: {{ dourado }}cc;
+    --fundo: {{ fundo }};
+    --areia: {{ areia }};
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   body { margin: 0; }
+
   .slide {
     width: 1080px; height: 1350px;
-    background: {{ fundo }};
-    color: {{ areia }};
-    display: flex; flex-direction: column; justify-content: space-between;
-    padding: 96px; font-family: Inter, sans-serif; position: relative; overflow: hidden;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 96px 88px;
+    font-family: 'Inter', sans-serif;
+    color: var(--areia);
+    background:
+      radial-gradient(circle at 80% 12%, {{ dourado }}29, transparent 42%),
+      linear-gradient(160deg, var(--fundo) 0%, var(--fundo) 100%);
   }
-  .texto { font-size: {{ tamanho_fonte }}px; line-height: 1.25; font-weight: {{ peso_fonte }}; min-width: 0; width: 100%; overflow-wrap: break-word; }
-  .rodape { display: flex; justify-content: space-between; border-top: 1px solid {{ dourado }}44; padding-top: 32px; }
+
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 36px;
+    border: 1.5px solid {{ dourado }}8c;
+    border-radius: 18px;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .top {
+    position: absolute; top: 76px; left: 88px; right: 88px; z-index: 3;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .brand img { width: 60px; height: 60px; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,.45)); }
+  .brand .nm { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; line-height: 1.1; }
+  .brand .sb { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--dourado); margin-top: 4px; }
+
+  .pager { display: flex; gap: 9px; align-items: center; }
+  .pager i { width: 12px; height: 12px; border-radius: 50%; background: {{ areia }}4d; display: block; }
+  .pager i.on { background: var(--dourado); width: 30px; border-radius: 999px; }
+
+  .content { position: relative; z-index: 2; }
+  .texto {
+    font-family: 'Playfair Display', serif;
+    font-size: {{ tamanho_fonte }}px;
+    line-height: 1.22;
+    font-weight: {{ peso_fonte }};
+    width: 100%;
+    overflow-wrap: break-word;
+  }
+
+  .foot {
+    position: relative; z-index: 2; margin-top: 44px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .swipe { display: inline-flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 600; color: var(--dourado-claro); }
+  .swipe .arrow { font-size: 30px; }
+  .cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--dourado); color: var(--fundo);
+    font-size: 27px; font-weight: 700;
+    padding: 20px 38px; border-radius: 999px;
+    box-shadow: 0 6px 22px {{ dourado }}66;
+  }
+  .handle { font-size: 20px; color: {{ areia }}a3; font-weight: 600; text-align: right; }
+  .handle .oab { display: block; font-size: 15px; color: var(--dourado); margin-top: 2px; }
 </style>
 </head>
 <body>
   <div class="slide">
-    <div style="display:flex;align-items:center;gap:16px;">
-      <div style="width:40px;height:40px;border-radius:50%;border:2px solid {{ dourado }};display:flex;align-items:center;justify-content:center;">
-        <div style="width:14px;height:14px;border-radius:50%;background:{{ dourado }};"></div>
+    <div class="top">
+      <div class="brand">
+        <img src="{{ logo_src }}" alt="{{ nome_conta }}">
+        <div>
+          <div class="nm">{{ nome_conta }}</div>
+          <div class="sb">Advocacia</div>
+        </div>
       </div>
-      <span style="font-size:26px;letter-spacing:2px;color:{{ dourado }};">{{ nome_conta }}</span>
+      <div class="pager">
+        {% for i in range(total) %}
+          <i class="{{ 'on' if i == indice else '' }}"></i>
+        {% endfor %}
+      </div>
     </div>
-    <div style="flex:1;display:flex;align-items:center;">
+
+    <div class="content">
       <p class="texto">{{ texto }}</p>
     </div>
-    <div class="rodape">
-      <span style="font-size:24px;color:{{ dourado }};">{{ instagram }}</span>
-      <span style="font-size:22px;color:{{ areia }}99;">{{ rodape_direita }}</span>
+
+    <div class="foot">
+      {% if final %}
+        <span class="cta">💬 Me chama</span>
+      {% else %}
+        <span class="swipe">Arraste pro lado <span class="arrow">›</span></span>
+      {% endif %}
+      <span class="handle">
+        {{ instagram }}
+        <span class="oab">OAB/ES 39.948</span>
+      </span>
     </div>
   </div>
 </body>
