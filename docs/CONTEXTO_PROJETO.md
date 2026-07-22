@@ -2,7 +2,8 @@
 
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
-> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-07-22**.
+> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-07-22**
+> (login redesenhado pra tema claro).
 
 ## O que é o Orbit
 
@@ -95,22 +96,42 @@ Visão Geral também). Layout comum via `AppShell` (`components/app-shell.tsx`).
   ainda estão no estilo visual antigo** (isso é a Fase 2, ver Pendências).
 - Logo novo (22/07): `public/logo/elemento-a.png` (anel orbital 3D dourado,
   fundo preto sólido sem alpha) substituindo o círculo+ponto simples no `AppShell`
-  e no Login — usa `mix-blend-screen` via CSS pra dissolver o fundo preto contra o
-  fundo escuro do app (confirmado com simulação de blend antes de aplicar).
-- **Sem suíte de testes automatizados no frontend** — toda verificação dessa fase
-  foi `tsc --noEmit` + `npm run build` apenas; nenhum agente teve acesso a navegador
-  real neste projeto até agora. Vale conferir visualmente com calma.
+  — usa `mix-blend-screen` via CSS pra dissolver o fundo preto contra o fundo escuro
+  do app (confirmado com simulação de blend antes de aplicar). **Só funciona sobre
+  fundo escuro** — `mix-blend-screen` lava a imagem inteira pra branco sobre fundo
+  claro, por isso o Login (agora claro, ver abaixo) usa um mark SVG simples
+  (`LogoMark` inline em `app/login/page.tsx`), não esse PNG.
+- **Login redesenhado pra tema claro (22/07)**, a pedido direto da usuária com
+  referência visual (fundo lavanda claro, card branco flutuante com sombra, ícones
+  nos campos, toggle de senha, botão gradiente). Diverge intencionalmente do sistema
+  de temas escuros (`ThemeProvider`/4 presets) — é hardcoded claro, não usa
+  `var(--background)` etc. Reaproveita `AmbientGlow` (ganhou prop `anchorLeft` pra
+  reposicionar o centro da órbita conforme o layout) pra manter o movimento.
+  **Sinal importante**: a usuária já indicou antes (print de dashboard claro) que
+  pode querer isso pro app inteiro na Fase 2 — não assumir que só o Login fica claro.
+- **Como validei visualmente sem navegador interativo**: usei o Playwright já
+  instalado no `apps/api` (Python) pra tirar screenshot real do build estático
+  servido localmente (`npx serve out` + `page.goto(...).screenshot(...)`) e ler a
+  imagem antes de commitar. Vale usar essa técnica sempre que uma mudança visual for
+  significativa — resolve a lacuna de "nenhum agente tem navegador" que apareceu
+  repetidamente nas revisões da Fase 1.
+- **Sem suíte de testes automatizados no frontend** — verificação é `tsc --noEmit` +
+  `npm run build`, complementado (a partir de 22/07) por screenshot real via
+  Playwright quando a mudança for visual.
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 1. **Redesenho visual — Fase 2**: usuária pediu uma "revolução" mais ampla, mostrou
    referência de um dashboard **claro** (fundo branco/cinza claro, cards brancos,
-   ícones coloridos) — bem diferente do dark/dourado atual. Ainda coletando
-   referências (`vou te passar mais ou menos o que eu quero`) antes de fechar o
-   escopo. Skills de design pra usar: `shadcn-ui`, `taste-design`,
+   ícones coloridos) e já teve o Login refeito nesse estilo claro (22/07, ver "O que
+   está pronto"). Ainda coletando referências antes de fechar o escopo total das 7
+   telas restantes (Planejamento, Aprovação, Calendário, Criativos, E-mails,
+   Configurações, Avaliações). Skills de design pra usar: `shadcn-ui`, `taste-design`,
    `ui-ux-pro-max-skill`, `stitch-design` (todas em `~/.claude/skills/`).
-   **Não presumir que é só "aplicar o Fase 1 nas 7 telas restantes"** — pode ser uma
-   direção visual nova (tema claro).
+   **Forte indício de que a direção é tema claro pro app inteiro**, não só cosmético
+   no Login — perguntar/confirmar explicitamente antes de converter as outras telas,
+   já que isso diverge do sistema de 4 temas escuros construído na Fase 1 (que
+   continua existindo/funcionando, só não é mais usado no Login).
 2. **Estilo real dos criativos do Instagram**: Estúdio de Criativos hoje só gera
    texto-dourado-sobre-fundo-escuro; usuária quer o estilo real que ela usa (fotos de
    banco de imagens, formato "Me faça uma pergunta", formato "Segunda Jurídica",
