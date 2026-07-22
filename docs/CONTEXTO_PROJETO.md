@@ -3,7 +3,7 @@
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
 > (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-07-22**
-> (tema claro virou o padrão de todo o app, não só o login).
+> (órbita do login sem corte + estrelas cadentes + paralaxe no mouse).
 
 ## O que é o Orbit
 
@@ -124,6 +124,18 @@ Visão Geral também). Layout comum via `AppShell` (`components/app-shell.tsx`).
     hover. Aplica em todas as telas automaticamente, sem editar página por página
     — foi a resposta ao pedido de "inclua micromovimentos, tire a cara de IA" na
     escala de tempo disponível.
+  - **`AmbientGlow` (blob orbital) precisou sair de dentro de uma seção com
+    `overflow-hidden`** — os anéis externos (até 720px de diâmetro) eram cortados
+    numa linha reta na borda da coluna esquerda do login. Corrigido movendo o
+    componente pra ser filho direto de `<main>` (cobre as duas colunas, anéis
+    sangram livremente atrás do card). **Gotcha a lembrar**: qualquer elemento
+    decorativo grande/animado precisa verificar se algum ancestral tem
+    `overflow-hidden` menor que a área que ele realmente ocupa.
+  - `AmbientGlow` ganhou: 5 "estrelas cadentes" (partículas com rastro, CSS
+    keyframes, posições/tempos escalonados) e paralaxe sutil que segue o mouse
+    (framer-motion `useSpring`, rastreado via listener em `window` — o overlay
+    continua `pointer-events-none` pra nunca bloquear cliques no formulário
+    embaixo). Ambos desligados em `prefers-reduced-motion`.
   - Login ainda usa paleta clara **hardcoded** (não os tokens) — foi construído
     antes dessa decisão virar "o app inteiro". As cores foram escolhidas pra bater
     com o tema "claro" recém-criado, mas não são literalmente a mesma fonte; se o
