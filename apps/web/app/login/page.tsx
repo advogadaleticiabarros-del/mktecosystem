@@ -6,6 +6,7 @@ import { ArrowRight, Eye, EyeOff, Lock, Mail, ShieldCheck } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { login } from "@/lib/api";
 import { AmbientGlow } from "@/components/ambient-glow";
+import { CursorGlow } from "@/components/cursor-glow";
 import { LogoMark } from "@/components/logo-mark";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,6 +44,7 @@ export default function LoginPage() {
 
   return (
     <main className="relative grid min-h-screen grid-cols-1 overflow-hidden bg-[#f3f2f7] text-[#161a23] md:grid-cols-2">
+      <CursorGlow />
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.35]"
         aria-hidden="true"
