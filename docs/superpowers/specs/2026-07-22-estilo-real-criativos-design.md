@@ -66,49 +66,24 @@ decisão explícita da usuária, não um banco por área jurídica):
 4. `retrato-humano` — retratos de pessoas reais em contextos diversos (idoso,
    gestante, jovem trabalhador), tom introspectivo/reflexivo
 
-4 fotos por categoria = 16 imagens no lote inicial. Ficam em
+5 fotos por categoria = 20 imagens no lote inicial (prompts prontos entregues à
+usuária em artefato separado). Ficam em
 `apps/api/media/banco_fotos/<categoria>/foto-01.jpg` (a 04.jpg), formato retrato
 (proporção próxima de 4:5 ou 3:4), mínimo 1080px de largura. O serviço de render
 escolhe uma foto por peça dentro da categoria (round-robin por categoria, pra não
 repetir sempre a mesma foto em sequência).
 
-**Prompts para gerar no nano banana** (Gemini 2.5 Flash Image) — um por categoria,
-gerar 4 variações de cada:
+**Representatividade:** o público real da usuária é majoritariamente formado por
+mulheres negras (confirmado ao analisar a grade real do Instagram dela) — todos os
+prompts abaixo já embutem isso como padrão, não uma variação opcional.
 
-> **Categoria `escritorio`:**
-> "Fotografia realista, luz natural suave, de uma mulher brasileira adulta em um
-> escritório de advocacia moderno e acolhedor, folheando documentos ou atendendo um
-> cliente. Expressão confiante e humana, não posada. Tons terrosos e dourados quentes
-> no ambiente (madeira, luz dourada de fim de tarde). Enquadramento vertical (retrato),
-> com espaço livre e mais escuro de um dos lados do quadro para sobrepor texto depois.
-> Fotografia editorial, não corporativa fria — sem sorriso forçado de banco de
-> imagens. Sem texto, sem logotipos, sem marca d'água na imagem."
-
-> **Categoria `familia`:**
-> "Fotografia realista, luz natural, de uma família brasileira em casa em um momento
-> cotidiano genuíno (conversando à mesa, brincando com uma criança, organizando
-> papéis em casa). Tons quentes e terrosos, ambiente simples e real, não um lar de
-> revista. Enquadramento vertical (retrato), com uma área mais escura/neutra de um
-> lado do quadro para permitir sobrepor texto. Fotografia documental humanizada, sem
-> pose de banco de imagens genérico. Sem texto, sem logotipos, sem marca d'água."
-
-> **Categoria `trabalho-braçal`:**
-> "Fotografia realista, luz natural de ambiente externo ou de obra/indústria, de um
-> trabalhador ou trabalhadora brasileiro em contexto de trabalho braçal (construção
-> civil, entrega, serviço, indústria), em ação, com dignidade e sem estereótipo de
-> pobreza. Tons terrosos e dourados na iluminação (fim de tarde/luz quente). Vertical
-> (retrato), com espaço mais escuro de um lado do quadro para sobrepor texto depois.
-> Sem texto, sem logotipos, sem marca d'água, sem capacete/uniforme com marca de
-> empresa visível."
-
-> **Categoria `retrato-humano`:**
-> "Retrato fotográfico realista de uma pessoa brasileira comum (varie idade e
-> contexto entre as gerações: pessoa idosa, gestante, jovem adulto), expressão
-> pensativa e humana, não sorridente/posada. Luz natural suave e quente, fundo
-> desfocado em tons terrosos/dourados. Enquadramento vertical (retrato), com espaço
-> negativo mais escuro de um lado do quadro pra sobrepor texto depois. Fotografia
-> editorial humanizada, não stock corporativo. Sem texto, sem logotipos, sem marca
-> d'água."
+**Prompts para gerar no nano banana** (Gemini 2.5 Flash Image) — 20 prompts prontos
+(5 por categoria), entregues à usuária em artefato HTML separado com checklist de
+progresso (`banco-fotos-prompts.html`, publicado 2026-07-22). Todos os prompts já
+especificam pessoas negras como sujeito (não uma variação opcional — ver
+"Representatividade" acima) e seguem a mesma estrutura: cena da categoria, luz
+quente/dourada, enquadramento vertical com área neutra/escura de um lado pra
+sobrepor texto, sem texto/logo/marca d'água embutidos.
 
 Regra comum a todos: **vertical, tom terroso/dourado quente, espaço de respiro para
 texto, sem texto/logo/marca d'água embutidos, sem pose de banco de imagens
