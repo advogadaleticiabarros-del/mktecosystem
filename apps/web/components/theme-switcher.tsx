@@ -4,6 +4,7 @@ import { useTheme, type Tema } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 
 const OPCOES: { tema: Tema; label: string; cor: string }[] = [
+  { tema: "claro", label: "Claro", cor: "#ba8c34" },
   { tema: "dourado", label: "Dourado Clássico", cor: "#c9a962" },
   { tema: "esmeralda", label: "Esmeralda", cor: "#34c98a" },
   { tema: "azul", label: "Azul Profundo", cor: "#4d8fe0" },

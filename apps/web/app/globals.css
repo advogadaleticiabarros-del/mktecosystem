@@ -70,11 +70,46 @@ body {
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Orbit é sempre dark — 4 temas de cor trocáveis via [data-theme] no <html>,
-   aplicado pelo ThemeProvider (persistido em localStorage). O bloco :root
-   sem atributo é o fallback de build-time (= dourado) usado até o script
+/* 5 temas de cor trocáveis via [data-theme] no <html>, aplicado pelo
+   ThemeProvider (persistido em localStorage). O bloco :root sem atributo é
+   o fallback de build-time (= claro, o tema padrão) usado até o script
    inline do layout.tsx rodar. */
 :root,
+:root[data-theme="claro"] {
+  --background: #f3f2f7;
+  --foreground: #161a23;
+  --card: #ffffff;
+  --card-foreground: #161a23;
+  --popover: #ffffff;
+  --popover-foreground: #161a23;
+  --primary: #ba8c34;
+  --primary-foreground: #241a06;
+  --secondary: #eeeef2;
+  --secondary-foreground: #161a23;
+  --muted: #eeeef2;
+  --muted-foreground: #6b7080;
+  --accent: #f7f3e8;
+  --accent-foreground: #ba8c34;
+  --destructive: #c8483e;
+  --border: rgba(20, 20, 30, 0.08);
+  --input: rgba(20, 20, 30, 0.08);
+  --ring: #ba8c34;
+  --chart-1: #ba8c34;
+  --chart-2: #2e8fd1;
+  --chart-3: #8a6425;
+  --chart-4: #6b7080;
+  --chart-5: #eeeef2;
+  --radius: 0.75rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #161a23;
+  --sidebar-primary: #ba8c34;
+  --sidebar-primary-foreground: #241a06;
+  --sidebar-accent: #f7f3e8;
+  --sidebar-accent-foreground: #ba8c34;
+  --sidebar-border: rgba(20, 20, 30, 0.06);
+  --sidebar-ring: #ba8c34;
+}
+
 :root[data-theme="dourado"] {
   --background: #231e1a;
   --foreground: #e8ded1;

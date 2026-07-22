@@ -27,9 +27,9 @@ export const metadata = {
 const THEME_SCRIPT = `
 (function () {
   try {
-    var temasValidos = ["dourado", "esmeralda", "azul", "violeta"];
+    var temasValidos = ["claro", "dourado", "esmeralda", "azul", "violeta"];
     var tema = localStorage.getItem("orbit-theme");
-    if (temasValidos.indexOf(tema) === -1) tema = "dourado";
+    if (temasValidos.indexOf(tema) === -1) tema = "claro";
     document.documentElement.setAttribute("data-theme", tema);
   } catch (e) {}
 })();
@@ -39,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="pt-BR"
-      data-theme="dourado"
+      data-theme="claro"
       suppressHydrationWarning
       className={cn("font-sans", chakraPetch.variable, inter.variable, jetbrainsMono.variable)}
     >

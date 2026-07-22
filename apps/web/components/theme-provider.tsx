@@ -2,10 +2,11 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-export type Tema = "dourado" | "esmeralda" | "azul" | "violeta";
+export type Tema = "claro" | "dourado" | "esmeralda" | "azul" | "violeta";
 
-const TEMAS: Tema[] = ["dourado", "esmeralda", "azul", "violeta"];
+const TEMAS: Tema[] = ["claro", "dourado", "esmeralda", "azul", "violeta"];
 const STORAGE_KEY = "orbit-theme";
+const TEMA_PADRAO: Tema = "claro";
 
 type ThemeContextValue = {
   tema: Tema;
@@ -15,13 +16,13 @@ type ThemeContextValue = {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 function lerTemaSalvo(): Tema {
-  if (typeof window === "undefined") return "dourado";
+  if (typeof window === "undefined") return TEMA_PADRAO;
   const salvo = window.localStorage.getItem(STORAGE_KEY);
-  return TEMAS.includes(salvo as Tema) ? (salvo as Tema) : "dourado";
+  return TEMAS.includes(salvo as Tema) ? (salvo as Tema) : TEMA_PADRAO;
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [tema, setTemaState] = useState<Tema>("dourado");
+  const [tema, setTemaState] = useState<Tema>(TEMA_PADRAO);
 
   useEffect(() => {
     setTemaState(lerTemaSalvo());

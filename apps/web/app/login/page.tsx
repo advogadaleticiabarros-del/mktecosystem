@@ -6,6 +6,7 @@ import { ArrowRight, Eye, EyeOff, Lock, Mail, ShieldCheck } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { login } from "@/lib/api";
 import { AmbientGlow } from "@/components/ambient-glow";
+import { LogoMark } from "@/components/logo-mark";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -16,24 +17,6 @@ const CAMPO_VARIANTS = {
 
 const LIGHT_INPUT_CLASSES =
   "h-11 rounded-xl border-black/10 bg-[#f7f7fa] pl-10 text-[#1f2430] placeholder:text-[#a1a5b0] transition-shadow focus-visible:border-primary focus-visible:bg-white focus-visible:shadow-[0_0_0_4px_color-mix(in_srgb,var(--primary)_20%,transparent)] focus-visible:ring-0";
-
-function LogoMark({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 40 40" className={className} fill="none" aria-hidden="true">
-      <circle
-        cx="20"
-        cy="20"
-        r="16"
-        stroke="var(--primary)"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeDasharray="82 18"
-        strokeDashoffset="4"
-      />
-      <circle cx="20" cy="4" r="2.6" fill="var(--primary)" />
-    </svg>
-  );
-}
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
