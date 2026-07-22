@@ -52,8 +52,9 @@ export default function LoginPage() {
         }}
       />
 
-      <section className="relative hidden flex-col justify-center overflow-hidden px-16 md:flex">
-        <AmbientGlow anchorLeft="88%" />
+      <AmbientGlow anchorLeft="54%" />
+
+      <section className="relative hidden flex-col justify-center px-16 md:flex">
         <div className="relative z-10 max-w-md">
           <div className="mb-16 flex items-center gap-2.5">
             <LogoMark className="h-8 w-8" />

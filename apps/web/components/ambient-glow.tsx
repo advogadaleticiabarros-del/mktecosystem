@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 
 type OrbitNodeProps = {
   ring: number;
@@ -42,12 +43,84 @@ function OrbitNode({ ring, size, duration, reverse, offset = 0, tether, reduzirM
   );
 }
 
+type ShootingStarProps = {
+  top: string;
+  left: string;
+  angle: number;
+  length: number;
+  duration: number;
+  delay: number;
+};
+
+function ShootingStar({ top, left, angle, length, duration, delay }: ShootingStarProps) {
+  return (
+    <div
+      className="absolute h-px"
+      style={{
+        top,
+        left,
+        width: length,
+        transform: `rotate(${angle}deg)`,
+        transformOrigin: "left center",
+        animation: `shooting-star ${duration}s ease-in ${delay}s infinite`,
+        opacity: 0,
+      }}
+    >
+      <div
+        className="h-px w-full"
+        style={{
+          background: "linear-gradient(90deg, transparent, var(--primary) 65%, color-mix(in srgb, var(--primary) 60%, white) 100%)",
+        }}
+      />
+      <div
+        className="absolute right-0 top-1/2 -translate-y-1/2 rounded-full"
+        style={{
+          width: 3,
+          height: 3,
+          background: "color-mix(in srgb, var(--primary) 60%, white)",
+          boxShadow: "0 0 8px 2px var(--primary)",
+        }}
+      />
+    </div>
+  );
+}
+
+const ESTRELAS: ShootingStarProps[] = [
+  { top: "14%", left: "8%", angle: 22, length: 110, duration: 6, delay: 0.5 },
+  { top: "62%", left: "72%", angle: 18, length: 90, duration: 7.5, delay: 3 },
+  { top: "30%", left: "55%", angle: 26, length: 130, duration: 8.5, delay: 5.5 },
+  { top: "78%", left: "20%", angle: 20, length: 100, duration: 6.8, delay: 1.8 },
+  { top: "8%", left: "68%", angle: 24, length: 80, duration: 7.2, delay: 7 },
+];
+
 export function AmbientGlow({ anchorLeft = "38%" }: { anchorLeft?: string }) {
   const reduzirMovimento = useReducedMotion() ?? false;
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const parallaxX = useSpring(mouseX, { stiffness: 60, damping: 20, mass: 0.6 });
+  const parallaxY = useSpring(mouseY, { stiffness: 60, damping: 20, mass: 0.6 });
+
+  useEffect(() => {
+    if (reduzirMovimento) return;
+    function handlePointerMove(event: PointerEvent) {
+      const container = containerRef.current;
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const relativeX = (event.clientX - rect.left) / rect.width - 0.5;
+      const relativeY = (event.clientY - rect.top) / rect.height - 0.5;
+      mouseX.set(relativeX * 22);
+      mouseY.set(relativeY * 22);
+    }
+    window.addEventListener("pointermove", handlePointerMove);
+    return () => window.removeEventListener("pointermove", handlePointerMove);
+  }, [reduzirMovimento, mouseX, mouseY]);
 
   return (
     <motion.div
-      className="pointer-events-none absolute inset-0 overflow-hidden"
+      ref={containerRef}
+      className="pointer-events-none absolute inset-0"
       aria-hidden="true"
       initial={reduzirMovimento ? false : { opacity: 0, scale: 0.85 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -58,9 +131,21 @@ export function AmbientGlow({ anchorLeft = "38%" }: { anchorLeft?: string }) {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
+        @keyframes shooting-star {
+          0% { opacity: 0; transform: translate(0, 0) rotate(var(--angle, 0deg)); }
+          6% { opacity: 1; }
+          18% { opacity: 0; transform: translate(160px, 90px) rotate(var(--angle, 0deg)); }
+          100% { opacity: 0; }
+        }
       `}</style>
 
-      <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ left: anchorLeft }}>
+      {!reduzirMovimento &&
+        ESTRELAS.map((estrela, indice) => <ShootingStar key={indice} {...estrela} />)}
+
+      <motion.div
+        className="pointer-events-none absolute top-1/2 -translate-x-1/2 -translate-y-1/2"
+        style={{ left: anchorLeft, x: parallaxX, y: parallaxY }}
+      >
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
@@ -92,7 +177,7 @@ export function AmbientGlow({ anchorLeft = "38%" }: { anchorLeft?: string }) {
         <OrbitNode ring={580} size={4} duration={42} offset={320} reverse reduzirMovimento={reduzirMovimento} />
         <OrbitNode ring={720} size={5} duration={64} offset={60} reduzirMovimento={reduzirMovimento} />
         <OrbitNode ring={720} size={3.5} duration={58} offset={210} reverse tether reduzirMovimento={reduzirMovimento} />
-      </div>
+      </motion.div>
     </motion.div>
   );
 }
