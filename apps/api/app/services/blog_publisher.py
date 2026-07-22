@@ -17,6 +17,7 @@ from app.models.content_piece import ContentPiece
 from app.models.pauta import Pauta
 from app.models.scheduled_post import ScheduledPost
 from app.models.tenant import TenantConfig
+from app.services.agendamento_horario import horario_ja_chegou
 from app.services.blog_index_editor import inserir_card, inserir_sitemap_entry
 from app.services.blog_slug import gerar_slug
 from app.services.render_artigo_blog import (
@@ -41,7 +42,12 @@ async def _agendamentos_prontos(db: AsyncSession) -> list[ScheduledPost]:
             ScheduledPost.data_agendada <= hoje,
         )
     )
-    return list(resultado.scalars().all())
+    candidatos = resultado.scalars().all()
+    return [
+        agendamento
+        for agendamento in candidatos
+        if horario_ja_chegou(agendamento.data_agendada, agendamento.horario, agora)
+    ]
 
 
 async def publicar_agendamentos_prontos(db: AsyncSession) -> int:

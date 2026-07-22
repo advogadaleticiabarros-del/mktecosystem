@@ -18,6 +18,7 @@ from app.models.content_piece import ContentPiece
 from app.models.scheduled_post import ScheduledPost
 from app.models.social_connection import SocialConnection
 from app.models.tenant import TenantConfig
+from app.services.agendamento_horario import horario_ja_chegou
 from app.services.render_criativo import renderizar_slide
 
 logger = logging.getLogger(__name__)
@@ -40,7 +41,12 @@ async def _agendamentos_prontos(db: AsyncSession) -> list[ScheduledPost]:
             ScheduledPost.data_agendada <= hoje,
         )
     )
-    return list(resultado.scalars().all())
+    candidatos = resultado.scalars().all()
+    return [
+        agendamento
+        for agendamento in candidatos
+        if horario_ja_chegou(agendamento.data_agendada, agendamento.horario, agora)
+    ]
 
 
 async def _conexao_ativa(db: AsyncSession, tenant_id: uuid.UUID) -> SocialConnection | None:
