@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <style>
+  * { box-sizing: border-box; }
   body { margin: 0; }
   .slide {
     width: 1080px; height: 1350px;
@@ -11,7 +12,7 @@
     display: flex; flex-direction: column; justify-content: space-between;
     padding: 96px; font-family: Inter, sans-serif; position: relative; overflow: hidden;
   }
-  .texto { font-size: {{ tamanho_fonte }}px; line-height: 1.25; font-weight: {{ peso_fonte }}; }
+  .texto { font-size: {{ tamanho_fonte }}px; line-height: 1.25; font-weight: {{ peso_fonte }}; min-width: 0; width: 100%; overflow-wrap: break-word; }
   .rodape { display: flex; justify-content: space-between; border-top: 1px solid {{ dourado }}44; padding-top: 32px; }
 </style>
 </head>

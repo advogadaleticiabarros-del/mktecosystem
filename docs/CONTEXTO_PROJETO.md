@@ -3,7 +3,7 @@
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
 > (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-07-22**
-> (órbita do login sem corte + estrelas cadentes + paralaxe no mouse).
+> (órbita do login sem corte + estrelas cadentes + glow que segue o cursor).
 
 ## O que é o Orbit
 

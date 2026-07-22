@@ -45,6 +45,7 @@ function Slide({
   return (
     <div
       style={{
+        boxSizing: "border-box",
         width: 1080,
         height: 1350,
         background: capa
@@ -117,6 +118,7 @@ function Slide({
             fontWeight: capa || final ? 700 : 500,
             color: capa ? MARCA.branco : MARCA.areia,
             margin: 0,
+            minWidth: 0,
           }}
         >
           {texto}
