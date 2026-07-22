@@ -42,9 +42,12 @@ export default function LoginPage() {
         <AmbientGlow />
         <div className="relative z-10 flex w-full max-w-md flex-col">
           <div className="mb-10 flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/40">
-              <div className="h-2.5 w-2.5 rounded-full bg-primary" />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo/elemento-a.png"
+              alt="Orbit"
+              className="h-8 w-8 mix-blend-screen"
+            />
             <div>
               <p className="font-display text-lg font-semibold tracking-wide">ORBIT</p>
               <p className="font-mono text-xs text-muted-foreground">The Marketing Operating System.</p>

@@ -1,3 +1,11 @@
+## Contexto do projeto
+
+Antes de qualquer trabalho neste repositório, leia `docs/CONTEXTO_PROJETO.md` — é o
+resumo vivo do estado do projeto (arquitetura, o que está pronto, pendências,
+decisões não-óbvias), mantido pra evitar reler tudo a cada sessão. Ao terminar uma
+mudança relevante, atualize esse arquivo (ver `.claude/skills/contexto-orbit/SKILL.md`
+para o que/como registrar).
+
 ## graphify
 
 This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.

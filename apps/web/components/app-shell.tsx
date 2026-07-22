@@ -50,9 +50,12 @@ export function AppShell({
   return (
     <div className="flex min-h-screen bg-background text-foreground">
       <aside className="flex w-16 flex-col items-center gap-6 border-r border-border bg-sidebar py-6">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40">
-          <div className="h-3 w-3 rounded-full bg-primary" />
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo/elemento-a.png"
+          alt="Orbit"
+          className="h-9 w-9 mix-blend-screen"
+        />
         <nav className="flex flex-col gap-2">
           {NAV_ITEMS.map((item) => {
             const matchPrefix = "matchPrefix" in item ? item.matchPrefix : undefined;
