@@ -13,12 +13,14 @@ import {
   MapPin,
   Users,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { apiFetch } from "@/lib/api";
 import { AppShell } from "@/components/app-shell";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { StaggerList } from "@/components/motion/stagger-list";
+import { CountUp } from "@/components/motion/count-up";
 
 type Resumo = {
   instagram: { seguidores: number; alcance_7d: number } | null;
@@ -48,6 +50,7 @@ function BarrasSemanais({ dados }: { dados: Resumo["producao_semanal"] }) {
   const [hover, setHover] = useState<number | null>(null);
   const alturaMax = 120;
   const teto = Math.max(1, ...dados.map((d) => Math.max(d.pautas, d.conteudos)));
+  const reduzirMovimento = useReducedMotion();
 
   return (
     <div>
@@ -82,20 +85,34 @@ function BarrasSemanais({ dados }: { dados: Resumo["producao_semanal"] }) {
               </div>
             )}
             <div className="flex w-full items-end justify-center gap-0.5" style={{ height: alturaMax }}>
-              <motion.div
-                initial={{ height: 0 }}
-                animate={{ height: Math.max(2, (d.pautas / teto) * alturaMax) }}
-                transition={{ delay: i * 0.04 }}
-                className="w-3 rounded-t"
-                style={{ background: COR_PAUTAS }}
-              />
-              <motion.div
-                initial={{ height: 0 }}
-                animate={{ height: Math.max(2, (d.conteudos / teto) * alturaMax) }}
-                transition={{ delay: i * 0.04 + 0.02 }}
-                className="w-3 rounded-t"
-                style={{ background: COR_CONTEUDOS }}
-              />
+              {reduzirMovimento ? (
+                <div
+                  className="w-3 rounded-t"
+                  style={{ background: COR_PAUTAS, height: Math.max(2, (d.pautas / teto) * alturaMax) }}
+                />
+              ) : (
+                <motion.div
+                  initial={{ height: 0 }}
+                  animate={{ height: Math.max(2, (d.pautas / teto) * alturaMax) }}
+                  transition={{ delay: i * 0.04 }}
+                  className="w-3 rounded-t"
+                  style={{ background: COR_PAUTAS }}
+                />
+              )}
+              {reduzirMovimento ? (
+                <div
+                  className="w-3 rounded-t"
+                  style={{ background: COR_CONTEUDOS, height: Math.max(2, (d.conteudos / teto) * alturaMax) }}
+                />
+              ) : (
+                <motion.div
+                  initial={{ height: 0 }}
+                  animate={{ height: Math.max(2, (d.conteudos / teto) * alturaMax) }}
+                  transition={{ delay: i * 0.04 + 0.02 }}
+                  className="w-3 rounded-t"
+                  style={{ background: COR_CONTEUDOS }}
+                />
+              )}
             </div>
             <span className="text-[10px] text-muted-foreground">
               {new Date(d.semana + "T00:00:00").toLocaleDateString("pt-BR", {
@@ -226,29 +243,25 @@ export default function VisaoGeralPage() {
       title="Visão geral"
       description="O desempenho de todo o ecossistema num lugar só"
     >
-      <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {tiles.map((tile, i) => (
-          <motion.div
+      <StaggerList className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {tiles.map((tile) => (
+          <Card
             key={tile.label}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.06 }}
+            className="p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_var(--primary),0_8px_24px_-8px_color-mix(in_srgb,var(--primary)_35%,transparent)]"
           >
-            <Card className="p-5">
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-muted-foreground">{tile.label}</p>
-                <tile.icone className="h-4 w-4 text-primary" />
-              </div>
-              <p className="mt-2 font-display text-3xl font-semibold tabular-nums">
-                {tile.valor}
-              </p>
-              {"extra" in tile && tile.extra && (
-                <p className="mt-1 text-xs text-primary">{tile.extra}</p>
-              )}
-            </Card>
-          </motion.div>
+            <div className="flex items-center justify-between">
+              <p className="text-xs text-muted-foreground">{tile.label}</p>
+              <tile.icone className="h-4 w-4 text-primary" />
+            </div>
+            <p className="mt-2 font-display text-3xl font-semibold tabular-nums">
+              <CountUp valor={tile.valor} />
+            </p>
+            {"extra" in tile && tile.extra && (
+              <p className="mt-1 text-xs text-primary">{tile.extra}</p>
+            )}
+          </Card>
         ))}
-      </div>
+      </StaggerList>
 
       <div className="grid gap-5 lg:grid-cols-[1.6fr_1fr]">
         <Card className="p-5">
@@ -273,7 +286,7 @@ export default function VisaoGeralPage() {
               <div key={a.id} className="flex items-center justify-between gap-2">
                 <div className="min-w-0">
                   <p className="truncate text-sm">{a.titulo}</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="font-mono text-xs text-muted-foreground">
                     {new Date(a.data_agendada + "T00:00:00").toLocaleDateString("pt-BR", {
                       day: "2-digit",
                       month: "short",
@@ -338,15 +351,30 @@ export default function VisaoGeralPage() {
         <Card className="p-5">
           <div className="flex items-center justify-between">
             <Camera className="h-5 w-5 text-primary" />
-            <Badge className={instagramConectado ? "bg-primary/15 text-primary" : undefined} variant={instagramConectado ? undefined : "secondary"}>
+            <Badge
+              className={
+                instagramConectado ? "font-mono bg-primary/15 text-primary" : "font-mono"
+              }
+              variant={instagramConectado ? undefined : "secondary"}
+            >
               {instagramConectado ? "Conectado" : "Não conectado"}
             </Badge>
           </div>
           <p className="mt-3 text-sm font-medium">Instagram</p>
           <p className="mt-1 text-xs text-muted-foreground">
-            {instagramConectado
-              ? `@${instagramConectado.nome_conta}${resumo.instagram ? ` · ${resumo.instagram.seguidores} seguidores` : ""}`
-              : "Alcance, seguidores, melhores posts"}
+            {instagramConectado ? (
+              <>
+                @{instagramConectado.nome_conta}
+                {resumo.instagram && (
+                  <>
+                    {" · "}
+                    <CountUp valor={resumo.instagram.seguidores} /> seguidores
+                  </>
+                )}
+              </>
+            ) : (
+              "Alcance, seguidores, melhores posts"
+            )}
           </p>
           {!instagramConectado && (
             <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -400,7 +428,9 @@ export default function VisaoGeralPage() {
           <div className="flex items-center justify-between">
             <MapPin className="h-5 w-5 text-primary" />
             <Badge
-              className={googleBusinessConectado ? "bg-primary/15 text-primary" : undefined}
+              className={
+                googleBusinessConectado ? "font-mono bg-primary/15 text-primary" : "font-mono"
+              }
               variant={googleBusinessConectado ? undefined : "secondary"}
             >
               {googleBusinessConectado ? "Conectado" : "Não conectado"}
@@ -408,11 +438,18 @@ export default function VisaoGeralPage() {
           </div>
           <p className="mt-3 text-sm font-medium">Google Meu Negócio</p>
           <p className="mt-1 text-xs text-muted-foreground">
-            {googleBusinessConectado
-              ? resumo.google_business
-                ? `${resumo.google_business.chamadas} ligações · ${resumo.google_business.pedidos_rota} rotas (7d)`
-                : googleBusinessConectado.nome_conta
-              : "Buscas locais, ligações, rotas"}
+            {googleBusinessConectado ? (
+              resumo.google_business ? (
+                <>
+                  <CountUp valor={resumo.google_business.chamadas} /> ligações ·{" "}
+                  <CountUp valor={resumo.google_business.pedidos_rota} /> rotas (7d)
+                </>
+              ) : (
+                googleBusinessConectado.nome_conta
+              )
+            ) : (
+              "Buscas locais, ligações, rotas"
+            )}
           </p>
           <button
             type="button"
@@ -426,7 +463,7 @@ export default function VisaoGeralPage() {
           <Card key={fonte.nome} className="p-5 opacity-70">
             <div className="flex items-center justify-between">
               <fonte.icone className="h-5 w-5 text-primary" />
-              <Badge variant="secondary">Em breve</Badge>
+              <Badge variant="secondary" className="font-mono">Em breve</Badge>
             </div>
             <p className="mt-3 text-sm font-medium">{fonte.nome}</p>
             <p className="mt-1 text-xs text-muted-foreground">{fonte.detalhe}</p>
