@@ -233,7 +233,7 @@ export default function VisaoGeralPage() {
 
   const tiles = [
     { label: "Pautas pesquisadas", valor: resumo.pautas_total, icone: FileText },
-    { label: "Conteúdos produzidos", valor: totalConteudos, icone: BarChart3, extra: `${aprovados} aprovados` },
+    { label: "Conteúdos produzidos", valor: totalConteudos, icone: BarChart3, extraValor: aprovados },
     { label: "Contatos ativos", valor: resumo.contatos_ativos, icone: Users },
     { label: "E-mails entregues", valor: resumo.emails_enviados, icone: Mail },
   ];
@@ -256,8 +256,10 @@ export default function VisaoGeralPage() {
             <p className="mt-2 font-display text-3xl font-semibold tabular-nums">
               <CountUp valor={tile.valor} />
             </p>
-            {"extra" in tile && tile.extra && (
-              <p className="mt-1 text-xs text-primary">{tile.extra}</p>
+            {"extraValor" in tile && tile.extraValor !== undefined && (
+              <p className="mt-1 text-xs text-primary">
+                <CountUp valor={tile.extraValor} /> aprovados
+              </p>
             )}
           </Card>
         ))}
