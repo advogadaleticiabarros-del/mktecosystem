@@ -20,17 +20,6 @@
       linear-gradient(160deg, {{ fundo }} 0%, {{ fundo }} 100%);
   }
 
-  .bg-foto {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; object-position: center;
-    z-index: 0;
-    filter: sepia(.35) saturate(1.25) brightness(.8);
-  }
-  .bg-overlay {
-    position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(180deg, {{ fundo }}4d 0%, {{ fundo }}a3 55%, {{ fundo }}f0 100%);
-  }
-
   .capa::before {
     content: '';
     position: absolute;
@@ -55,23 +44,18 @@
     padding: 8px 18px; border-radius: 999px;
   }
 
-  .content { position: relative; z-index: 2; }
-  .titulo {
-    font-family: 'Playfair Display', serif;
-    font-size: 42px; font-weight: 800; line-height: 1.2;
-    max-width: 920px;
-    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;
-    overflow: hidden;
+  .selo {
+    position: relative; z-index: 2;
+    align-self: center;
+    width: 96px; height: 96px;
+    object-fit: contain;
+    opacity: .9;
+    filter: drop-shadow(0 4px 14px {{ dourado }}55);
   }
 </style>
 </head>
 <body>
   <div class="capa">
-    {% if foto_src %}
-      <img class="bg-foto" src="{{ foto_src }}" alt="">
-      <div class="bg-overlay"></div>
-    {% endif %}
-
     <div class="top">
       <div class="brand">
         <img src="{{ logo_src }}" alt="{{ nome_conta }}">
@@ -80,9 +64,7 @@
       <span class="categoria">{{ categoria }}</span>
     </div>
 
-    <div class="content">
-      <p class="titulo">{{ titulo }}</p>
-    </div>
+    <img class="selo" src="{{ logo_src }}" alt="">
   </div>
 </body>
 </html>
