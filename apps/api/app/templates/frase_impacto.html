@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { margin: 0; }
+
+  .card {
+    width: 1080px; height: 1350px;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 140px 104px;
+    font-family: 'Inter', sans-serif;
+    color: {{ areia }};
+    text-align: center;
+    background:
+      radial-gradient(circle at 82% 12%, {{ dourado }}29, transparent 42%),
+      radial-gradient(circle at 12% 90%, {{ dourado }}1f, transparent 46%),
+      linear-gradient(160deg, {{ fundo }} 0%, {{ fundo }} 100%);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 36px;
+    border: 1.5px solid {{ dourado }}8c;
+    border-radius: 18px;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .aspas {
+    font-family: 'Playfair Display', serif;
+    font-size: 180px;
+    line-height: 1;
+    color: {{ dourado }};
+    opacity: .55;
+    margin-bottom: -40px;
+  }
+
+  .frase {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: {{ tamanho_fonte }}px;
+    line-height: 1.32;
+    max-width: 880px;
+  }
+  .frase em {
+    font-style: normal;
+    color: {{ dourado }};
+  }
+
+  .assinatura {
+    margin-top: 64px;
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+  }
+  .assinatura img { width: 60px; height: 60px; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,.4)); }
+  .assinatura .nome { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; }
+  .assinatura .oab { font-size: 14px; letter-spacing: 2px; text-transform: uppercase; color: {{ dourado }}; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="aspas">&ldquo;</div>
+    <p class="frase">{{ frase|safe }}</p>
+    <div class="assinatura">
+      <img src="{{ logo_src }}" alt="{{ nome_conta }}">
+      <span class="nome">{{ nome_conta }}</span>
+      <span class="oab">{{ oab }}</span>
+    </div>
+  </div>
+</body>
+</html>

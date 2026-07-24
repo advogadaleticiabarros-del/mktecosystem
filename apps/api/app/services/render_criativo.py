@@ -78,3 +78,38 @@ async def renderizar_slide(
         await browser.close()
 
     _aplicar_acabamento_dourado(caminho_saida)
+
+
+async def renderizar_frase_impacto(
+    frase_html: str,
+    identidade_visual: dict,
+    caminho_saida: str,
+    nome_conta: str = "Letícia Barros",
+    oab: str = "OAB/ES 39.948",
+) -> None:
+    """Card tipográfico de frase de impacto — sem foto, pensado pra compartilhar.
+
+    `frase_html` pode usar <em>destaque</em> pra colorir de dourado a parte
+    decisiva da frase.
+    """
+    cores = identidade_visual.get("cores", {})
+    tamanho_fonte = 72 if len(frase_html) < 90 else 60 if len(frase_html) < 140 else 50
+    html = _env.get_template("frase_impacto.html").render(
+        frase=frase_html,
+        fundo=cores.get("fundo_escuro", "#231E1A"),
+        dourado=cores.get("dourado", "#C9A962"),
+        areia=cores.get("areia", "#E8DED1"),
+        tamanho_fonte=tamanho_fonte,
+        nome_conta=nome_conta,
+        oab=oab,
+        logo_src=_logo_data_uri(),
+    )
+
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page(viewport={"width": 1080, "height": 1350})
+        await page.set_content(html)
+        await page.screenshot(path=caminho_saida)
+        await browser.close()
+
+    _aplicar_acabamento_dourado(caminho_saida)
