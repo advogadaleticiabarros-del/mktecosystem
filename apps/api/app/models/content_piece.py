@@ -17,6 +17,8 @@ class ContentPiece(Base):
     corpo: Mapped[dict] = mapped_column(JSON, default=dict)
     status: Mapped[str] = mapped_column(String(20), default="rascunho")
     versao: Mapped[int] = mapped_column(Integer, default=1)
+    alerta_atualidade: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    verificado_em: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     criado_em: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )

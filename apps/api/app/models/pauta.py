@@ -19,6 +19,8 @@ class Pauta(Base):
     fonte: Mapped[str] = mapped_column(String(200))
     relevante_para_conteudo: Mapped[bool] = mapped_column(Boolean, default=False)
     status: Mapped[str] = mapped_column(String(20), default="sugerida")
+    alerta_atualidade: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    verificado_em: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     criado_em: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )

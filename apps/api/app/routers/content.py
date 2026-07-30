@@ -10,6 +10,8 @@ from app.core.deps import get_current_user
 from app.db import get_db
 from app.integrations.ai.base import AIClient
 from app.integrations.ai.gemini import GeminiClient
+from app.integrations.ai.groq_client import GroqClient
+from app.integrations.search.tavily_client import TavilyClient
 from app.models.content_piece import ContentPiece
 from app.models.marketing_memory import MarketingMemory
 from app.models.pauta import Pauta
@@ -18,6 +20,7 @@ from app.models.user import User
 from app.schemas.content_piece import ContentPieceOut, ContentPieceUpdate, GerarRequest
 from app.services.agenda import agendar_conteudo_aprovado
 from app.services.cerebro import memorias_de_edicao, registrar_edicao
+from app.services.verificacao_atualidade import verificar_atualidade
 
 router = APIRouter(prefix="/content", tags=["content"])
 
@@ -174,6 +177,15 @@ async def atualizar_content_piece(
             )
         )
         pauta = pauta_result.scalar_one()
+        if settings.TAVILY_API_KEY:
+            alerta, verificado_em = await verificar_atualidade(
+                titulo=pauta.titulo,
+                area=pauta.area,
+                ai_client=GroqClient(api_key=settings.GROQ_API_KEY),
+                tavily_client=TavilyClient(api_key=settings.TAVILY_API_KEY),
+            )
+            piece.alerta_atualidade = alerta
+            piece.verificado_em = verificado_em
         db.add(
             MarketingMemory(
                 tenant_id=current_user.tenant_id,

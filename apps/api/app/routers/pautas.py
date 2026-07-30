@@ -10,6 +10,8 @@ from app.core.deps import get_current_user
 from app.db import get_db
 from app.integrations.ai.base import AIClient
 from app.integrations.ai.gemini import GeminiClient
+from app.integrations.ai.groq_client import GroqClient
+from app.integrations.search.tavily_client import TavilyClient
 from app.integrations.sources.cnj import fetch_cnj
 from app.integrations.sources.stf import fetch_stf
 from app.integrations.sources.tst import fetch_tst
@@ -17,12 +19,31 @@ from app.models.pauta import Pauta
 from app.models.tenant import TenantConfig
 from app.models.user import User
 from app.schemas.pauta import PautaManualCreate, PautaOut
+from app.services.verificacao_atualidade import verificar_atualidade
 
 router = APIRouter(prefix="/pautas", tags=["pautas"])
 
 
 def get_ai_client() -> AIClient:
     return GeminiClient(api_key=settings.GEMINI_API_KEY)
+
+
+async def _verificar_e_marcar(pauta: Pauta) -> None:
+    """Roda a verificação de atualidade e marca o alerta na própria pauta.
+
+    Silenciosa por design: se a Tavily não estiver configurada ou a
+    verificação falhar, a pauta segue sem alerta, nunca bloqueia a criação.
+    """
+    if not settings.TAVILY_API_KEY:
+        return
+    alerta, verificado_em = await verificar_atualidade(
+        titulo=pauta.titulo,
+        area=pauta.area,
+        ai_client=GroqClient(api_key=settings.GROQ_API_KEY),
+        tavily_client=TavilyClient(api_key=settings.TAVILY_API_KEY),
+    )
+    pauta.alerta_atualidade = alerta
+    pauta.verificado_em = verificado_em
 
 
 EXTRACTION_PROMPT = """\
@@ -117,6 +138,8 @@ async def criar_pauta_manual(
         status="sugerida",
     )
     db.add(pauta)
+    await db.flush()
+    await _verificar_e_marcar(pauta)
     await db.commit()
     await db.refresh(pauta)
     return pauta

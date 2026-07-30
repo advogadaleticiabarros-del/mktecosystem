@@ -12,7 +12,11 @@ from sqlalchemy import select
 from app.config import settings
 from app.db import SessionLocal
 from app.integrations.ai.gemini import GeminiClient
+from app.integrations.ai.groq_client import GroqClient
 from app.integrations.email.resend_client import ResendClient
+from app.integrations.search.tavily_client import TavilyClient
+from app.models.content_piece import ContentPiece
+from app.models.pauta import Pauta
 from app.models.tenant import Tenant
 from app.services.blog_publisher import publicar_agendamentos_prontos as publicar_blog_prontos
 from app.services.email_campaigns import gerar_rascunho_newsletter
@@ -20,6 +24,7 @@ from app.services.email_sender import processar_boas_vindas, processar_fila_news
 from app.services.google_business_metrics import coletar_metricas_google_business
 from app.services.instagram_metrics import coletar_metricas_diarias
 from app.services.instagram_publisher import publicar_agendamentos_prontos
+from app.services.verificacao_atualidade import verificar_atualidade
 
 logger = logging.getLogger(__name__)
 
@@ -62,10 +67,58 @@ async def job_rascunho_newsletter() -> None:
                 logger.exception("Falha ao gerar newsletter para %s", tenant.slug)
 
 
+async def job_verificacao_atualidade() -> None:
+    """Reverifica diariamente pautas e conteúdos ainda não publicados —
+    pega mudanças de lei/decisão que aconteceram depois da aprovação
+    (foi assim que a revisão da vida toda quase saiu errada, 2026-07-30).
+    """
+    if not settings.TAVILY_API_KEY:
+        return
+
+    ai = GroqClient(api_key=settings.GROQ_API_KEY)
+    tavily = TavilyClient(api_key=settings.TAVILY_API_KEY)
+    total = 0
+
+    async with SessionLocal() as db:
+        pautas = (
+            (await db.execute(select(Pauta).where(Pauta.status.in_(["sugerida", "aprovada"]))))
+            .scalars()
+            .all()
+        )
+        for pauta in pautas:
+            alerta, verificado_em = await verificar_atualidade(pauta.titulo, pauta.area, ai, tavily)
+            pauta.alerta_atualidade = alerta
+            pauta.verificado_em = verificado_em
+            if alerta:
+                total += 1
+
+        pieces = (
+            (await db.execute(select(ContentPiece).where(ContentPiece.status != "publicado")))
+            .scalars()
+            .all()
+        )
+        for piece in pieces:
+            pauta_result = await db.execute(select(Pauta).where(Pauta.id == piece.pauta_id))
+            pauta = pauta_result.scalar_one_or_none()
+            if pauta is None:
+                continue
+            alerta, verificado_em = await verificar_atualidade(pauta.titulo, pauta.area, ai, tavily)
+            piece.alerta_atualidade = alerta
+            piece.verificado_em = verificado_em
+            if alerta:
+                total += 1
+
+        await db.commit()
+
+    if total:
+        logger.warning("Verificação de atualidade: %d itens com alerta de desatualização.", total)
+
+
 def criar_scheduler() -> AsyncIOScheduler:
     scheduler = AsyncIOScheduler(timezone="UTC")
     scheduler.add_job(job_envios, CronTrigger(minute=15))
     # Segunda 11:00 UTC = 08:00 em Brasília
     scheduler.add_job(job_rascunho_newsletter, CronTrigger(day_of_week="mon", hour=11))
     scheduler.add_job(job_metricas_fontes_externas, CronTrigger(hour=6))
+    scheduler.add_job(job_verificacao_atualidade, CronTrigger(hour=5))
     return scheduler

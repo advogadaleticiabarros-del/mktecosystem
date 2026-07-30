@@ -13,6 +13,8 @@ class PautaOut(BaseModel):
     fonte: str
     relevante_para_conteudo: bool
     status: str
+    alerta_atualidade: str | None = None
+    verificado_em: datetime | None = None
     criado_em: datetime
 
     model_config = {"from_attributes": True}

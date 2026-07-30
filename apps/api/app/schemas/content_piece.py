@@ -15,6 +15,8 @@ class ContentPieceOut(BaseModel):
     corpo: dict
     status: str
     versao: int
+    alerta_atualidade: str | None = None
+    verificado_em: datetime | None = None
     criado_em: datetime
 
     model_config = {"from_attributes": True}
