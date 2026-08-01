@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5B513VWB4D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5B513VWB4D');
+    </script>
+
     <title>{{ titulo }} | Dra. Letícia Barros</title>
     <meta name="description" content="{{ meta_description }}">
     <link rel="canonical" href="{{ canonical_url }}">
@@ -71,6 +81,39 @@
             .article-body h2 { font-size: 1.5rem; }
             .article-cta { padding: 32px 24px; }
             .prova-table { font-size: 0.85rem; }
+        }
+        .whatsapp-float { position: fixed !important; bottom: 24px !important; right: 24px !important; left: auto !important; top: auto !important; }
+        .whatsapp-float-tooltip {
+            position: absolute;
+            right: calc(100% + 14px);
+            top: 50%;
+            transform: translateY(-50%);
+            background: #231E1A;
+            color: #E8DED1;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            padding: 8px 16px;
+            border-radius: 999px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            pointer-events: none;
+        }
+        .whatsapp-float-tooltip::after {
+            content: '';
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 6px solid transparent;
+            border-left-color: #231E1A;
+        }
+        .whatsapp-float:hover .whatsapp-float-tooltip {
+            opacity: 1;
+            visibility: visible;
         }
     </style>
 </head>
@@ -197,7 +240,10 @@
     </div>
 </footer>
 
-<a href="https://wa.me/{{ whatsapp }}?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20vim%20pelo%20blog%20e%20gostaria%20de%20saber%20mais." class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+<a href="https://wa.me/{{ whatsapp }}?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20vim%20pelo%20blog%20e%20gostaria%20de%20saber%20mais." class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <span class="whatsapp-float-tooltip">Preciso de ajuda?</span>
+    <i class="fa-brands fa-whatsapp"></i>
+</a>
 <button class="back-top" id="backTop" aria-label="Voltar ao topo"><i class="fa-solid fa-chevron-up"></i></button>
 <script src="../../js/scroll-animations.js"></script>
     <script src="../js/pages.js"></script>
