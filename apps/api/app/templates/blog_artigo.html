@@ -233,7 +233,7 @@
         if (!email.includes('@')) { msg.textContent = 'Informe um e-mail válido.'; return; }
         btn.disabled = true; btn.textContent = 'Enviando…';
         try {
-            var resp = await fetch('https://orbit-api-production-0029.up.railway.app/public/contacts', {
+            var resp = await fetch('https://api.orbit.advogadaleticiabarros.com.br/public/contacts', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     tenant_slug: 'leticia-barros', nome: nome, email: email,

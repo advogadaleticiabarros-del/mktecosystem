@@ -3,7 +3,7 @@
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
 > (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-08-28**
-> (Reels/estático no gerador automático + captura de leads/Radar Jurídico).
+> (migração de deploy Railway → VPS Hostinger, DNS ainda pendente).
 
 ## O que é o Orbit
 
@@ -24,24 +24,65 @@ com edições anteriores.
 - **Frontend** (`apps/web`): Next.js 15 App Router, **export estático puro**
   (`output: "export"`, sem servidor Node rodando — é servido como arquivo estático
   via `npx serve`). Tailwind v4 + shadcn/ui. `framer-motion` para animação.
-- **Deploy**: **Railway** (migrado da Hostinger em 21/07/2026). Projeto
-  `orbit-marketing-os`, conta `alcancelegalmkt-collab`. Dois serviços:
-  - `orbit-api` → `https://orbit-api-production-0029.up.railway.app`
-  - `orbit-web` → `https://orbit-web-production-0a39.up.railway.app`
-  - Convenção deste projeto: **commit direto na `main`**, sem branch de feature —
-    confirmado repetidamente ao longo da sessão, é assim que o time trabalha aqui.
-  - Deploy manual: `railway up ./apps/<api|web> --path-as-root --service orbit-<api|web> --detach`
-    (o `railway up` sem `--path-as-root` builda a partir da raiz do monorepo e falha).
-  - **Gotcha resolvido 22/07**: build do `orbit-web` falhava sempre (~23s, sem log
-    nenhum) por colisão de mount do BuildKit em `/app/tsconfig.tsbuildinfo` (TS
-    incremental grava esse arquivo na raiz por padrão). Corrigido apontando
-    `tsBuildInfoFile` pra dentro de `.next/cache` no `tsconfig.json`. Se o deploy do
-    `orbit-web` voltar a falhar sem log nenhum logo após o build, comece por aqui.
+- **Deploy**: **VPS Hostinger** (migrado do Railway em 28/08/2026 — ver
+  `deploy/vps/README.md` pro runbook completo). VPS `srv1921337.hstgr.cloud`
+  (IP `179.199.128.68`, Ubuntu 24.04), a mesma máquina que já roda o CRM
+  jurídico da Letícia (Node em `/home/crma`, porta 3001, MySQL local) —
+  isolados via Docker, sem tocar no que já existia. Código em
+  `/home/orbit-src` (git clone deste repo).
+  - `db`: container `postgres:16`, volume próprio `vps_orbit_pgdata`.
+  - `api`: container buildado de `apps/api/Dockerfile`, só `127.0.0.1:8010`
+    (nunca exposto direto), atrás do nginx.
+  - `web`: **sem container** — `apps/web` é buildado (`npm run build`, Node já
+    presente na VPS pro CRM) e os arquivos estáticos de `out/` são copiados
+    pra `/var/www/orbit-web`, servido direto pelo nginx.
+  - nginx: dois server blocks novos em `/etc/nginx/sites-available/`
+    (`orbit-web`, `orbit-api`), sem tocar no bloco existente do CRM (`crm`).
+  - Domínios: `orbit.advogadaleticiabarros.com.br` (painel) e
+    `api.orbit.advogadaleticiabarros.com.br` (API) — DNS gerenciado numa
+    conta Hostinger **diferente** da conta dona da VPS (confuso à primeira
+    vista: painel do domínio ≠ painel da VPS, apesar de ambos serem
+    Hostinger).
+  - Redeploy: `cd /home/orbit-src && git pull && cd deploy/vps && docker
+    compose up -d --build`. Rebuild do web: `cd apps/web && npm run build &&
+    cp -r out/* /var/www/orbit-web/`.
+  - **Banco começou zerado, não migrado do Railway** — o Postgres do Railway
+    (`Postgres-AXnQ`) estava fora do ar na hora da migração (conexão TCP
+    abria mas o servidor fechava sem responder ao handshake do Postgres,
+    junto com `orbit-api`/`orbit-web` mostrando "Service is offline" no
+    painel — o ambiente inteiro do Railway parecia derrubado, possivelmente
+    ligado a um "Security patch scheduled — CVE-2026-15741" que apareceu no
+    card do Postgres). Decisão explícita da usuária: sem dado de produção
+    relevante acumulado (app ainda recente), não valia a pena investigar o
+    Railway só pra recuperar o dump — seed rodado do zero
+    (`python -m app.seed.seed_leticia`, tenant `leticia-barros`, login
+    `leticia@advogadaleticiabarros.com.br`).
+  - **Pendência ativa: DNS não propagou** — os registros A criados apontam
+    certo pro IP da VPS no painel, mas consultas externas (`dns.google`,
+    `cloudflare-dns.com`) continuam voltando um pool de IPs de hospedagem
+    compartilhada da Hostinger pra `orbit.advogadaleticiabarros.com.br`
+    (TTL 60, IPs diferentes a cada consulta — cheira a algo sobrescrevendo,
+    não só demora de propagação) e `NXDOMAIN` pra
+    `api.orbit.advogadaleticiabarros.com.br`. Tudo já validado funcionando
+    *dentro* da VPS via `curl -H "Host: ..." http://127.0.0.1/` (nginx→api e
+    nginx→estático ambos OK) — só falta a internet enxergar o domínio certo.
+    Sem isso, o `certbot` (HTTPS) também não roda, porque a validação dele
+    depende do domínio resolver pro IP certo. Próximo passo: usuária abrir
+    chamado com o suporte da Hostinger (conta do domínio) perguntando por
+    que um registro A criado manualmente não sai do ar.
+  - **Chaves a rotacionar quando der** (ficaram visíveis numa sessão de
+    terminal/chat durante a migração): senha root da VPS (trocar em
+    hPanel → VPS → "Redefinir senha"), e as chaves que estavam no `.env`
+    antigo do Railway (`JWT_SECRET`, `GEMINI_API_KEY`, `ENCRYPTION_KEY`,
+    `GOOGLE_CLIENT_SECRET`, `GROQ_API_KEY`, `META_APP_SECRET`,
+    `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET`, `TAVILY_API_KEY`, senha do
+    SFTP do blog) — não é urgente (baixo risco prático), mas fica registrado.
 - **Blog público** (site separado, NÃO é o Orbit): `advogadaleticiabarros.com.br/blog/`,
   HTML estático hospedado na Hostinger, publicado via SFTP (host `147.93.38.211`,
   porta `65002`, usuário `u528898188`, caminho
   `/home/u528898188/domains/advogadaleticiabarros.com.br/public_html/blog/`).
-  Credenciais salvas como env vars `BLOG_SFTP_*` no serviço `orbit-api` do Railway.
+  Credenciais salvas em `deploy/vps/.env` na VPS (antes: env vars do serviço
+  `orbit-api` no Railway, hoje desativado).
 
 ## O que está pronto e em produção
 
@@ -257,6 +298,14 @@ Claude Code, o Orbit gera conteúdo via API do Gemini diretamente, sem relação
 com esse sistema de skills.
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
+
+0. **DNS da VPS não propagou** (a mais urgente agora — bloqueia o site novo
+   funcionar de verdade): ver detalhes completos na seção "Deploy" acima.
+   Tudo já validado dentro da VPS; só falta a internet enxergar
+   `orbit.advogadaleticiabarros.com.br`/`api.orbit....` apontando pro IP
+   certo. Depois que resolver: rodar `certbot --nginx -d
+   orbit.advogadaleticiabarros.com.br -d api.orbit.advogadaleticiabarros.com.br`
+   na VPS pra emitir o HTTPS.
 
 1. **Redesenho visual — polimento por página ainda falta**: o tema claro já é o
    padrão de todo o app (22/07, ver "O que está pronto") — isso resolveu a cor/fundo/

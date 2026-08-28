@@ -286,7 +286,7 @@
         .filter(Boolean);
       var origem = utmTags.length ? ' [Origem: ' + utmTags.join(', ') + ']' : ' [Origem: direta/sem UTM]';
       try {
-        var resp = await fetch('https://orbit-api-production-0029.up.railway.app/public/contacts', {
+        var resp = await fetch('https://api.orbit.advogadaleticiabarros.com.br/public/contacts', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             tenant_slug: 'leticia-barros', nome: nomeEl.value.trim(), email: emailEl.value.trim(),
