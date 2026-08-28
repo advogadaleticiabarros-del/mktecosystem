@@ -1,0 +1,286 @@
+=== aposentadoria-hibrida-como-funciona ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Quer saber se<br><span class="highlight">já pode se aposentar?</span></h2>
+            <p>Advogada previdenciária em Vitória-ES. Análise completa do histórico e cálculo de benefício.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20e%20quero%20analisar%20minha%20aposentadoria." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== bpc-loas-como-funciona ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Precisa de ajuda<br><span class="highlight">com BPC/LOAS?</span></h2>
+            <p>Advogada previdenciária em Vitória-ES. Recurso administrativo ou ação judicial se for negado.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20e%20preciso%20de%20ajuda%20com%20BPC%20LOAS." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== carga-horaria-maxima-clt ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Sua jornada está sendo<br><span class="highlight">desrespeitada pela empresa?</span></h2>
+            <p>Advogada trabalhista em Vitória-ES. Se sua empresa não paga hora extra ou te faz trabalhar além do limite legal, você pode cobrar tudo retroativamente.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20sobre%20carga%20hor%C3%A1ria%20e%20quero%20entender%20meus%20direitos." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== compra-online-direitos-do-consumidor ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Tiveste problema<br><span class="highlight">em compra online?</span></h2>
+            <p>Advogada de consumidor em Vitória-ES. Reclamação no Procon ou ação na Justiça — sua defesa é garantida.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20e%20tenho%20problema%20em%20compra%20online." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== divorcio-como-funciona-e-quanto-custa ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Precisa se divorciar e<br><span class="highlight">não sabe por onde começar?</span></h2>
+            <p>Advogada de família em Vitória-ES. Oriento sobre o melhor caminho para o seu caso — consensual, judicial ou via cartório.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20sobre%20div%C3%B3rcio%20e%20quero%20entender%20minha%20situa%C3%A7%C3%A3o." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== empresa-pode-obrigar-limpar-banheiro ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Está sendo vítima<br><span class="highlight">de desvio de função?</span></h2>
+            <p>Advogada em Vitória-ES com experiência em casos de assédio e desvio. Atendimento humanizado e confidencial.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20e%20preciso%20de%20orienta%C3%A7%C3%A3o%20sobre%20desvio%20de%20fun%C3%A7%C3%A3o." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== ex-nao-paga-pensao-o-que-fazer ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Ex não paga pensão e<br><span class="highlight">você está no limite?</span></h2>
+            <p>Advogada de família em Vitória-ES. Inicio a cobrança rapidamente — com bloqueio de conta, desconto em folha ou, se necessário, prisão civil.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20sobre%20pens%C3%A3o%20em%20atraso%20e%20preciso%20de%20ajuda." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== fgts-trabalhador-temporario-direitos-e-como-cobrar ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Empresa não recolheu seu FGTS<br><span class="highlight">e você quer cobrar?</span></h2>
+            <p>Advogada trabalhista em Vitória-ES. Analiso seu extrato, identifico os valores e oriento sobre o melhor caminho para recuperar o que é seu.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20sobre%20FGTS%20tempor%C3%A1rio%20e%20quero%20verificar%20meu%20caso." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== fui-demitida-gravida-o-que-fazer ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Precisa de orientação<br><span class="highlight">sobre seu caso?</span></h2>
+            <p>Advogada em Vitória-ES, atendo gestantes e mães de toda a Grande Vitória e de todo o Brasil de forma online.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20sobre%20demiss%C3%A3o%20de%20gestante%20e%20preciso%20de%20ajuda." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== guarda-compartilhada-como-funciona ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Separando e preocupada<br><span class="highlight">com a guarda dos filhos?</span></h2>
+            <p>Advogada de família em Vitória-ES. Oriento sobre guarda, pensão e convivência — sempre priorizando o bem-estar das crianças.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20sobre%20guarda%20compartilhada%20e%20preciso%20de%20orienta%C3%A7%C3%A3o." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== insalubridade-quem-tem-direito ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Quer saber se<br><span class="highlight">tem direito ao adicional?</span></h2>
+            <p>Análise gratuita do seu caso. Advogada em Vitória-ES com atendimento humanizado.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20sobre%20insalubridade%20e%20preciso%20de%20an%C3%A1lise." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== nome-negativado-indevidamente-o-que-fazer ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Seu nome foi negativado<br><span class="highlight">sem você dever nada?</span></h2>
+            <p>Advogada de consumidor em Vitória-ES. Cuido da retirada da negativação e da indenização — você não precisa resolver isso sozinha.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20sobre%20negativa%C3%A7%C3%A3o%20indevida%20e%20gostaria%20de%20entender%20meus%20direitos." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== pensao-alimenticia-como-funciona ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Precisa cobrar<br><span class="highlight">pensão alimentícia?</span></h2>
+            <p>Advogada em Vitória-ES especialista em Direito de Família. Atendo mães solo de toda Grande Vitória e Brasil online.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20sobre%20pens%C3%A3o%20e%20preciso%20de%20ajuda." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== plano-de-saude-negou-cobertura-o-que-fazer ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Plano de saúde te deixou<br><span class="highlight">na mão na hora que mais precisava?</span></h2>
+            <p>Advogada de consumidor em Vitória-ES. Analiso seu caso gratuitamente e — quando necessário — consigo autorização judicial em menos de 24 horas.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20sobre%20plano%20de%20sa%C3%BAde%20e%20quero%20entender%20meus%20direitos." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== quanto-tempo-processar-apos-demissao ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Seu direito foi<br><span class="highlight">violado na demissão?</span></h2>
+            <p>Advogada trabalhista em Vitória-ES. Análise gratuita e ação na Justiça — você merece seus direitos.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20e%20preciso%20de%20ajuda%20com%20demiss%C3%A3o." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== racismo-no-trabalho-como-provar-e-seus-direitos ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Sofreu racismo no trabalho?<br><span class="highlight">A lei está do seu lado</span></h2>
+            <p>Advogada trabalhista em Vitória-ES. Você merece trabalhar com dignidade e respeito. Se passou por discriminação racial, vamos conversar com acolhimento sobre o seu caso.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20sofri%20racismo%20no%20trabalho%20e%20quero%20orienta%C3%A7%C3%A3o." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== rescisao-indireta-o-que-e-quando-tenho-direito ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Sua empresa está te<br><span class="highlight">prejudicando todos os dias?</span></h2>
+            <p>Advogada trabalhista em Vitória-ES. Se o salário atrasa, o FGTS não é depositado ou você sofre assédio, pode ser hora de sair recebendo tudo a que tem direito.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20sobre%20rescis%C3%A3o%20indireta%20e%20quero%20entender%20meus%20direitos." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== rescisao-indireta-riscos-vale-a-pena ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Antes de decidir,<br><span class="highlight">conheça as suas chances de verdade</span></h2>
+            <p>Advogada trabalhista em Vitória-ES. Prefiro te orientar com honestidade a te empurrar para uma ação frágil. Vamos analisar o seu caso com franqueza.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20quero%20avaliar%20com%20sinceridade%20se%20tenho%20caso%20de%20rescis%C3%A3o%20indireta." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== trabalhei-sem-registro-posso-processar ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Trabalhou sem registro?<br><span class="highlight">Fale comigo.</span></h2>
+            <p>Advogada em Vitória-ES, pego o seu caso com transparência. Honorários só cobrados sobre o valor recuperado.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20li%20o%20artigo%20sobre%20trabalho%20sem%20registro%20e%20preciso%20de%20ajuda." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== aborto-espontaneo-direitos-da-trabalhadora-clt ===
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Seus direitos merecem ser<br><span class="highlight">protegidos — mesmo nos dias mais difíceis</span></h2>
+            <p>Se você está passando por isso e precisa de orientação, estou aqui. Analiso seu caso com cuidado, sem julgamentos e sem pressa.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20vim%20pelo%20blog%20e%20preciso%20de%20orienta%C3%A7%C3%A3o%20sobre%20aborto%20espont%C3%A2neo%20e%20direitos%20no%20trabalho." class="btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                <a href="../contato.html" class="btn-outline"><i class="fa-solid fa-envelope"></i> Ir para contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+=== gravida-pode-pedir-demissao-riscos-e-validacao ===
+NAO ENCONTRADO
+
+=== pedi-demissao-gravida-posso-reverter ===
+NAO ENCONTRADO
+

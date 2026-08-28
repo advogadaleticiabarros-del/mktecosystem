@@ -9,3 +9,24 @@ apps/web/.env*.local
 apps/web/out/
 .claude/settings.json
 graphify-out/
+
+# Scripts pontuais com credenciais hardcoded (senha SFTP / chaves de API) —
+# nunca commitar, ver histórico de conversa para as chaves reais.
+apps/api/_buscar_fotos_acho_chique.py
+apps/api/_corrigir_cta_restantes.py
+apps/api/_corrigir_cta_section_legado.py
+apps/api/_corrigir_ctas_legado.py
+apps/api/_corrigir_nav_fale_comigo.py
+apps/api/_corrigir_nav_site_principal.py
+apps/api/_publicar_4_novas.py
+apps/api/_publicar_areas_2.py
+apps/api/_publicar_assessoria_juridica.py
+apps/api/_publicar_degrade.py
+apps/api/_publicar_escritorio.py
+apps/api/_publicar_faq_fix.py
+apps/api/_publicar_img_insalubridade.py
+apps/api/_publicar_lp_antiga_pensao.py
+apps/api/_publicar_lp_antigas_4.py
+apps/api/_publicar_lp_bpc_img.py
+apps/api/_publicar_lps.py
+apps/api/_publicar_trabalhista.py

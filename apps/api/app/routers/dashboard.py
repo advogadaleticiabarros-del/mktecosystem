@@ -35,6 +35,35 @@ async def insights(
     return {"dicas": dicas}
 
 
+@router.get("/instagram-historico")
+async def instagram_historico(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)],
+) -> dict:
+    tenant_id = current_user.tenant_id
+    registros = (
+        (
+            await db.execute(
+                select(SocialMetric)
+                .where(SocialMetric.tenant_id == tenant_id, SocialMetric.tipo == "conta")
+                .order_by(SocialMetric.coletado_em.asc())
+            )
+        )
+        .scalars()
+        .all()
+    )
+    return {
+        "registros": [
+            {
+                "id": str(r.id),
+                "coletado_em": r.coletado_em.isoformat(),
+                "metricas": r.metricas,
+            }
+            for r in registros
+        ]
+    }
+
+
 @router.get("/resumo")
 async def resumo(
     db: Annotated[AsyncSession, Depends(get_db)],

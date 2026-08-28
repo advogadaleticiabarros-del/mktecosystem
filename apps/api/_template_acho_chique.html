@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'Rosaline';
+    src: url("{{ fonte_rosaline_src }}") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { margin: 0; }
+  .card {
+    width: 1080px; height: 1350px;
+    position: relative; overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+  }
+  .foto {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.05) contrast(1.1) saturate(1.2) sepia(0.28) brightness(0.96);
+  }
+  .grao {
+    position: absolute; inset: -2px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch' seed='7'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='2.2' intercept='-0.15'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+    opacity: 0.85;
+  }
+  .vinheta {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, transparent 32%, rgba(12,8,4,0.75) 100%);
+    z-index: 1;
+  }
+  .tom-quente {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, rgba(150,85,25,0.28) 0%, transparent 45%, rgba(35,20,8,0.32) 100%);
+    mix-blend-mode: multiply;
+    z-index: 1;
+  }
+  .escurecimento {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(25,17,10,0.4) 0%, rgba(25,17,10,0.18) 35%, rgba(25,17,10,0.58) 100%);
+  }
+  .escurecimento.forte {
+    background: linear-gradient(180deg, rgba(18,12,6,0.65) 0%, rgba(18,12,6,0.52) 35%, rgba(18,12,6,0.75) 100%);
+  }
+  .marca-dagua {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 560px; height: 560px;
+    transform: translate(-50%, -50%) rotate(-18deg);
+    background-image: url("{{ logo_marca_dagua_src }}");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.035;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .conteudo {
+    position: relative; z-index: 2;
+    height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 90px 70px;
+    text-align: center;
+  }
+  .texto {
+    font-family: 'Rosaline', 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: {{ tamanho_fonte | default(64) }}px;
+    line-height: 1.42;
+    color: #F5E3A8;
+    text-shadow: 0 2px 3px rgba(0,0,0,0.75);
+    max-width: 900px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  .texto em {
+    font-style: normal;
+  }
+  /* Capa: "Acho Chique" grande + subtítulo em fonte serifada distinta */
+  .capa-titulo {
+    font-family: 'Rosaline', 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 128px;
+    line-height: 1.05;
+    color: #F5E3A8;
+    text-shadow: 0 2px 3px rgba(0,0,0,0.65);
+  }
+  .capa-subtitulo {
+    margin-top: 26px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 34px;
+    color: #FFFFFF;
+    text-shadow: 0 1.5px 2px rgba(0,0,0,0.6);
+  }
+  .seta {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.28);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 3;
+    color: #fff; font-size: 26px; font-weight: 700;
+  }
+  .seta.esq { left: 28px; }
+  .seta.dir { right: 28px; }
+  .rodape {
+    position: absolute; left: 0; right: 0; bottom: 46px;
+    z-index: 3;
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+  }
+  .rodape img { width: 58px; height: 58px; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4)); }
+  .rodape .textos { text-align: left; }
+  .rodape .nome { font-weight: 800; font-size: 21px; color: #fff; letter-spacing: 0.3px; }
+  .rodape .sub { font-weight: 600; font-size: 14px; color: #F5E3A8; letter-spacing: 1.5px; text-transform: uppercase; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <img class="foto" src="{{ foto_src }}" alt="">
+    <div class="tom-quente"></div>
+    <div class="grao"></div>
+    <div class="vinheta"></div>
+    <div class="escurecimento {{ 'forte' if fechamento_forte else '' }}"></div>
+    <div class="marca-dagua"></div>
+    <div class="seta esq">&#8249;</div>
+    <div class="seta dir">&#8250;</div>
+    <div class="conteudo">
+      {% if capa %}
+        <div class="capa-titulo">Acho<br>Chique</div>
+        <div class="capa-subtitulo">versão {{ subtitulo }}</div>
+      {% else %}
+        <p class="texto">{{ texto|safe }}</p>
+      {% endif %}
+    </div>
+    <div class="rodape">
+      <img src="{{ logo_src }}" alt="">
+      <div class="textos">
+        <div class="nome">Letícia Barros</div>
+        <div class="sub">Advocacia</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

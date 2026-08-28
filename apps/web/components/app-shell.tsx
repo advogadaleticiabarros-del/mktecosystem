@@ -13,6 +13,7 @@ import {
   Settings,
   ShieldCheck,
   Star,
+  TrendingUp,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
@@ -21,6 +22,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 
 const NAV_ITEMS = [
   { href: "/visao-geral", label: "Visão geral", icon: Home },
+  { href: "/crescimento", label: "Crescimento", icon: TrendingUp },
   { href: "/planejamento", label: "Planejamento", icon: ClipboardList },
   { href: "/resumo-diario", label: "Resumo Jurídico Diário", icon: Newspaper },
   // Aprovação requires a ?pautaId= query param to be meaningful — it isn't

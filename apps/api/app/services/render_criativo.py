@@ -49,6 +49,7 @@ async def renderizar_slide(
     instagram: str = "@adv.leticiabarros2",
     foto_path: str | None = None,
     foto_posicao: str = "center",
+    cta_texto: str = "⚖️ Procure uma advogada",
 ) -> None:
     cores = identidade_visual.get("cores", {})
     capa = indice == 0
@@ -68,6 +69,7 @@ async def renderizar_slide(
         logo_src=_logo_data_uri(),
         foto_src=_foto_data_uri(foto_path) if foto_path else None,
         foto_posicao=foto_posicao,
+        cta_texto=cta_texto,
     )
 
     async with async_playwright() as p:

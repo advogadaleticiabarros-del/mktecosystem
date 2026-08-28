@@ -69,6 +69,7 @@
     font-weight: {{ peso_fonte }};
     width: 100%;
     overflow-wrap: break-word;
+    white-space: pre-line;
   }
 
   .foot {
@@ -115,7 +116,7 @@
 
     <div class="foot">
       {% if final %}
-        <span class="cta">⚖️ Procure uma advogada</span>
+        <span class="cta">{{ cta_texto }}</span>
       {% else %}
         <span class="swipe">Arraste pro lado <span class="arrow">›</span></span>
       {% endif %}
