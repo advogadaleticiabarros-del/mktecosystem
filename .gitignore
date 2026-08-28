@@ -8,4 +8,5 @@ node_modules/
 apps/web/.env*.local
 apps/web/out/
 .claude/settings.json
+.claude/settings.local.json
 graphify-out/

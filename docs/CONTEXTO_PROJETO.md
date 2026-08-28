@@ -3,7 +3,7 @@
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
 > (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-08-28**
-> (Radar Jurídico → Jornal do site + captação de leads).
+> (Reels/estático no gerador automático + captura de leads/Radar Jurídico).
 
 ## O que é o Orbit
 
@@ -212,6 +212,49 @@ ContentPiece → Aprovação → Agendamento → SFTP):
   Railway).
 - Rodar `alembic upgrade head` em produção antes do próximo deploy do
   `orbit-api` (nova coluna `pautas.conteudo_bruto`).
+
+### Reels e estático no gerador automático (28/08/2026)
+
+`POST /content/gerar` (`app/routers/content.py`) agora produz **6 peças por
+pauta** (era 4): `artigo`, `carrossel`, `legenda`, `stories`, e dois tipos
+novos — `reels` (roteiro de Reels/TikTok, estrutura Problema-Solução com
+timestamps, regra dos 3 segundos, sugestão de *tom* de áudio de tendência —
+nunca nome de música real, sem acesso ao catálogo da plataforma) e `estatico`
+(briefing de arte única: conceito visual + texto de overlay + legenda). O
+prompt do `carrossel` também foi reescrito pra estrutura Value-Stack (capa
+declara quantidade exata de itens, sem slide de enchimento) — isso mudou o
+número de slides de fixo em 5 para variável (6-10); `instagram_publisher.py`
+já lia `len(slides)` dinamicamente, então nenhuma mudança foi necessária lá.
+
+Mapeamento novo em `agenda.py`: `reels` → canal `instagram`/formato `reels`
+(`reels` virou valor novo em `FORMATOS`, `calendario.py`); `estatico` → canal
+`instagram`/formato `post` (reaproveita o mesmo bucket de `legenda`).
+**Nenhum dos dois tem publicador automático ainda** — só `carrossel` publica
+de verdade hoje (`instagram_publisher.py` filtra
+`ScheduledPost.formato == "carrossel"` explicitamente); `reels`/`estatico`
+ficam agendados como `pronto` e exigem publicação manual, mesmo padrão já
+existente pra `legenda`/`stories`.
+
+Isso roda pra **toda pauta**, não só as do Radar — decisão explícita da
+usuária ("coloque tudo que dá pra usarmos aqui em produção"), então o custo/
+latência de geração por pauta subiu de 4 para 6 chamadas de IA (mais 1 pro
+`jornal`, quando aplicável).
+
+Origem do conteúdo dos prompts: skills do plugin `marketing-skills` (ver
+próxima seção) — a estrutura de carrossel Value-Stack e o roteiro de vídeo
+curto vieram de lá, adaptados à voz/regras OAB do tenant.
+
+### Plugin de skills de marketing instalado (28/08/2026)
+
+`claude plugin install marketing-skills@marketingskills --scope local` — 50
+skills de marketing (SEO, copywriting, vídeo, imagem, social/Reels/TikTok,
+carrossel, ads, e-mail, etc.), fonte `github.com/coreyhaines31/marketingskills`.
+Escopo `local` (`.claude/settings.local.json`, gitignorado) — só disponível
+neste repositório, não é global nem versionado. Usado como referência de
+conteúdo ao escrever/revisar os prompts do Orbit (ver seção acima), não é
+algo que o backend do Orbit chama em runtime — skills são um recurso do
+Claude Code, o Orbit gera conteúdo via API do Gemini diretamente, sem relação
+com esse sistema de skills.
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 

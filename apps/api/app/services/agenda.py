@@ -24,6 +24,8 @@ FORMATO_POR_TIPO = {
     "story": "story",
     "artigo": "artigo",
     "jornal": "newsletter",
+    "reels": "reels",
+    "estatico": "post",
 }
 
 CANAL_POR_TIPO = {"artigo": "blog", "jornal": "blog"}

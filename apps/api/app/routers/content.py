@@ -49,9 +49,15 @@ PROMPTS = {
         "\"resumo\": str (1-2 frases curtas, usadas como chamada nos cards do blog)}}"
     ),
     "carrossel": (
-        "Crie um carrossel de 5 slides de Instagram resumindo o tema '{titulo}' "
-        "(ângulo: {angulo}). Cada slide: uma ideia curta e direta.\n"
-        "{voz}\nResponda em JSON: {{\"slides\": [str, str, str, str, str]}}"
+        "Crie um carrossel de Instagram sobre '{titulo}' (ângulo: {angulo}) usando "
+        "a estrutura Value-Stack: slide 1 é a capa e compete sozinha no feed antes "
+        "de alguém saber que é um carrossel — precisa declarar a quantidade exata "
+        "de itens e a entrega exata (ex.: '5 direitos que...'), não um título vago. "
+        "Slides do meio: um direito/dica por slide, direto, sem enrolação. Último "
+        "slide: fecha o loop com uma ação clara (comente, salve, procure orientação). "
+        "Entre 6 e 10 slides — o número da capa tem que bater exatamente com quantos "
+        "slides de conteúdo existem, nunca arredondar pra cima com slide de enchimento.\n"
+        "{voz}\nResponda em JSON: {{\"slides\": [str, ...]}}"
     ),
     "legenda": (
         "Escreva a legenda do post de Instagram sobre '{titulo}' (ângulo: {angulo}). "
@@ -63,6 +69,31 @@ PROMPTS = {
         "Crie um roteiro de 3 stories (9:16) sobre '{titulo}' (ângulo: {angulo}): "
         "anúncio do tema, ponto principal, chamada para o link do blog.\n"
         "{voz}\nResponda em JSON: {{\"roteiro\": [str, str, str]}}"
+    ),
+    "reels": (
+        "Roteirize um Reels/TikTok (formato vertical 9:16, 15-30 segundos) sobre "
+        "'{titulo}' (ângulo: {angulo}). Regra dos 3 segundos: os 3 primeiros "
+        "segundos precisam ter gancho visual + gancho falado + texto na tela "
+        "batendo juntos, ou a pessoa passa o vídeo. Estrutura Problema-Solução: "
+        "[0-3s] gancho declarando o problema; [3-10s] por que isso importa; "
+        "[10-25s] a orientação/solução; [25-30s] CTA claro. Cada legenda de tela: "
+        "no máximo 2 linhas, 3-5 palavras por linha, sincronizada com a fala. "
+        "Sugira o tom/clima de áudio de tendência (ex.: 'batida crescente e "
+        "tensa', 'som de suspense que resolve') para buscar na biblioteca nativa "
+        "do Instagram/TikTok — não invente nome de música específica, já que não "
+        "há acesso ao catálogo real de áudios da plataforma.\n"
+        "{voz}\nResponda em JSON: {{\"gancho\": str, \"roteiro\": "
+        "[{{\"tempo\": str, \"cena\": str, \"texto_tela\": str}}, ...], "
+        "\"legenda\": str, \"cta\": str, \"audio_sugestao\": str}}"
+    ),
+    "estatico": (
+        "Crie o briefing de uma arte estática única para Instagram/feed sobre "
+        "'{titulo}' (ângulo: {angulo}). Defina o conceito visual (o que aparece "
+        "na imagem), o texto de overlay (curto, direto, legível em miniatura), "
+        "e a legenda do post. Formato quadrado ou 4:5, sem depender de vídeo ou "
+        "carrossel.\n"
+        "{voz}\nResponda em JSON: {{\"conceito_visual\": str, \"texto_overlay\": "
+        "str, \"legenda\": str, \"cta\": str}}"
     ),
 }
 
