@@ -15,6 +15,7 @@ class PautaOut(BaseModel):
     status: str
     alerta_atualidade: str | None = None
     verificado_em: datetime | None = None
+    conteudo_bruto: str | None = None
     criado_em: datetime
 
     model_config = {"from_attributes": True}
@@ -24,3 +25,5 @@ class PautaManualCreate(BaseModel):
     titulo: str
     angulo: str
     area: str
+    origem: str = "manual"
+    conteudo_bruto: str | None = None

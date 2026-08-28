@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime, timezone
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, String, Uuid
+from sqlalchemy import Boolean, DateTime, ForeignKey, String, Text, Uuid
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db import Base
@@ -21,6 +21,7 @@ class Pauta(Base):
     status: Mapped[str] = mapped_column(String(20), default="sugerida")
     alerta_atualidade: Mapped[str | None] = mapped_column(String(500), nullable=True)
     verificado_em: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    conteudo_bruto: Mapped[str | None] = mapped_column(Text, nullable=True)
     criado_em: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )

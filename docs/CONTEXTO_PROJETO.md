@@ -2,8 +2,8 @@
 
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
-> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-07-22**
-> (órbita do login sem corte + estrelas cadentes + glow que segue o cursor).
+> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-08-28**
+> (Radar Jurídico → Jornal do site + captação de leads).
 
 ## O que é o Orbit
 
@@ -150,6 +150,68 @@ Visão Geral também). Layout comum via `AppShell` (`components/app-shell.tsx`).
 - **Sem suíte de testes automatizados no frontend** — verificação é `tsc --noEmit` +
   `npm run build`, complementado (a partir de 22/07) por screenshot real via
   Playwright quando a mudança for visual.
+
+### Radar Jurídico → Jornal do site (28/08/2026)
+
+A advogada já pesquisa/cura um "Radar Jurídico" semanal no ChatGPT (fora do
+Orbit, por escolha dela). Em vez de reconstruir essa pesquisa dentro do Orbit,
+o material entra via CLI e passa a andar pelo pipeline existente (Pauta →
+ContentPiece → Aprovação → Agendamento → SFTP):
+
+- **Import**: `apps/api/scripts/import_radar.py` (`python scripts/import_radar.py
+  arquivo.md --titulo "..." --area ... --origem radar_juridico_manchete|
+  radar_juridico_satelite`) loga como o owner e chama `POST /pautas` (agora
+  aceitando `origem`/`conteudo_bruto`, campos que `criar_pauta_manual` não
+  hardcoda mais — ver `app/schemas/pauta.py`, `app/routers/pautas.py`).
+  `Pauta.conteudo_bruto` (Text, nullable) é coluna nova
+  (`alembic/versions/e7a2c4f6b891_pauta_conteudo_bruto.py`).
+- **Geração**: `POST /content/gerar` (`app/routers/content.py`) injeta
+  `pauta.conteudo_bruto` (quando existe) em todos os prompts como "material já
+  pesquisado — não invente além disso", em vez de deixar a IA repesquisar. Se
+  `pauta.origem == "radar_juridico_manchete"`, gera também um `ContentPiece`
+  extra `tipo="jornal"` (a edição semanal), além do conjunto padrão
+  (artigo/carrossel/legenda/stories). Pautas satélite (`radar_juridico_satelite`)
+  geram só o conjunto padrão — viram matéria de blog normal.
+- **Agendamento**: `app/services/agenda.py` mapeia `tipo="jornal"` →
+  `canal="blog"`, `formato="newsletter"` — dando uso real ao `formato`
+  `"newsletter"` que já existia em `FORMATOS` (`calendario.py`) mas nunca era
+  produzido por nada.
+- **Publicação**: `app/services/blog_publisher.py` ramifica por
+  `agendamento.formato`: `"artigo"` segue o caminho de sempre (slug novo por
+  artigo); `"newsletter"` cai em `_publicar_jornal`, que sobe sempre para a
+  mesma URL fixa `jornal.html` (sobrescreve, não cria slug novo a cada
+  edição) via novo template `app/templates/jornal.html` +
+  `render_artigo_blog.py::renderizar_jornal_html`. O card no `index.html` do
+  blog é inserido uma única vez (idempotente por URL, como já era
+  `inserir_card`); o `sitemap.xml` agora atualiza o `<lastmod>` de uma URL já
+  existente em vez de só ignorar (`blog_index_editor.py::inserir_sitemap_entry`)
+  — necessário porque a URL do Jornal não muda, só o conteúdo.
+- **Dois bugs de produção corrigidos no mesmo trabalho** (pré-existentes,
+  bloqueavam captação mesmo antes do Jornal existir):
+  1. O formulário "Jornal da Semana" (`blog_artigo.html`) e os dois formulários
+     de lead dos guias (`lp/guia-gestante-clt.html`,
+     `lp/guia-direitos-gestante-trabalhadora.html`) enviavam para
+     `crm.advogadaleticiabarros.com.br/api/public/*` — domínio inexistente.
+     Corrigidos para `https://orbit-api-production-0029.up.railway.app/public/contacts`
+     com o payload real de `ContactCreate` (`tenant_slug: "leticia-barros"`,
+     `nome`, `email`, `origem`, `website`). **Efeito colateral aceito**: os
+     guias coletavam telefone e uma mensagem com UTM/contexto; `Contact` não
+     tem esses campos, então phone/mensagem deixaram de ser persistidos —
+     só nome/e-mail/origem. Se telefone for importante para esses leads,
+     precisa de campo novo em `Contact` (fora de escopo deste trabalho).
+  2. `email_campaigns.py::gerar_rascunho_newsletter` filtrava
+     `ContentPiece.tipo == "blog"`, tipo que a geração real nunca produz
+     (produz `"artigo"`) — a newsletter semanal por e-mail estava sempre
+     vazia mesmo com artigos aprovados. Filtro corrigido para
+     `tipo.in_(["artigo", "jornal"])`.
+- **Pendência operacional (não é código)**: confirmar no Railway que
+  `CORS_ORIGINS` do serviço `orbit-api` inclui a origem real de onde o
+  formulário roda no navegador (`https://advogadaleticiabarros.com.br`) —
+  sem isso, o `fetch` do formulário corrigido é bloqueado por CORS mesmo com
+  o endpoint certo. Não verificado nesta sessão (sem acesso às env vars do
+  Railway).
+- Rodar `alembic upgrade head` em produção antes do próximo deploy do
+  `orbit-api` (nova coluna `pautas.conteudo_bruto`).
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 

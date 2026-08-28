@@ -132,10 +132,11 @@ async def criar_pauta_manual(
         titulo=payload.titulo,
         angulo=payload.angulo,
         area=payload.area,
-        origem="manual",
-        fonte="manual",
+        origem=payload.origem,
+        fonte="chatgpt-radar" if payload.origem.startswith("radar_juridico") else "manual",
         relevante_para_conteudo=True,
         status="sugerida",
+        conteudo_bruto=payload.conteudo_bruto,
     )
     db.add(pauta)
     await db.flush()

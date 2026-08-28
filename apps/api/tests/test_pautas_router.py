@@ -130,3 +130,26 @@ async def test_create_manual_pauta(client, db_session):
     body = response.json()
     assert body["origem"] == "manual"
     assert body["relevante_para_conteudo"] is True
+
+
+@pytest.mark.anyio
+async def test_criar_pauta_de_radar_com_conteudo_bruto(client, db_session):
+    tenant, user = await _make_tenant_and_user(db_session)
+    token = create_access_token(user.id)
+
+    response = await client.post(
+        "/pautas",
+        json={
+            "titulo": "NR-1 e riscos psicossociais: o que muda após decisão do STF",
+            "angulo": "direitos",
+            "area": "Trabalhista",
+            "origem": "radar_juridico_manchete",
+            "conteudo_bruto": "STF confirma suspensão temporária das multas da NR-1...",
+        },
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 201
+    body = response.json()
+    assert body["origem"] == "radar_juridico_manchete"
+    assert body["fonte"] == "chatgpt-radar"
+    assert body["conteudo_bruto"] == "STF confirma suspensão temporária das multas da NR-1..."

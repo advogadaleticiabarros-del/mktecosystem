@@ -97,6 +97,20 @@ def test_inserir_sitemap_entry_e_idempotente_para_mesma_url():
     assert segunda.count("<loc>https://advogadaleticiabarros.com.br/blog/novo-artigo.html</loc>") == 1
 
 
+def test_inserir_sitemap_entry_atualiza_lastmod_de_url_existente():
+    """Uma URL fixa (o Jornal semanal) tem seu lastmod atualizado a cada edição,
+    em vez de ficar preso na data da primeira publicação."""
+    primeira = inserir_sitemap_entry(
+        SITEMAP_FIXTURE, url="https://advogadaleticiabarros.com.br/blog/jornal.html", data_iso="2026-08-21"
+    )
+    segunda = inserir_sitemap_entry(
+        primeira, url="https://advogadaleticiabarros.com.br/blog/jornal.html", data_iso="2026-08-28"
+    )
+    assert segunda.count("<loc>https://advogadaleticiabarros.com.br/blog/jornal.html</loc>") == 1
+    assert "<lastmod>2026-08-28</lastmod>" in segunda
+    assert "<lastmod>2026-08-21</lastmod>" not in segunda
+
+
 def test_inserir_card_escapa_titulo_com_caracteres_html():
     resultado = inserir_card(
         INDEX_FIXTURE,

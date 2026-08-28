@@ -24,6 +24,7 @@ from app.services.render_artigo_blog import (
     estimar_tempo_leitura,
     renderizar_artigo_html,
     renderizar_capa_artigo,
+    renderizar_jornal_html,
 )
 
 logger = logging.getLogger(__name__)
@@ -81,54 +82,21 @@ async def publicar_agendamentos_prontos(db: AsyncSession) -> int:
         )
 
         try:
-            titulo = piece.corpo["titulo"]
-            slug = gerar_slug(titulo) or "artigo"
-            categoria_slug = gerar_slug(categoria)
-            url_artigo = f"{BLOG_BASE_URL}{slug}.html"
-            meta_description = piece.corpo.get("meta_description", "")
-            resumo = piece.corpo.get("resumo", "")
-
-            html_artigo = renderizar_artigo_html(
-                titulo=titulo,
-                meta_description=meta_description,
-                categoria=categoria,
-                resumo=resumo,
-                corpo_html=piece.corpo["html"],
-                slug=slug,
-                data_publicacao=date.today(),
-            )
-
-            caminho_capa_local = MEDIA_DIR / f"{agendamento.id}-capa.png"
-            await renderizar_capa_artigo(
-                titulo=titulo,
-                categoria=categoria,
-                identidade_visual=identidade_visual,
-                caminho_saida=str(caminho_capa_local),
-            )
-            capa_bytes = caminho_capa_local.read_bytes()
-
-            index_atual = (await sftp.download(f"{settings.BLOG_SFTP_PATH}index.html")).decode("utf-8")
-            sitemap_atual = (await sftp.download(f"{settings.BLOG_SFTP_PATH}../sitemap.xml")).decode("utf-8")
-
-            index_novo = inserir_card(
-                index_atual,
-                url=f"{slug}.html",
-                imagem=f"capas/{slug}.png",
-                categoria=categoria,
-                categoria_slug=categoria_slug,
-                titulo=titulo,
-                resumo=resumo,
-                tempo_leitura=estimar_tempo_leitura(piece.corpo["html"]),
-            )
-            sitemap_novo = inserir_sitemap_entry(
-                sitemap_atual, url=url_artigo, data_iso=date.today().isoformat()
-            )
-
-            await sftp.upload(f"{settings.BLOG_SFTP_PATH}{slug}.html", html_artigo.encode("utf-8"))
-            await sftp.garantir_diretorio(f"{settings.BLOG_SFTP_PATH}capas")
-            await sftp.upload(f"{settings.BLOG_SFTP_PATH}capas/{slug}.png", capa_bytes)
-            await sftp.upload(f"{settings.BLOG_SFTP_PATH}index.html", index_novo.encode("utf-8"))
-            await sftp.upload(f"{settings.BLOG_SFTP_PATH}../sitemap.xml", sitemap_novo.encode("utf-8"))
+            if agendamento.formato == "newsletter":
+                url_publicada = await _publicar_jornal(
+                    sftp=sftp,
+                    piece=piece,
+                    agendamento=agendamento,
+                    identidade_visual=identidade_visual,
+                )
+            else:
+                url_publicada = await _publicar_artigo(
+                    sftp=sftp,
+                    piece=piece,
+                    agendamento=agendamento,
+                    categoria=categoria,
+                    identidade_visual=identidade_visual,
+                )
         except Exception:
             logger.exception("Falha ao publicar artigo do agendamento %s", agendamento.id)
             agendamento.tentativas += 1
@@ -140,8 +108,114 @@ async def publicar_agendamentos_prontos(db: AsyncSession) -> int:
 
         await sftp.close()
         agendamento.status = "publicado"
-        agendamento.platform_post_id = url_artigo
+        agendamento.platform_post_id = url_publicada
         await db.commit()
         publicados += 1
 
     return publicados
+
+
+async def _publicar_artigo(
+    *, sftp: SFTPClient, piece: ContentPiece, agendamento: ScheduledPost, categoria: str,
+    identidade_visual: dict,
+) -> str:
+    titulo = piece.corpo["titulo"]
+    slug = gerar_slug(titulo) or "artigo"
+    categoria_slug = gerar_slug(categoria)
+    url_artigo = f"{BLOG_BASE_URL}{slug}.html"
+    meta_description = piece.corpo.get("meta_description", "")
+    resumo = piece.corpo.get("resumo", "")
+
+    html_artigo = renderizar_artigo_html(
+        titulo=titulo,
+        meta_description=meta_description,
+        categoria=categoria,
+        resumo=resumo,
+        corpo_html=piece.corpo["html"],
+        slug=slug,
+        data_publicacao=date.today(),
+    )
+
+    caminho_capa_local = MEDIA_DIR / f"{agendamento.id}-capa.png"
+    await renderizar_capa_artigo(
+        titulo=titulo,
+        categoria=categoria,
+        identidade_visual=identidade_visual,
+        caminho_saida=str(caminho_capa_local),
+    )
+    capa_bytes = caminho_capa_local.read_bytes()
+
+    index_atual = (await sftp.download(f"{settings.BLOG_SFTP_PATH}index.html")).decode("utf-8")
+    sitemap_atual = (await sftp.download(f"{settings.BLOG_SFTP_PATH}../sitemap.xml")).decode("utf-8")
+
+    index_novo = inserir_card(
+        index_atual,
+        url=f"{slug}.html",
+        imagem=f"capas/{slug}.png",
+        categoria=categoria,
+        categoria_slug=categoria_slug,
+        titulo=titulo,
+        resumo=resumo,
+        tempo_leitura=estimar_tempo_leitura(piece.corpo["html"]),
+    )
+    sitemap_novo = inserir_sitemap_entry(
+        sitemap_atual, url=url_artigo, data_iso=date.today().isoformat()
+    )
+
+    await sftp.upload(f"{settings.BLOG_SFTP_PATH}{slug}.html", html_artigo.encode("utf-8"))
+    await sftp.garantir_diretorio(f"{settings.BLOG_SFTP_PATH}capas")
+    await sftp.upload(f"{settings.BLOG_SFTP_PATH}capas/{slug}.png", capa_bytes)
+    await sftp.upload(f"{settings.BLOG_SFTP_PATH}index.html", index_novo.encode("utf-8"))
+    await sftp.upload(f"{settings.BLOG_SFTP_PATH}../sitemap.xml", sitemap_novo.encode("utf-8"))
+    return url_artigo
+
+
+async def _publicar_jornal(
+    *, sftp: SFTPClient, piece: ContentPiece, agendamento: ScheduledPost, identidade_visual: dict,
+) -> str:
+    """Publica a edição semanal na mesma URL fixa (sobrescreve, não cria slug novo)."""
+    titulo = piece.corpo["titulo"]
+    url_jornal = f"{BLOG_BASE_URL}jornal.html"
+    meta_description = piece.corpo.get("meta_description", "")
+    resumo = piece.corpo.get("resumo", "")
+
+    html_jornal = renderizar_jornal_html(
+        titulo=titulo,
+        meta_description=meta_description,
+        resumo=resumo,
+        corpo_html=piece.corpo["html"],
+        data_publicacao=date.today(),
+    )
+
+    caminho_capa_local = MEDIA_DIR / f"{agendamento.id}-capa.png"
+    await renderizar_capa_artigo(
+        titulo=titulo,
+        categoria="Jornal Jurídico",
+        identidade_visual=identidade_visual,
+        caminho_saida=str(caminho_capa_local),
+    )
+    capa_bytes = caminho_capa_local.read_bytes()
+
+    index_atual = (await sftp.download(f"{settings.BLOG_SFTP_PATH}index.html")).decode("utf-8")
+    sitemap_atual = (await sftp.download(f"{settings.BLOG_SFTP_PATH}../sitemap.xml")).decode("utf-8")
+
+    index_novo = inserir_card(
+        index_atual,
+        url="jornal.html",
+        imagem="capas/jornal.png",
+        categoria="Jornal Jurídico",
+        categoria_slug="jornal-juridico",
+        titulo=titulo,
+        resumo=resumo,
+        tempo_leitura=estimar_tempo_leitura(piece.corpo["html"]),
+    )
+    sitemap_novo = inserir_sitemap_entry(
+        sitemap_atual, url=url_jornal, data_iso=date.today().isoformat()
+    )
+
+    await sftp.upload(f"{settings.BLOG_SFTP_PATH}jornal.html", html_jornal.encode("utf-8"))
+    await sftp.garantir_diretorio(f"{settings.BLOG_SFTP_PATH}capas")
+    await sftp.upload(f"{settings.BLOG_SFTP_PATH}capas/jornal.png", capa_bytes)
+    await sftp.upload(f"{settings.BLOG_SFTP_PATH}index.html", index_novo.encode("utf-8"))
+    await sftp.upload(f"{settings.BLOG_SFTP_PATH}../sitemap.xml", sitemap_novo.encode("utf-8"))
+    return url_jornal

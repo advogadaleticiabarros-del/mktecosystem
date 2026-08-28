@@ -23,9 +23,10 @@ FORMATO_POR_TIPO = {
     "stories": "story",
     "story": "story",
     "artigo": "artigo",
+    "jornal": "newsletter",
 }
 
-CANAL_POR_TIPO = {"artigo": "blog"}
+CANAL_POR_TIPO = {"artigo": "blog", "jornal": "blog"}
 
 
 async def proxima_vaga(db: AsyncSession, tenant_id: uuid.UUID) -> tuple[date, str]:

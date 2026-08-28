@@ -1,4 +1,5 @@
 import html as html_lib
+import re
 
 from bs4 import BeautifulSoup
 
@@ -53,8 +54,14 @@ def inserir_card(
 
 
 def inserir_sitemap_entry(xml_atual: str, *, url: str, data_iso: str) -> str:
-    if f"<loc>{url}</loc>" in xml_atual:
-        return xml_atual
+    marcador_loc = f"<loc>{url}</loc>"
+    if marcador_loc in xml_atual:
+        # URL fixa (ex.: o Jornal semanal) já existe: só atualiza o lastmod
+        # em vez de duplicar a entrada.
+        padrao = re.compile(
+            re.escape(marcador_loc) + r"(\s*<lastmod>)[^<]*(</lastmod>)"
+        )
+        return padrao.sub(rf"{marcador_loc}\g<1>{data_iso}\g<2>", xml_atual)
 
     entrada = f"  <url>\n    <loc>{url}</loc>\n    <lastmod>{data_iso}</lastmod>\n  </url>\n"
     marcador = "<urlset"
