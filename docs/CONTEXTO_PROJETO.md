@@ -83,6 +83,18 @@ com edições anteriores.
   `/home/u528898188/domains/advogadaleticiabarros.com.br/public_html/blog/`).
   Credenciais salvas em `deploy/vps/.env` na VPS (antes: env vars do serviço
   `orbit-api` no Railway, hoje desativado).
+- **Formulários do site principal corrigidos (04/09/2026)**: `index.html` e
+  `contato.html` tinham `<form action="https://formspree.io/f/xrerejoa">` —
+  nunca chegavam no CRM, e quando o Formspree falhava o lead se perdia sem
+  nenhuma cópia. Os dois usam o mesmo `js/pages.js` compartilhado; trocado
+  o `action` do Formspree por um `fetch()` direto pro
+  `POST https://crm.advogadaleticiabarros.com.br/api/public/lead` (mesmo
+  endpoint que as landing pages em `lp/` já usavam corretamente — CORS já
+  liberado lá pra esse domínio). Publicado via SFTP (mesmas credenciais do
+  blog acima, caminho `public_html/` em vez de `public_html/blog/`).
+  Backups dos 3 arquivos originais ficaram só na sessão que fez a correção,
+  não versionados aqui — se precisar reverter, puxar de novo via SFTP e
+  comparar com o histórico do painel da Hostinger, se houver.
 
 ## O que está pronto e em produção
 
