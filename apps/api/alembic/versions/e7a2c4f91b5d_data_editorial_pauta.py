@@ -1,7 +1,7 @@
 """data_editorial em pautas
 
 Revision ID: e7a2c4f91b5d
-Revises: d4f1a8c9e2b3
+Revises: e7a2c4f6b891
 Create Date: 2026-09-29 10:00:00.000000
 
 """
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 revision = 'e7a2c4f91b5d'
-down_revision = 'd4f1a8c9e2b3'
+down_revision = 'e7a2c4f6b891'
 branch_labels = None
 depends_on = None
 

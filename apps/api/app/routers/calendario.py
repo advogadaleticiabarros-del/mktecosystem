@@ -15,7 +15,7 @@ from app.models.user import User
 router = APIRouter(prefix="/calendario", tags=["calendario"])
 
 CANAIS = {"instagram", "blog", "email"}
-FORMATOS = {"carrossel", "post", "story", "artigo", "newsletter"}
+FORMATOS = {"carrossel", "post", "story", "artigo", "newsletter", "reels"}
 STATUS = {"planejado", "pronto", "publicado"}
 
 

@@ -115,7 +115,7 @@ async def gerar_rascunho_newsletter(
         .join(Pauta, ContentPiece.pauta_id == Pauta.id)
         .where(
             ContentPiece.tenant_id == tenant_id,
-            ContentPiece.tipo == "blog",
+            ContentPiece.tipo.in_(["artigo", "jornal"]),
             ContentPiece.status == "aprovado",
             ContentPiece.criado_em >= since,
         )

@@ -54,6 +54,39 @@ async def _setup(db, status_piece="aprovado"):
     return tenant, agendamento
 
 
+async def _setup_jornal(db):
+    tenant = Tenant(nome="Letícia", slug="leticia-barros", nicho="juridico")
+    db.add(tenant)
+    await db.flush()
+    db.add(TenantConfig(tenant_id=tenant.id, voz={}, identidade_visual={"cores": {}}))
+    pauta = Pauta(
+        tenant_id=tenant.id, titulo="Radar Jurídico — NR-1", angulo="direitos", area="Trabalhista",
+        origem="radar_juridico_manchete", fonte="chatgpt-radar", relevante_para_conteudo=True,
+    )
+    db.add(pauta)
+    await db.flush()
+    piece = ContentPiece(
+        tenant_id=tenant.id, pauta_id=pauta.id, tipo="jornal",
+        corpo={
+            "titulo": "Radar Jurídico — NR-1",
+            "html": "<p>Edição semanal</p>",
+            "meta_description": "Resumo da semana",
+            "resumo": "Resumo curto",
+        },
+        status="aprovado",
+    )
+    db.add(piece)
+    await db.flush()
+    agendamento = ScheduledPost(
+        tenant_id=tenant.id, content_piece_id=piece.id, titulo="Radar Jurídico — NR-1",
+        canal="blog", formato="newsletter",
+        data_agendada=date.today() - timedelta(days=1), horario="11:00", status="pronto",
+    )
+    db.add(agendamento)
+    await db.commit()
+    return tenant, agendamento
+
+
 async def _fake_renderizar_capa_artigo(*, titulo, categoria, identidade_visual, caminho_saida):
     # A implementação real (Playwright) grava o PNG em caminho_saida; o mock
     # precisa replicar isso, já que blog_publisher lê os bytes de volta do disco.
@@ -86,6 +119,33 @@ async def test_publica_agendamento_pronto(db_session):
     assert instancia.upload.await_count == 4
     instancia.garantir_diretorio.assert_awaited_once_with("capas")
     instancia.close.assert_awaited_once()
+
+
+@pytest.mark.anyio
+async def test_publica_jornal_em_url_fixa(db_session):
+    tenant, agendamento = await _setup_jornal(db_session)
+
+    with patch(
+        "app.services.blog_publisher.renderizar_capa_artigo",
+        new=AsyncMock(side_effect=_fake_renderizar_capa_artigo),
+    ), patch(
+        "app.services.blog_publisher.SFTPClient"
+    ) as MockSFTP:
+        instancia = MockSFTP.return_value
+        instancia.download = AsyncMock(side_effect=[INDEX_FIXTURE.encode(), SITEMAP_FIXTURE.encode()])
+        instancia.upload = AsyncMock()
+        instancia.garantir_diretorio = AsyncMock()
+        instancia.close = AsyncMock()
+
+        publicados = await publicar_agendamentos_prontos(db_session)
+
+    assert publicados == 1
+    await db_session.refresh(agendamento)
+    assert agendamento.status == "publicado"
+    assert agendamento.platform_post_id == "https://advogadaleticiabarros.com.br/blog/jornal.html"
+    caminhos_upload = [chamada.args[0] for chamada in instancia.upload.await_args_list]
+    assert "jornal.html" in caminhos_upload
+    assert "capas/jornal.png" in caminhos_upload
 
 
 @pytest.mark.anyio

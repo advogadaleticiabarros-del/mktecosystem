@@ -54,9 +54,15 @@ PROMPTS = {
         "\"resumo\": str (1-2 frases curtas, usadas como chamada nos cards do blog)}}"
     ),
     "carrossel": (
-        "Crie um carrossel de 5 slides de Instagram resumindo o tema '{titulo}' "
-        "(ângulo: {angulo}). Cada slide: uma ideia curta e direta.\n"
-        "{voz}\nResponda em JSON: {{\"slides\": [str, str, str, str, str]}}"
+        "Crie um carrossel de Instagram sobre '{titulo}' (ângulo: {angulo}) usando "
+        "a estrutura Value-Stack: slide 1 é a capa e compete sozinha no feed antes "
+        "de alguém saber que é um carrossel — precisa declarar a quantidade exata "
+        "de itens e a entrega exata (ex.: '5 direitos que...'), não um título vago. "
+        "Slides do meio: um direito/dica por slide, direto, sem enrolação. Último "
+        "slide: fecha o loop com uma ação clara (comente, salve, procure orientação). "
+        "Entre 6 e 10 slides — o número da capa tem que bater exatamente com quantos "
+        "slides de conteúdo existem, nunca arredondar pra cima com slide de enchimento.\n"
+        "{voz}\nResponda em JSON: {{\"slides\": [str, ...]}}"
     ),
     "legenda": (
         "Escreva a legenda do post de Instagram sobre '{titulo}' (ângulo: {angulo}). "
@@ -69,7 +75,52 @@ PROMPTS = {
         "anúncio do tema, ponto principal, chamada para o link do blog.\n"
         "{voz}\nResponda em JSON: {{\"roteiro\": [str, str, str]}}"
     ),
+    "reels": (
+        "Roteirize um Reels/TikTok (formato vertical 9:16, 15-30 segundos) sobre "
+        "'{titulo}' (ângulo: {angulo}). Regra dos 3 segundos: os 3 primeiros "
+        "segundos precisam ter gancho visual + gancho falado + texto na tela "
+        "batendo juntos, ou a pessoa passa o vídeo. Estrutura Problema-Solução: "
+        "[0-3s] gancho declarando o problema; [3-10s] por que isso importa; "
+        "[10-25s] a orientação/solução; [25-30s] CTA claro. Cada legenda de tela: "
+        "no máximo 2 linhas, 3-5 palavras por linha, sincronizada com a fala. "
+        "Sugira o tom/clima de áudio de tendência (ex.: 'batida crescente e "
+        "tensa', 'som de suspense que resolve') para buscar na biblioteca nativa "
+        "do Instagram/TikTok — não invente nome de música específica, já que não "
+        "há acesso ao catálogo real de áudios da plataforma.\n"
+        "{voz}\nResponda em JSON: {{\"gancho\": str, \"roteiro\": "
+        "[{{\"tempo\": str, \"cena\": str, \"texto_tela\": str}}, ...], "
+        "\"legenda\": str, \"cta\": str, \"audio_sugestao\": str}}"
+    ),
+    "estatico": (
+        "Crie o briefing de uma arte estática única para Instagram/feed sobre "
+        "'{titulo}' (ângulo: {angulo}). Defina o conceito visual (o que aparece "
+        "na imagem), o texto de overlay (curto, direto, legível em miniatura), "
+        "e a legenda do post. Formato quadrado ou 4:5, sem depender de vídeo ou "
+        "carrossel.\n"
+        "{voz}\nResponda em JSON: {{\"conceito_visual\": str, \"texto_overlay\": "
+        "str, \"legenda\": str, \"cta\": str}}"
+    ),
 }
+
+JORNAL_PROMPT = (
+    "Você monta a edição semanal do 'Radar Jurídico da Semana', a partir do "
+    "material já pesquisado e curado abaixo (ângulo principal: {angulo}, área: "
+    "{area}). Escreva a edição em blocos: um resumo de abertura (100-180 "
+    "palavras), 'Destaque da Semana' (a decisão principal, '{titulo}'), "
+    "'Direito do Trabalho', 'Direito de Família', 'O que isso muda na "
+    "prática?', 'Julgamentos para acompanhar' e 'Fontes oficiais' (tribunal, "
+    "processo/tema, data e link, quando o material trouxer). Nunca invente "
+    "decisão, número de processo, data, tribunal, súmula ou resultado que não "
+    "esteja no material.\n"
+    "{voz}\n"
+    "MATERIAL JÁ PESQUISADO (única fonte permitida — não pesquise nada além "
+    "disso):\n{material}\n\n"
+    "Responda em JSON: {{\"titulo\": str, \"html\": str, "
+    "\"meta_description\": str (até 155 caracteres), "
+    "\"resumo\": str (1-2 frases para o card/CTA)}}"
+)
+
+RADAR_ORIGENS_MANCHETE = {"radar_juridico_manchete"}
 
 
 @router.post("/gerar", response_model=list[ContentPieceOut])
@@ -102,17 +153,26 @@ async def gerar_conteudo(
 
     licoes = await memorias_de_edicao(db, current_user.tenant_id)
 
+    def _com_licoes(prompt: str) -> str:
+        if not licoes:
+            return prompt
+        return prompt + (
+            "\n\nLIÇÕES DE EDIÇÕES ANTERIORES (a cliente corrigiu estes pontos "
+            "em conteúdos passados — evite repetir):\n" + licoes
+        )
+
     pieces = []
     for tipo, template in PROMPTS.items():
         prompt = template.format(
             titulo=pauta.titulo, angulo=pauta.angulo, area=pauta.area, voz=voz_block
         )
-        if licoes:
+        if pauta.conteudo_bruto:
             prompt += (
-                "\n\nLIÇÕES DE EDIÇÕES ANTERIORES (a cliente corrigiu estes pontos "
-                "em conteúdos passados — evite repetir):\n" + licoes
+                "\n\nMATERIAL JÁ PESQUISADO (use como fonte principal — não "
+                "invente decisão, número de processo, data ou tribunal além do "
+                "que está aqui):\n" + pauta.conteudo_bruto
             )
-        corpo = await ai_client.generate_json(prompt)
+        corpo = await ai_client.generate_json(_com_licoes(prompt))
         piece = ContentPiece(
             tenant_id=current_user.tenant_id,
             pauta_id=pauta.id,
@@ -123,6 +183,26 @@ async def gerar_conteudo(
         )
         db.add(piece)
         pieces.append(piece)
+
+    if pauta.origem in RADAR_ORIGENS_MANCHETE and pauta.conteudo_bruto:
+        prompt = JORNAL_PROMPT.format(
+            titulo=pauta.titulo,
+            angulo=pauta.angulo,
+            area=pauta.area,
+            voz=voz_block,
+            material=pauta.conteudo_bruto,
+        )
+        corpo = await ai_client.generate_json(_com_licoes(prompt))
+        jornal_piece = ContentPiece(
+            tenant_id=current_user.tenant_id,
+            pauta_id=pauta.id,
+            tipo="jornal",
+            corpo=corpo,
+            status="rascunho",
+            versao=1,
+        )
+        db.add(jornal_piece)
+        pieces.append(jornal_piece)
 
     await db.commit()
     for p in pieces:

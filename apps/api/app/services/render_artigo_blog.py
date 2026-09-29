@@ -79,6 +79,38 @@ def renderizar_artigo_html(
     )
 
 
+def renderizar_jornal_html(
+    *,
+    titulo: str,
+    meta_description: str,
+    resumo: str,
+    corpo_html: str,
+    data_publicacao: date,
+    whatsapp: str = "5527995151402",
+    oab: str = "OAB/ES 39.948",
+) -> str:
+    """Renderiza a edição semanal do Jornal/Radar Jurídico numa URL fixa.
+
+    Diferente de `renderizar_artigo_html`, não gera slug próprio: a mesma
+    página (`jornal.html`) é sobrescrita a cada edição.
+    """
+    data_extenso = f"{data_publicacao.day} de {MESES[data_publicacao.month - 1]} de {data_publicacao.year}"
+    template = _env.get_template("jornal.html")
+    return template.render(
+        titulo=titulo,
+        meta_description=meta_description,
+        resumo=resumo,
+        corpo_html=corpo_html,
+        canonical_url=f"{BLOG_BASE_URL}jornal.html",
+        capa_url=f"{BLOG_BASE_URL}capas/jornal.png",
+        data_iso=data_publicacao.isoformat(),
+        data_extenso=data_extenso,
+        tempo_leitura=estimar_tempo_leitura(corpo_html),
+        whatsapp=whatsapp,
+        oab=oab,
+    )
+
+
 async def renderizar_capa_artigo(
     *,
     titulo: str,

@@ -4,7 +4,9 @@ import pytest
 from sqlalchemy import select
 
 from app.core.security import create_access_token, hash_password
+from app.models.content_piece import ContentPiece
 from app.models.email_campaign import EmailCampaign
+from app.models.pauta import Pauta
 from app.models.tenant import Tenant, TenantConfig
 from app.models.user import User
 
@@ -106,3 +108,46 @@ async def test_status_enviado_nao_e_setavel_via_api(client, db_session):
         headers={"Authorization": f"Bearer {token}"},
     )
     assert resp.status_code == 422
+
+
+@pytest.mark.anyio
+async def test_gerar_newsletter_inclui_artigos_e_jornal_aprovados(client, db_session):
+    """Regressão: o filtro antigo (tipo == "blog") nunca batia com nada, porque a
+    geração real produz tipo="artigo" (e agora também "jornal") — a newsletter
+    semanal ficava sempre vazia mesmo com conteúdo aprovado disponível."""
+    tenant, user = await _make_tenant_and_user(db_session)
+    token = create_access_token(user.id)
+    pauta = Pauta(
+        tenant_id=tenant.id, titulo="Radar Jurídico — NR-1", angulo="direitos",
+        area="Trabalhista", origem="radar_juridico_manchete", fonte="chatgpt-radar",
+        relevante_para_conteudo=True, status="sugerida",
+    )
+    db_session.add(pauta)
+    await db_session.flush()
+    db_session.add_all(
+        [
+            ContentPiece(
+                tenant_id=tenant.id, pauta_id=pauta.id, tipo="artigo",
+                corpo={"titulo": "Artigo aprovado"}, status="aprovado",
+            ),
+            ContentPiece(
+                tenant_id=tenant.id, pauta_id=pauta.id, tipo="jornal",
+                corpo={"titulo": "Jornal aprovado"}, status="aprovado",
+            ),
+        ]
+    )
+    await db_session.commit()
+
+    mock_ai = AsyncMock()
+    mock_ai.generate_json.return_value = {
+        "assunto": "Sua semana no direito",
+        "corpo_html": "<p>oi</p>",
+        "corpo_texto": "oi",
+    }
+    with patch("app.routers.email.get_ai_client", return_value=mock_ai):
+        resp = await client.post(
+            "/email/campaigns/gerar-newsletter",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+    assert resp.status_code == 200
+    assert resp.json()["tipo"] == "newsletter"

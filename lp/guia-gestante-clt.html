@@ -286,12 +286,11 @@
         .filter(Boolean);
       var origem = utmTags.length ? ' [Origem: ' + utmTags.join(', ') + ']' : ' [Origem: direta/sem UTM]';
       try {
-        var resp = await fetch('https://crm.advogadaleticiabarros.com.br/api/public/lead', {
+        var resp = await fetch('https://api.orbit.advogadaleticiabarros.com.br/public/contacts', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            name: nomeEl.value.trim(), phone: telEl.value, email: emailEl.value.trim(),
-            area: 'trabalhista',
-            message: '[ISCA guia-gestante-clt]' + origem + (momento ? ' [Momento: ' + momento + ']' : '') + ' [Lead frio - baixou o guia gratuito]',
+            tenant_slug: 'leticia-barros', nome: nomeEl.value.trim(), email: emailEl.value.trim(),
+            origem: 'lp-guia-gestante',
             website: this.querySelector('[name=website]').value
           })
         });
