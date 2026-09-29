@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query
@@ -112,11 +112,20 @@ async def listar_pautas(
     db: Annotated[AsyncSession, Depends(get_db)],
     current_user: Annotated[User, Depends(get_current_user)],
     relevante_para_conteudo: Annotated[bool | None, Query()] = None,
+    data_inicio: Annotated[date | None, Query()] = None,
+    data_fim: Annotated[date | None, Query()] = None,
 ) -> list[Pauta]:
     query = select(Pauta).where(Pauta.tenant_id == current_user.tenant_id)
     if relevante_para_conteudo is not None:
         query = query.where(Pauta.relevante_para_conteudo == relevante_para_conteudo)
-    query = query.order_by(Pauta.criado_em.desc())
+    if data_inicio is not None:
+        query = query.where(Pauta.data_editorial >= data_inicio)
+    if data_fim is not None:
+        query = query.where(Pauta.data_editorial <= data_fim)
+    if data_inicio is not None or data_fim is not None:
+        query = query.order_by(Pauta.data_editorial.desc())
+    else:
+        query = query.order_by(Pauta.criado_em.desc())
     result = await db.execute(query)
     return list(result.scalars().all())
 
@@ -136,6 +145,7 @@ async def criar_pauta_manual(
         fonte="manual",
         relevante_para_conteudo=True,
         status="sugerida",
+        data_editorial=payload.data_editorial or date.today(),
     )
     db.add(pauta)
     await db.flush()

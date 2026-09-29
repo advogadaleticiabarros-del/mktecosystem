@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Analytics 4 + Meta Pixel: carregados após a primeira interação
+         ou 2s, o que vier primeiro — tira ~346 KiB do caminho crítico de
+         carregamento sem perder eventos de conversão (que só disparam
+         quando o usuário já está interagindo). -->
+    <script>
+      function carregarRastreadores() {
+        if (window._rastreadoresCarregados) return;
+        window._rastreadoresCarregados = true;
+
+        var gtmScript = document.createElement('script');
+        gtmScript.async = true;
+        gtmScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-5B513VWB4D';
+        document.head.appendChild(gtmScript);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-5B513VWB4D');
+
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '858690737244687');
+        fbq('track', 'PageView');
+      }
+      ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach(function (ev) {
+        window.addEventListener(ev, carregarRastreadores, { once: true, passive: true });
+      });
+      setTimeout(carregarRastreadores, 2000);
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=858690737244687&ev=PageView&noscript=1"/></noscript>
+
+    <title>Letícia Barros | Advocacia e Consultoria Jurídica | Vitória-ES</title>
+    <meta name="description" content="Advogada especialista em Direito Trabalhista, Família e Previdenciário. Atendimento humanizado para gestantes CLT, mães solo e trabalhadores. Vitória-ES e online em todo o Brasil. OAB/ES 39.948">
+    <link rel="canonical" href="https://advogadaleticiabarros.com.br/">
+    <meta name="keywords" content="advogada vitória es, advogada trabalhista, gestante clt, pensão alimentícia, BPC LOAS, direito trabalhista, advogada família">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Letícia Barros | Advocacia e Consultoria Jurídica">
+    <meta property="og:description" content="Advocacia humanizada para quem mais precisa. Gestantes, mães solo e trabalhadores. OAB/ES 39.948">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://advogadaleticiabarros.com.br">
+    <meta property="og:image" content="assets/logo/logo-800x800.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logo/logo-800x800.png">
+    <link rel="apple-touch-icon" href="assets/logo/logo-800x800.png">
+    <meta name="apple-mobile-web-app-title" content="Letícia Barros">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons — subconjunto com só os ícones usados nesta página
+         (27 de milhares), gerado a partir do all.min.css oficial 6.5.1 -->
+    <link rel="stylesheet" href="assets/css/fontawesome-subset.css">
+
+    <style>
+        /* =====================================================
+           LETÍCIA BARROS — ADVOCACIA E CONSULTORIA JURÍDICA
+           Design System & Global Styles
+           ===================================================== */
+
+        :root {
+            --fundo-escuro: #231E1A;
+            --fundo-alt: #2E2720;
+            --fundo-card: #352E26;
+            --fundo-light: #3A3228;
+            --dourado: #C9A962;
+            --dourado-light: #D4BC7D;
+            --dourado-dark: #B8943F;
+            --areia: #E8DED1;
+            --areia-light: #F2EBE0;
+            --cafe: #3D2B1F;
+            --branco: #FAF6F0;
+            --branco-puro: #FFFFFF;
+            --dourado-glow: rgba(201, 169, 98, 0.15);
+            --dourado-glow-md: rgba(201, 169, 98, 0.25);
+            --dourado-glow-strong: rgba(201, 169, 98, 0.4);
+            --gradient-gold: linear-gradient(135deg, var(--dourado), var(--dourado-light));
+            --gradient-dark: linear-gradient(180deg, var(--fundo-escuro), var(--fundo-alt));
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-fast: all 0.25s ease;
+            --shadow-gold: 0 4px 30px rgba(201, 169, 98, 0.15);
+            --shadow-card: 0 8px 40px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 16px 50px rgba(0, 0, 0, 0.4);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 30px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--fundo-escuro);
+            color: var(--areia);
+            overflow-x: hidden;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        img { max-width: 100%; height: auto; display: block; }
+        button { font-family: inherit; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* Selection */
+        ::selection { background: var(--dourado); color: var(--fundo-escuro); }
+
+        /* ========== LOADING SCREEN ========== */
+        .loading-screen {
+            position: fixed; inset: 0;
+            background: var(--fundo-escuro);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        .loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        .loading-logo {
+            display: flex; flex-direction: column; align-items: center; gap: 16px;
+        }
+        .loading-logo img {
+            width: 80px; height: 80px; border-radius: 50%;
+            animation: pulse-gold 1.5s ease-in-out infinite;
+        }
+        .loading-logo .loading-bar {
+            width: 120px; height: 2px; background: rgba(201,169,98,0.15);
+            border-radius: 2px; overflow: hidden;
+        }
+        .loading-logo .loading-bar-inner {
+            width: 0%; height: 100%; background: var(--gradient-gold);
+            animation: loading-progress 1.2s ease-out forwards;
+        }
+
+        @keyframes pulse-gold {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.12); opacity: .7; }
+        }
+        @keyframes loading-progress {
+            to { width: 100%; }
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 16px 0; transition: var(--transition);
+        }
+        .header.scrolled {
+            padding: 10px 0;
+            background: rgba(26,22,20,0.95);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(201,169,98,0.08);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
+        .header .container {
+            display: flex; align-items: center; justify-content: space-between;
+        }
+
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo-img {
+            width: 44px; height: 44px; border-radius: 50%;
+            border: 1.5px solid rgba(201,169,98,0.3);
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        .logo:hover .logo-img { border-color: var(--dourado); }
+        .logo-text { display: flex; flex-direction: column; }
+        .logo-text .name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem; font-weight: 600;
+            color: var(--dourado); letter-spacing: 0.5px;
+        }
+        .logo-text .subtitle {
+            font-size: 0.6rem; color: var(--dourado-light);
+            letter-spacing: 2.5px; text-transform: uppercase; opacity: 0.85;
+            text-shadow: 0 1px 3px rgba(0,0,0,.6);
+        }
+
+        .nav-menu {
+            display: flex; align-items: center; gap: 32px; list-style: none;
+        }
+        .nav-menu a {
+            font-size: 0.82rem; font-weight: 400; color: var(--areia);
+            letter-spacing: 0.3px; position: relative; padding: 4px 0;
+        }
+        .nav-menu a::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 0; height: 1px; background: var(--dourado);
+            transition: width 0.3s ease;
+        }
+        .nav-menu a:hover { color: var(--dourado); }
+        .nav-menu a:hover::after { width: 100%; }
+
+        .nav-cta {
+            background: transparent !important;
+            border: 1px solid var(--dourado) !important;
+            color: var(--dourado) !important;
+            padding: 10px 24px !important; border-radius: 4px;
+            font-size: 0.75rem !important; font-weight: 600 !important;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            transition: var(--transition); cursor: pointer;
+        }
+        .nav-cta:hover {
+            background: var(--dourado) !important;
+            color: var(--fundo-escuro) !important;
+        }
+        .nav-cta::after { display: none !important; }
+
+        .hamburger {
+            display: none; flex-direction: column; gap: 5px;
+            cursor: pointer; z-index: 1001; padding: 8px; background: none; border: none;
+        }
+        .hamburger span {
+            width: 24px; height: 2px; background: var(--dourado);
+            transition: var(--transition); display: block;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        .nav-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+            z-index: 998; opacity: 0; visibility: hidden; transition: var(--transition);
+        }
+        .nav-overlay.visible { opacity: 1; visibility: visible; }
+
+        /* ========== BUTTONS ========== */
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--gradient-gold); color: var(--fundo-escuro);
+            padding: 16px 32px; border-radius: 6px;
+            font-size: 0.82rem; font-weight: 600;
+            letter-spacing: 1px; text-transform: uppercase;
+            transition: var(--transition); border: none; cursor: pointer;
+            position: relative; overflow: hidden;
+        }
+        .btn-primary::before {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(201,169,98,0.35);
+        }
+
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: var(--dourado); font-size: 0.85rem; font-weight: 500;
+            letter-spacing: 0.5px; padding: 16px 8px; background: none; border: none;
+            cursor: pointer; transition: var(--transition);
+        }
+        .btn-secondary:hover { color: var(--dourado-light); }
+        .btn-secondary .arrow { transition: transform 0.3s ease; }
+        .btn-secondary:hover .arrow { transform: translateX(5px); }
+
+        .btn-outline {
+            display: inline-flex; align-items: center; gap: 8px;
+            border: 1px solid rgba(201,169,98,0.25); color: var(--dourado);
+            padding: 12px 24px; border-radius: 6px;
+            font-size: 0.82rem; font-weight: 500;
+            letter-spacing: 0.5px; background: transparent;
+            transition: var(--transition); cursor: pointer;
+        }
+        .btn-outline:hover {
+            background: var(--dourado-glow); border-color: var(--dourado);
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--dourado);
+            color: #1a1612;
+            padding: 16px 34px; border-radius: 6px;
+            font-size: 0.82rem; font-weight: 700;
+            letter-spacing: 1.2px; text-transform: uppercase;
+            border: none; cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(201,169,98,0.2);
+            text-decoration: none;
+        }
+        .btn-whatsapp:hover {
+            background: #d4b36e; transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(201,169,98,0.4);
+            color: #1a1612;
+        }
+
+        /* ========== SECTION HELPERS ========== */
+        .section-header { text-align: center; margin-bottom: 60px; }
+
+        .section-tag {
+            display: inline-block; font-size: 0.68rem;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--dourado); margin-bottom: 16px;
+            position: relative; padding: 0 50px;
+        }
+        .section-tag::before, .section-tag::after {
+            content: ''; position: absolute; top: 50%;
+            width: 30px; height: 1px; background: var(--dourado); opacity: 0.3;
+        }
+        .section-tag::before { left: 0; }
+        .section-tag::after { right: 0; }
+
+        .section-header h2 {
+            font-size: 2.6rem; color: var(--branco); margin-bottom: 16px;
+        }
+        .section-header p {
+            font-size: 1rem; color: var(--areia); opacity: 0.7;
+            max-width: 520px; margin: 0 auto;
+        }
+
+        .gold-line {
+            width: 100%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--dourado), transparent);
+            opacity: 0.25;
+        }
+
+        .highlight { color: var(--dourado); }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            position: relative; overflow: hidden; padding: 120px 0 80px;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -30%; right: -15%;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(201,169,98,0.08) 0%, transparent 70%);
+            border-radius: 50%; animation: float-glow 10s ease-in-out infinite;
+        }
+        .hero::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--dourado), transparent);
+            opacity: 0.25;
+        }
+        @keyframes float-glow {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-20px, 20px) scale(1.05); }
+        }
+
+        .hero .container {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 60px; align-items: center;
+            position: relative; z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--dourado-glow);
+            border: 1px solid rgba(201,169,98,0.15);
+            padding: 8px 18px; border-radius: 30px;
+            font-size: 0.72rem; color: var(--dourado-light);
+            margin-bottom: 24px; letter-spacing: 1px; text-transform: uppercase;
+        }
+        .hero-badge .dot {
+            width: 6px; height: 6px; background: var(--dourado);
+            border-radius: 50%; animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+        }
+
+        .hero h1 {
+            font-size: 3.4rem; color: var(--branco); margin-bottom: 8px;
+        }
+        .hero h1 .highlight-line {
+            position: relative; display: inline-block;
+        }
+        .hero h1 .highlight-line::after {
+            content: ''; position: absolute; bottom: 6px; left: 0;
+            width: 100%; height: 3px; background: var(--dourado); opacity: 0.3;
+            border-radius: 2px;
+        }
+
+        .hero-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem; font-style: italic;
+            color: var(--dourado-light); margin-bottom: 20px;
+        }
+        .hero-text {
+            font-size: 0.95rem; color: var(--areia-light); opacity: 0.85;
+            margin-bottom: 32px; max-width: 460px; line-height: 1.8;
+        }
+
+        .hero-buttons { display: flex; gap: 12px; align-items: center; margin-bottom: 36px; }
+
+        .hero-trust {
+            display: flex; align-items: center; gap: 16px;
+            padding-top: 20px; border-top: 1px solid rgba(201,169,98,0.08);
+        }
+        .trust-stars { color: var(--dourado); font-size: 0.85rem; letter-spacing: 2px; }
+        .trust-text { font-size: 0.78rem; color: var(--areia); opacity: 0.7; }
+        .trust-text strong { color: var(--dourado-light); opacity: 1; }
+        .trust-divider { width: 1px; height: 28px; background: rgba(201,169,98,0.15); }
+        .trust-oab { font-size: 0.72rem; color: var(--areia); opacity: 0.6; letter-spacing: 1px; }
+
+        /* Hero Image */
+        .hero-image { position: relative; display: flex; justify-content: center; }
+
+        .hero-img-wrapper {
+            position: relative; width: 400px; height: 500px;
+            border-radius: 180px 180px 24px 24px;
+            overflow: hidden;
+            border: 2px solid rgba(201,169,98,0.15);
+            background: var(--fundo-alt);
+        }
+        .hero-img-wrapper img {
+            width: 100%; height: 100%; object-fit: cover;
+            object-position: top center;
+            position: relative; z-index: 1;
+        }
+        /* Fallback when image fails to load */
+        .img-fallback {
+            width: 100%; height: 100%;
+            background: linear-gradient(160deg, var(--fundo-card) 0%, var(--cafe) 50%, var(--fundo-alt) 100%);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 12px;
+        }
+        .img-fallback .initials {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem; font-weight: 700;
+            color: var(--dourado); opacity: 0.3;
+            border: 2px solid rgba(201,169,98,0.15);
+            width: 120px; height: 120px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .img-fallback span {
+            font-size: 0.75rem; color: var(--dourado-light);
+            opacity: 0.35; text-align: center; padding: 0 24px;
+        }
+        .hero-img-wrapper::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 30%;
+            background: linear-gradient(to top, var(--fundo-escuro), transparent);
+        }
+
+        .hero-float {
+            position: absolute;
+            background: rgba(37,32,25,0.92);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(201,169,98,0.12);
+            border-radius: var(--radius-md);
+            padding: 14px 18px; z-index: 3;
+            animation: float-card 4s ease-in-out infinite;
+        }
+        .hero-float.f1 {
+            bottom: 100px; left: -50px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .hero-float.f2 {
+            top: 60px; right: -40px;
+            animation-delay: -2s;
+        }
+        @keyframes float-card {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .float-icon {
+            width: 42px; height: 42px;
+            background: var(--dourado-glow-md); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--dourado); font-size: 1.1rem;
+        }
+        .float-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem; font-weight: 700; color: var(--dourado);
+        }
+        .float-label { font-size: 0.68rem; color: var(--areia); opacity: 0.6; }
+
+        /* ========== STATS ========== */
+        .stats {
+            padding: 70px 0; background: var(--fundo-alt);
+            position: relative;
+        }
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 32px; text-align: center;
+        }
+        .stat-item { position: relative; }
+        .stat-item::after {
+            content: ''; position: absolute; right: 0; top: 50%;
+            transform: translateY(-50%); height: 40px; width: 1px;
+            background: rgba(201,169,98,0.1);
+        }
+        .stat-item:last-child::after { display: none; }
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem; font-weight: 700; color: var(--dourado);
+            line-height: 1; margin-bottom: 6px;
+        }
+        .stat-label {
+            font-size: 0.75rem; color: var(--areia); opacity: 0.7;
+            letter-spacing: 1.5px; text-transform: uppercase;
+        }
+
+        /* ========== AUDIENCE / PARA QUEM ========== */
+        .audience { padding: 100px 0; }
+
+        .audience-grid {
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;
+        }
+        .audience-card {
+            background: var(--fundo-alt);
+            border: 1px solid rgba(201,169,98,0.06);
+            border-radius: var(--radius-lg); padding: 32px 24px;
+            text-align: center; transition: var(--transition);
+            position: relative; overflow: hidden; cursor: pointer;
+        }
+        .audience-card::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: var(--gradient-gold);
+            transform: scaleX(0); transition: transform 0.4s ease;
+        }
+        .audience-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(201,169,98,0.15);
+            box-shadow: var(--shadow-card);
+        }
+        .audience-card:hover::before { transform: scaleX(1); }
+
+        .audience-icon {
+            width: 60px; height: 60px;
+            background: var(--dourado-glow); border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px; font-size: 1.5rem;
+            color: var(--dourado); transition: var(--transition);
+        }
+        .audience-card:hover .audience-icon {
+            background: var(--dourado-glow-strong); transform: scale(1.08);
+        }
+        .audience-card h3 {
+            font-size: 1.25rem; color: var(--branco); margin-bottom: 10px;
+        }
+        .audience-card p {
+            font-size: 0.82rem; color: var(--areia-light); opacity: 0.75;
+            line-height: 1.6; margin-bottom: 16px;
+        }
+        .card-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--dourado); font-size: 0.78rem; font-weight: 500;
+        }
+        .card-link i { transition: transform 0.3s ease; font-size: 0.7rem; }
+        .audience-card:hover .card-link i { transform: translateX(4px); }
+
+        /* ========== ABOUT ========== */
+        .about { padding: 100px 0; background: var(--fundo-alt); position: relative; }
+
+        .about .container {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 80px; align-items: center;
+        }
+        .about-img-area { position: relative; }
+        .about-img-wrapper {
+            width: 100%; max-width: 420px;
+            aspect-ratio: 3 / 4; border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid rgba(201,169,98,0.1);
+        }
+        .about-img-wrapper img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .about-decor {
+            position: absolute; top: -16px; left: -16px;
+            width: 100px; height: 100px;
+            border: 1px solid rgba(201,169,98,0.1);
+            border-radius: var(--radius-lg); z-index: -1;
+        }
+        .about-decor-2 {
+            position: absolute; bottom: -16px; right: -16px;
+            width: 80px; height: 80px;
+            border: 1px solid rgba(201,169,98,0.08);
+            border-radius: var(--radius-md); z-index: -1;
+        }
+
+        .about-content .section-tag { padding: 0; }
+        .about-content .section-tag::before,
+        .about-content .section-tag::after { display: none; }
+
+        .about-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem; font-style: italic;
+            color: var(--dourado-light); margin-bottom: 24px;
+            line-height: 1.5; padding-left: 20px;
+            border-left: 2px solid var(--dourado);
+        }
+        .about-text {
+            font-size: 0.92rem; color: var(--areia-light); opacity: 0.85;
+            margin-bottom: 28px; line-height: 1.9;
+        }
+        .credentials { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+        .credential {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 0.88rem; color: var(--areia);
+        }
+        .credential i {
+            width: 24px; height: 24px; background: var(--dourado-glow);
+            border-radius: 6px; display: flex; align-items: center;
+            justify-content: center; color: var(--dourado); font-size: 0.65rem;
+            flex-shrink: 0;
+        }
+
+        /* ========== ESCRITÓRIO PREVIEW ========== */
+        .escritorio-preview { padding: 100px 0; background: var(--fundo-escuro); }
+
+        .escritorio-content {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 80px; align-items: center;
+        }
+
+        .escritorio-text .section-tag { padding: 0; }
+        .escritorio-text .section-tag::before,
+        .escritorio-text .section-tag::after { display: none; }
+
+        .escritorio-text h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem; color: var(--branco); margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .escritorio-text p {
+            font-size: 0.92rem; color: var(--areia-light); opacity: 0.85;
+            margin-bottom: 20px; line-height: 1.9;
+        }
+
+        .escritorio-image {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid rgba(201,169,98,0.1);
+        }
+
+        .escritorio-image img {
+            width: 100%; height: auto; display: block;
+        }
+
+        /* ========== AREAS ========== */
+        .areas { padding: 100px 0; }
+
+        .areas-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+        }
+        .area-card {
+            background: var(--fundo-alt);
+            border: 1px solid rgba(201,169,98,0.06);
+            border-radius: var(--radius-lg); padding: 32px;
+            transition: var(--transition); position: relative;
+            overflow: hidden; cursor: pointer;
+        }
+        .area-card::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 3px; background: var(--gradient-gold);
+            transform: scaleX(0); transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .area-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(201,169,98,0.12);
+            box-shadow: var(--shadow-card);
+        }
+        .area-card:hover::after { transform: scaleX(1); }
+
+        .area-icon {
+            width: 48px; height: 48px;
+            background: var(--dourado-glow); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 18px; color: var(--dourado); font-size: 1.2rem;
+        }
+        .area-card h3 { font-size: 1.3rem; color: var(--branco); margin-bottom: 10px; }
+        .area-card p {
+            font-size: 0.82rem; color: var(--areia-light); opacity: 0.75;
+            line-height: 1.7; margin-bottom: 16px;
+        }
+        .area-card .card-link {
+            opacity: 0; transform: translateX(-8px);
+            transition: var(--transition);
+        }
+        .area-card:hover .card-link {
+            opacity: 1; transform: translateX(0);
+        }
+
+        .areas-row-2 {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 20px; margin: 20px auto 0;
+        }
+
+        /* ========== PROCESS ========== */
+        .process { padding: 100px 0; background: var(--fundo-alt); }
+
+        .process-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 40px; position: relative;
+        }
+        .process-grid::before {
+            content: ''; position: absolute; top: 45px;
+            left: 16%; width: 68%; height: 1px;
+            background: linear-gradient(90deg, var(--dourado), var(--dourado-light), var(--dourado));
+            opacity: 0.25;
+        }
+
+        .process-step { text-align: center; }
+        .step-num {
+            width: 90px; height: 90px;
+            border: 2px solid rgba(201,169,98,0.15);
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; margin: 0 auto 20px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem; font-weight: 700; color: var(--dourado);
+            background: var(--fundo-alt); position: relative; z-index: 2;
+            transition: var(--transition);
+        }
+        .process-step:hover .step-num {
+            background: var(--dourado-glow);
+            border-color: var(--dourado);
+            transform: scale(1.05);
+        }
+        .process-step h3 {
+            font-size: 1.3rem; color: var(--branco); margin-bottom: 10px;
+        }
+        .process-step p {
+            font-size: 0.85rem; color: var(--areia-light); opacity: 0.75;
+            line-height: 1.7; max-width: 280px; margin: 0 auto;
+        }
+
+        /* ========== TESTIMONIALS ========== */
+        .testimonials { padding: 100px 0; }
+
+        /* ========== CTA FINAL ========== */
+        .cta-final {
+            padding: 100px 0; position: relative; overflow: hidden;
+        }
+        .cta-final::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(201,169,98,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .cta-box {
+            text-align: center; position: relative; z-index: 2;
+            max-width: 620px; margin: 0 auto;
+        }
+        .cta-box h2 {
+            font-size: 2.6rem; color: var(--branco); margin-bottom: 16px;
+        }
+        .cta-box p {
+            font-size: 1rem; color: var(--areia-light); opacity: 0.8;
+            margin-bottom: 32px; line-height: 1.8;
+        }
+        .cta-buttons {
+            display: flex; gap: 16px; justify-content: center;
+            flex-wrap: wrap;
+        }
+        .cta-urgency {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(201,169,98,0.06);
+            border: 1px solid rgba(201,169,98,0.1);
+            padding: 10px 20px; border-radius: var(--radius-sm);
+            margin-top: 20px; font-size: 0.78rem; color: var(--dourado-light);
+        }
+
+        /* ========== CONTACT FORM ========== */
+        .contact { padding: 100px 0; background: var(--fundo-alt); }
+
+        .contact .container {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 60px; align-items: start;
+        }
+        .contact-info h2 {
+            font-size: 2.2rem; color: var(--branco); margin-bottom: 16px;
+        }
+        .contact-info > p {
+            font-size: 0.92rem; color: var(--areia-light); opacity: 0.8;
+            line-height: 1.8; margin-bottom: 32px;
+        }
+        .contact-item {
+            display: flex; align-items: flex-start; gap: 14px;
+            margin-bottom: 20px;
+        }
+        .contact-icon {
+            width: 44px; height: 44px; flex-shrink: 0;
+            background: var(--dourado-glow); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--dourado); font-size: 1rem;
+        }
+        .contact-item h3 {
+            font-family: 'Inter', sans-serif; font-size: 0.85rem;
+            font-weight: 600; color: var(--branco); margin-bottom: 4px;
+        }
+        .contact-item p {
+            font-size: 0.82rem; color: var(--areia); opacity: 0.7; line-height: 1.6;
+        }
+
+        .contact-social {
+            display: flex; gap: 10px; margin-top: 28px;
+        }
+        .social-btn {
+            width: 42px; height: 42px;
+            border: 1px solid rgba(201,169,98,0.12); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--dourado); font-size: 1rem;
+            transition: var(--transition);
+        }
+        .social-btn:hover {
+            background: var(--dourado-glow); border-color: var(--dourado);
+            transform: translateY(-3px);
+        }
+
+        .contact-form-wrapper {
+            background: var(--fundo-escuro);
+            border: 1px solid rgba(201,169,98,0.08);
+            border-radius: var(--radius-lg); padding: 40px;
+        }
+        .contact-form-wrapper h3 {
+            font-size: 1.5rem; color: var(--branco); margin-bottom: 8px;
+        }
+        .contact-form-wrapper > p {
+            font-size: 0.82rem; color: var(--areia); opacity: 0.6;
+            margin-bottom: 28px;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block; font-size: 0.78rem; font-weight: 500;
+            color: var(--areia); margin-bottom: 6px; letter-spacing: 0.5px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%; padding: 14px 16px;
+            background: var(--fundo-alt);
+            border: 1px solid rgba(201,169,98,0.08);
+            border-radius: var(--radius-sm);
+            color: var(--branco); font-size: 0.88rem;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition-fast);
+            outline: none;
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--areia); opacity: 0.3;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--dourado);
+            box-shadow: 0 0 0 3px rgba(201,169,98,0.08);
+        }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .form-group select { cursor: pointer; }
+        .form-group select option { background: var(--fundo-alt); color: var(--branco); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .form-lgpd {
+            font-size: 0.7rem; color: var(--areia); opacity: 0.35;
+            margin-top: 12px; display: flex; align-items: center; gap: 6px;
+        }
+        .form-lgpd i { color: var(--dourado); opacity: 0.5; }
+
+        .form-submit { width: 100%; margin-top: 8px; justify-content: center; }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: var(--fundo-escuro); padding: 70px 0 28px;
+            border-top: 1px solid rgba(201,169,98,0.06);
+        }
+        .footer-grid {
+            display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+            gap: 40px; margin-bottom: 40px;
+        }
+        .footer-brand p {
+            font-size: 0.82rem; color: var(--areia); opacity: 0.7;
+            line-height: 1.7; margin: 16px 0 20px;
+        }
+
+        .footer h4 {
+            font-family: 'Inter', sans-serif; font-size: 0.78rem;
+            font-weight: 600; color: var(--dourado);
+            margin-bottom: 18px; letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .footer-links a {
+            font-size: 0.82rem; color: var(--areia); opacity: 0.7;
+        }
+        .footer-links a:hover { color: var(--dourado); opacity: 1; padding-left: 3px; }
+
+        .ft-contact-item {
+            display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px;
+        }
+        .ft-contact-item i {
+            color: var(--dourado); font-size: 0.8rem; margin-top: 3px; opacity: 0.6;
+        }
+        .ft-contact-item span {
+            font-size: 0.82rem; color: var(--areia); opacity: 0.6; line-height: 1.5;
+        }
+
+        .footer-bottom {
+            padding-top: 24px;
+            border-top: 1px solid rgba(201,169,98,0.05);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .footer-bottom p { font-size: 0.72rem; color: var(--areia); opacity: 0.6; }
+        .footer-bottom a { color: var(--dourado); opacity: 0.85; }
+        .footer-bottom a:hover { opacity: 1; }
+
+        /* ========== FLOATING ELEMENTS ========== */
+        .whatsapp-float {
+            position: fixed; bottom: 24px; right: 24px;
+            width: 56px; height: 56px; background: #25D366;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; color: white; font-size: 1.5rem;
+            z-index: 999; cursor: pointer; border: none;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+            transition: var(--transition);
+        }
+        .whatsapp-float::after {
+            content: ''; position: absolute; inset: 0; border-radius: 50%;
+            border: 2px solid rgba(37,211,102,0.5);
+            animation: whatsapp-pulse 2s ease-in-out infinite;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(37,211,102,0.5);
+        }
+        @keyframes whatsapp-pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+
+        .back-top {
+            position: fixed; bottom: 24px; left: 24px;
+            width: 44px; height: 44px;
+            background: var(--fundo-alt); border: 1px solid rgba(201,169,98,0.15);
+            border-radius: 10px; display: flex; align-items: center;
+            justify-content: center; color: var(--dourado); font-size: 0.9rem;
+            z-index: 999; cursor: pointer;
+            opacity: 0; visibility: hidden; transition: var(--transition);
+        }
+        .back-top.visible { opacity: 1; visibility: visible; }
+        .back-top:hover {
+            background: var(--dourado-glow); border-color: var(--dourado);
+            transform: translateY(-3px);
+        }
+
+        /* ========== SCROLL ANIMATIONS ========== */
+        .reveal {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .reveal-left {
+            opacity: 0; transform: translateX(-40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+        .reveal-right {
+            opacity: 0; transform: translateX(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+        .stagger > * {
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .stagger.visible > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: translateY(0); }
+        .stagger.visible > *:nth-child(2) { transition-delay: 0.15s; opacity: 1; transform: translateY(0); }
+        .stagger.visible > *:nth-child(3) { transition-delay: 0.25s; opacity: 1; transform: translateY(0); }
+        .stagger.visible > *:nth-child(4) { transition-delay: 0.35s; opacity: 1; transform: translateY(0); }
+        .stagger.visible > *:nth-child(5) { transition-delay: 0.45s; opacity: 1; transform: translateY(0); }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .hero .container { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+            .hero-image { order: -1; }
+            .hero-img-wrapper { width: 320px; height: 400px; margin: 0 auto; }
+            .hero-text { margin: 0 auto 32px; }
+            .hero-buttons { justify-content: center; }
+            .hero-trust { justify-content: center; flex-wrap: wrap; }
+            .hero-float.f1 { left: 10px; bottom: 80px; }
+            .hero-float.f2 { right: 10px; }
+            .audience-grid { grid-template-columns: repeat(2, 1fr); }
+            .about .container { grid-template-columns: 1fr; gap: 40px; }
+            .about-img-area { display: flex; justify-content: center; }
+            .about-img-wrapper { max-width: 360px; }
+            .about-content { text-align: center; }
+            .about-quote { border-left: none; padding-left: 0; padding-bottom: 16px; border-bottom: 2px solid var(--dourado); }
+            .credentials { align-items: center; }
+            .areas-grid { grid-template-columns: repeat(2, 1fr); }
+            .areas-row-2 { grid-template-columns: repeat(2, 1fr); }
+            .contact .container { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            html { font-size: 15px; }
+            .nav-menu {
+                position: fixed; top: 0; right: -100%;
+                width: 80%; max-width: 320px; height: 100vh;
+                background: var(--fundo-alt); flex-direction: column;
+                justify-content: center; align-items: center;
+                gap: 24px; transition: right 0.4s ease;
+                border-left: 1px solid rgba(201,169,98,0.08);
+                box-shadow: -10px 0 40px rgba(0,0,0,0.5);
+                z-index: 999;
+            }
+            .nav-menu.open { right: 0; }
+            .nav-menu a { font-size: 1rem; }
+            .hamburger { display: flex; }
+
+            .hero { padding: 100px 0 60px; min-height: auto; }
+            .hero h1 { font-size: 2.3rem; }
+            .hero-img-wrapper { width: 260px; height: 330px; }
+            .hero-float { display: none; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .trust-divider { display: none; }
+
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+            .stat-item::after { display: none; }
+            .stat-number { font-size: 2.2rem; }
+
+            .audience-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
+            .section-header h2 { font-size: 2rem; }
+
+            .areas-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
+            .areas-row-2 { grid-template-columns: 1fr; max-width: 380px; }
+
+            .process-grid { grid-template-columns: 1fr; gap: 36px; }
+            .process-grid::before { display: none; }
+
+            .cta-box h2 { font-size: 2rem; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+
+            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            html { font-size: 14px; }
+            .hero h1 { font-size: 2rem; }
+            .logo-text .name { font-size: 1rem; }
+            .btn-primary, .btn-whatsapp { width: 100%; justify-content: center; }
+        }
+    </style>
+
+    <!-- Schema.org — LocalBusiness + Attorney -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": ["Attorney", "LegalService"],
+      "name": "Letícia Barros — Advocacia e Consultoria Jurídica",
+      "alternateName": "Dra. Letícia Barros",
+      "description": "Advogada especialista em Direito Trabalhista, de Família, Previdenciário, do Consumidor e Cível. Atendimento humanizado em Vitória-ES e online em todo o Brasil.",
+      "url": "https://advogadaleticiabarros.com.br",
+      "logo": "https://advogadaleticiabarros.com.br/assets/logo/logo-800x800.png",
+      "image": "https://advogadaleticiabarros.com.br/assets/images/hero-leticia-sem-fundo.png",
+      "telephone": "+55-27-99515-1402",
+      "email": "advogadaleticia.barros@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "R. José Alexandre Buaiz, 160",
+        "addressLocality": "Vitória",
+        "addressRegion": "ES",
+        "postalCode": "29050-545",
+        "addressCountry": "BR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -20.3155,
+        "longitude": -40.2889
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "08:00",
+        "closes": "18:00"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Brazil"
+      },
+      "priceRange": "$$",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "reviewCount": "30",
+        "bestRating": "5"
+      },
+      "sameAs": [
+        "https://www.instagram.com/adv.leticiabarros2/",
+        "https://www.linkedin.com/in/leticia-barros-996699158/",
+        "http://facebook.com/profile.php?id=61576777010109"
+      ],
+      "knowsAbout": [
+        "Direito Trabalhista",
+        "Direito de Família",
+        "Direito Previdenciário",
+        "Direito do Consumidor",
+        "Direito Civil",
+        "Assessoria Jurídica",
+        "Soluções Extrajudiciais"
+      ]
+    }
+    </script>
+</head>
+<body>
+
+<!-- Loading -->
+<div class="loading-screen" id="loading">
+    <div class="loading-logo">
+        <picture>
+            <source srcset="assets/logo/logo-800x800.webp" type="image/webp">
+            <img src="assets/logo/logo-800x800.png" alt="LB">
+        </picture>
+        <div class="loading-bar"><div class="loading-bar-inner"></div></div>
+    </div>
+</div>
+
+<!-- Header -->
+<header class="header" id="header">
+    <div class="container">
+        <a href="#" class="logo">
+            <picture>
+                <source srcset="assets/logo/logo-sem-fundo.webp" type="image/webp">
+                <img src="assets/logo/logo-sem-fundo.png" alt="Letícia Barros" class="logo-img">
+            </picture>
+            <div class="logo-text">
+                <span class="name">Letícia Barros</span>
+                <span class="subtitle">Advocacia & Consultoria</span>
+            </div>
+        </a>
+        <nav>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="escritorio.html">Escritório</a></li>
+                <li><a href="#areas">Áreas de Atuação</a></li>
+                <li><a href="blog/index.html">Blog</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="contato.html" class="nav-cta">Contato</a></li>
+            </ul>
+        </nav>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<main>
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Atendimento em todo o Brasil
+            </div>
+
+            <h1>
+                Seus direitos<br>
+                <span class="highlight highlight-line">não podem esperar.</span>
+            </h1>
+
+            <p class="hero-subtitle">Eu luto por você.</p>
+
+            <p class="hero-text">
+                Advocacia humanizada, acolhedora e firme na defesa dos seus direitos.
+                Cada caso é tratado com atenção, carinho e compromisso com resultados.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20seus%20servi%C3%A7os." class="btn-whatsapp" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Fale pelo WhatsApp
+                </a>
+                <a href="#areas" class="btn-secondary">
+                    Conheça as áreas
+                    <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+            </div>
+
+            <div class="hero-trust">
+                <span class="trust-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                <span class="trust-text"><strong>5.0</strong> no Google</span>
+                <span class="trust-divider"></span>
+                <span class="trust-oab">OAB/ES 39.948</span>
+                <span class="trust-divider"></span>
+                <span class="trust-text">Vitória-ES</span>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <div class="hero-img-wrapper">
+                <picture>
+                    <source srcset="assets/images/hero-leticia-sem-fundo.webp" type="image/webp">
+                    <img src="assets/images/hero-leticia-sem-fundo.png" alt="Dra. Letícia Barros — Advogada em Vitória-ES" loading="eager" fetchpriority="high"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                </picture>
+                <div class="img-fallback" style="display:none;">
+                    <div class="initials">LB</div>
+                    <span>Foto profissional será exibida aqui</span>
+                </div>
+            </div>
+
+            <div class="hero-float f1">
+                <div class="float-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div>
+                    <div class="float-number">5+ anos</div>
+                    <div class="float-label">de experiência</div>
+                </div>
+            </div>
+
+            <div class="hero-float f2">
+                <div>
+                    <div style="color: var(--dourado); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 2px;">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="float-label">Google Reviews</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== STATS ==================== -->
+<section class="stats">
+    <div class="gold-line"></div>
+    <div class="container" style="padding-top: 70px; padding-bottom: 70px;">
+        <div class="stats-grid stagger">
+            <div class="stat-item">
+                <div class="stat-number" data-target="500" data-prefix="+">0</div>
+                <div class="stat-label">Clientes Atendidos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="5">0</div>
+                <div class="stat-label">Anos de Experiência</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="5" data-suffix=".0">0</div>
+                <div class="stat-label">Avaliação Google</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="100" data-suffix="%">0</div>
+                <div class="stat-label">Online no Brasil</div>
+            </div>
+        </div>
+    </div>
+    <div class="gold-line"></div>
+</section>
+
+<!-- ==================== PARA QUEM É ==================== -->
+<section class="audience" id="publico">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-tag">Posso te ajudar</span>
+            <h2>Você se identifica com<br>alguma dessas situações?</h2>
+            <p>Se está passando por alguma delas, eu posso ajudar.</p>
+        </div>
+
+        <div class="audience-grid stagger">
+            <a href="lp/gestante-clt.html" class="audience-card">
+                <div class="audience-icon"><i class="fa-solid fa-person-pregnant"></i></div>
+                <h3>Gestante CLT</h3>
+                <p>Grávida e com medo de perder o emprego? Conheça seus direitos de estabilidade e licença.</p>
+                <span class="card-link">Saiba mais <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <a href="lp/pensao-alimenticia.html" class="audience-card">
+                <div class="audience-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                <h3>Mãe Solo</h3>
+                <p>Seu filho tem direito a pensão alimentícia. Não tenha medo — eu faço acontecer.</p>
+                <span class="card-link">Saiba mais <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <a href="lp/insalubridade-clt.html" class="audience-card">
+                <div class="audience-icon"><i class="fa-solid fa-helmet-safety"></i></div>
+                <h3>Trabalhador</h3>
+                <p>Horas extras, insalubridade, demissão injusta — seus direitos no trabalho merecem defesa.</p>
+                <span class="card-link">Saiba mais <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <a href="lp/assessoria-empresarial.html" class="audience-card">
+                <div class="audience-icon"><i class="fa-solid fa-building"></i></div>
+                <h3>Empresário PME</h3>
+                <p>Proteja sua empresa de processos com assessoria jurídica preventiva e estratégica.</p>
+                <span class="card-link">Saiba mais <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <a href="lp/bpc-loas-criancas.html" class="audience-card">
+                <div class="audience-icon"><i class="fa-solid fa-child-reaching"></i></div>
+                <h3>BPC/LOAS Criança</h3>
+                <p>Filho com deficiência ou autismo? Ele pode ter direito ao benefício mensal do INSS.</p>
+                <span class="card-link">Saiba mais <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== SOBRE ==================== -->
+<section class="about" id="sobre">
+    <div class="gold-line"></div>
+    <div class="container" style="padding-top: 100px; padding-bottom: 100px;">
+        <div class="about-img-area reveal-left">
+            <div class="about-decor"></div>
+            <div class="about-decor-2"></div>
+            <div class="about-img-wrapper">
+                <picture>
+                    <source srcset="assets/images/leticia-sentada-removebg-preview.webp" type="image/webp">
+                    <img src="assets/images/leticia-sentada-removebg-preview.png" alt="Dra. Letícia Barros" style="object-position: top;" loading="lazy"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                </picture>
+                <div class="img-fallback" style="display:none;">
+                    <div class="initials">LB</div>
+                    <span>Foto profissional será exibida aqui</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-content reveal-right">
+            <span class="section-tag">Sobre</span>
+            <h2 style="font-size: 2.2rem; color: var(--branco); margin-bottom: 20px;">
+                Dra. Letícia Barros
+            </h2>
+
+            <blockquote class="about-quote">
+                "Eu sei o que é não saber a quem recorrer. Por isso faço da sua causa, a minha missão."
+            </blockquote>
+
+            <p class="about-text">
+                Sou Letícia Elias Barros, advogada movida pela paixão por justiça social
+                e pelo compromisso com quem mais precisa. Há 5 anos atuo na defesa dos
+                direitos de gestantes, mães solo, trabalhadores e famílias — sempre com
+                um atendimento humano, transparente e próximo. Acredito que todo mundo
+                merece ser ouvido e ter seus direitos garantidos, independentemente da
+                situação. Se você chegou até aqui, saiba: <strong style="color: var(--dourado-light);">você
+                não está sozinha.</strong>
+            </p>
+
+            <div class="credentials">
+                <div class="credential">
+                    <i class="fa-solid fa-check"></i>
+                    OAB/ES 39.948
+                </div>
+                <div class="credential">
+                    <i class="fa-solid fa-check"></i>
+                    Especialista em Direito Trabalhista e de Família
+                </div>
+                <div class="credential">
+                    <i class="fa-solid fa-check"></i>
+                    Presencial em Vitória-ES e online em todo o Brasil
+                </div>
+                <div class="credential">
+                    <i class="fa-solid fa-check"></i>
+                    Sócia — Santiago Prado & Barros Advogados
+                </div>
+            </div>
+
+            <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20gostaria%20de%20saber%20mais." class="btn-primary" target="_blank" rel="noopener">
+                Fale comigo agora <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== ESCRITÓRIO ==================== -->
+<section class="escritorio-preview" id="escritorio">
+    <div class="container">
+        <div class="escritorio-content">
+            <div class="escritorio-text reveal-left">
+                <span class="section-tag">Nosso Escritório</span>
+                <h2>Santiago Prado & Barros Advogados</h2>
+                <p>Sócia do escritório Santiago Prado & Barros Advogados, localizado em Vitória-ES. Um espaço onde técnica jurídica, humanização e estratégia se encontram para defender seus direitos com excelência.</p>
+                <p style="margin-top: 16px;">Sob a liderança das sócias <strong style="color: var(--dourado-light);">Dra. Carolina Prado</strong> (especialista em Direito Criminal e Tribunal do Júri) e <strong style="color: var(--dourado-light);">Dra. Letícia Barros</strong> (especialista em Direito Trabalhista, Família e Previdenciário), o escritório oferece soluções jurídicas estratégicas para pessoas físicas e empresas.</p>
+                <div style="margin-top: 32px;">
+                    <a href="escritorio.html" class="btn-primary">Conheça o Escritório <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="escritorio-image reveal-right">
+                <picture>
+                    <source srcset="assets/images/santiagopradoebarrosescritorioadvogadas.webp" type="image/webp">
+                    <img src="assets/images/santiagopradoebarrosescritorioadvogadas.png" alt="Santiago Prado & Barros Advogados">
+                </picture>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- ==================== ÁREAS DE ATUAÇÃO ==================== -->
+<section class="areas" id="areas">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-tag">Especialidades</span>
+            <h2>Áreas de Atuação</h2>
+            <p>Atendimento especializado para cada momento da sua vida.</p>
+        </div>
+
+        <div class="areas-grid stagger">
+            <a href="areas/direito-trabalhista.html" class="area-card">
+                <div class="area-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <h3>Direito Trabalhista</h3>
+                <p>Demissão injusta, horas extras, assédio, insalubridade e muito mais. Seus direitos no trabalho protegidos.</p>
+                <span class="card-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <a href="areas/direito-previdenciario.html" class="area-card">
+                <div class="area-icon"><i class="fa-solid fa-landmark"></i></div>
+                <h3>Direito Previdenciário</h3>
+                <p>Aposentadoria, auxílio-doença, BPC/LOAS. Garanta os benefícios que você tem direito.</p>
+                <span class="card-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <a href="areas/direito-familia.html" class="area-card">
+                <div class="area-icon"><i class="fa-solid fa-people-roof"></i></div>
+                <h3>Direito de Família</h3>
+                <p>Divórcio, guarda, pensão, inventário e união estável com sensibilidade e agilidade.</p>
+                <span class="card-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+        </div>
+
+        <div class="areas-row-2 stagger">
+            <a href="areas/direito-consumidor.html" class="area-card">
+                <div class="area-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                <h3>Direito do Consumidor</h3>
+                <p>Cobrança indevida, produto defeituoso, negativação. Faça valer seus direitos de consumidor.</p>
+                <span class="card-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <a href="areas/direito-civil.html" class="area-card">
+                <div class="area-icon"><i class="fa-solid fa-file-contract"></i></div>
+                <h3>Direito Cível</h3>
+                <p>Contratos, responsabilidade civil, indenizações e cobranças com atuação estratégica.</p>
+                <span class="card-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <a href="areas/assessoria-juridica.html" class="area-card">
+                <div class="area-icon"><i class="fa-solid fa-briefcase"></i></div>
+                <h3>Assessoria Jurídica</h3>
+                <p>Consultoria preventiva e estratégica para empresas e pessoas físicas. Proteja seu patrimônio e negócios.</p>
+                <span class="card-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <a href="areas/extrajudiciais.html" class="area-card">
+                <div class="area-icon"><i class="fa-solid fa-handshake"></i></div>
+                <h3>Extrajudiciais</h3>
+                <p>Resolução de conflitos sem processo judicial: acordos, mediação, notificações e contratos extrajudiciais.</p>
+                <span class="card-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== COMO FUNCIONA ==================== -->
+<section class="process" id="processo">
+    <div class="gold-line"></div>
+    <div class="container" style="padding-top: 100px; padding-bottom: 100px;">
+        <div class="section-header reveal">
+            <span class="section-tag">Simples e transparente</span>
+            <h2>Como funciona o atendimento?</h2>
+            <p>Três passos simples para garantir seus direitos.</p>
+        </div>
+
+        <div class="process-grid stagger">
+            <div class="process-step">
+                <div class="step-num">1</div>
+                <h3>Contato</h3>
+                <p>Preencha o formulário ou me envie uma mensagem pelo WhatsApp contando brevemente o seu caso.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">2</div>
+                <h3>Análise</h3>
+                <p>Analiso seu caso com atenção e carinho, e apresento as melhores estratégias jurídicas para você.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">3</div>
+                <h3>Ação</h3>
+                <p>Inicio a defesa dos seus direitos com total transparência e acompanhamento em cada etapa.</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 48px;" class="reveal">
+            <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20gostaria%20de%20uma%20consulta." class="btn-primary" target="_blank" rel="noopener">
+                Iniciar meu atendimento <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== DEPOIMENTOS ==================== -->
+<section class="testimonials" id="depoimentos">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-tag">Depoimentos</span>
+            <h2>O que dizem sobre<br>o meu trabalho</h2>
+        </div>
+
+        <div class="reveal">
+            <!-- Elfsight Google Reviews Widget -->
+            <script src="https://elfsightcdn.com/platform.js" async></script>
+            <div class="elfsight-app-f5931c10-08da-43c2-ab98-b7f7e59cf980" data-elfsight-app-lazy></div>
+
+            <div style="text-align: center; margin-top: 32px;">
+                <a href="https://www.google.com/search?q=Let%C3%ADcia+Barros+Advocacia+Gestantes+Trabalhadores" class="btn-outline" target="_blank" rel="noopener">
+                    <i class="fa-solid fa-star"></i>
+                    Ver todas as avaliações no Google
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CTA FINAL ==================== -->
+<section class="cta-final">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Não deixe seus direitos<br><span class="highlight">para depois.</span></h2>
+            <p>Cada dia sem agir pode significar um direito perdido. Fale comigo agora e dê o primeiro passo para garantir o que é seu por direito.</p>
+
+            <div class="cta-buttons">
+                <a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20preciso%20de%20ajuda%20jur%C3%ADdica." class="btn-whatsapp" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Chamar no WhatsApp
+                </a>
+                <a href="#contato" class="btn-outline">
+                    <i class="fa-solid fa-envelope"></i>
+                    Enviar formulário
+                </a>
+            </div>
+
+            <div class="cta-urgency">
+                <i class="fa-solid fa-clock"></i>
+                Prazos legais não esperam. Quanto antes agir, maiores suas chances.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CONTATO ==================== -->
+<section class="contact" id="contato">
+    <div class="gold-line"></div>
+    <div class="container" style="padding-top: 100px; padding-bottom: 100px;">
+        <div class="contact-info reveal-left">
+            <h2>Vamos conversar<br>sobre o <span class="highlight">seu caso?</span></h2>
+            <p>Preencha o formulário ou entre em contato por um dos canais abaixo. Respondemos em até 24 horas úteis.</p>
+
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                <div>
+                    <h3>WhatsApp</h3>
+                    <p>(27) 99515-1402</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                <div>
+                    <h3>E-mail</h3>
+                    <p>advogadaleticia.barros@gmail.com</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+                <div>
+                    <h3>Escritório</h3>
+                    <p>R. José Alexandre Buaiz, 160<br>Enseada do Suá, Vitória - ES<br>CEP 29050-545</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fa-solid fa-clock"></i></div>
+                <div>
+                    <h3>Horário</h3>
+                    <p>Segunda a Sexta, 8h às 18h</p>
+                </div>
+            </div>
+
+            <div class="contact-social">
+                <a href="https://www.instagram.com/adv.leticiabarros2/" class="social-btn" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/leticia-barros-996699158/" class="social-btn" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="http://facebook.com/profile.php?id=61576777010109" class="social-btn" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.google.com/search?q=Let%C3%ADcia+Barros+Advocacia" class="social-btn" target="_blank" rel="noopener" title="Google" aria-label="Perfil no Google"><i class="fa-brands fa-google"></i></a>
+            </div>
+        </div>
+
+        <div class="contact-form-wrapper reveal-right">
+            <h3>Envie sua mensagem</h3>
+            <p>Conte brevemente o seu caso e entro em contato.</p>
+
+            <form id="contactForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Nome completo *</label>
+                        <input type="text" id="name" name="name" placeholder="Seu nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefone / WhatsApp *</label>
+                        <input type="tel" id="phone" name="phone" placeholder="(27) 99999-9999" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="seu@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="area">Área de interesse</label>
+                    <select id="area" name="area">
+                        <option value="">Selecione uma área</option>
+                        <option value="trabalhista">Direito Trabalhista</option>
+                        <option value="gestante">Gestante CLT</option>
+                        <option value="familia">Direito de Família</option>
+                        <option value="pensao">Pensão Alimentícia</option>
+                        <option value="previdenciario">Direito Previdenciário</option>
+                        <option value="bpc">BPC/LOAS</option>
+                        <option value="consumidor">Direito do Consumidor</option>
+                        <option value="civel">Direito Cível</option>
+                        <option value="insalubridade">Insalubridade CLT</option>
+                        <option value="empresarial">Assessoria Empresarial</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Conte brevemente o seu caso</label>
+                    <textarea id="message" name="message" placeholder="Descreva sua situação em poucas palavras..."></textarea>
+                </div>
+
+                <!-- Honeypot anti-spam -->
+                <div style="position: absolute; left: -9999px;">
+                    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-label="Não preencher" style="position:absolute;left:-9999px">
+                </div>
+
+                <input type="hidden" name="_subject" value="Novo contato pelo site - advogadaleticiabarros.com.br">
+
+                <button type="submit" class="btn-primary form-submit">
+                    Enviar mensagem <i class="fa-solid fa-paper-plane"></i>
+                </button>
+
+                <div class="form-lgpd">
+                    <i class="fa-solid fa-lock"></i>
+                    Seus dados estão protegidos conforme a LGPD. Não compartilhamos suas informações.
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <picture>
+                        <source srcset="assets/logo/logo-sem-fundo.webp" type="image/webp">
+                        <img src="assets/logo/logo-sem-fundo.png" alt="LB" class="logo-img">
+                    </picture>
+                    <div class="logo-text">
+                        <span class="name">Letícia Barros</span>
+                        <span class="subtitle">Advocacia & Consultoria</span>
+                    </div>
+                </a>
+                <p>Advocacia humanizada com foco em resultados para quem mais precisa. Presencial em Vitória-ES e online em todo o Brasil.</p>
+                <div class="contact-social">
+                    <a href="https://www.instagram.com/adv.leticiabarros2/" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/leticia-barros-996699158/" class="social-btn" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="http://facebook.com/profile.php?id=61576777010109" class="social-btn" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4>Navegação</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="escritorio.html">Escritório</a></li>
+                    <li><a href="#areas">Áreas de Atuação</a></li>
+                    <li><a href="blog/index.html">Blog</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4>Áreas</h4>
+                <ul class="footer-links">
+                    <li><a href="areas/direito-trabalhista.html">Trabalhista</a></li>
+                    <li><a href="areas/direito-previdenciario.html">Previdenciário</a></li>
+                    <li><a href="areas/direito-familia.html">Família</a></li>
+                    <li><a href="areas/direito-consumidor.html">Consumidor</a></li>
+                    <li><a href="areas/direito-civil.html">Cível</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4>Contato</h4>
+                <div class="ft-contact-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>R. José Alexandre Buaiz, 160<br>Enseada do Suá, Vitória - ES</span>
+                </div>
+                <div class="ft-contact-item">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>(27) 99515-1402</span>
+                </div>
+                <div class="ft-contact-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>advogadaleticia.barros@gmail.com</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Letícia Elias Barros — Advocacia e Consultoria Jurídica. Todos os direitos reservados.</p>
+            <p><a href="politica-privacidade.html">Política de Privacidade</a> &nbsp;|&nbsp; <a href="termos-de-uso.html">Termos de Uso</a></p>
+        </div>
+    </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20vim%20pelo%20site%20e%20gostaria%20de%20saber%20mais." class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<!-- Back to Top -->
+<button class="back-top" id="backTop" aria-label="Voltar ao topo">
+    <i class="fa-solid fa-chevron-up"></i>
+</button>
+
+<script>
+// Loading
+window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('loading').classList.add('hidden'), 1400);
+});
+
+// Header scroll
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Mobile menu
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('navMenu');
+const overlay = document.getElementById('navOverlay');
+
+function closeMenu() {
+    hamburger.classList.remove('active');
+    navMenu.classList.remove('open');
+    overlay.classList.remove('visible');
+    document.body.style.overflow = '';
+}
+
+hamburger.addEventListener('click', () => {
+    const isOpen = navMenu.classList.toggle('open');
+    hamburger.classList.toggle('active');
+    overlay.classList.toggle('visible');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+
+overlay.addEventListener('click', closeMenu);
+navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger');
+const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => revealObs.observe(el));
+
+// Counter animation
+const counters = document.querySelectorAll('.stat-number[data-target]');
+const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = +el.dataset.target;
+        const prefix = el.dataset.prefix || '';
+        const suffix = el.dataset.suffix || '';
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let cur = 0;
+        const timer = setInterval(() => {
+            cur += step;
+            if (cur >= target) {
+                el.textContent = prefix + target + suffix;
+                clearInterval(timer);
+            } else {
+                el.textContent = prefix + Math.floor(cur) + suffix;
+            }
+        }, 16);
+        counterObs.unobserve(el);
+    });
+}, { threshold: 0.5 });
+counters.forEach(el => counterObs.observe(el));
+
+// Back to top
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => backTop.classList.toggle('visible', window.scrollY > 500));
+backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+        const t = document.querySelector(this.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+});
+
+// Phone mask
+const phoneInput = document.getElementById('phone');
+if (phoneInput) {
+    phoneInput.addEventListener('input', function() {
+        let v = this.value.replace(/\D/g, '');
+        if (v.length > 11) v = v.slice(0, 11);
+        if (v.length > 6) v = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+        else if (v.length > 2) v = `(${v.slice(0,2)}) ${v.slice(2)}`;
+        else if (v.length > 0) v = `(${v}`;
+        this.value = v;
+    });
+}
+
+// Form submit feedback
+const form = document.getElementById('contactForm');
+if (form) {
+    form.addEventListener('submit', function(e) {
+        const btn = this.querySelector('.form-submit');
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
+        btn.disabled = true;
+    });
+}
+</script>
+    <script src="js/scroll-animations.js"></script>
+</body>
+</html>

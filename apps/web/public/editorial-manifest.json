@@ -1,0 +1,16 @@
+{
+  "name": "Orbit Editorial",
+  "short_name": "Editorial",
+  "description": "Conteúdo diário pronto pra postar no Instagram",
+  "start_url": "/editorial/",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#121212",
+  "icons": [
+    {
+      "src": "/editorial-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

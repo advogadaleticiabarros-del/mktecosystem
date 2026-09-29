@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import date, datetime
 
 from pydantic import BaseModel
 
@@ -15,6 +15,7 @@ class PautaOut(BaseModel):
     status: str
     alerta_atualidade: str | None = None
     verificado_em: datetime | None = None
+    data_editorial: date | None = None
     criado_em: datetime
 
     model_config = {"from_attributes": True}
@@ -24,3 +25,4 @@ class PautaManualCreate(BaseModel):
     titulo: str
     angulo: str
     area: str
+    data_editorial: date | None = None

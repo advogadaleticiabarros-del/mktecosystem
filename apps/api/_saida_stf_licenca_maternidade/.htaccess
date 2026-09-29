@@ -1,0 +1,36 @@
+# Compressão de texto (acelera o carregamento)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json application/xml text/xml image/svg+xml
+</IfModule>
+
+# Cache do navegador
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # HTML: cache curto, pra sempre mostrar artigos novos e mudanças recentes
+    ExpiresByType text/html "access plus 10 minutes"
+
+    # Imagens, fontes, CSS, JS: cache longo, mudam raramente
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.html$">
+        Header set Cache-Control "public, max-age=600, must-revalidate"
+    </FilesMatch>
+    <FilesMatch "\.(jpg|jpeg|png|webp|svg|ico|woff2|woff)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+</IfModule>

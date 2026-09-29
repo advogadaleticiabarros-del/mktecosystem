@@ -17,7 +17,12 @@ from app.models.marketing_memory import MarketingMemory
 from app.models.pauta import Pauta
 from app.models.tenant import TenantConfig
 from app.models.user import User
-from app.schemas.content_piece import ContentPieceOut, ContentPieceUpdate, GerarRequest
+from app.schemas.content_piece import (
+    ContentPieceManualCreate,
+    ContentPieceOut,
+    ContentPieceUpdate,
+    GerarRequest,
+)
 from app.services.agenda import agendar_conteudo_aprovado
 from app.services.cerebro import memorias_de_edicao, registrar_edicao
 from app.services.verificacao_atualidade import verificar_atualidade
@@ -131,15 +136,46 @@ async def listar_content_pieces(
     current_user: Annotated[User, Depends(get_current_user)],
     tipo: str | None = None,
     status: str | None = None,
+    pauta_id: uuid.UUID | None = None,
 ) -> list[ContentPiece]:
     query = select(ContentPiece).where(ContentPiece.tenant_id == current_user.tenant_id)
     if tipo is not None:
         query = query.where(ContentPiece.tipo == tipo)
     if status is not None:
         query = query.where(ContentPiece.status == status)
+    if pauta_id is not None:
+        query = query.where(ContentPiece.pauta_id == pauta_id)
     query = query.order_by(ContentPiece.criado_em.desc())
     result = await db.execute(query)
     return list(result.scalars().all())
+
+
+@router.post("", response_model=ContentPieceOut, status_code=201)
+async def criar_content_piece_manual(
+    payload: ContentPieceManualCreate,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)],
+) -> ContentPiece:
+    pauta_result = await db.execute(
+        select(Pauta).where(
+            Pauta.id == payload.pauta_id, Pauta.tenant_id == current_user.tenant_id
+        )
+    )
+    if pauta_result.scalar_one_or_none() is None:
+        raise HTTPException(status_code=404, detail="Pauta not found")
+
+    piece = ContentPiece(
+        tenant_id=current_user.tenant_id,
+        pauta_id=payload.pauta_id,
+        tipo=payload.tipo,
+        corpo=payload.corpo,
+        status=payload.status,
+        versao=1,
+    )
+    db.add(piece)
+    await db.commit()
+    await db.refresh(piece)
+    return piece
 
 
 @router.patch("/{piece_id}", response_model=ContentPieceOut)

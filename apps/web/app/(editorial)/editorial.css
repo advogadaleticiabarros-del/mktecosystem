@@ -1,0 +1,307 @@
+/* Editorial — visual iOS dedicado, isolado dos tokens de tema do resto do Orbit. */
+
+.editorial-root {
+  --ios-bg: #000000;
+  --ios-bg-elevated: #1c1c1e;
+  --ios-bg-grouped: #121212;
+  --ios-card: #1c1c1e;
+  --ios-card-2: #2c2c2e;
+  --ios-separator: rgba(255, 255, 255, 0.12);
+  --ios-label: #ffffff;
+  --ios-label-secondary: rgba(255, 255, 255, 0.6);
+  --ios-label-tertiary: rgba(255, 255, 255, 0.35);
+  --ios-accent: #c9a962;
+  --ios-accent-pressed: #b8943f;
+  --ios-success: #34c759;
+  --ios-danger: #ff453a;
+
+  min-height: 100dvh;
+  min-height: 100vh;
+  background: var(--ios-bg-grouped);
+  color: var(--ios-label);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.editorial-root * {
+  box-sizing: border-box;
+}
+
+.editorial-root a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.editorial-root button {
+  font-family: inherit;
+}
+
+.editorial-scroll-area {
+  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+}
+
+.editorial-nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 12px;
+  background: color-mix(in srgb, var(--ios-bg-grouped) 82%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--ios-separator);
+}
+
+.editorial-nav-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.editorial-nav-subtitle {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--ios-label-secondary);
+}
+
+.editorial-tab-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px));
+  background: color-mix(in srgb, var(--ios-bg-elevated) 88%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--ios-separator);
+}
+
+.editorial-tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 0 2px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ios-label-tertiary);
+  background: none;
+  border: none;
+}
+
+.editorial-tab-item[data-active="true"] {
+  color: var(--ios-accent);
+}
+
+.editorial-list-section {
+  margin: 0 16px 24px;
+}
+
+.editorial-list-header {
+  padding: 0 4px 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ios-label-secondary);
+}
+
+.editorial-card-group {
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--ios-card);
+}
+
+.editorial-card-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--ios-separator);
+}
+
+.editorial-card-row:last-child {
+  border-bottom: none;
+}
+
+.editorial-card-row[data-pressable="true"] {
+  cursor: pointer;
+}
+
+.editorial-card-row[data-pressable="true"]:active {
+  background: var(--ios-card-2);
+}
+
+.editorial-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.editorial-badge[data-tone="progress"] {
+  background: rgba(201, 169, 98, 0.18);
+  color: var(--ios-accent);
+}
+
+.editorial-badge[data-tone="done"] {
+  background: rgba(52, 199, 89, 0.18);
+  color: var(--ios-success);
+}
+
+.editorial-badge[data-tone="pending"] {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--ios-label-secondary);
+}
+
+.editorial-empty {
+  padding: 64px 24px;
+  text-align: center;
+  color: var(--ios-label-secondary);
+}
+
+.editorial-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: flex-end;
+}
+
+.editorial-sheet {
+  width: 100%;
+  max-height: 92dvh;
+  background: var(--ios-bg-elevated);
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.editorial-sheet-handle {
+  width: 36px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--ios-label-tertiary);
+  margin: 10px auto 4px;
+}
+
+.editorial-sheet-scroll {
+  overflow-y: auto;
+  padding: 12px 16px calc(24px + env(safe-area-inset-bottom, 0px));
+}
+
+.editorial-image-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--ios-card);
+  display: flex;
+}
+
+.editorial-image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  scroll-snap-align: start;
+  flex: 0 0 100%;
+}
+
+.editorial-image-frame[data-carousel="true"] {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.editorial-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.editorial-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--ios-label-tertiary);
+}
+
+.editorial-dot[data-active="true"] {
+  background: var(--ios-accent);
+  width: 16px;
+}
+
+.editorial-textarea {
+  width: 100%;
+  min-height: 160px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--ios-separator);
+  background: var(--ios-card);
+  color: var(--ios-label);
+  font-size: 15px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.editorial-textarea:focus {
+  outline: none;
+  border-color: var(--ios-accent);
+}
+
+.editorial-action-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.editorial-button {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+}
+
+.editorial-button[data-variant="primary"] {
+  background: var(--ios-accent);
+  color: #1a1408;
+}
+
+.editorial-button[data-variant="primary"]:active {
+  background: var(--ios-accent-pressed);
+}
+
+.editorial-button[data-variant="secondary"] {
+  background: var(--ios-card-2);
+  color: var(--ios-label);
+}
+
+.editorial-button[data-variant="success"] {
+  background: var(--ios-success);
+  color: #05210c;
+}
+
+.editorial-button[disabled] {
+  opacity: 0.5;
+}
+
+.editorial-status-line {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--ios-label-secondary);
+  min-height: 16px;
+}

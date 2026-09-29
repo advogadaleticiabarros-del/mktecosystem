@@ -1,0 +1,300 @@
+<title>Guarda Compartilhada de Pet</title>
+<meta name="description" content="Prévia do artigo pronto para publicação — Lei 15.392/2026 sobre guarda compartilhada de animais de estimação no divórcio.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,400&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root {
+    --dourado: #C9A962;
+    --dourado-claro: #E8D7A6;
+    --fundo: #231E1A;
+    --fundo-alt: #2B241F;
+    --texto: #F3EAD4;
+    --texto-suave: rgba(243,234,212,0.72);
+    --texto-mais-suave: rgba(243,234,212,0.5);
+    --borda: rgba(201,169,98,0.22);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--fundo);
+    color: var(--texto);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.7;
+    padding-inline: 20px;
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .status-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(201,169,98,0.1);
+    border: 1px solid var(--borda);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--dourado-claro);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    width: fit-content;
+    margin-block: 20px 28px;
+  }
+  .status-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--dourado);
+    flex-shrink: 0;
+  }
+
+  .cat-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(201,169,98,0.14);
+    border-radius: 999px;
+    color: var(--dourado);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+    line-height: 1.25;
+    text-wrap: balance;
+    margin: 0 0 18px;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    font-size: 0.82rem;
+    color: var(--texto-mais-suave);
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--borda);
+  }
+  .meta strong { color: var(--texto-suave); font-weight: 600; }
+
+  article > p {
+    font-size: 1.02rem;
+    color: var(--texto-suave);
+    margin-bottom: 20px;
+  }
+  article > p:first-of-type {
+    font-size: 1.12rem;
+    color: var(--texto);
+    border-left: 3px solid var(--dourado);
+    padding-left: 18px;
+    margin-bottom: 32px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 1.35;
+    text-wrap: balance;
+    margin: 40px 0 16px;
+    color: var(--texto);
+  }
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.12rem;
+    margin: 30px 0 10px;
+    color: var(--texto);
+  }
+
+  strong { color: var(--texto); }
+
+  ul { padding-left: 22px; margin-bottom: 20px; }
+  li { margin-bottom: 8px; color: var(--texto-suave); }
+
+  .callout {
+    background: rgba(201,169,98,0.07);
+    border: 1px solid var(--borda);
+    border-left: 4px solid var(--dourado);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 26px 0;
+  }
+  .callout h4 {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--dourado);
+    margin: 0 0 8px;
+  }
+  .callout p { margin: 0; color: var(--texto-suave); }
+
+  .table-wrap { overflow-x: auto; margin: 22px 0 28px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    min-width: 480px;
+  }
+  th {
+    background: rgba(201,169,98,0.12);
+    color: var(--dourado);
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--borda);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(201,169,98,0.08);
+    color: var(--texto-suave);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+
+  .faq-item { border-bottom: 1px solid var(--borda); padding-block: 16px; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-item h3 { margin: 0 0 8px; font-size: 1.05rem; }
+  .faq-item p { margin: 0; color: var(--texto-suave); }
+
+  .cta-box {
+    background: linear-gradient(135deg, rgba(201,169,98,0.15), rgba(201,169,98,0.05));
+    border: 1px solid rgba(201,169,98,0.35);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    margin: 40px 0 30px;
+  }
+  .cta-box h3 {
+    font-size: 1.3rem;
+    margin: 0 0 12px;
+  }
+  .cta-box p {
+    color: var(--texto-suave);
+    max-width: 420px;
+    margin: 0 auto 20px;
+    font-size: 0.95rem;
+  }
+  .cta-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .cta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(201,169,98,0.1);
+    border: 1px solid rgba(201,169,98,0.3);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 0.75rem;
+    color: var(--dourado);
+    font-weight: 600;
+  }
+
+  footer.page-footer {
+    text-align: center;
+    padding-block: 32px 40px;
+    color: var(--texto-mais-suave);
+    font-size: 0.8rem;
+  }
+</style>
+
+<div class="status-bar"><span class="status-dot"></span> Prévia — ainda não publicado</div>
+
+<article>
+  <span class="cat-badge">Família</span>
+  <h1>Guarda compartilhada de pet: como funciona a nova lei no divórcio</h1>
+  <div class="meta">
+    <span>Por <strong>Dra. Letícia Barros</strong> — OAB/ES 39.948</span>
+    <span>·</span>
+    <span>30 de setembro de 2026</span>
+    <span>·</span>
+    <span>3 min de leitura</span>
+  </div>
+
+  <p>Você está se separando e, no meio de todas as decisões, uma pergunta te pega de surpresa: e o cachorro, fica com quem?</p>
+
+  <p>Eu preciso te contar: essa pergunta agora tem resposta na lei. Em 2026, o Brasil ganhou uma norma específica só pra isso, e ela pode mudar completamente o que você espera do seu divórcio.</p>
+
+  <p>Neste artigo eu explico, sem juridiquês, como funciona a guarda compartilhada de animais de estimação depois da Lei 15.392/2026.</p>
+
+  <h2>O que diz a Lei 15.392/2026</h2>
+  <p>Sancionada em 16 de abril de 2026, a lei regulamenta a custódia compartilhada de animais de estimação em casos de divórcio ou dissolução de união estável. Ela reconhece algo que muitos casais já sentiam na pele: o pet não é só um bem, é parte da família.</p>
+
+  <h2>De quem é o pet, afinal?</h2>
+  <p>A lei traz uma presunção importante: <strong>se o animal viveu a maior parte da vida durante o casamento ou a união estável, ele é considerado propriedade comum dos dois</strong>, independentemente de quem comprou ou adotou originalmente.</p>
+
+  <h2>A guarda compartilhada é a regra, não a exceção</h2>
+  <p>Se o casal não chegar a um acordo sobre com quem o pet vai morar, <strong>o juiz deve fixar a guarda compartilhada como padrão</strong>. Isso é uma inversão importante: antes, a tendência era simplesmente "dar" o animal a um dos dois, geralmente sem muito critério. Agora, dividir o tempo e a responsabilidade é o caminho esperado.</p>
+
+  <div class="callout">
+    <h4>Ponto decisivo</h4>
+    <p>A guarda compartilhada não é mais uma exceção rara. Ela é a regra legal, a menos que existam circunstâncias específicas que a impeçam.</p>
+  </div>
+
+  <h2>Como ficam as despesas</h2>
+  <p>Na custódia compartilhada, a lei presume que as despesas de manutenção do animal, consultas veterinárias, internações, medicamentos, sejam divididas de forma equilibrada entre os dois, <strong>independentemente da renda de cada um</strong>.</p>
+
+  <h2>Quando a guarda compartilhada não é concedida</h2>
+  <p>A lei prevê exceções claras. Não será deferida a custódia compartilhada se o juiz identificar:</p>
+  <ul>
+    <li>Histórico ou risco de violência doméstica e familiar</li>
+    <li>Ocorrência de maus-tratos contra o animal</li>
+  </ul>
+  <p>Nesses casos, a proteção do animal e da parte vulnerável vem antes de qualquer critério de divisão.</p>
+
+  <h2>Onde esse processo corre</h2>
+  <p>A competência para decidir sobre a guarda do pet é das <strong>Varas de Família</strong>, o que significa que essa questão é resolvida <strong>dentro do mesmo processo de divórcio ou dissolução de união estável</strong>, sem precisar abrir uma ação separada. Isso evita decisões contraditórias e agiliza a resolução.</p>
+
+  <h2>O que fazer se você está se separando e tem um pet</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Passo</th><th>O que fazer</th></tr>
+      <tr><td>1. Reúna provas de convivência</td><td>Fotos, registros veterinários, comprovantes de gastos que mostrem o vínculo do animal com a família ao longo do tempo.</td></tr>
+      <tr><td>2. Tente o acordo primeiro</td><td>Se for possível dialogar, definir a rotina do pet em comum acordo evita judicializar essa parte da separação.</td></tr>
+      <tr><td>3. Inclua no mesmo processo</td><td>A guarda do pet pode e deve ser tratada dentro do processo de divórcio, na Vara de Família.</td></tr>
+      <tr><td>4. Documente maus-tratos, se houver</td><td>Se há histórico de violência doméstica ou maus-tratos ao animal, isso deve ser levado à Justiça para afastar a guarda compartilhada.</td></tr>
+    </table>
+  </div>
+
+  <h2>Perguntas frequentes</h2>
+  <div class="faq-item">
+    <h3>Quem decide com quem o pet vai morar no divórcio?</h3>
+    <p>Se não houver acordo entre o casal, o juiz decide, e a lei determina que a guarda compartilhada seja a regra padrão.</p>
+  </div>
+  <div class="faq-item">
+    <h3>As despesas do pet são sempre divididas igualmente?</h3>
+    <p>Na guarda compartilhada, sim, a lei presume divisão equilibrada das despesas, independentemente da renda de cada parte.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Existe alguma situação em que a guarda compartilhada não é concedida?</h3>
+    <p>Sim. Quando há histórico de violência doméstica e familiar, ou maus-tratos contra o animal, a guarda compartilhada não é deferida.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Preciso abrir um processo separado para decidir sobre o pet?</h3>
+    <p>Não. A questão é resolvida dentro do mesmo processo de divórcio ou dissolução de união estável, na Vara de Família.</p>
+  </div>
+
+  <div class="cta-box">
+    <h3>Ficou com dúvidas sobre o seu caso?</h3>
+    <div class="cta-badges">
+      <span class="cta-badge">★ 5.0 no Google</span>
+      <span class="cta-badge">⚖ 5+ anos de experiência</span>
+      <span class="cta-badge">🛡 OAB/ES 39.948</span>
+    </div>
+    <p>Se essa é a sua situação, procure uma advogada de confiança pra analisar o seu caso.</p>
+  </div>
+</article>
+
+<footer class="page-footer">Dra. Letícia Barros · Advocacia e Consultoria Jurídica</footer>
