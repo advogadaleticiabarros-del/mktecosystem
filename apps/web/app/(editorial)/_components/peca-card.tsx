@@ -21,7 +21,7 @@ export function PecaCard({
           height: 44,
           borderRadius: 10,
           overflow: "hidden",
-          background: "var(--ios-card-2)",
+          background: "var(--editorial-card-2)",
           flexShrink: 0,
         }}
       >
@@ -40,7 +40,7 @@ export function PecaCard({
       <span className="editorial-badge" data-tone={postado ? "done" : "pending"}>
         {postado ? "Postado" : "Pendente"}
       </span>
-      <ChevronRight size={18} color="var(--ios-label-tertiary)" />
+      <ChevronRight size={18} color="var(--muted-foreground)" />
     </button>
   );
 }

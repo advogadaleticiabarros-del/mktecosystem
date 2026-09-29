@@ -1,25 +1,15 @@
-/* Editorial — visual iOS dedicado, isolado dos tokens de tema do resto do Orbit. */
+/* Editorial — usa os mesmos tokens do tema "dourado" do Orbit (globals.css),
+   fixado nesta tela via [data-theme="dourado"] no elemento raiz, pra manter
+   consistência visual com o resto do produto em vez de um sistema paralelo. */
 
 .editorial-root {
-  --ios-bg: #000000;
-  --ios-bg-elevated: #1c1c1e;
-  --ios-bg-grouped: #121212;
-  --ios-card: #1c1c1e;
-  --ios-card-2: #2c2c2e;
-  --ios-separator: rgba(255, 255, 255, 0.12);
-  --ios-label: #ffffff;
-  --ios-label-secondary: rgba(255, 255, 255, 0.6);
-  --ios-label-tertiary: rgba(255, 255, 255, 0.35);
-  --ios-accent: #c9a962;
-  --ios-accent-pressed: #b8943f;
-  --ios-success: #34c759;
-  --ios-danger: #ff453a;
+  --editorial-card-2: color-mix(in srgb, var(--card) 88%, var(--primary) 12%);
+  --editorial-success: #4ade80;
 
   min-height: 100dvh;
   min-height: 100vh;
-  background: var(--ios-bg-grouped);
-  color: var(--ios-label);
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", sans-serif;
+  background: var(--background);
+  color: var(--foreground);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -37,30 +27,54 @@
 }
 
 .editorial-scroll-area {
-  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 900px) {
+  .editorial-scroll-area {
+    padding-bottom: 32px;
+    max-width: 1040px;
+    margin: 0 auto;
+  }
 }
 
 .editorial-nav-bar {
   position: sticky;
   top: 0;
   z-index: 10;
-  padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 12px;
-  background: color-mix(in srgb, var(--ios-bg-grouped) 82%, transparent);
+  padding: calc(env(safe-area-inset-top, 0px) + 14px) 20px 14px;
+  background: color-mix(in srgb, var(--background) 82%, transparent);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--ios-separator);
+  border-bottom: 1px solid var(--border);
+}
+
+@media (min-width: 900px) {
+  .editorial-nav-bar {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding-top: 32px;
+    padding-left: 0;
+    padding-right: 0;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: none;
+    position: static;
+  }
 }
 
 .editorial-nav-title {
+  font-family: var(--font-display);
   font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .editorial-nav-subtitle {
   margin-top: 2px;
   font-size: 13px;
-  color: var(--ios-label-secondary);
+  color: var(--muted-foreground);
 }
 
 .editorial-tab-bar {
@@ -71,10 +85,16 @@
   z-index: 20;
   display: flex;
   padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px));
-  background: color-mix(in srgb, var(--ios-bg-elevated) 88%, transparent);
+  background: color-mix(in srgb, var(--card) 92%, transparent);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid var(--ios-separator);
+  border-top: 1px solid var(--border);
+}
+
+@media (min-width: 900px) {
+  .editorial-tab-bar {
+    display: none;
+  }
 }
 
 .editorial-tab-item {
@@ -86,40 +106,60 @@
   padding: 6px 0 2px;
   font-size: 10px;
   font-weight: 600;
-  color: var(--ios-label-tertiary);
+  color: var(--muted-foreground);
   background: none;
   border: none;
 }
 
 .editorial-tab-item[data-active="true"] {
-  color: var(--ios-accent);
+  color: var(--primary);
 }
 
 .editorial-list-section {
-  margin: 0 16px 24px;
+  margin: 0 20px 24px;
+}
+
+@media (min-width: 900px) {
+  .editorial-list-section {
+    margin: 0 0 28px;
+  }
 }
 
 .editorial-list-header {
-  padding: 0 4px 6px;
-  font-size: 13px;
+  padding: 0 4px 8px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--ios-label-secondary);
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
 }
 
 .editorial-card-group {
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--ios-card);
+  background: var(--card);
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+@media (min-width: 900px) {
+  .editorial-card-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+  .editorial-card-row {
+    border-bottom: none !important;
+    box-shadow: 0 0 0 1px var(--border);
+  }
 }
 
 .editorial-card-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--ios-separator);
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  transition: background-color 150ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .editorial-card-row:last-child {
@@ -130,38 +170,44 @@
   cursor: pointer;
 }
 
+.editorial-card-row[data-pressable="true"]:hover {
+  background: var(--accent);
+}
+
 .editorial-card-row[data-pressable="true"]:active {
-  background: var(--ios-card-2);
+  background: var(--editorial-card-2);
+  transform: scale(0.995);
 }
 
 .editorial-badge {
   display: inline-flex;
   align-items: center;
-  padding: 3px 9px;
+  padding: 3px 10px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 .editorial-badge[data-tone="progress"] {
-  background: rgba(201, 169, 98, 0.18);
-  color: var(--ios-accent);
+  background: var(--accent);
+  color: var(--primary);
 }
 
 .editorial-badge[data-tone="done"] {
-  background: rgba(52, 199, 89, 0.18);
-  color: var(--ios-success);
+  background: color-mix(in srgb, var(--editorial-success) 18%, transparent);
+  color: var(--editorial-success);
 }
 
 .editorial-badge[data-tone="pending"] {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--ios-label-secondary);
+  background: var(--secondary);
+  color: var(--muted-foreground);
 }
 
 .editorial-empty {
   padding: 64px 24px;
   text-align: center;
-  color: var(--ios-label-secondary);
+  color: var(--muted-foreground);
 }
 
 .editorial-sheet-backdrop {
@@ -171,38 +217,82 @@
   background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: flex-end;
+  animation: editorial-fade-in 200ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (min-width: 900px) {
+  .editorial-sheet-backdrop {
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@keyframes editorial-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .editorial-sheet {
   width: 100%;
   max-height: 92dvh;
-  background: var(--ios-bg-elevated);
-  border-radius: 20px 20px 0 0;
+  background: var(--card);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow: 0 0 0 1px var(--border);
+  animation: editorial-slide-up 260ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (min-width: 900px) {
+  .editorial-sheet {
+    width: 480px;
+    max-height: 88dvh;
+    border-radius: var(--radius-xl);
+  }
+}
+
+@keyframes editorial-slide-up {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .editorial-sheet-handle {
   width: 36px;
   height: 5px;
   border-radius: 999px;
-  background: var(--ios-label-tertiary);
+  background: var(--border);
   margin: 10px auto 4px;
+}
+
+@media (min-width: 900px) {
+  .editorial-sheet-handle {
+    display: none;
+  }
 }
 
 .editorial-sheet-scroll {
   overflow-y: auto;
-  padding: 12px 16px calc(24px + env(safe-area-inset-bottom, 0px));
+  padding: 12px 20px calc(24px + env(safe-area-inset-bottom, 0px));
 }
 
 .editorial-image-frame {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 5;
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--ios-card);
+  background: var(--secondary);
   display: flex;
 }
 
@@ -230,11 +320,11 @@
   width: 6px;
   height: 6px;
   border-radius: 999px;
-  background: var(--ios-label-tertiary);
+  background: var(--border);
 }
 
 .editorial-dot[data-active="true"] {
-  background: var(--ios-accent);
+  background: var(--primary);
   width: 16px;
 }
 
@@ -243,10 +333,10 @@
   min-height: 160px;
   margin-top: 12px;
   padding: 12px 14px;
-  border-radius: 12px;
-  border: 1px solid var(--ios-separator);
-  background: var(--ios-card);
-  color: var(--ios-label);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--secondary);
+  color: var(--foreground);
   font-size: 15px;
   line-height: 1.5;
   resize: vertical;
@@ -254,7 +344,7 @@
 
 .editorial-textarea:focus {
   outline: none;
-  border-color: var(--ios-accent);
+  border-color: var(--primary);
 }
 
 .editorial-action-row {
@@ -270,28 +360,37 @@
   justify-content: center;
   gap: 6px;
   padding: 12px 14px;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 700;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
   border: none;
+  transition: transform 120ms cubic-bezier(0.23, 1, 0.32, 1), background-color 150ms;
+}
+
+.editorial-button:active {
+  transform: scale(0.97);
 }
 
 .editorial-button[data-variant="primary"] {
-  background: var(--ios-accent);
-  color: #1a1408;
+  background: var(--primary);
+  color: var(--primary-foreground);
 }
 
-.editorial-button[data-variant="primary"]:active {
-  background: var(--ios-accent-pressed);
+.editorial-button[data-variant="primary"]:hover {
+  background: color-mix(in srgb, var(--primary) 88%, black);
 }
 
 .editorial-button[data-variant="secondary"] {
-  background: var(--ios-card-2);
-  color: var(--ios-label);
+  background: var(--secondary);
+  color: var(--foreground);
+}
+
+.editorial-button[data-variant="secondary"]:hover {
+  background: var(--accent);
 }
 
 .editorial-button[data-variant="success"] {
-  background: var(--ios-success);
+  background: var(--editorial-success);
   color: #05210c;
 }
 
@@ -302,6 +401,16 @@
 .editorial-status-line {
   margin-top: 10px;
   font-size: 12px;
-  color: var(--ios-label-secondary);
+  color: var(--muted-foreground);
   min-height: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editorial-sheet-backdrop,
+  .editorial-sheet,
+  .editorial-card-row,
+  .editorial-button {
+    animation: none !important;
+    transition: none !important;
+  }
 }

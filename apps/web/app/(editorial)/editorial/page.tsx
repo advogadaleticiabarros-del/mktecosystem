@@ -17,26 +17,29 @@ export default function EditorialPage() {
   const [pautas, setPautas] = useState<PautaEditorial[]>([]);
   const [pecasPorPauta, setPecasPorPauta] = useState<Record<string, ContentPieceEditorial[]>>({});
   const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    async function carregar() {
-      try {
-        const lista = await listarPautasEditorial(dataISO(-30), dataISO(14));
-        setPautas(lista);
-        const entradas = await Promise.all(
-          lista.map(async (pauta) => [pauta.id, await listarPecas(pauta.id)] as const),
-        );
-        setPecasPorPauta(Object.fromEntries(entradas));
-      } catch {
-        // Se o token expirou, a próxima navegação normal do usuário já vai
-        // cair no /login via apiFetch nas outras telas; aqui só evita
-        // travar a tela em estado de carregando infinito.
-      } finally {
-        setCarregando(false);
-      }
+  async function carregar() {
+    setCarregando(true);
+    setErro(false);
+    try {
+      const lista = await listarPautasEditorial(dataISO(-30), dataISO(14));
+      setPautas(lista);
+      const entradas = await Promise.all(
+        lista.map(async (pauta) => [pauta.id, await listarPecas(pauta.id)] as const),
+      );
+      setPecasPorPauta(Object.fromEntries(entradas));
+    } catch {
+      setErro(true);
+    } finally {
+      setCarregando(false);
     }
+  }
+
+  useEffect(() => {
     carregar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   return (
@@ -49,6 +52,15 @@ export default function EditorialPage() {
       <main className="editorial-scroll-area">
         {carregando ? (
           <div className="editorial-empty">Carregando…</div>
+        ) : erro ? (
+          <div className="editorial-empty">
+            Não foi possível carregar o conteúdo. Verifique sua conexão.
+            <div className="editorial-action-row" style={{ maxWidth: 220, margin: "16px auto 0" }}>
+              <button type="button" className="editorial-button" data-variant="secondary" onClick={carregar}>
+                Tentar de novo
+              </button>
+            </div>
+          </div>
         ) : (
           <DiaList pautas={pautas} pecasPorPauta={pecasPorPauta} />
         )}

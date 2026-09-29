@@ -3,6 +3,7 @@
 import { Download, X } from "lucide-react";
 import { atualizarPeca } from "../_lib/editorial-api";
 import { TIPO_LABEL, imagensDaPeca, legendaDaPeca, type ContentPieceEditorial } from "../_lib/types";
+import { ArtigoLeitura } from "./artigo-leitura";
 import { ImageCarousel } from "./image-carousel";
 import { LegendaEditor } from "./legenda-editor";
 import { StatusToggle } from "./status-toggle";
@@ -18,6 +19,8 @@ export function PecaViewerSheet({
 }) {
   const imagens = imagensDaPeca(peca);
   const legendaAtual = legendaDaPeca(peca);
+  const ehArtigo = peca.tipo === "artigo";
+  const corpoArtigo = ehArtigo ? (peca.corpo as { html?: string; titulo?: string }) : null;
 
   async function salvarLegenda(novaLegenda: string) {
     // Peças do tipo "legenda" (legado) guardam o texto em `texto`; todas as
@@ -54,12 +57,12 @@ export function PecaViewerSheet({
               width: 32,
               height: 32,
               borderRadius: "50%",
-              background: "var(--ios-card-2)",
+              background: "var(--editorial-card-2)",
               border: "none",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "var(--ios-label)",
+              color: "var(--foreground)",
             }}
             aria-label="Fechar"
           >
@@ -89,7 +92,11 @@ export function PecaViewerSheet({
             </div>
           )}
 
-          <LegendaEditor legendaInicial={legendaAtual} onSalvar={salvarLegenda} />
+          {ehArtigo ? (
+            <ArtigoLeitura html={corpoArtigo?.html ?? ""} titulo={corpoArtigo?.titulo} />
+          ) : (
+            <LegendaEditor legendaInicial={legendaAtual} onSalvar={salvarLegenda} />
+          )}
 
           <div className="editorial-action-row">
             <StatusToggle status={peca.status} onMarcarPostado={marcarPostado} />

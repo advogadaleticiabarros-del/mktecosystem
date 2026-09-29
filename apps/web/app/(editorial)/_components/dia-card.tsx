@@ -34,7 +34,7 @@ export function DiaCard({
         <div
           style={{
             fontSize: 14,
-            color: "var(--ios-label-secondary)",
+            color: "var(--muted-foreground)",
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
@@ -51,7 +51,7 @@ export function DiaCard({
           {pecasPostadas}/{totalPecas}
         </span>
       )}
-      <ChevronRight size={18} color="var(--ios-label-tertiary)" />
+      <ChevronRight size={18} color="var(--muted-foreground)" />
     </Link>
   );
 }

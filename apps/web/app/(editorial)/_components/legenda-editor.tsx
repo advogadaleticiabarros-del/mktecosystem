@@ -13,6 +13,7 @@ export function LegendaEditor({
   const [legenda, setLegenda] = useState(legendaInicial);
   const [salvando, setSalvando] = useState(false);
   const [salvo, setSalvo] = useState(false);
+  const [erroSalvar, setErroSalvar] = useState(false);
   const [copiado, setCopiado] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -29,10 +30,13 @@ export function LegendaEditor({
   async function salvar() {
     if (legenda === legendaInicial) return;
     setSalvando(true);
+    setErroSalvar(false);
     try {
       await onSalvar(legenda);
       setSalvo(true);
       setTimeout(() => setSalvo(false), 1800);
+    } catch {
+      setErroSalvar(true);
     } finally {
       setSalvando(false);
     }
@@ -71,7 +75,21 @@ export function LegendaEditor({
         </button>
       </div>
       <div className="editorial-status-line">
-        {salvando ? "Salvando…" : salvo ? "Salvo" : ""}
+        {salvando ? (
+          "Salvando…"
+        ) : erroSalvar ? (
+          <button
+            type="button"
+            onClick={salvar}
+            style={{ background: "none", border: "none", padding: 0, color: "var(--destructive)", font: "inherit", cursor: "pointer" }}
+          >
+            Não foi possível salvar. Toque para tentar de novo.
+          </button>
+        ) : salvo ? (
+          "Salvo"
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

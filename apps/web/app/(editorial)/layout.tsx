@@ -15,10 +15,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#121212",
+  themeColor: "#231e1a",
   viewportFit: "cover",
 };
 
 export default function EditorialLayout({ children }: { children: React.ReactNode }) {
-  return <div className="editorial-root">{children}</div>;
+  return (
+    <div className="editorial-root" data-theme="dourado">
+      {children}
+    </div>
+  );
 }

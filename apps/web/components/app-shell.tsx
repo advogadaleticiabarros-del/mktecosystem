@@ -12,6 +12,7 @@ import {
   Newspaper,
   Settings,
   ShieldCheck,
+  Sparkles,
   Star,
   TrendingUp,
 } from "lucide-react";
@@ -22,6 +23,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 
 const NAV_ITEMS = [
   { href: "/visao-geral", label: "Visão geral", icon: Home },
+  { href: "/editorial", label: "Editorial", icon: Sparkles, destaque: true },
   { href: "/crescimento", label: "Crescimento", icon: TrendingUp },
   { href: "/planejamento", label: "Planejamento", icon: ClipboardList },
   { href: "/resumo-diario", label: "Resumo Jurídico Diário", icon: Newspaper },
@@ -60,6 +62,7 @@ export function AppShell({
             const isActive = matchPrefix
               ? pathname.startsWith(matchPrefix)
               : pathname === item.href;
+            const isDestaque = "destaque" in item && item.destaque;
             const Icon = item.icon;
             return (
               <Link
@@ -70,7 +73,9 @@ export function AppShell({
                   "flex h-10 w-10 items-center justify-center rounded-lg transition-colors",
                   isActive
                     ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                    : isDestaque
+                      ? "text-primary ring-1 ring-primary/40 hover:bg-accent hover:text-accent-foreground"
+                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
                 )}
               >
                 <Icon className="h-5 w-5" />

@@ -15,22 +15,29 @@ function DiaDetalheContent() {
   const pautaId = searchParams.get("id") ?? "";
   const [pecas, setPecas] = useState<ContentPieceEditorial[]>([]);
   const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState(false);
   const [pecaAberta, setPecaAberta] = useState<ContentPieceEditorial | null>(null);
 
-  useEffect(() => {
+  async function carregar() {
     if (!pautaId) {
       setCarregando(false);
       return;
     }
-    async function carregar() {
-      try {
-        const lista = await listarPecas(pautaId);
-        setPecas(lista);
-      } finally {
-        setCarregando(false);
-      }
+    setCarregando(true);
+    setErro(false);
+    try {
+      const lista = await listarPecas(pautaId);
+      setPecas(lista);
+    } catch {
+      setErro(true);
+    } finally {
+      setCarregando(false);
     }
+  }
+
+  useEffect(() => {
     carregar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pautaId]);
 
   function atualizarPecaNaLista(atualizado: ContentPieceEditorial) {
@@ -43,7 +50,7 @@ function DiaDetalheContent() {
       <header className="editorial-nav-bar">
         <Link
           href="/editorial"
-          style={{ display: "flex", alignItems: "center", gap: 2, fontSize: 15, color: "var(--ios-accent)", marginBottom: 6 }}
+          style={{ display: "flex", alignItems: "center", gap: 2, fontSize: 15, color: "var(--primary)", marginBottom: 6 }}
         >
           <ChevronLeft size={18} />
           Dias
@@ -54,6 +61,15 @@ function DiaDetalheContent() {
       <main className="editorial-scroll-area">
         {carregando ? (
           <div className="editorial-empty">Carregando…</div>
+        ) : erro ? (
+          <div className="editorial-empty">
+            Não foi possível carregar as peças deste dia.
+            <div className="editorial-action-row" style={{ maxWidth: 220, margin: "16px auto 0" }}>
+              <button type="button" className="editorial-button" data-variant="secondary" onClick={carregar}>
+                Tentar de novo
+              </button>
+            </div>
+          </div>
         ) : pecas.length === 0 ? (
           <div className="editorial-empty">Nenhuma peça registrada para este dia.</div>
         ) : (
