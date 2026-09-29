@@ -1,31 +1,22 @@
 from datetime import date, datetime, timedelta, timezone
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import settings
 from app.core.deps import get_current_user
 from app.db import get_db
-from app.integrations.ai.base import AIClient
-from app.integrations.ai.gemini import GeminiClient
 from app.integrations.ai.groq_client import GroqClient
 from app.integrations.search.tavily_client import TavilyClient
-from app.integrations.sources.cnj import fetch_cnj
-from app.integrations.sources.stf import fetch_stf
-from app.integrations.sources.tst import fetch_tst
 from app.models.pauta import Pauta
-from app.models.tenant import TenantConfig
 from app.models.user import User
 from app.schemas.pauta import PautaManualCreate, PautaOut
+from app.services.radar_juridico import criar_pesquisador, rodar_radar
 from app.services.verificacao_atualidade import verificar_atualidade
 
 router = APIRouter(prefix="/pautas", tags=["pautas"])
-
-
-def get_ai_client() -> AIClient:
-    return GeminiClient(api_key=settings.GEMINI_API_KEY)
 
 
 async def _verificar_e_marcar(pauta: Pauta) -> None:
@@ -46,65 +37,19 @@ async def _verificar_e_marcar(pauta: Pauta) -> None:
     pauta.verificado_em = verificado_em
 
 
-EXTRACTION_PROMPT = """\
-Você é assistente de uma advogada com áreas de prática: {areas}.
-
-Leia o material abaixo, extraído de fontes jurídicas oficiais (STF, TST, CNJ), e
-identifique até 8 temas relevantes.
-
-Para cada tema, retorne:
-- titulo: nome curto e claro do tema
-- angulo: "direitos" (oportunidade para o cliente) ou "sinceridade" (riscos/cautela)
-- area: área do direito
-- fonte: qual fonte trouxe o tema (STF, TST ou CNJ)
-- relevante_para_conteudo: true se o tema é simples de explicar, trabalhista ou
-  previdenciário, e tem potencial de atrair cliente; false se é relevante
-  juridicamente mas técnico/processual demais para virar post.
-
-Responda em JSON: {{"pautas": [...]}}
-
-MATERIAL:
-{material}
-"""
-
-
 @router.post("/buscar", response_model=list[PautaOut])
 async def buscar_pautas(
     db: Annotated[AsyncSession, Depends(get_db)],
     current_user: Annotated[User, Depends(get_current_user)],
 ) -> list[Pauta]:
-    ai_client = get_ai_client()
-    docs = [await fetch_stf(), await fetch_tst(), await fetch_cnj()]
-    material = "\n\n".join(f"=== {d.fonte} ===\n{d.texto}" for d in docs)
-
-    result = await db.execute(
-        select(TenantConfig).where(TenantConfig.tenant_id == current_user.tenant_id)
-    )
-    tenant_config = result.scalar_one_or_none()
-    areas = ", ".join(tenant_config.voz.get("areas", [])) if tenant_config else ""
-
-    prompt = EXTRACTION_PROMPT.format(areas=areas, material=material)
-    extraction = await ai_client.generate_json(prompt)
-
-    pautas = []
-    for item in extraction.get("pautas", []):
-        pauta = Pauta(
-            tenant_id=current_user.tenant_id,
-            titulo=item["titulo"],
-            angulo=item["angulo"],
-            area=item["area"],
-            origem="buscada",
-            fonte=item["fonte"],
-            relevante_para_conteudo=item["relevante_para_conteudo"],
-            status="sugerida",
+    """Roda o Radar Jurídico na hora (o mesmo que o agendador faz às 8h)."""
+    pesquisador = criar_pesquisador()
+    if pesquisador is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Radar Jurídico sem chave de pesquisa (configure OPENAI_API_KEY ou TAVILY_API_KEY + GEMINI_API_KEY).",
         )
-        db.add(pauta)
-        pautas.append(pauta)
-
-    await db.commit()
-    for p in pautas:
-        await db.refresh(p)
-    return pautas
+    return await rodar_radar(db, current_user.tenant_id, pesquisador, date.today())
 
 
 @router.get("", response_model=list[PautaOut])

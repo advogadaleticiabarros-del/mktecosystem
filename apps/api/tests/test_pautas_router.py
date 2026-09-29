@@ -1,8 +1,8 @@
-from unittest.mock import AsyncMock, patch
+from unittest.mock import patch
 
 import pytest
 
-from app.integrations.sources.base import SourceDocument
+from app.services.radar_juridico import Achado
 from app.models.tenant import Tenant, TenantConfig
 from app.models.user import User
 from app.core.security import hash_password, create_access_token
@@ -35,39 +35,20 @@ async def _make_tenant_and_user(db_session):
 
 
 @pytest.mark.anyio
-async def test_buscar_pautas_persists_ranked_results(client, db_session):
+async def test_buscar_pautas_roda_o_radar_juridico(client, db_session):
     tenant, user = await _make_tenant_and_user(db_session)
     token = create_access_token(user.id)
 
-    fake_ai_result = {
-        "pautas": [
-            {
-                "titulo": "Revisão de benefício por incapacidade",
-                "angulo": "direitos",
-                "area": "Previdenciário",
-                "fonte": "STF",
-                "relevante_para_conteudo": True,
-            },
-            {
-                "titulo": "Alteração de rito em recurso especial",
-                "angulo": "tecnico",
-                "area": "Processual",
-                "fonte": "STF",
-                "relevante_para_conteudo": False,
-            },
-        ]
-    }
+    class Pesquisador:
+        async def pesquisar(self, areas, evitar, hoje):
+            return [
+                Achado("Revisão de benefício por incapacidade", "resumo", "Previdenciário",
+                       "direitos", "STF", "https://stf", True),
+                Achado("Alteração de rito em recurso especial", "resumo", "Processual",
+                       "sinceridade", "STJ", "https://stj", False),
+            ]
 
-    with (
-        patch("app.routers.pautas.fetch_stf", new=AsyncMock(return_value=SourceDocument("STF", "url", "texto stf"))),
-        patch("app.routers.pautas.fetch_tst", new=AsyncMock(return_value=SourceDocument("TST", "url", "texto tst"))),
-        patch("app.routers.pautas.fetch_cnj", new=AsyncMock(return_value=SourceDocument("CNJ", "url", "texto cnj"))),
-        patch("app.routers.pautas.get_ai_client") as mock_get_ai,
-    ):
-        mock_ai = AsyncMock()
-        mock_ai.generate_json.return_value = fake_ai_result
-        mock_get_ai.return_value = mock_ai
-
+    with patch("app.routers.pautas.criar_pesquisador", return_value=Pesquisador()):
         response = await client.post(
             "/pautas/buscar", headers={"Authorization": f"Bearer {token}"}
         )
@@ -75,8 +56,21 @@ async def test_buscar_pautas_persists_ranked_results(client, db_session):
     assert response.status_code == 200
     body = response.json()
     assert len(body) == 2
-    assert any(p["relevante_para_conteudo"] is True for p in body)
-    assert any(p["relevante_para_conteudo"] is False for p in body)
+    assert {p["fonte"] for p in body} == {"STF", "STJ"}
+    assert all(p["origem"].startswith("radar_juridico") for p in body)
+
+
+@pytest.mark.anyio
+async def test_buscar_pautas_sem_chave_de_pesquisa_retorna_503(client, db_session):
+    tenant, user = await _make_tenant_and_user(db_session)
+    token = create_access_token(user.id)
+
+    with patch("app.routers.pautas.criar_pesquisador", return_value=None):
+        response = await client.post(
+            "/pautas/buscar", headers={"Authorization": f"Bearer {token}"}
+        )
+
+    assert response.status_code == 503
 
 
 @pytest.mark.anyio

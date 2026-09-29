@@ -26,6 +26,8 @@ class Settings(BaseSettings):
     GOOGLE_REDIRECT_URI: str = "http://localhost:8000/integracoes/google-business/callback"
     GROQ_API_KEY: str = ""
     TAVILY_API_KEY: str = ""
+    OPENAI_API_KEY: str = ""
+    OPENAI_RADAR_MODEL: str = "gpt-4.1-mini"
     BLOG_SFTP_HOST: str = ""
     BLOG_SFTP_PORT: int = 22
     BLOG_SFTP_USER: str = ""

@@ -15,7 +15,7 @@ class Pauta(Base):
     titulo: Mapped[str] = mapped_column(String(300))
     angulo: Mapped[str] = mapped_column(String(50))
     area: Mapped[str] = mapped_column(String(100))
-    origem: Mapped[str] = mapped_column(String(20))
+    origem: Mapped[str] = mapped_column(String(40))
     fonte: Mapped[str] = mapped_column(String(200))
     relevante_para_conteudo: Mapped[bool] = mapped_column(Boolean, default=False)
     status: Mapped[str] = mapped_column(String(20), default="sugerida")

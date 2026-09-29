@@ -100,7 +100,7 @@ com edições anteriores.
 
 ### Backend — módulos completos
 - **Auth**: login, troca de senha, JWT.
-- **Pautas**: pesquisa automática (STF/TST/CNJ) + geração manual, com IA.
+- **Pautas**: Radar Jurídico automático diário (web search, ver seção própria) + geração manual, com IA.
 - **Content**: geração de 4 tipos de peça por pauta (artigo, carrossel, legenda,
   stories) via Gemini, com "lições de edições anteriores" injetadas no prompt
   (o "cérebro" — `app/services/cerebro.py` / `MarketingMemory`).
@@ -309,15 +309,38 @@ algo que o backend do Orbit chama em runtime — skills são um recurso do
 Claude Code, o Orbit gera conteúdo via API do Gemini diretamente, sem relação
 com esse sistema de skills.
 
+### Radar Jurídico automático (29/09/2026)
+
+Substitui o ChatGPT rodado à mão e as fontes fixas STF/TST/CNJ (que buscavam
+sempre a mesma página → temas repetidos). Módulo profundo
+`app/services/radar_juridico.py`: interface `rodar_radar(db, tenant_id,
+pesquisador, hoje)`; por dentro lê áreas do `TenantConfig.voz`, manda os
+títulos dos últimos 30 dias como "evitar" e **também** filtra depois por
+similaridade (`difflib`, ≥0,85, sem acento/pontuação), limita a 8, grava
+`conteudo_bruto` = resumo + link, `data_editorial` = hoje. Às **segundas** o
+1º achado relevante vira `radar_juridico_manchete` (alimenta o Jornal
+semanal); o resto é `radar_juridico_satelite`.
+
+- **Seam `Pesquisador`**, dois adapters em `app/integrations/radar/`:
+  `OpenAIPesquisador` (Responses API + tool `web_search`, modelo em
+  `OPENAI_RADAR_MODEL`, default `gpt-4.1-mini`) — preferido quando há
+  `OPENAI_API_KEY`; `TavilyGeminiPesquisador` (Tavily `topic=news`, 7 dias,
+  1 consulta por área + 1 geral de tribunais superiores → Gemini seleciona)
+  — reserva com chaves já existentes. `criar_pesquisador()` escolhe; `None`
+  = radar desligado (job loga aviso, `/pautas/buscar` responde 503).
+- **Agendador**: `job_radar_juridico` diário 10:40 UTC (07:40 Brasília).
+- **`POST /pautas/buscar`** agora roda o mesmo radar na hora.
+  `app/integrations/sources/` (STF/TST/CNJ) removido.
+- **Bug corrigido**: `pautas.origem` era `String(20)` e as origens do radar
+  têm 23 chars — o Postgres rejeitaria (SQLite dos testes não valida).
+  Migração `f1b3d5a7c9e2_pauta_origem_40.py`.
+- `scripts/import_radar.py` continua existindo para importar texto manual.
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
-0. **DNS da VPS não propagou** (a mais urgente agora — bloqueia o site novo
-   funcionar de verdade): ver detalhes completos na seção "Deploy" acima.
-   Tudo já validado dentro da VPS; só falta a internet enxergar
-   `orbit.advogadaleticiabarros.com.br`/`api.orbit....` apontando pro IP
-   certo. Depois que resolver: rodar `certbot --nginx -d
-   orbit.advogadaleticiabarros.com.br -d api.orbit.advogadaleticiabarros.com.br`
-   na VPS pra emitir o HTTPS.
+0. **Chave da OpenAI para o Radar** (opcional — sem ela o radar roda com
+   Tavily+Gemini): colocar `OPENAI_API_KEY` no `.env` da API na VPS.
+   DNS/HTTPS da VPS: resolvidos (verificado 29/09/2026, cert até 28/11/2026).
 
 1. **Redesenho visual — polimento por página ainda falta**: o tema claro já é o
    padrão de todo o app (22/07, ver "O que está pronto") — isso resolveu a cor/fundo/
