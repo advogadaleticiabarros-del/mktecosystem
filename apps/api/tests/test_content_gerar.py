@@ -74,6 +74,8 @@ async def test_gerar_creates_seis_content_pieces(client, db_session):
     body = response.json()
     tipos = {piece["tipo"] for piece in body}
     assert tipos == set(TIPOS_PADRAO)
+    await db_session.refresh(pauta)
+    assert pauta.status == "em_producao"
     assert all(piece["status"] == "rascunho" for piece in body)
 
 

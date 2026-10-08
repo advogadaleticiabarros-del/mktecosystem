@@ -140,7 +140,7 @@ JORNAL_PROMPT = (
     "\"resumo\": str (1-2 frases para o card/CTA)}}"
 )
 
-RADAR_ORIGENS_MANCHETE = {"radar_juridico_manchete"}
+RADAR_ORIGENS_MANCHETE = {"radar_juridico_manchete", "jornalista_manchete"}
 
 
 @router.post("/gerar", response_model=list[ContentPieceOut])
@@ -224,6 +224,8 @@ async def gerar_conteudo(
         db.add(jornal_piece)
         pieces.append(jornal_piece)
 
+    if pauta.status in ("sugerida", "aprovada", "guardada"):
+        pauta.status = "em_producao"
     await db.commit()
     for p in pieces:
         await db.refresh(p)

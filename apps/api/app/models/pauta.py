@@ -1,7 +1,7 @@
 import uuid
 from datetime import date, datetime, timezone
 
-from sqlalchemy import Boolean, Date, DateTime, ForeignKey, String, Text, Uuid
+from sqlalchemy import JSON, Boolean, Date, DateTime, ForeignKey, Integer, String, Text, Uuid
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db import Base
@@ -18,11 +18,16 @@ class Pauta(Base):
     origem: Mapped[str] = mapped_column(String(40))
     fonte: Mapped[str] = mapped_column(String(200))
     relevante_para_conteudo: Mapped[bool] = mapped_column(Boolean, default=False)
+    # sugerida → aprovada → em_producao → publicada; ou guardada / descartada
     status: Mapped[str] = mapped_column(String(20), default="sugerida")
     alerta_atualidade: Mapped[str | None] = mapped_column(String(500), nullable=True)
     verificado_em: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     conteudo_bruto: Mapped[str | None] = mapped_column(Text, nullable=True)
     data_editorial: Mapped[date | None] = mapped_column(Date, nullable=True)
+    # Apuração do Jornalista: gancho, fatos, o que muda, fontes, selo de verificação, formatos sugeridos.
+    apuracao: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    relevancia: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    urgencia: Mapped[str | None] = mapped_column(String(10), nullable=True)
     criado_em: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )

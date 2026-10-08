@@ -26,7 +26,7 @@ from app.services.google_business_metrics import coletar_metricas_google_busines
 from app.services.coleta_instagram import coletar_instagram
 from app.services.instagram_metrics import coletar_metricas_diarias
 from app.services.instagram_publisher import publicar_agendamentos_prontos
-from app.services.radar_juridico import criar_pesquisador, rodar_radar
+from app.services.jornalista import apurar, criar_jornalista
 from app.services.verificacao_atualidade import verificar_atualidade
 
 logger = logging.getLogger(__name__)
@@ -118,21 +118,22 @@ async def job_verificacao_atualidade() -> None:
         logger.warning("Verificação de atualidade: %d itens com alerta de desatualização.", total)
 
 
-async def job_radar_juridico() -> None:
-    """Radar Jurídico diário: pesquisa novidades e cria pautas sugeridas,
-    sem passo manual (substitui o ChatGPT rodado à mão às 8h)."""
-    pesquisador = criar_pesquisador()
-    if pesquisador is None:
-        logger.warning("Radar Jurídico desligado: sem OPENAI_API_KEY nem TAVILY_API_KEY + GEMINI_API_KEY.")
+async def job_jornalista() -> None:
+    """Ronda diária do Jornalista: apura notícias reais das áreas do escritório
+    e deixa pautas prontas (com fontes e selo de verificação) às 07h40."""
+    jornalista = criar_jornalista()
+    if jornalista is None:
+        logger.warning("Jornalista desligado: sem GEMINI_API_KEY.")
         return
+    buscador, redator = jornalista
     async with SessionLocal() as db:
         tenants = (await db.execute(select(Tenant).where(Tenant.ativo))).scalars().all()
         for tenant in tenants:
             try:
-                pautas = await rodar_radar(db, tenant.id, pesquisador, date.today())
-                logger.info("Radar Jurídico: %d pautas novas para %s.", len(pautas), tenant.slug)
+                pautas = await apurar(db, tenant.id, buscador, redator, date.today())
+                logger.info("Jornalista: %d pautas novas para %s.", len(pautas), tenant.slug)
             except Exception:
-                logger.exception("Radar Jurídico falhou para %s", tenant.slug)
+                logger.exception("Jornalista falhou para %s", tenant.slug)
 
 
 def criar_scheduler() -> AsyncIOScheduler:
@@ -143,5 +144,5 @@ def criar_scheduler() -> AsyncIOScheduler:
     scheduler.add_job(job_metricas_fontes_externas, CronTrigger(hour=6))
     scheduler.add_job(job_verificacao_atualidade, CronTrigger(hour=5))
     # Todo dia 10:40 UTC = 07:40 em Brasília: pautas prontas quando ela abre o Orbit às 8h
-    scheduler.add_job(job_radar_juridico, CronTrigger(hour=10, minute=40))
+    scheduler.add_job(job_jornalista, CronTrigger(hour=10, minute=40))
     return scheduler
