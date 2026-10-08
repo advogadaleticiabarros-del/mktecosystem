@@ -26,6 +26,7 @@ import unicodedata
 import uuid
 from datetime import date, datetime, timedelta, timezone
 from difflib import SequenceMatcher
+from urllib.parse import urlparse
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -43,7 +44,10 @@ MAX_GRUPOS = 40
 SIMILARIDADE_REPETIDO = 0.85
 SEMELHANCA_MESMO_FATO = 0.5
 
-_OFICIAL = re.compile(r"(\.jus\.br|\.gov\.br|\.leg\.br|planalto|\bstf\b|\bstj\b|\btst\b|inss|\.mp\.br)", re.I)
+_DOMINIO_OFICIAL = re.compile(r"\.(jus|gov|leg|mp)\.br$", re.I)
+_SUFIXOS_BR = (".com.br", ".org.br", ".net.br", ".jus.br", ".gov.br", ".leg.br", ".mp.br", ".edu.br", ".adv.br")
+AREAS_PRINCIPAIS = {"trabalh": "Trabalhista", "gestante": "Trabalhista", "previd": "Previdenciário",
+                    "famíl": "Família", "famil": "Família", "consum": "Consumidor"}
 
 _CONSULTAS_POR_AREA = {
     "trabalh": ["TST decisão trabalhador", "direitos trabalhistas nova regra", "CLT mudança empregado"],
@@ -73,16 +77,19 @@ NÃO repita estes temas já trabalhados:
 
 Para cada pauta, responda com:
 - grupos: lista com os NÚMEROS dos grupos usados (ex.: [3, 7]). Obrigatório.
-- manchete: título leigo e claro, até 90 caracteres
+- manchete: título leigo e claro, até 90 caracteres, tom sóbrio e acolhedor \
+(sem ponto de exclamação, sem sensacionalismo, sem "surpreende" ou "urgente")
 - gancho: por que falar disso agora (1 frase)
 - fatos: o que aconteceu, quem decidiu/publicou e quando (2 a 4 frases, só o \
 que está no material)
 - o_que_muda: o que muda na prática para a cliente (1 a 3 frases)
-- area: uma das áreas acima
+- area: exatamente uma destas: Trabalhista, Previdenciário, Família ou Consumidor \
+(gestante e licença-maternidade = Trabalhista)
 - angulo: "direitos" (oportunidade) ou "sinceridade" (risco/cautela)
 - urgencia: "alta" (prazo ou assunto quente esta semana), "media" ou "baixa"
 - prazo: data ou prazo concreto se houver, senão null
-- relevancia: 0 a 100 (quanto atrai cliente para o escritório)
+- relevancia: 0 a 100 (quanto atrai cliente para o escritório). Seja exigente e \
+distribua as notas: no máximo 2 pautas acima de 85; a média deve ficar perto de 65
 - relevante_para_conteudo: false se for técnico demais para post
 - local_es: true se o fato é do Espírito Santo
 - formatos: {{"carrossel": ideia de capa, "frase": frase de até 20 palavras, \
@@ -153,10 +160,27 @@ def _material(grupos: list[list[Noticia]]) -> str:
     return "\n".join(linhas)
 
 
+def _dominio(fonte: dict) -> str:
+    """Domínio do veículo (www e subdomínios fora): o mesmo jornal vindo do
+    Google Notícias e da Tavily conta como um só."""
+    host = urlparse(fonte.get("site") or fonte.get("url", "")).netloc.lower().split(":")[0]
+    partes = host.split(".")
+    if not host:
+        return fonte.get("nome", "").lower()
+    n = 3 if host.endswith(_SUFIXOS_BR) else 2
+    return ".".join(partes[-n:])
+
+
+def _area(area: str) -> str:
+    chave = next((k for k in AREAS_PRINCIPAIS if k in area.lower()), None)
+    return AREAS_PRINCIPAIS[chave] if chave else area
+
+
 def verificacao_das_fontes(fontes: list[dict]) -> dict:
-    """Selo de verificação por regra fixa (nunca pela IA)."""
-    oficiais = [f for f in fontes if _OFICIAL.search(f.get("site") or f.get("url", "")) or _OFICIAL.search(f.get("nome", ""))]
-    veiculos = {f.get("nome", "").lower() for f in fontes}
+    """Selo de verificação por regra fixa (nunca pela IA). Oficial = domínio
+    .jus.br/.gov.br/.leg.br/.mp.br; o resto da URL não conta."""
+    oficiais = [f for f in fontes if _DOMINIO_OFICIAL.search(_dominio(f))]
+    veiculos = {_dominio(f) for f in fontes}
     if oficiais:
         return {"nivel": "oficial", "texto": f"Fonte oficial: {oficiais[0]['nome']}"}
     if len(veiculos) >= 2:
@@ -240,29 +264,30 @@ async def apurar(
                 continue
             if 1 <= n <= len(grupos):
                 numeros.append(n)
-        manchete = str(s.get("manchete") or "").strip()
+        manchete = str(s.get("manchete") or "").replace("!", "").strip()
         if not numeros or not manchete or _repetido(manchete, vistos):
             continue
         vistos.append(_normalizar(manchete))
 
-        fontes, urls = [], set()
+        fontes, veiculos_vistos = [], set()
         for n in numeros:
             for noticia in grupos[n - 1]:
-                if noticia.url not in urls:
-                    urls.add(noticia.url)
+                fonte = {"nome": noticia.fonte, "url": noticia.url, "site": noticia.site}
+                if _dominio(fonte) not in veiculos_vistos:
+                    veiculos_vistos.add(_dominio(fonte))
                     fontes.append({
                         "nome": noticia.fonte, "url": noticia.url, "site": noticia.site,
                         "data": noticia.publicado_em.date().isoformat() if noticia.publicado_em else None,
                     })
         fontes = fontes[:6]
         verificacao = verificacao_das_fontes(fontes)
-        bonus = {"oficial": 10, "confirmada": 5}.get(verificacao["nivel"], 0)
+        bonus = {"oficial": 5, "confirmada": 3}.get(verificacao["nivel"], 0)
         try:
             relevancia = min(100, max(0, int(s.get("relevancia", 50))) + bonus)
         except (TypeError, ValueError):
             relevancia = 50 + bonus
         urgencia = s.get("urgencia") if s.get("urgencia") in ("alta", "media", "baixa") else "media"
-        principal = next((f for f in fontes if _OFICIAL.search(f.get("site") or f["url"])), fontes[0])
+        principal = next((f for f in fontes if _DOMINIO_OFICIAL.search(_dominio(f))), fontes[0])
 
         apuracao = {
             "gancho": s.get("gancho", ""),
@@ -280,7 +305,7 @@ async def apurar(
             tenant_id=tenant_id,
             titulo=manchete[:300],
             angulo=s.get("angulo") if s.get("angulo") in ("direitos", "sinceridade") else "direitos",
-            area=str(s.get("area") or "Geral")[:100],
+            area=_area(str(s.get("area") or "Geral"))[:100],
             origem=ORIGEM,
             fonte=principal["nome"][:200],
             relevante_para_conteudo=bool(s.get("relevante_para_conteudo", True)),

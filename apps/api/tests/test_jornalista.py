@@ -195,3 +195,25 @@ async def test_aceita_chave_traduzida_e_numero_em_texto(db_session):
     sugestao["groups"] = ["1"]
     pautas = await apurar(db_session, tenant.id, BuscadorFalso([PIX_BLOG]), RedatorFalso([sugestao]), QUINTA)
     assert len(pautas) == 1
+
+
+def test_selo_olha_so_o_dominio_e_nao_conta_o_mesmo_jornal_duas_vezes():
+    falso_oficial = verificacao_das_fontes([{"nome": "Boqnews", "url": "https://boqnews.com/stf-decide-inss"}])
+    assert falso_oficial["nivel"] == "fonte_unica"
+    mesmo_jornal = verificacao_das_fontes([
+        {"nome": "Folha PE", "url": "https://news.google.com/x", "site": "https://www.folhape.com.br"},
+        {"nome": "folhape.com.br", "url": "https://www.folhape.com.br/noticia", "site": "https://www.folhape.com.br/noticia"},
+    ])
+    assert mesmo_jornal["nivel"] == "fonte_unica"
+    oficial = verificacao_das_fontes([{"nome": "stf noticias", "url": "https://news.google.com/y",
+                                       "site": "https://noticias.stf.jus.br"}])
+    assert oficial["nivel"] == "oficial"
+
+
+@pytest.mark.anyio
+async def test_manchete_sem_exclamacao_e_gestante_vira_trabalhista(db_session):
+    tenant = await _tenant(db_session)
+    sugestao = _pauta_redator([1], "TST condena demissão na licença!", area="Direito da Gestante CLT")
+    pautas = await apurar(db_session, tenant.id, BuscadorFalso([GESTANTE_TST]), RedatorFalso([sugestao]), QUINTA)
+    assert pautas[0].titulo == "TST condena demissão na licença"
+    assert pautas[0].area == "Trabalhista"

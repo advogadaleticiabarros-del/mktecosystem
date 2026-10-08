@@ -68,7 +68,7 @@ async def test_buscar_pautas_roda_o_jornalista(client, db_session):
     assert body[0]["origem"].startswith("jornalista")
     assert body[0]["urgencia"] == "alta"
     assert body[0]["apuracao"]["verificacao"]["nivel"] == "oficial"
-    assert body[0]["relevancia"] == 90
+    assert body[0]["relevancia"] == 85
 
 
 @pytest.mark.anyio
