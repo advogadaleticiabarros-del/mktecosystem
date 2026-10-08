@@ -120,7 +120,7 @@ async def _publicar_artigo(
     identidade_visual: dict,
 ) -> str:
     titulo = piece.corpo["titulo"]
-    slug = gerar_slug(titulo) or "artigo"
+    slug = piece.corpo.get("slug") or gerar_slug(titulo) or "artigo"
     categoria_slug = gerar_slug(categoria)
     url_artigo = f"{BLOG_BASE_URL}{slug}.html"
     meta_description = piece.corpo.get("meta_description", "")
@@ -136,14 +136,20 @@ async def _publicar_artigo(
         data_publicacao=date.today(),
     )
 
-    caminho_capa_local = MEDIA_DIR / f"{agendamento.id}-capa.png"
-    await renderizar_capa_artigo(
-        titulo=titulo,
-        categoria=categoria,
-        identidade_visual=identidade_visual,
-        caminho_saida=str(caminho_capa_local),
-    )
-    capa_bytes = caminho_capa_local.read_bytes()
+    # Capa pronta (foto escolhida à mão, enviada para a pasta de mídia) tem
+    # prioridade sobre a capa simples gerada.
+    capa_pronta = piece.corpo.get("capa_arquivo")
+    if capa_pronta and (MEDIA_DIR / capa_pronta).exists():
+        capa_bytes = (MEDIA_DIR / capa_pronta).read_bytes()
+    else:
+        caminho_capa_local = MEDIA_DIR / f"{agendamento.id}-capa.png"
+        await renderizar_capa_artigo(
+            titulo=titulo,
+            categoria=categoria,
+            identidade_visual=identidade_visual,
+            caminho_saida=str(caminho_capa_local),
+        )
+        capa_bytes = caminho_capa_local.read_bytes()
 
     index_atual = (await sftp.download(f"{settings.BLOG_SFTP_PATH}index.html")).decode("utf-8")
     sitemap_atual = (await sftp.download(f"{settings.BLOG_SFTP_PATH}../sitemap.xml")).decode("utf-8")

@@ -183,3 +183,28 @@ async def test_falha_incrementa_tentativas_e_marca_erro_apos_3(db_session):
     await db_session.refresh(agendamento)
     assert agendamento.status == "erro"
     assert agendamento.tentativas == 3
+
+
+@pytest.mark.anyio
+async def test_artigo_com_capa_pronta_e_slug_definido_usa_os_dois(db_session, tmp_path):
+    tenant, agendamento = await _setup(db_session)
+    piece = await db_session.get(ContentPiece, agendamento.content_piece_id)
+    (tmp_path / "capa-pet.png").write_bytes(b"foto-de-verdade")
+    piece.corpo = {**piece.corpo, "slug": "guarda-de-pet", "capa_arquivo": "capa-pet.png"}
+    await db_session.commit()
+
+    renderizar = AsyncMock()
+    with patch("app.services.blog_publisher.renderizar_capa_artigo", new=renderizar), patch(
+        "app.services.blog_publisher.MEDIA_DIR", tmp_path
+    ), patch("app.services.blog_publisher.SFTPClient") as MockSFTP:
+        instancia = MockSFTP.return_value
+        instancia.download = AsyncMock(side_effect=[INDEX_FIXTURE.encode(), SITEMAP_FIXTURE.encode()])
+        instancia.upload = AsyncMock()
+        instancia.garantir_diretorio = AsyncMock()
+        instancia.close = AsyncMock()
+        assert await publicar_agendamentos_prontos(db_session) == 1
+
+    renderizar.assert_not_awaited()
+    enviados = {c.args[0]: c.args[1] for c in instancia.upload.await_args_list}
+    assert enviados["capas/guarda-de-pet.png"] == b"foto-de-verdade"
+    assert "guarda-de-pet.html" in enviados
