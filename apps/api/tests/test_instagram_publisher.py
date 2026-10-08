@@ -2,20 +2,18 @@ from datetime import date, timedelta
 from unittest.mock import AsyncMock, patch
 
 import pytest
-from sqlalchemy import select
 
 from app.core.crypto import encrypt_token
-from app.core.security import hash_password
 from app.models.content_piece import ContentPiece
 from app.models.pauta import Pauta
 from app.models.scheduled_post import ScheduledPost
 from app.models.social_connection import SocialConnection
 from app.models.tenant import Tenant, TenantConfig
-from app.models.user import User
 from app.services.instagram_publisher import publicar_agendamentos_prontos
+from tests.fakes import RenderizadorFalso
 
 
-async def _setup(db, com_conexao=True):
+async def _setup(db, com_conexao=True, tipo="carrossel", corpo=None, formato="carrossel"):
     tenant = Tenant(nome="Letícia", slug="leticia-barros", nicho="juridico")
     db.add(tenant)
     await db.flush()
@@ -39,14 +37,15 @@ async def _setup(db, com_conexao=True):
     db.add(pauta)
     await db.flush()
     piece = ContentPiece(
-        tenant_id=tenant.id, pauta_id=pauta.id, tipo="carrossel",
-        corpo={"slides": ["a", "b", "c"]}, status="aprovado",
+        tenant_id=tenant.id, pauta_id=pauta.id, tipo=tipo,
+        corpo=corpo if corpo is not None else {"slides": ["a", "b", "c"], "legenda": "Legenda"},
+        status="aprovado",
     )
     db.add(piece)
     await db.flush()
     agendamento = ScheduledPost(
         tenant_id=tenant.id, content_piece_id=piece.id, titulo="Tema",
-        canal="instagram", formato="carrossel",
+        canal="instagram", formato=formato,
         data_agendada=date.today() - timedelta(days=1), horario="11:00", status="pronto",
     )
     db.add(agendamento)
@@ -54,65 +53,112 @@ async def _setup(db, com_conexao=True):
     return tenant, agendamento
 
 
+def _api_falsa(MockAPI, post_id="post_123"):
+    instancia = MockAPI.return_value
+    instancia.publicar_carrossel = AsyncMock(return_value=post_id)
+    instancia.publicar_imagem_unica = AsyncMock(return_value=post_id)
+    return instancia
+
+
 @pytest.mark.anyio
-async def test_publica_agendamento_pronto(db_session):
+async def test_publica_carrossel_com_legenda(db_session, tmp_path):
     tenant, agendamento = await _setup(db_session)
 
-    with patch("app.services.instagram_publisher.renderizar_slide", new=AsyncMock()), patch(
-        "app.services.instagram_publisher.InstagramAPI"
-    ) as MockAPI:
-        instancia = MockAPI.return_value
-        instancia.publicar_carrossel = AsyncMock(return_value="post_123")
-        publicados = await publicar_agendamentos_prontos(db_session)
+    with patch("app.services.instagram_publisher.InstagramAPI") as MockAPI, patch(
+        "app.services.instagram_publisher.MEDIA_DIR", tmp_path
+    ):
+        api = _api_falsa(MockAPI)
+        publicados = await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
 
     assert publicados == 1
+    urls, = api.publicar_carrossel.await_args.args[1:]
+    assert len(urls) == 3
+    assert api.publicar_carrossel.await_args.kwargs["legenda"] == "Legenda"
     await db_session.refresh(agendamento)
     assert agendamento.status == "publicado"
     assert agendamento.platform_post_id == "post_123"
 
 
 @pytest.mark.anyio
+@pytest.mark.parametrize(
+    "tipo,corpo",
+    [
+        ("frase", {"frase": "Pensão não é ajuda.", "legenda": "L"}),
+        ("pergunta", {"pergunta": "Fui demitida grávida. E agora?", "legenda": "L"}),
+        ("estatico", {"texto_overlay": "Atestado verdadeiro protege", "legenda": "L"}),
+    ],
+)
+async def test_frase_pergunta_e_estatico_publicam_imagem_unica(db_session, tmp_path, tipo, corpo):
+    tenant, agendamento = await _setup(db_session, tipo=tipo, corpo=corpo, formato="post")
+
+    with patch("app.services.instagram_publisher.InstagramAPI") as MockAPI, patch(
+        "app.services.instagram_publisher.MEDIA_DIR", tmp_path
+    ):
+        api = _api_falsa(MockAPI)
+        publicados = await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
+
+    assert publicados == 1
+    api.publicar_carrossel.assert_not_awaited()
+    ig_user_id, url = api.publicar_imagem_unica.await_args.args
+    assert ig_user_id == "999"
+    assert url.endswith(f"{agendamento.id}-0.png")
+    assert api.publicar_imagem_unica.await_args.kwargs["legenda"] == "L"
+
+
+@pytest.mark.anyio
 async def test_sem_conexao_pula_silenciosamente(db_session):
     tenant, agendamento = await _setup(db_session, com_conexao=False)
-    publicados = await publicar_agendamentos_prontos(db_session)
+    publicados = await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
     assert publicados == 0
     await db_session.refresh(agendamento)
     assert agendamento.status == "pronto"
 
 
 @pytest.mark.anyio
-async def test_formato_sem_publicador_nao_e_tentado(db_session):
-    """Legenda/stories ainda não têm caminho de publicação — não devem ser
-    selecionados, para não estourar tentativas/erro tentando montar um
-    carrossel sem imagens."""
-    tenant, agendamento = await _setup(db_session)
-    agendamento.formato = "post"  # como uma "legenda" seria agendada hoje
-    await db_session.commit()
+async def test_tipo_sem_imagem_nao_e_tentado(db_session):
+    """Legenda solta, stories e reels não têm imagem própria: ficam como
+    'pronto' para publicação manual, sem gastar tentativas."""
+    tenant, agendamento = await _setup(db_session, tipo="legenda", corpo={"texto": "x"}, formato="post")
 
     with patch("app.services.instagram_publisher.InstagramAPI") as MockAPI:
-        instancia = MockAPI.return_value
-        instancia.publicar_carrossel = AsyncMock(return_value="post_123")
-        publicados = await publicar_agendamentos_prontos(db_session)
+        api = _api_falsa(MockAPI)
+        publicados = await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
 
     assert publicados == 0
-    instancia.publicar_carrossel.assert_not_awaited()
+    api.publicar_imagem_unica.assert_not_awaited()
     await db_session.refresh(agendamento)
     assert agendamento.status == "pronto"
     assert agendamento.tentativas == 0
 
 
 @pytest.mark.anyio
-async def test_falha_incrementa_tentativas_e_marca_erro_apos_3(db_session):
+async def test_peca_sem_texto_da_imagem_vai_direto_para_erro(db_session, tmp_path):
+    """Tentar de novo não resolve uma frase vazia: marca erro na hora."""
+    tenant, agendamento = await _setup(db_session, tipo="frase", corpo={"legenda": "L"}, formato="post")
+
+    with patch("app.services.instagram_publisher.InstagramAPI") as MockAPI, patch(
+        "app.services.instagram_publisher.MEDIA_DIR", tmp_path
+    ):
+        _api_falsa(MockAPI)
+        publicados = await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
+
+    assert publicados == 0
+    await db_session.refresh(agendamento)
+    assert agendamento.status == "erro"
+
+
+@pytest.mark.anyio
+async def test_falha_incrementa_tentativas_e_marca_erro_apos_3(db_session, tmp_path):
     tenant, agendamento = await _setup(db_session)
     agendamento.tentativas = 2
     await db_session.commit()
 
-    with patch("app.services.instagram_publisher.renderizar_slide", new=AsyncMock()), patch(
-        "app.services.instagram_publisher.InstagramAPI"
-    ) as MockAPI:
-        instancia = MockAPI.return_value
-        instancia.publicar_carrossel = AsyncMock(side_effect=Exception("erro da API"))
-        publicados = await publicar_agendamentos_prontos(db_session)
+    with patch("app.services.instagram_publisher.InstagramAPI") as MockAPI, patch(
+        "app.services.instagram_publisher.MEDIA_DIR", tmp_path
+    ):
+        api = _api_falsa(MockAPI)
+        api.publicar_carrossel = AsyncMock(side_effect=Exception("erro da API"))
+        publicados = await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
 
     assert publicados == 0
     await db_session.refresh(agendamento)

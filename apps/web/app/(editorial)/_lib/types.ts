@@ -7,7 +7,15 @@ export type PautaEditorial = {
   criado_em: string;
 };
 
-export type TipoContentPiece = "artigo" | "carrossel" | "legenda" | "stories" | "pergunta";
+export type TipoContentPiece =
+  | "artigo"
+  | "carrossel"
+  | "legenda"
+  | "stories"
+  | "pergunta"
+  | "frase"
+  | "estatico"
+  | "reels";
 
 export type CorpoCarrossel = { slides?: string[]; imagens?: string[]; legenda?: string };
 export type CorpoPergunta = { pergunta?: string; imagem?: string; legenda?: string };
@@ -44,6 +52,9 @@ export const TIPO_LABEL: Record<TipoContentPiece, string> = {
   stories: "Story",
   artigo: "Blog",
   legenda: "Legenda",
+  frase: "Frase",
+  estatico: "Estático",
+  reels: "Reels",
 };
 
 export function imagensDaPeca(piece: ContentPieceEditorial): string[] {

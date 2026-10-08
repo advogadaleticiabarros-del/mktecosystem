@@ -106,7 +106,35 @@ async def renderizar_frase_impacto(
         oab=oab,
         logo_src=_logo_data_uri(),
     )
+    await _fotografar(html, caminho_saida)
 
+
+async def renderizar_pergunta(
+    pergunta: str,
+    identidade_visual: dict,
+    caminho_saida: str,
+    rotulo: str = "Pergunta que eu recebo",
+    nome_conta: str = "Letícia Barros",
+    oab: str = "OAB/ES 39.948",
+) -> None:
+    """Card da dúvida real de uma cliente, em balão de conversa; a resposta vai na legenda."""
+    cores = identidade_visual.get("cores", {})
+    tamanho_fonte = 76 if len(pergunta) < 70 else 64 if len(pergunta) < 120 else 54
+    html = _env.get_template("pergunta_card.html").render(
+        pergunta=pergunta,
+        rotulo=rotulo,
+        fundo=cores.get("fundo_escuro", "#231E1A"),
+        dourado=cores.get("dourado", "#C9A962"),
+        areia=cores.get("areia", "#E8DED1"),
+        tamanho_fonte=tamanho_fonte,
+        nome_conta=nome_conta,
+        oab=oab,
+        logo_src=_logo_data_uri(),
+    )
+    await _fotografar(html, caminho_saida)
+
+
+async def _fotografar(html: str, caminho_saida: str) -> None:
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         page = await browser.new_page(viewport={"width": 1080, "height": 1350})

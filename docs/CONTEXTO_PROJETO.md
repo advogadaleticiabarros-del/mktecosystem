@@ -2,7 +2,7 @@
 
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
-> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-08-28**
+> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-08**
 > (migração de deploy Railway → VPS Hostinger, DNS ainda pendente).
 
 ## O que é o Orbit
@@ -336,6 +336,45 @@ semanal); o resto é `radar_juridico_satelite`.
   Migração `f1b3d5a7c9e2_pauta_origem_40.py`.
 - `scripts/import_radar.py` continua existindo para importar texto manual.
 
+### Ciclo editorial de 2 dias + publicador de imagem única (08/10/2026)
+
+Estratégia aprovada pela usuária e documentada no doc "Estratégia Editorial
+Orbit" (https://claude.ai/code/artifact/f49e795f-5a37-4d7a-a6f7-c31235e86e5d),
+com o raio-X real do Instagram (309 posts via Graph API): Reels alcançam ~4x
+o carrossel, 0 salvamentos/30 dias, +15 seguidores/30 dias, 73% mulheres,
+74% ES. Fase 1 da refatoração implementada:
+
+- **Instagram conectado** (08/10) com token de System User que não expira
+  (app "Orbit Leticia Barros"). Escopos: pages_show_list, pages_read_engagement,
+  business_management, instagram_basic/content_publish/manage_insights/
+  manage_comments/manage_messages/manage_contents. **Faltam** read_insights,
+  pages_read_user_content, pages_manage_posts, ads_read, leads_retrieval
+  (Facebook e anúncios) — dependem de adicionar produtos ao app da Meta.
+- **`app/services/midia_instagram.py`** (módulo profundo): `montar_midia(piece,
+  ...) -> Midia(imagens, legenda)` transforma carrossel, frase, pergunta e
+  estático em imagens + legenda; usa `corpo.imagem`/`corpo.imagens` (arte
+  enviada à mão) quando existe, senão renderiza. Renderizador injetável
+  (`RenderizadorPlaywright` em produção, `tests/fakes.py` nos testes).
+  `publicavel(tipo)` filtra o que tem imagem.
+- **Publicador** (`instagram_publisher.py`) agora publica `formato in
+  (carrossel, post)` cujo tipo é publicável: 1 imagem → `publicar_imagem_unica`,
+  várias → carrossel. **Bug corrigido**: carrossel saía sem legenda (caption
+  não era enviada ao container pai). Peça sem texto de imagem
+  (`PecaSemConteudo`) vai direto pra `erro`, sem gastar tentativas.
+- **Gerador**: 8 peças por pauta (+`frase`, +`pergunta`); carrossel agora pede
+  `legenda` no JSON. Card novo `templates/pergunta_card.html` +
+  `render_criativo.renderizar_pergunta`.
+- **Agenda** (`agenda.py`): Instagram segue o ciclo — dias de tema alternam a
+  partir de `CICLO_ANCORA = 2026-10-09`; pergunta 12h, frase 15h, carrossel 20h
+  da mesma pauta no mesmo dia (uma pauta por dia de tema); estático 19h no dia
+  de respiro seguinte ao tema da sua pauta. Artigo/jornal/legenda/stories/reels
+  seguem o playbook antigo (11h/17h).
+- **Próximas fases** (no doc): 2 = arte com foto + calendário montado sozinho
+  pelo Radar/rodízio de áreas; 3 = métricas por post + ranking + relatório
+  semanal; 4 = ajuste automático de horários/formatos, Reels, Facebook.
+- **Não deployado ainda** — acesso à VPS bloqueado pelo classificador de
+  permissões nesta sessão; a usuária precisa liberar ou rodar o redeploy.
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 0. **Chave da OpenAI para o Radar** (opcional — sem ela o radar roda com
@@ -361,14 +400,10 @@ semanal); o resto é `radar_juridico_satelite`.
    `squads/@squad-design/criativos-estaticos/templates/`.
 3. **Variantes de legenda via Groq**: teste A/B de 2-3 legendas alternativas na tela
    de Aprovação, gerado por Groq. Design aprovado, não construído ainda.
-4. **Instagram — token do sistema**: usuária precisa gerar um token de System User
-   no Gerenciador de Negócios da Meta (permissões `pages_show_list`,
-   `pages_read_engagement`, `instagram_basic`, `instagram_content_publish`,
-   `business_management`) e colar no botão "Colar token" da Visão Geral — OAuth
-   direto está bloqueado por exigência de Business Verification sem atalho de teste.
-5. **Publicador do Instagram só cobre carrossel**: legenda (`formato="post"`) e
-   stories ainda não têm publicador — são explicitamente ignorados pela query de
-   seleção (`instagram_publisher.py`) pra não tentar montar carrossel vazio.
+4. **Instagram — token do sistema**: RESOLVIDO em 08/10/2026 (ver "Ciclo
+   editorial de 2 dias"). Falta só o produto da Meta para dados do Facebook.
+5. **Publicador do Instagram**: cobre carrossel + imagem única (frase, pergunta,
+   estático) desde 08/10/2026. Stories e Reels ainda sem publicador.
 6. **`known_hosts=None` no SFTP do blog**: verificação de host key desabilitada
    (`app/integrations/publish/sftp_client.py`) — risco aceito por falta de acesso à
    fingerprint real do host; documentado, não resolvido.

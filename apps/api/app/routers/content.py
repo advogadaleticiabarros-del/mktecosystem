@@ -61,8 +61,11 @@ PROMPTS = {
         "Slides do meio: um direito/dica por slide, direto, sem enrolação. Último "
         "slide: fecha o loop com uma ação clara (comente, salve, procure orientação). "
         "Entre 6 e 10 slides — o número da capa tem que bater exatamente com quantos "
-        "slides de conteúdo existem, nunca arredondar pra cima com slide de enchimento.\n"
-        "{voz}\nResponda em JSON: {{\"slides\": [str, ...]}}"
+        "slides de conteúdo existem, nunca arredondar pra cima com slide de enchimento. "
+        "O último slide pede para salvar e mandar para quem precisa. Escreva também a "
+        "legenda do post: gancho na primeira linha, 2 parágrafos curtos, convite para "
+        "salvar e 5 hashtags do setor.\n"
+        "{voz}\nResponda em JSON: {{\"slides\": [str, ...], \"legenda\": str}}"
     ),
     "legenda": (
         "Escreva a legenda do post de Instagram sobre '{titulo}' (ângulo: {angulo}). "
@@ -99,6 +102,23 @@ PROMPTS = {
         "carrossel.\n"
         "{voz}\nResponda em JSON: {{\"conceito_visual\": str, \"texto_overlay\": "
         "str, \"legenda\": str, \"cta\": str}}"
+    ),
+    "frase": (
+        "Escreva uma frase de impacto para um card de Instagram sobre '{titulo}' "
+        "(ângulo: {angulo}). No máximo 20 palavras, na primeira pessoa da advogada "
+        "ou falando direto com a leitora, sem termo jurídico, feita para ser "
+        "compartilhada. Marque com <em>...</em> as 2 a 4 palavras decisivas (ficam "
+        "em dourado). Escreva também a legenda: 1 parágrafo que explica a frase e "
+        "um convite para mandar a quem precisa ouvir isso.\n"
+        "{voz}\nResponda em JSON: {{\"frase\": str, \"legenda\": str}}"
+    ),
+    "pergunta": (
+        "Escreva a dúvida real de uma cliente sobre '{titulo}' (ângulo: {angulo}), "
+        "do jeito que ela falaria no WhatsApp, em primeira pessoa e com no máximo "
+        "18 palavras (ex.: 'Fui demitida grávida. E agora?'). A legenda responde a "
+        "pergunta de forma curta e clara, sem juridiquês, e termina com 'Já passou "
+        "por isso? Me conta nos comentários'.\n"
+        "{voz}\nResponda em JSON: {{\"pergunta\": str, \"legenda\": str}}"
     ),
 }
 

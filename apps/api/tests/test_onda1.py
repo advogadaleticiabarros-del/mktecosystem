@@ -1,6 +1,8 @@
 from datetime import date, timedelta
 
 import pytest
+
+from app.services.agenda import eh_dia_de_tema
 from sqlalchemy import select
 
 from app.core.security import create_access_token, hash_password
@@ -63,8 +65,11 @@ async def test_aprovar_agenda_no_calendario(client, db_session):
     assert agendado.titulo == "Direitos da gestante"
     assert agendado.formato == "carrossel"
     assert agendado.canal == "instagram"
-    assert agendado.data_agendada == date.today() + timedelta(days=1)
-    assert agendado.horario == "11:00"
+    # carrossel segue o ciclo editorial: primeiro dia de tema a partir de amanhã, às 20h
+    amanha = date.today() + timedelta(days=1)
+    esperado = amanha if eh_dia_de_tema(amanha) else amanha + timedelta(days=1)
+    assert agendado.data_agendada == esperado
+    assert agendado.horario == "20:00"
     assert agendado.status == "pronto"
 
 

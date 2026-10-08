@@ -7,7 +7,7 @@ from app.models.pauta import Pauta
 from app.models.tenant import Tenant, TenantConfig
 from app.models.user import User
 
-TIPOS_PADRAO = ["artigo", "carrossel", "legenda", "stories", "reels", "estatico"]
+TIPOS_PADRAO = ["artigo", "carrossel", "legenda", "stories", "reels", "estatico", "frase", "pergunta"]
 
 FAKE_RESULTS_PADRAO = {
     "artigo": {"titulo": "Tema", "html": "<p>artigo</p>"},
@@ -27,6 +27,8 @@ FAKE_RESULTS_PADRAO = {
         "legenda": "legenda estatico",
         "cta": "cta",
     },
+    "frase": {"frase": "Pensão não é <em>ajuda</em>.", "legenda": "legenda frase"},
+    "pergunta": {"pergunta": "Fui demitida grávida. E agora?", "legenda": "resposta na legenda"},
 }
 
 
@@ -171,3 +173,11 @@ async def test_gerar_pauta_satelite_do_radar_nao_cria_jornal(client, db_session)
     assert response.status_code == 200
     tipos = {piece["tipo"] for piece in response.json()}
     assert tipos == set(TIPOS_PADRAO)
+
+
+def test_prompts_de_frase_pergunta_e_carrossel_pedem_o_que_vira_imagem_e_legenda():
+    from app.routers.content import PROMPTS
+
+    assert '"frase": str' in PROMPTS["frase"] and '"legenda": str' in PROMPTS["frase"]
+    assert '"pergunta": str' in PROMPTS["pergunta"] and '"legenda": str' in PROMPTS["pergunta"]
+    assert '"legenda": str' in PROMPTS["carrossel"]

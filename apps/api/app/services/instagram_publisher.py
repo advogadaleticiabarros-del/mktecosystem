@@ -2,6 +2,11 @@
 
 Nunca publica rascunho: verifica que o content_piece está aprovado antes de
 renderizar/publicar. Sem conexão ativa do tenant, pula silenciosamente.
+
+Formatos: carrossel e post de imagem única (frase, pergunta, estático). A
+transformação peça → imagens + legenda fica em `midia_instagram`; peças sem
+imagem própria (legenda solta, stories, reels) continuam como "pronto" para
+publicação manual, sem gastar tentativas.
 """
 import logging
 import uuid
@@ -19,33 +24,31 @@ from app.models.scheduled_post import ScheduledPost
 from app.models.social_connection import SocialConnection
 from app.models.tenant import TenantConfig
 from app.services.agendamento_horario import horario_ja_chegou
-from app.services.render_criativo import renderizar_slide
+from app.services.midia_instagram import PecaSemConteudo, Renderizador, montar_midia, publicavel
 
 logger = logging.getLogger(__name__)
 MEDIA_DIR = Path(__file__).parent.parent.parent / "media"
 LIMITE_TENTATIVAS = 3
 
 
-async def _agendamentos_prontos(db: AsyncSession) -> list[ScheduledPost]:
-    # Só "carrossel" tem publicador implementado hoje (renderiza slides e
-    # monta o carrossel via Graph API). Legenda ("post") e stories ainda não
-    # têm asset visual próprio — nunca selecionar, pra não tentar montar um
-    # carrossel vazio e estourar tentativas à toa.
+async def _agendamentos_prontos(db: AsyncSession) -> list[tuple[ScheduledPost, ContentPiece]]:
     agora = datetime.now(timezone.utc)
-    hoje = agora.date()
     resultado = await db.execute(
-        select(ScheduledPost).where(
+        select(ScheduledPost, ContentPiece)
+        .join(ContentPiece, ContentPiece.id == ScheduledPost.content_piece_id)
+        .where(
             ScheduledPost.canal == "instagram",
-            ScheduledPost.formato == "carrossel",
+            ScheduledPost.formato.in_(["carrossel", "post"]),
             ScheduledPost.status == "pronto",
-            ScheduledPost.data_agendada <= hoje,
+            ScheduledPost.data_agendada <= agora.date(),
+            ContentPiece.status == "aprovado",
         )
     )
-    candidatos = resultado.scalars().all()
     return [
-        agendamento
-        for agendamento in candidatos
-        if horario_ja_chegou(agendamento.data_agendada, agendamento.horario, agora)
+        (agendamento, piece)
+        for agendamento, piece in resultado.all()
+        if publicavel(piece.tipo)
+        and horario_ja_chegou(agendamento.data_agendada, agendamento.horario, agora)
     ]
 
 
@@ -60,42 +63,45 @@ async def _conexao_ativa(db: AsyncSession, tenant_id: uuid.UUID) -> SocialConnec
     return resultado.scalar_one_or_none()
 
 
-async def publicar_agendamentos_prontos(db: AsyncSession) -> int:
+async def publicar_agendamentos_prontos(
+    db: AsyncSession, renderizador: Renderizador | None = None
+) -> int:
     publicados = 0
-    MEDIA_DIR.mkdir(exist_ok=True)
 
-    for agendamento in await _agendamentos_prontos(db):
+    for agendamento, piece in await _agendamentos_prontos(db):
         conexao = await _conexao_ativa(db, agendamento.tenant_id)
         if conexao is None:
             logger.info("Tenant %s sem conexão Instagram ativa; pulando.", agendamento.tenant_id)
-            continue
-
-        piece = (
-            await db.execute(
-                select(ContentPiece).where(ContentPiece.id == agendamento.content_piece_id)
-            )
-        ).scalar_one_or_none()
-        if piece is None or piece.status != "aprovado":
             continue
 
         tenant_config = (
             await db.execute(select(TenantConfig).where(TenantConfig.tenant_id == agendamento.tenant_id))
         ).scalar_one_or_none()
         identidade_visual = tenant_config.identidade_visual if tenant_config else {}
-
-        page_token = decrypt_token(conexao.access_token_encrypted)
-        api = InstagramAPI(page_token=page_token)
+        api = InstagramAPI(page_token=decrypt_token(conexao.access_token_encrypted))
 
         try:
-            slides = piece.corpo.get("slides", [])
-            urls_imagens = []
-            for i, texto in enumerate(slides):
-                nome_arquivo = f"{agendamento.id}-{i}.png"
-                caminho = MEDIA_DIR / nome_arquivo
-                await renderizar_slide(texto, i, len(slides), identidade_visual, str(caminho))
-                urls_imagens.append(f"{settings.PUBLIC_API_URL}/media/{nome_arquivo}")
-
-            post_id = await api.publicar_carrossel(conexao.ig_user_id, urls_imagens)
+            midia = await montar_midia(
+                piece,
+                identidade_visual=identidade_visual,
+                pasta=MEDIA_DIR,
+                base_url=f"{settings.PUBLIC_API_URL}/media",
+                prefixo=str(agendamento.id),
+                renderizador=renderizador,
+            )
+            if len(midia.imagens) == 1:
+                post_id = await api.publicar_imagem_unica(
+                    conexao.ig_user_id, midia.imagens[0], legenda=midia.legenda
+                )
+            else:
+                post_id = await api.publicar_carrossel(
+                    conexao.ig_user_id, midia.imagens, legenda=midia.legenda
+                )
+        except PecaSemConteudo:
+            logger.warning("Agendamento %s sem conteúdo de imagem; marcado como erro.", agendamento.id)
+            agendamento.status = "erro"
+            await db.commit()
+            continue
         except Exception:
             logger.exception("Falha ao publicar agendamento %s", agendamento.id)
             agendamento.tentativas += 1

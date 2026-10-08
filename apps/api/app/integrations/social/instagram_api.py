@@ -29,7 +29,7 @@ class InstagramAPI:
         publicado = await self._post(f"/{ig_user_id}/media_publish", {"creation_id": container["id"]})
         return publicado["id"]
 
-    async def publicar_carrossel(self, ig_user_id: str, urls_imagens: list[str]) -> str:
+    async def publicar_carrossel(self, ig_user_id: str, urls_imagens: list[str], legenda: str = "") -> str:
         containers_ids = []
         for url in urls_imagens:
             container = await self._post(
@@ -39,7 +39,7 @@ class InstagramAPI:
 
         container_pai = await self._post(
             f"/{ig_user_id}/media",
-            {"media_type": "CAROUSEL", "children": ",".join(containers_ids)},
+            {"media_type": "CAROUSEL", "children": ",".join(containers_ids), "caption": legenda},
         )
         publicado = await self._post(f"/{ig_user_id}/media_publish", {"creation_id": container_pai["id"]})
         return publicado["id"]

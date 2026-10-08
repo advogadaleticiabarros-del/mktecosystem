@@ -21,3 +21,17 @@ async def test_renderiza_slide_1080x1350(tmp_path):
     assert saida.exists()
     with Image.open(saida) as img:
         assert img.size == (1080, 1350)
+
+
+@pytest.mark.anyio
+async def test_renderiza_card_de_pergunta_1080x1350(tmp_path):
+    from app.services.render_criativo import renderizar_pergunta
+
+    saida = tmp_path / "pergunta.png"
+    await renderizar_pergunta(
+        pergunta="Fui demitida grávida. E agora?",
+        identidade_visual=IDENTIDADE_VISUAL_TESTE,
+        caminho_saida=str(saida),
+    )
+    with Image.open(saida) as img:
+        assert img.size == (1080, 1350)
