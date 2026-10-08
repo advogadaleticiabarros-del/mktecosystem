@@ -261,3 +261,16 @@ body {
     @apply font-sans;
   }
 }
+
+/* Cores dos formatos do Instagram nos gráficos de Crescimento.
+   Validadas (dataviz validate_palette) no claro (#fcfcfb) e no escuro (#352e26). */
+:root {
+  --fmt-reels: #ba8c34;
+  --fmt-carrossel: #2e8fd1;
+  --fmt-imagem: #c0567e;
+}
+:root:not([data-theme="claro"]) {
+  --fmt-reels: #b88b3a;
+  --fmt-carrossel: #3b8fd2;
+  --fmt-imagem: #cc6690;
+}

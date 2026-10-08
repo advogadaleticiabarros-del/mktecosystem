@@ -21,3 +21,76 @@ async def test_carrossel_envia_legenda_no_container_pai():
     assert pai["children"] == "c1,c2"
     assert enviados[-1][0].endswith("/999/media_publish")
     assert post_id == "c4"
+
+
+@pytest.mark.anyio
+async def test_listar_publicacoes_pagina_e_junta_insights():
+    def responder(request: httpx.Request) -> httpx.Response:
+        path, q = request.url.path, dict(request.url.params)
+        if path.endswith("/999/media") and "after" not in q:
+            return httpx.Response(200, json={
+                "data": [{"id": "m1", "media_type": "VIDEO", "media_product_type": "REELS",
+                          "timestamp": "2026-05-28T23:00:00+0000", "caption": "Grávida", "permalink": "p1"}],
+                "paging": {"cursors": {"after": "X"}, "next": "https://graph.facebook.com/v21.0/999/media?after=X"},
+            })
+        if path.endswith("/999/media"):
+            return httpx.Response(200, json={"data": [{"id": "m2", "media_type": "CAROUSEL_ALBUM",
+                                                       "media_product_type": "FEED",
+                                                       "timestamp": "2026-08-10T15:00:00+0000"}]})
+        if path.endswith("/m1/insights"):
+            return httpx.Response(200, json={"data": [{"name": "reach", "values": [{"value": 900}]},
+                                                      {"name": "shares", "values": [{"value": 5}]}]})
+        if path.endswith("/m2/insights"):
+            return httpx.Response(200, json={"data": [{"name": "reach", "values": [{"value": 100}]},
+                                                      {"name": "follows", "values": [{"value": 3}]}]})
+        return httpx.Response(404, json={})
+
+    api = InstagramAPI("tok", transport=httpx.MockTransport(responder))
+    posts = await api.listar_publicacoes("999")
+
+    assert [p["id"] for p in posts] == ["m1", "m2"]
+    assert posts[0]["insights"] == {"reach": 900, "shares": 5}
+    assert posts[1]["insights"]["follows"] == 3
+
+
+@pytest.mark.anyio
+async def test_insight_que_falha_nao_derruba_a_lista():
+    def responder(request: httpx.Request) -> httpx.Response:
+        if request.url.path.endswith("/999/media"):
+            return httpx.Response(200, json={"data": [{"id": "m1", "media_type": "IMAGE", "media_product_type": "FEED",
+                                                       "timestamp": "2026-08-10T15:00:00+0000"}]})
+        return httpx.Response(400, json={"error": {"message": "metric not supported"}})
+
+    api = InstagramAPI("tok", transport=httpx.MockTransport(responder))
+    posts = await api.listar_publicacoes("999")
+    assert posts[0]["insights"] == {}
+
+
+@pytest.mark.anyio
+async def test_raio_x_da_conta_junta_perfil_series_totais_e_publico():
+    def responder(request: httpx.Request) -> httpx.Response:
+        path, q = request.url.path, dict(request.url.params)
+        if path.endswith("/999") :
+            return httpx.Response(200, json={"followers_count": 416, "follows_count": 442, "media_count": 295})
+        if path.endswith("/999/insights"):
+            m = q["metric"]
+            if m == "follower_demographics":
+                bd = q["breakdown"]
+                chave = {"city": "Vitória, Espírito Santo", "age": "25-34", "gender": "F"}[bd]
+                return httpx.Response(200, json={"data": [{"total_value": {"breakdowns": [
+                    {"results": [{"dimension_values": [chave], "value": 10}]}]}}]})
+            if q.get("metric_type") == "total_value":
+                return httpx.Response(200, json={"data": [{"name": n, "total_value": {"value": 7}} for n in m.split(",")]})
+            return httpx.Response(200, json={"data": [{"name": m, "values": [
+                {"value": 3, "end_time": "2026-10-07T07:00:00+0000"}]}]})
+        return httpx.Response(404, json={})
+
+    api = InstagramAPI("tok", transport=httpx.MockTransport(responder))
+    raio_x = await api.buscar_raio_x("999")
+
+    assert raio_x["perfil"]["followers_count"] == 416
+    assert raio_x["totais_30d"]["reach"] == 7
+    assert raio_x["serie_alcance"][-1] == ["2026-10-07", 3]
+    assert raio_x["serie_seguidores"] == [["2026-10-07", 3]]
+    assert raio_x["demografia"]["cidades"] == {"Vitória, Espírito Santo": 10}
+    assert raio_x["demografia"]["genero"] == {"F": 10}

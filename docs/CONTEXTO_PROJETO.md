@@ -375,6 +375,40 @@ o carrossel, 0 salvamentos/30 dias, +15 seguidores/30 dias, 73% mulheres,
 - **Não deployado ainda** — acesso à VPS bloqueado pelo classificador de
   permissões nesta sessão; a usuária precisa liberar ou rodar o redeploy.
 
+### Tela Crescimento = análise automática do Instagram (08/10/2026)
+
+A tela `/crescimento` antiga dependia de prints enviados à mão (vivia vazia).
+Foi reescrita como painel de análise alimentado sozinho pela Graph API:
+
+- **Coleta** (`app/services/coleta_instagram.py`, `coletar_instagram(db,
+  tenant_id=None, criar_api=...)`): grava/atualiza cada publicação em
+  `instagram_posts` (modelo `InstagramPost`, migração `a3c5e7f9b1d2`) com
+  alcance, visualizações, curtidas, comentários, compartilhamentos,
+  salvamentos, interações, seguidores ganhos e visitas ao perfil; stories
+  ficam de fora. Guarda o retrato da conta (perfil, alcance diário 90 dias,
+  novos seguidores 30 dias, totais 30 dias, demografia) em
+  `SocialMetric(tipo="ig_raio_x")`. Roda no `job_metricas_fontes_externas`
+  (06h UTC) e sob demanda pelo botão "Atualizar dados".
+- **API Meta** (`InstagramAPI.listar_publicacoes` com paginação + insights
+  por post em paralelo, limite 8; `buscar_raio_x`). Insight recusado vira {}
+  sem derrubar a coleta.
+- **Análise** (`app/services/analise_instagram.py`): `analisar(posts, raio_x,
+  hoje)` é pura e devolve cada seção com dados + `explicacao` em português
+  (formatos, áreas, horário e dia em horário de Brasília, volume × alcance
+  por mês, ranking top 10 em 4 critérios, público) e `recomendacoes`.
+  "Típico" = mediana. Área do post = `classificar_area(legenda)` por
+  contagem de palavras-chave (empate: Previdenciário > Família > Consumidor
+  > Trabalhista; sem palavra = "Institucional").
+- **Rotas**: `GET /analise/instagram`, `POST /analise/instagram/atualizar`.
+- **Front** (`app/(app)/crescimento/page.tsx` + `_components/`): diagnóstico
+  no topo, 8 números do mês com explicação, cada gráfico com o painel "O que
+  isso quer dizer"; gráficos SVG feitos à mão (linha com cursor, barras,
+  colunas, participação). Cores dos formatos `--fmt-reels/carrossel/imagem`
+  em `globals.css`, validadas com o script da skill `dataviz` no claro e no
+  escuro. Conferido em screenshot real (desktop 1440 e celular 390).
+- Facebook: card explicando que entra quando a permissão de leitura da
+  Página for liberada.
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 0. **Chave da OpenAI para o Radar** (opcional — sem ela o radar roda com

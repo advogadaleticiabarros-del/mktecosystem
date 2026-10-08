@@ -11,6 +11,7 @@ from app.models import (  # noqa: F401
     content_piece,
     email_campaign,
     email_send,
+    instagram_post,
     marketing_memory,
     pauta,
     scheduled_post,

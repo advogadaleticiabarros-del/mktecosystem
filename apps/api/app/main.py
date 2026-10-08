@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.routers import (
+    analise,
     auth,
     avaliacoes,
     calendario,
@@ -56,6 +57,7 @@ app.include_router(dashboard.router)
 app.include_router(integracoes.router)
 app.include_router(media.router)
 app.include_router(avaliacoes.router)
+app.include_router(analise.router)
 
 
 @app.get("/health")

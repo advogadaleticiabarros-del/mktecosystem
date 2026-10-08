@@ -23,6 +23,7 @@ from app.services.blog_publisher import publicar_agendamentos_prontos as publica
 from app.services.email_campaigns import gerar_rascunho_newsletter
 from app.services.email_sender import processar_boas_vindas, processar_fila_newsletter
 from app.services.google_business_metrics import coletar_metricas_google_business
+from app.services.coleta_instagram import coletar_instagram
 from app.services.instagram_metrics import coletar_metricas_diarias
 from app.services.instagram_publisher import publicar_agendamentos_prontos
 from app.services.radar_juridico import criar_pesquisador, rodar_radar
@@ -51,6 +52,7 @@ async def job_envios() -> None:
 async def job_metricas_fontes_externas() -> None:
     async with SessionLocal() as db:
         ig = await coletar_metricas_diarias(db)
+        await coletar_instagram(db)
         gmb = await coletar_metricas_google_business(db)
         if ig or gmb:
             logger.info("Métricas coletadas: %d Instagram, %d Google Meu Negócio.", ig, gmb)
