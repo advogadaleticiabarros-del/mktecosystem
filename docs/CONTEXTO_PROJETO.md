@@ -129,8 +129,9 @@ com edições anteriores.
 
 ### Frontend — 9 telas do grupo `(app)` + login
 `visao-geral`, `planejamento`, `aprovacao` (via query `?pautaId=`), `calendario`,
-`criativos`, `emails`, `configuracoes`, `avaliacoes`, `resumo-diario` (usado na
-Visão Geral também). Layout comum via `AppShell` (`components/app-shell.tsx`).
+`criativos`, `emails`, `configuracoes`, `avaliacoes`. (`resumo-diario` foi removida
+em 08/10/2026: só listava as pautas das últimas 24h, o que a aba "Novas" do
+Planejamento já faz; a rota redireciona para `/planejamento`.) Layout comum via `AppShell` (`components/app-shell.tsx`).
 
 **Revolução visual — Fase 1** (concluída e no ar em 22/07/2026):
 - 4 temas de cor trocáveis: dourado (default), esmeralda, azul, violeta —

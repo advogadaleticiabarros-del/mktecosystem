@@ -9,7 +9,6 @@ import {
   Home,
   ImageIcon,
   Mail,
-  Newspaper,
   Settings,
   ShieldCheck,
   Sparkles,
@@ -26,7 +25,6 @@ const NAV_ITEMS = [
   { href: "/editorial", label: "Editorial", icon: Sparkles, destaque: true },
   { href: "/crescimento", label: "Crescimento", icon: TrendingUp },
   { href: "/planejamento", label: "Planejamento", icon: ClipboardList },
-  { href: "/resumo-diario", label: "Resumo Jurídico Diário", icon: Newspaper },
   // Aprovação requires a ?pautaId= query param to be meaningful — it isn't
   // a directly-navigable destination, but its nav icon still highlights
   // when the user is on that route. Clicking it from elsewhere sends them

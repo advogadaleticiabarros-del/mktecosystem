@@ -1,5 +1,5 @@
 import uuid
-from datetime import date, datetime, timedelta, timezone
+from datetime import date
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -117,22 +117,6 @@ async def criar_pauta_manual(
     await db.commit()
     await db.refresh(pauta)
     return pauta
-
-
-@router.get("/resumo-diario", response_model=list[PautaOut])
-async def resumo_diario(
-    db: Annotated[AsyncSession, Depends(get_db)],
-    current_user: Annotated[User, Depends(get_current_user)],
-) -> list[Pauta]:
-    since = datetime.now(timezone.utc) - timedelta(hours=24)
-    query = (
-        select(Pauta)
-        .where(Pauta.tenant_id == current_user.tenant_id)
-        .where(Pauta.criado_em >= since)
-        .order_by(Pauta.area, Pauta.criado_em.desc())
-    )
-    result = await db.execute(query)
-    return list(result.scalars().all())
 
 
 @router.patch("/{pauta_id}", response_model=PautaOut)
