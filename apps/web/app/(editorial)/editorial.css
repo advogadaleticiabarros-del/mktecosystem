@@ -299,7 +299,8 @@
 .editorial-image-frame img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* contain: a arte aparece inteira, com as faixas douradas de topo e rodapé */
+  object-fit: contain;
   scroll-snap-align: start;
   flex: 0 0 100%;
 }
@@ -307,6 +308,12 @@
 .editorial-image-frame[data-carousel="true"] {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  /* Sem barra de rolagem: ela roubava altura e cortava topo e rodapé da arte. */
+  scrollbar-width: none;
+}
+
+.editorial-image-frame[data-carousel="true"]::-webkit-scrollbar {
+  display: none;
 }
 
 .editorial-dots {
