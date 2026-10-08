@@ -418,10 +418,41 @@ Foi reescrita como painel de análise alimentado sozinho pela Graph API:
 - Facebook: card explicando que entra quando a permissão de leitura da
   Página for liberada.
 
+### Jornalista do Orbit + Planejamento como redação (08/10/2026)
+
+O Radar Jurídico (`radar_juridico.py`, `integrations/radar/`) foi **removido** e
+substituído pelo Jornalista (`app/services/jornalista.py`, interface
+`apurar(db, tenant_id, buscador, redator, hoje, foco=None)`):
+
+- **Fontes** (`app/integrations/noticias/`, seam `Buscador`): Google Notícias
+  RSS (sem chave), Tavily (topic=news) e pesquisa web da OpenAI (só quando
+  houver `OPENAI_API_KEY`; só ficam links que a busca citou em
+  `url_citation`; até 8 buscas por ronda). `BuscadorMultiplo` junta tudo.
+- **Método** (inspirado nas skills de jornalismo jamditis/claude-skills-journalism:
+  story-pitch, source-verification, editorial-workflow): coleta → agrupa matérias
+  do mesmo fato (Jaccard de palavras ≥ 0,5) → Gemini redige citando NÚMEROS de
+  grupo (links nunca vêm da IA; aceita a chave traduzida "groups") → selo por
+  regra fixa pelo DOMÍNIO (`.jus/.gov/.leg/.mp.br` = oficial; 2+ domínios =
+  confirmada; senão fonte única) → dedup 30 dias → máx. 8 (5 num pedido).
+  Segunda-feira: a mais relevante vira `jornalista_manchete` (Jornal semanal).
+- `Pauta` ganhou `apuracao` (JSON: gancho, fatos, o_que_muda, prazo, local_es,
+  formatos {pergunta, frase, carrossel}, fontes, verificacao, pedido),
+  `relevancia`, `urgencia` (migração `b4d6f8a0c2e3`). Etapas: sugerida →
+  aprovada → em_producao (automático ao gerar conteúdo) → publicada; ou
+  guardada / descartada (`PATCH /pautas/{id}`).
+- Rotas: `POST /pautas/buscar` (ronda), `POST /pautas/jornalista {foco}`.
+  Agendador: `job_jornalista` 10:40 UTC.
+- Primeira ronda real (08/10): 7 pautas, fontes reais (Agência Brasil, Folha,
+  TST, TJSC…). Ajustes feitos após ler o resultado: manchete sem "!",
+  notas distribuídas, mesmo veículo conta uma vez.
+- Tela `/planejamento` reescrita: painel do Jornalista (pedido por assunto +
+  ronda agora), abas por etapa, filtro por área, lista com selo/urgência/
+  relevância e apuração completa ao lado (no celular, abaixo do card).
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
-0. **Chave da OpenAI para o Radar** (opcional — sem ela o radar roda com
-   Tavily+Gemini): colocar `OPENAI_API_KEY` no `.env` da API na VPS.
+0. **Chave da OpenAI para o Jornalista** (opcional — terceira fonte):
+   `OPENAI_API_KEY` no `.env` da API na VPS + `docker compose up -d api`.
    DNS/HTTPS da VPS: resolvidos (verificado 29/09/2026, cert até 28/11/2026).
 
 1. **Redesenho visual — polimento por página ainda falta**: o tema claro já é o
