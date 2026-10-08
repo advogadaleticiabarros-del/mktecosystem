@@ -63,3 +63,15 @@ async def test_respeita_o_limite_de_buscas_por_ronda():
     for c in ["a", "b", "c", "d"]:
         await fonte.buscar(c, 7)
     assert len(chamadas) == 2
+
+
+@pytest.mark.anyio
+async def test_materia_antiga_pela_data_do_titulo_fica_de_fora():
+    texto = "- Reajuste do INSS (folha) e nada novo."
+    url = "https://folha.uol.com.br/a"
+    resposta = {"output": [{"type": "message", "content": [{"type": "output_text", "text": texto, "annotations": [
+        {"type": "url_citation", "url": url, "title": "Tabela INSS 2026 - 12/01/2026 - Economia",
+         "start_index": 2, "end_index": 20},
+    ]}]}]}
+    transporte = httpx.MockTransport(lambda r: httpx.Response(200, json=resposta))
+    assert await OpenAINoticias(api_key="k", model="m", transport=transporte).buscar("INSS", 7) == []

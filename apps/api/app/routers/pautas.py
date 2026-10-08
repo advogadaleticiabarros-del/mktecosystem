@@ -39,8 +39,8 @@ async def _verificar_e_marcar(pauta: Pauta) -> None:
     pauta.verificado_em = verificado_em
 
 
-async def _jornalista(db: AsyncSession, tenant_id: uuid.UUID):
-    jornalista = criar_jornalista(openai_key=await obter_chave(db, tenant_id, "openai"))
+async def _jornalista(db: AsyncSession, tenant_id: uuid.UUID, pedido: bool = False):
+    jornalista = criar_jornalista(openai_key=await obter_chave(db, tenant_id, "openai"), pedido=pedido)
     if jornalista is None:
         raise HTTPException(status_code=503, detail="Jornalista sem chave de IA (configure GEMINI_API_KEY).")
     return jornalista
@@ -63,7 +63,7 @@ async def pedir_ao_jornalista(
     current_user: Annotated[User, Depends(get_current_user)],
 ) -> list[Pauta]:
     """Pede ao Jornalista que investigue um assunto específico (últimos 30 dias)."""
-    buscador, redator = await _jornalista(db, current_user.tenant_id)
+    buscador, redator = await _jornalista(db, current_user.tenant_id, pedido=True)
     return await apurar(db, current_user.tenant_id, buscador, redator, date.today(), foco=payload.foco.strip())
 
 
