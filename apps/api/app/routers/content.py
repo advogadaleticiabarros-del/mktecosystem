@@ -73,7 +73,7 @@ PROMPTS = {
     "legenda": (
         "Escreva a legenda do post de Instagram sobre '{titulo}' (ângulo: {angulo}). "
         "Gancho + 3 parágrafos + chamada para o blog + gancho do próximo post + "
-        "7 hashtags do setor.\n"
+        "5 hashtags específicas do tema, em CamelCase.\n"
         "{voz}\nResponda em JSON: {{\"texto\": str}}"
     ),
     "stories": (

@@ -183,3 +183,15 @@ def test_prompts_de_frase_pergunta_e_carrossel_pedem_o_que_vira_imagem_e_legenda
     assert '"frase": str' in PROMPTS["frase"] and '"legenda": str' in PROMPTS["frase"]
     assert '"pergunta": str' in PROMPTS["pergunta"] and '"legenda": str' in PROMPTS["pergunta"]
     assert '"legenda": str' in PROMPTS["carrossel"]
+
+
+def test_nenhum_prompt_pede_mais_de_5_hashtags():
+    """O Instagram limita posts e Reels a 5 hashtags desde 18/12/2025
+    (docs/MANUAL_CONTEUDO_REDES.md); prompt pedindo mais gera legenda inválida."""
+    import re
+
+    from app.routers.content import PROMPTS
+
+    for tipo, prompt in PROMPTS.items():
+        for qtd in re.findall(r"(\d+)\s+hashtags", prompt):
+            assert int(qtd) <= 5, f"prompt '{tipo}' pede {qtd} hashtags"

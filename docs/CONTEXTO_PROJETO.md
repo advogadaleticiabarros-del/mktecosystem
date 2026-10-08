@@ -489,6 +489,18 @@ Ajustes para a 1ª publicação automática: `InstagramAPI._aguardar` espera o
 container ficar FINISHED antes de `media_publish`; `job_envios` a cada 5 min.
 Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 
+### Manual de Conteúdo para Instagram e Facebook (08/10/2026)
+
+- `docs/MANUAL_CONTEUDO_REDES.md` = regras obrigatórias de toda peça de rede social
+  (OAB Prov. 205/2021, políticas da Meta, specs, design system aplicado, copy,
+  checklist). Referenciado no `CLAUDE.md` e nas skills `leticia-*`/`fabrica-de-conteudo`.
+  Versão comentada com fontes: https://claude.ai/code/artifact/3927cd5d-9428-4056-a928-2c779b46ea2b
+- Prompt `legenda` pedia 7 hashtags; o Instagram limita a 5 desde 18/12/2025. Corrigido
+  e travado por `test_nenhum_prompt_pede_mais_de_5_hashtags`.
+- **Pendente**: templates de render ainda geram 1080×1350; padrão novo do manual é
+  1080×1440 (grid 3:4) com conteúdo crítico na faixa central 1350. Subtítulo da marca
+  em `carrossel_slide.html` está em 12 px (mínimo do manual: 22 px).
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 0. **Chave da OpenAI para o Jornalista** (opcional — terceira fonte):

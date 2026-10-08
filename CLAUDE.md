@@ -6,6 +6,17 @@ decisões não-óbvias), mantido pra evitar reler tudo a cada sessão. Ao termin
 mudança relevante, atualize esse arquivo (ver `.claude/skills/contexto-orbit/SKILL.md`
 para o que/como registrar).
 
+## Conteúdo para Instagram e Facebook (obrigatório)
+
+Toda peça de rede social (carrossel, frase, pergunta, estático, Reels, Stories, Facebook),
+seja gerada por prompt do Orbit, template de render ou feita à mão, segue
+`docs/MANUAL_CONTEUDO_REDES.md`: regras da OAB (Provimento 205/2021), políticas da Meta
+(máx. 5 hashtags, originalidade, rótulo de IA), especificações (1080×1440 feed, áreas
+seguras), uso do design system (contraste, escala tipográfica, nada abaixo de 22 px) e
+checklist. Prioridade em conflito: OAB > Meta > design system > criatividade. Ao mexer em
+prompts de geração (`app/routers/content.py`) ou templates (`app/templates/`), alinhar
+com esse manual. Pedido da usuária em 08/10/2026.
+
 ## graphify
 
 This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
