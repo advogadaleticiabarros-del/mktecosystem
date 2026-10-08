@@ -26,6 +26,7 @@ from app.services.google_business_metrics import coletar_metricas_google_busines
 from app.services.coleta_instagram import coletar_instagram
 from app.services.instagram_metrics import coletar_metricas_diarias
 from app.services.instagram_publisher import publicar_agendamentos_prontos
+from app.services.chaves_api import obter_chave
 from app.services.jornalista import apurar, criar_jornalista
 from app.services.verificacao_atualidade import verificar_atualidade
 
@@ -121,14 +122,14 @@ async def job_verificacao_atualidade() -> None:
 async def job_jornalista() -> None:
     """Ronda diária do Jornalista: apura notícias reais das áreas do escritório
     e deixa pautas prontas (com fontes e selo de verificação) às 07h40."""
-    jornalista = criar_jornalista()
-    if jornalista is None:
-        logger.warning("Jornalista desligado: sem GEMINI_API_KEY.")
-        return
-    buscador, redator = jornalista
     async with SessionLocal() as db:
         tenants = (await db.execute(select(Tenant).where(Tenant.ativo))).scalars().all()
         for tenant in tenants:
+            jornalista = criar_jornalista(openai_key=await obter_chave(db, tenant.id, "openai"))
+            if jornalista is None:
+                logger.warning("Jornalista desligado: sem GEMINI_API_KEY.")
+                return
+            buscador, redator = jornalista
             try:
                 pautas = await apurar(db, tenant.id, buscador, redator, date.today())
                 logger.info("Jornalista: %d pautas novas para %s.", len(pautas), tenant.slug)

@@ -1,3 +1,4 @@
+from app.models.chave_api import ChaveApi  # noqa: F401
 from app.models.contact import Contact  # noqa: F401
 from app.models.content_piece import ContentPiece  # noqa: F401
 from app.models.email_campaign import EmailCampaign  # noqa: F401

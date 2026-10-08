@@ -8,6 +8,7 @@ from app.routers import (
     analise,
     auth,
     avaliacoes,
+    chaves,
     calendario,
     content,
     dashboard,
@@ -58,6 +59,7 @@ app.include_router(integracoes.router)
 app.include_router(media.router)
 app.include_router(avaliacoes.router)
 app.include_router(analise.router)
+app.include_router(chaves.router)
 
 
 @app.get("/health")

@@ -449,6 +449,18 @@ substituído pelo Jornalista (`app/services/jornalista.py`, interface
   ronda agora), abas por etapa, filtro por área, lista com selo/urgência/
   relevância e apuração completa ao lado (no celular, abaixo do card).
 
+### Painel de chaves de IA (08/10/2026)
+
+`Configurações → Chaves de IA`: a usuária cola a chave, o Orbit testa no
+serviço (OpenAI: `GET /v1/models`) e guarda criptografada com Fernet em
+`chaves_api` (migração `c5e7a9b1d3f4`); a tela só mostra os 4 últimos
+caracteres. `app/services/chaves_api.py` (`salvar_chave`, `status_chaves`,
+`obter_chave` com fallback para a variável de ambiente, `remover_chave`) e
+rotas `GET/PUT/DELETE /chaves/{provedor}`. O Jornalista recebe a chave via
+`criar_jornalista(openai_key=...)` (rota e agendador leem com `obter_chave`).
+A chave da OpenAI atual foi colocada pela usuária no `.env` da VPS em 08/10
+(veio colada 3x pelo `read -s`; corrigida para uma cópia, validada: 200).
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 0. **Chave da OpenAI para o Jornalista** (opcional — terceira fonte):

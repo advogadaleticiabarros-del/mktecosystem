@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from app.config import settings
 from app.db import Base
 from app.models import (  # noqa: F401
+    chave_api,
     contact,
     content_piece,
     email_campaign,

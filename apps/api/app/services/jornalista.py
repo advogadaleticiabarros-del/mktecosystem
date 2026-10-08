@@ -338,7 +338,7 @@ async def apurar(
     return pautas
 
 
-def criar_jornalista() -> tuple[Buscador, AIClient] | None:
+def criar_jornalista(openai_key: str | None = None) -> tuple[Buscador, AIClient] | None:
     """Google Notícias sempre (não precisa de chave) + Tavily e pesquisa web da
     OpenAI quando houver chave; a redação usa o Gemini. Sem Gemini, o
     Jornalista fica desligado. Uma instância por ronda (o limite de buscas da
@@ -357,8 +357,9 @@ def criar_jornalista() -> tuple[Buscador, AIClient] | None:
         from app.integrations.search.tavily_client import TavilyClient
 
         fontes.append(TavilyNoticias(TavilyClient(api_key=settings.TAVILY_API_KEY)))
-    if settings.OPENAI_API_KEY:
+    openai_key = openai_key or settings.OPENAI_API_KEY
+    if openai_key:
         from app.integrations.noticias.openai_noticias import OpenAINoticias
 
-        fontes.append(OpenAINoticias(api_key=settings.OPENAI_API_KEY, model=settings.OPENAI_RADAR_MODEL))
+        fontes.append(OpenAINoticias(api_key=openai_key, model=settings.OPENAI_RADAR_MODEL))
     return BuscadorMultiplo(fontes), GeminiClient(api_key=settings.GEMINI_API_KEY)

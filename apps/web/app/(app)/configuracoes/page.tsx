@@ -7,6 +7,7 @@ import { AppShell } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { ChavesIA } from "./_components/chaves-ia";
 
 export default function ConfiguracoesPage() {
   const [senhaAtual, setSenhaAtual] = useState("");
@@ -52,7 +53,8 @@ export default function ConfiguracoesPage() {
 
   return (
     <AppShell title="Configurações" description="Sua conta e preferências da plataforma">
-      <Card className="max-w-md p-6">
+      <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,28rem)_minmax(0,1fr)]">
+      <Card className="p-6 hover:translate-y-0">
         <div className="mb-4 flex items-center gap-2">
           <KeyRound className="h-4 w-4 text-primary" />
           <h2 className="font-display text-base font-semibold">Trocar senha</h2>
@@ -105,6 +107,8 @@ export default function ConfiguracoesPage() {
           </Button>
         </form>
       </Card>
+      <ChavesIA />
+      </div>
     </AppShell>
   );
 }

@@ -14,6 +14,7 @@ from app.integrations.search.tavily_client import TavilyClient
 from app.models.pauta import Pauta
 from app.models.user import User
 from app.schemas.pauta import PautaManualCreate, PautaOut, PautaStatusUpdate, PedidoJornalista
+from app.services.chaves_api import obter_chave
 from app.services.jornalista import apurar, criar_jornalista
 from app.services.verificacao_atualidade import verificar_atualidade
 
@@ -38,8 +39,8 @@ async def _verificar_e_marcar(pauta: Pauta) -> None:
     pauta.verificado_em = verificado_em
 
 
-def _jornalista():
-    jornalista = criar_jornalista()
+async def _jornalista(db: AsyncSession, tenant_id: uuid.UUID):
+    jornalista = criar_jornalista(openai_key=await obter_chave(db, tenant_id, "openai"))
     if jornalista is None:
         raise HTTPException(status_code=503, detail="Jornalista sem chave de IA (configure GEMINI_API_KEY).")
     return jornalista
@@ -51,7 +52,7 @@ async def buscar_pautas(
     current_user: Annotated[User, Depends(get_current_user)],
 ) -> list[Pauta]:
     """Roda a ronda do Jornalista na hora (a mesma que o agendador faz às 07h40)."""
-    buscador, redator = _jornalista()
+    buscador, redator = await _jornalista(db, current_user.tenant_id)
     return await apurar(db, current_user.tenant_id, buscador, redator, date.today())
 
 
@@ -62,7 +63,7 @@ async def pedir_ao_jornalista(
     current_user: Annotated[User, Depends(get_current_user)],
 ) -> list[Pauta]:
     """Pede ao Jornalista que investigue um assunto específico (últimos 30 dias)."""
-    buscador, redator = _jornalista()
+    buscador, redator = await _jornalista(db, current_user.tenant_id)
     return await apurar(db, current_user.tenant_id, buscador, redator, date.today(), foco=payload.foco.strip())
 
 
