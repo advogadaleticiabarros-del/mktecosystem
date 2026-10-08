@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
@@ -19,6 +19,7 @@ from app.models.scheduled_post import ScheduledPost
 from app.models.social_metric import SocialMetric
 from app.models.user import User
 from app.services.insights import gerar_insights
+from app.services.agendamento_horario import hoje_brasilia
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 
@@ -127,7 +128,7 @@ async def resumo(
                 select(ScheduledPost)
                 .where(
                     ScheduledPost.tenant_id == tenant_id,
-                    ScheduledPost.data_agendada >= date.today(),
+                    ScheduledPost.data_agendada >= hoje_brasilia(),
                 )
                 .order_by(ScheduledPost.data_agendada, ScheduledPost.horario)
                 .limit(6)

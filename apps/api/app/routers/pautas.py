@@ -17,6 +17,7 @@ from app.schemas.pauta import PautaManualCreate, PautaOut, PautaStatusUpdate, Pe
 from app.services.chaves_api import obter_chave
 from app.services.jornalista import apurar, criar_jornalista
 from app.services.verificacao_atualidade import verificar_atualidade
+from app.services.agendamento_horario import hoje_brasilia
 
 router = APIRouter(prefix="/pautas", tags=["pautas"])
 
@@ -53,7 +54,7 @@ async def buscar_pautas(
 ) -> list[Pauta]:
     """Roda a ronda do Jornalista na hora (a mesma que o agendador faz às 07h40)."""
     buscador, redator = await _jornalista(db, current_user.tenant_id)
-    return await apurar(db, current_user.tenant_id, buscador, redator, date.today())
+    return await apurar(db, current_user.tenant_id, buscador, redator, hoje_brasilia())
 
 
 @router.post("/jornalista", response_model=list[PautaOut])
@@ -64,7 +65,7 @@ async def pedir_ao_jornalista(
 ) -> list[Pauta]:
     """Pede ao Jornalista que investigue um assunto específico (últimos 30 dias)."""
     buscador, redator = await _jornalista(db, current_user.tenant_id, pedido=True)
-    return await apurar(db, current_user.tenant_id, buscador, redator, date.today(), foco=payload.foco.strip())
+    return await apurar(db, current_user.tenant_id, buscador, redator, hoje_brasilia(), foco=payload.foco.strip())
 
 
 @router.get("", response_model=list[PautaOut])
@@ -109,7 +110,7 @@ async def criar_pauta_manual(
         relevante_para_conteudo=True,
         status="sugerida",
         conteudo_bruto=payload.conteudo_bruto,
-        data_editorial=payload.data_editorial or date.today(),
+        data_editorial=payload.data_editorial or hoje_brasilia(),
     )
     db.add(pauta)
     await db.flush()

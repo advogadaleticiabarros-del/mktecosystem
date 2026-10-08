@@ -5,7 +5,7 @@ renderizar/publicar. Faz upload do HTML do artigo, da capa, do índice
 atualizado e do sitemap atualizado via SFTP.
 """
 import logging
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
 from pathlib import Path
 
 from sqlalchemy import select
@@ -17,7 +17,7 @@ from app.models.content_piece import ContentPiece
 from app.models.pauta import Pauta
 from app.models.scheduled_post import ScheduledPost
 from app.models.tenant import TenantConfig
-from app.services.agendamento_horario import horario_ja_chegou
+from app.services.agendamento_horario import horario_ja_chegou, hoje_brasilia
 from app.services.blog_index_editor import inserir_card, inserir_sitemap_entry
 from app.services.blog_slug import gerar_slug
 from app.services.render_artigo_blog import (
@@ -133,7 +133,7 @@ async def _publicar_artigo(
         resumo=resumo,
         corpo_html=piece.corpo["html"],
         slug=slug,
-        data_publicacao=date.today(),
+        data_publicacao=hoje_brasilia(),
     )
 
     # Capa pronta (foto escolhida à mão, enviada para a pasta de mídia) tem
@@ -165,7 +165,7 @@ async def _publicar_artigo(
         tempo_leitura=estimar_tempo_leitura(piece.corpo["html"]),
     )
     sitemap_novo = inserir_sitemap_entry(
-        sitemap_atual, url=url_artigo, data_iso=date.today().isoformat()
+        sitemap_atual, url=url_artigo, data_iso=hoje_brasilia().isoformat()
     )
 
     await sftp.upload(f"{settings.BLOG_SFTP_PATH}{slug}.html", html_artigo.encode("utf-8"))
@@ -190,7 +190,7 @@ async def _publicar_jornal(
         meta_description=meta_description,
         resumo=resumo,
         corpo_html=piece.corpo["html"],
-        data_publicacao=date.today(),
+        data_publicacao=hoje_brasilia(),
     )
 
     caminho_capa_local = MEDIA_DIR / f"{agendamento.id}-capa.png"
@@ -216,7 +216,7 @@ async def _publicar_jornal(
         tempo_leitura=estimar_tempo_leitura(piece.corpo["html"]),
     )
     sitemap_novo = inserir_sitemap_entry(
-        sitemap_atual, url=url_jornal, data_iso=date.today().isoformat()
+        sitemap_atual, url=url_jornal, data_iso=hoje_brasilia().isoformat()
     )
 
     await sftp.upload(f"{settings.BLOG_SFTP_PATH}jornal.html", html_jornal.encode("utf-8"))

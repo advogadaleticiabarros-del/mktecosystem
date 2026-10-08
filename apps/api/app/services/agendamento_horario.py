@@ -15,3 +15,9 @@ def horario_ja_chegou(data_agendada: date, horario: str, agora_utc: datetime | N
         hora, minuto, tzinfo=FUSO_PADRAO,
     )
     return alvo_local.astimezone(timezone.utc) <= agora_utc
+
+
+def hoje_brasilia(agora_utc: datetime | None = None) -> date:
+    """A data de hoje no fuso do escritório (o servidor roda em UTC: depois das
+    21h de Brasília, `date.today()` já seria o dia seguinte)."""
+    return (agora_utc or datetime.now(timezone.utc)).astimezone(FUSO_PADRAO).date()

@@ -4,7 +4,6 @@ Ativado só com ENABLE_SCHEDULER=true (produção). Em dev/testes fica desligado
 para não disparar envios acidentais.
 """
 import logging
-from datetime import date
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -30,6 +29,7 @@ from app.services.instagram_publisher import publicar_agendamentos_prontos
 from app.services.chaves_api import obter_chave
 from app.services.jornalista import apurar, criar_jornalista
 from app.services.verificacao_atualidade import verificar_atualidade
+from app.services.agendamento_horario import hoje_brasilia
 
 logger = logging.getLogger(__name__)
 
@@ -132,7 +132,7 @@ async def job_jornalista() -> None:
                 return
             buscador, redator = jornalista
             try:
-                pautas = await apurar(db, tenant.id, buscador, redator, date.today())
+                pautas = await apurar(db, tenant.id, buscador, redator, hoje_brasilia())
                 logger.info("Jornalista: %d pautas novas para %s.", len(pautas), tenant.slug)
             except Exception:
                 logger.exception("Jornalista falhou para %s", tenant.slug)

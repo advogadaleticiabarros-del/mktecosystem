@@ -11,6 +11,7 @@ from app.core.deps import get_current_user
 from app.db import get_db
 from app.models.scheduled_post import ScheduledPost
 from app.models.user import User
+from app.services.agendamento_horario import hoje_brasilia
 
 router = APIRouter(prefix="/calendario", tags=["calendario"])
 
@@ -68,7 +69,7 @@ async def listar_mes(
         ano, mes_num = int(mes[:4]), int(mes[5:7])
         inicio = date(ano, mes_num, 1)
     else:
-        hoje = date.today()
+        hoje = hoje_brasilia()
         inicio = date(hoje.year, hoje.month, 1)
     fim = (inicio + timedelta(days=32)).replace(day=1)
 

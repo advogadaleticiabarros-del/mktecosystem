@@ -21,6 +21,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.content_piece import ContentPiece
 from app.models.pauta import Pauta
 from app.models.scheduled_post import ScheduledPost
+from app.services.agendamento_horario import hoje_brasilia
 
 HORARIOS_PLAYBOOK = ["11:00", "17:00"]
 CICLO_ANCORA = date(2026, 10, 9)  # primeiro dia de tema do ciclo
@@ -51,7 +52,7 @@ def eh_dia_de_tema(dia: date) -> bool:
 
 async def proxima_vaga(db: AsyncSession, tenant_id: uuid.UUID) -> tuple[date, str]:
     """Encontra o primeiro (dia, horário) livre do playbook a partir de amanhã."""
-    dia = date.today() + timedelta(days=1)
+    dia = hoje_brasilia() + timedelta(days=1)
     while True:
         ocupados = (
             (
@@ -80,7 +81,7 @@ async def _ciclo_ocupado(db: AsyncSession, tenant_id: uuid.UUID) -> dict[date, l
         .where(
             ScheduledPost.tenant_id == tenant_id,
             ScheduledPost.canal == "instagram",
-            ScheduledPost.data_agendada > date.today(),
+            ScheduledPost.data_agendada > hoje_brasilia(),
             ContentPiece.tipo.in_(tipos),
         )
     )
@@ -92,7 +93,7 @@ async def _ciclo_ocupado(db: AsyncSession, tenant_id: uuid.UUID) -> dict[date, l
 
 async def vaga_no_ciclo(db: AsyncSession, piece: ContentPiece) -> tuple[date, str]:
     ocupado = await _ciclo_ocupado(db, piece.tenant_id)
-    amanha = date.today() + timedelta(days=1)
+    amanha = hoje_brasilia() + timedelta(days=1)
 
     if piece.tipo in HORARIO_DIA_DE_TEMA:
         dia = amanha if eh_dia_de_tema(amanha) else amanha + timedelta(days=1)
