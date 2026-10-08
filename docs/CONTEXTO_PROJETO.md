@@ -475,6 +475,20 @@ descarta matéria antiga pela data (na ronda diária trazia notícias de meses
 atrás); resposta pedida em texto com citações (JSON não traz `url_citation`).
 Pendência: decidir se vale ativar o faturamento do Gemini.
 
+### Primeira programação automática (08/10/2026)
+
+Peças prontas do Editorial (Desktop\Editorial 28/09–04/10) + artes novas
+(frases de pet/abandono/CLT, pergunta CLT no padrão creme da usuária via
+`_saida_programacao_0810/_gerar_pergunta_clt.py`) + 3 frases de violência de
+gênero como estáticos de respiro. Tudo em JPEG (a Graph API só aceita JPEG)
+no volume `/app/media`, programado por `_saida_programacao_0810/_programar.py`
+(pauta por tema, peça aprovada com `imagem`/`imagens` + `legenda`, agendamento
+no ciclo). 13 posts Instagram 08–14/10 + artigos de pet (09/10 10h) e abandono
+afetivo (11/10 10h) no blog com capa pronta (`corpo.capa_arquivo` + `slug`).
+Ajustes para a 1ª publicação automática: `InstagramAPI._aguardar` espera o
+container ficar FINISHED antes de `media_publish`; `job_envios` a cada 5 min.
+Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 0. **Chave da OpenAI para o Jornalista** (opcional — terceira fonte):
