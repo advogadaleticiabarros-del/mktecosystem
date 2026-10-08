@@ -372,8 +372,17 @@ o carrossel, 0 salvamentos/30 dias, +15 seguidores/30 dias, 73% mulheres,
 - **Próximas fases** (no doc): 2 = arte com foto + calendário montado sozinho
   pelo Radar/rodízio de áreas; 3 = métricas por post + ranking + relatório
   semanal; 4 = ajuste automático de horários/formatos, Reels, Facebook.
-- **Não deployado ainda** — acesso à VPS bloqueado pelo classificador de
-  permissões nesta sessão; a usuária precisa liberar ou rodar o redeploy.
+- **Deployado em 08/10/2026** (commit 3bb9fc7), junto com o Radar automático
+  e a análise do Instagram. A VPS estava travada em 963611a porque o
+  `docker-compose.yml` tinha um volume `orbit_media:/app/media` adicionado à
+  mão (bloqueava o `git pull`); agora está no repositório.
+- **Acesso do Claude à VPS**: chave dedicada `~/.ssh/orbit_vps` (máquina da
+  usuária) autorizada em `/root/.ssh/authorized_keys` (comentário
+  `claude-orbit-deploy`), com regra de permissão no Claude Code
+  `Bash(ssh -i ~/.ssh/orbit_vps root@179.199.128.68:*)`. Deploy = backup
+  (`/root/orbit-backups/`), `git pull --ff-only`, `docker compose up -d
+  --build api` (roda alembic), build do web e `cp -r out/*
+  /var/www/orbit-web/`.
 
 ### Tela Crescimento = análise automática do Instagram (08/10/2026)
 
