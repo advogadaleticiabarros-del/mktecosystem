@@ -340,14 +340,16 @@ async def apurar(
 
 def criar_jornalista(openai_key: str | None = None, pedido: bool = False) -> tuple[Buscador, AIClient] | None:
     """Google Notícias sempre (não precisa de chave) + Tavily e pesquisa web da
-    OpenAI quando houver chave; a redação usa o Gemini. Sem Gemini, o
-    Jornalista fica desligado. Uma instância por ronda (o limite de buscas da
+    OpenAI quando houver chave; a redação usa o Gemini com a OpenAI de
+    reserva (`criar_ia`). Sem nenhuma IA, o Jornalista fica desligado. Uma instância por ronda (o limite de buscas da
     OpenAI vale por instância)."""
     from app.config import settings
 
-    if not settings.GEMINI_API_KEY:
+    from app.integrations.ai.fabrica import criar_ia
+
+    redator = criar_ia(openai_key)
+    if redator is None:
         return None
-    from app.integrations.ai.gemini import GeminiClient
     from app.integrations.noticias.base import BuscadorMultiplo
     from app.integrations.noticias.google_news import GoogleNewsRSS
 
@@ -364,4 +366,4 @@ def criar_jornalista(openai_key: str | None = None, pedido: bool = False) -> tup
         from app.integrations.noticias.openai_noticias import OpenAINoticias
 
         fontes.append(OpenAINoticias(api_key=openai_key, model=settings.OPENAI_RADAR_MODEL))
-    return BuscadorMultiplo(fontes), GeminiClient(api_key=settings.GEMINI_API_KEY)
+    return BuscadorMultiplo(fontes), redator

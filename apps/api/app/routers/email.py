@@ -10,6 +10,7 @@ from app.config import settings
 from app.core.deps import get_current_user
 from app.db import get_db
 from app.integrations.ai.base import AIClient
+from app.integrations.ai.fabrica import criar_ia
 from app.integrations.ai.gemini import GeminiClient
 from app.models.contact import Contact
 from app.models.email_campaign import EmailCampaign
@@ -24,7 +25,7 @@ STATUS_PERMITIDOS = {"rascunho", "aprovado", "arquivado"}
 
 
 def get_ai_client() -> AIClient:
-    return GeminiClient(api_key=settings.GEMINI_API_KEY)
+    return criar_ia() or GeminiClient(api_key=settings.GEMINI_API_KEY)
 
 
 @router.get("/contacts", response_model=list[ContactOut])

@@ -12,6 +12,7 @@ from sqlalchemy import select
 
 from app.config import settings
 from app.db import SessionLocal
+from app.integrations.ai.fabrica import criar_ia
 from app.integrations.ai.gemini import GeminiClient
 from app.integrations.ai.groq_client import GroqClient
 from app.integrations.email.resend_client import ResendClient
@@ -61,7 +62,7 @@ async def job_metricas_fontes_externas() -> None:
 
 async def job_rascunho_newsletter() -> None:
     async with SessionLocal() as db:
-        ai = GeminiClient(api_key=settings.GEMINI_API_KEY)
+        ai = criar_ia() or GeminiClient(api_key=settings.GEMINI_API_KEY)
         tenants = (await db.execute(select(Tenant).where(Tenant.ativo))).scalars().all()
         for tenant in tenants:
             try:

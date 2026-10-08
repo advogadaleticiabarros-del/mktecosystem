@@ -9,6 +9,7 @@ from app.config import settings
 from app.core.deps import get_current_user
 from app.db import get_db
 from app.integrations.ai.base import AIClient
+from app.integrations.ai.fabrica import criar_ia
 from app.integrations.ai.gemini import GeminiClient
 from app.integrations.ai.groq_client import GroqClient
 from app.integrations.search.tavily_client import TavilyClient
@@ -24,14 +25,16 @@ from app.schemas.content_piece import (
     GerarRequest,
 )
 from app.services.agenda import agendar_conteudo_aprovado
+from app.services.chaves_api import obter_chave
 from app.services.cerebro import memorias_de_edicao, registrar_edicao
 from app.services.verificacao_atualidade import verificar_atualidade
 
 router = APIRouter(prefix="/content", tags=["content"])
 
 
-def get_ai_client() -> AIClient:
-    return GeminiClient(api_key=settings.GEMINI_API_KEY)
+def get_ai_client(openai_key: str | None = None) -> AIClient:
+    """Gemini com a OpenAI de reserva (cota do Gemini estourada não trava a geração)."""
+    return criar_ia(openai_key) or GeminiClient(api_key=settings.GEMINI_API_KEY)
 
 
 VOZ_BLOCK = """\
@@ -149,7 +152,7 @@ async def gerar_conteudo(
     db: Annotated[AsyncSession, Depends(get_db)],
     current_user: Annotated[User, Depends(get_current_user)],
 ) -> list[ContentPiece]:
-    ai_client = get_ai_client()
+    ai_client = get_ai_client(await obter_chave(db, current_user.tenant_id, "openai"))
 
     pauta_result = await db.execute(
         select(Pauta).where(
