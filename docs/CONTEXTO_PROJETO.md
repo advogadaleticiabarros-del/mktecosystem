@@ -539,8 +539,7 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   sem data. Programação de 10–14/10 ajustada (5 hashtags, primeiro comentário, CTA).
 - 08/10 19h: primeira publicação automática real + primeiro comentário confirmados
   via Graph API (post 18095711492653597).
-- `produzir.py` lê o índice de fotos de `%TEMP%/sheets/index.json` (gerado na sessão);
-  para rerodar, regerar o índice do BANCO IMAGENS na mesma ordem.
+- `produzir.py` usa `indice_fotos.json` (número da foto → arquivo do BANCO IMAGENS).
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
