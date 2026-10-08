@@ -18,6 +18,8 @@ services:
     depends_on: [db]
     ports:
       - "127.0.0.1:8010:8000"
+    volumes:
+      - orbit_media:/app/media
     networks: [orbit]
 
 networks:
@@ -25,3 +27,4 @@ networks:
 
 volumes:
   orbit_pgdata:
+  orbit_media:
