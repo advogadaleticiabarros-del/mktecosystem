@@ -7,7 +7,8 @@ dia (últimos 7 dias, uma bateria de consultas por área + Espírito Santo);
 com `foco`, investiga um assunto pedido (últimos 30 dias).
 
 Por dentro, o método de redação (skills story-pitch / source-verification):
-1. Coleta — consultas no `buscador` (Google Notícias + Tavily); uma consulta
+1. Coleta — consultas no `buscador` (Google Notícias + Tavily + pesquisa web
+   da OpenAI quando houver chave); uma consulta
    que falha não derruba a ronda.
 2. Agrupa — matérias sobre o mesmo fato viram um grupo numerado; cada grupo
    sabe quantos veículos diferentes o publicaram.
@@ -125,11 +126,15 @@ def _repetido(titulo: str, vistos: list[str]) -> bool:
 def _consultas(areas: list[str], foco: str | None) -> list[str]:
     if foco:
         return [foco, f"{foco} decisão justiça", f"{foco} lei nova regra"]
-    consultas = []
+    por_area = []
     for area in areas or ["Trabalhista", "Previdenciário", "Família", "Consumidor"]:
         chave = next((k for k in _CONSULTAS_POR_AREA if k in area.lower()), None)
-        consultas += _CONSULTAS_POR_AREA[chave] if chave else [f"{area} decisão justiça"]
-    return list(dict.fromkeys(consultas + _CONSULTAS_LOCAIS))
+        por_area.append(_CONSULTAS_POR_AREA[chave] if chave else [f"{area} decisão justiça"])
+    por_area.append(_CONSULTAS_LOCAIS)
+    # Revezando as áreas (1ª de cada, depois 2ª...): fontes com limite de
+    # buscas por ronda (OpenAI) cobrem todas as áreas, não só as primeiras.
+    revezadas = [c for rodada in zip(*[q + [None] * (3 - len(q)) for q in por_area]) for c in rodada if c]
+    return list(dict.fromkeys(revezadas))
 
 
 def _agrupar(noticias: list[Noticia]) -> list[list[Noticia]]:
@@ -334,8 +339,10 @@ async def apurar(
 
 
 def criar_jornalista() -> tuple[Buscador, AIClient] | None:
-    """Google Notícias sempre (não precisa de chave) + Tavily se houver chave;
-    a redação usa o Gemini. Sem Gemini, o Jornalista fica desligado."""
+    """Google Notícias sempre (não precisa de chave) + Tavily e pesquisa web da
+    OpenAI quando houver chave; a redação usa o Gemini. Sem Gemini, o
+    Jornalista fica desligado. Uma instância por ronda (o limite de buscas da
+    OpenAI vale por instância)."""
     from app.config import settings
 
     if not settings.GEMINI_API_KEY:
@@ -350,4 +357,8 @@ def criar_jornalista() -> tuple[Buscador, AIClient] | None:
         from app.integrations.search.tavily_client import TavilyClient
 
         fontes.append(TavilyNoticias(TavilyClient(api_key=settings.TAVILY_API_KEY)))
+    if settings.OPENAI_API_KEY:
+        from app.integrations.noticias.openai_noticias import OpenAINoticias
+
+        fontes.append(OpenAINoticias(api_key=settings.OPENAI_API_KEY, model=settings.OPENAI_RADAR_MODEL))
     return BuscadorMultiplo(fontes), GeminiClient(api_key=settings.GEMINI_API_KEY)
