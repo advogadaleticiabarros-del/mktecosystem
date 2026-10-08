@@ -37,7 +37,7 @@ async def test_salva_criptografada_e_so_mostra_o_final(db_session):
     linha = (await db_session.execute(select(ChaveApi))).scalar_one()
     assert "sk-proj" not in linha.chave_criptografada
     assert await obter_chave(db_session, tenant.id, "openai") == "sk-proj-abc123XYZ9"
-    [s] = await status_chaves(db_session, tenant.id)
+    [s] = [x for x in await status_chaves(db_session, tenant.id) if x["provedor"] == "openai"]
     assert s["provedor"] == "openai" and s["final"] == "XYZ9" and "chave" not in s
 
 

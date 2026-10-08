@@ -36,12 +36,27 @@ async def validar_openai(chave: str, transport: httpx.AsyncBaseTransport | None 
     resposta.raise_for_status()
 
 
+async def validar_pexels(chave: str, transport: httpx.AsyncBaseTransport | None = None) -> None:
+    async with httpx.AsyncClient(transport=transport, timeout=20) as client:
+        resposta = await client.get("https://api.pexels.com/v1/search", params={"query": "office", "per_page": 1},
+                                    headers={"Authorization": chave})
+    if resposta.status_code in (401, 403):
+        raise ChaveRecusada("O Pexels recusou essa chave. Confira se copiou a chave inteira em pexels.com/api.")
+    resposta.raise_for_status()
+
+
 PROVEDORES = {
     "openai": {
         "nome": "OpenAI",
         "uso": "Terceira fonte do Jornalista: pesquisa na web, inclusive sites de tribunais e do governo.",
         "variavel": "OPENAI_API_KEY",
         "validar": validar_openai,
+    },
+    "pexels": {
+        "nome": "Pexels",
+        "uso": "Banco de fotos para capas e slides: busca a imagem certa para o tema de cada post.",
+        "variavel": "PEXELS_API_KEY",
+        "validar": validar_pexels,
     },
 }
 
