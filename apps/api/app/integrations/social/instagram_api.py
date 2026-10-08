@@ -65,6 +65,13 @@ class InstagramAPI:
         publicado = await self._post(f"/{ig_user_id}/media_publish", {"creation_id": container_pai["id"]})
         return publicado["id"]
 
+    async def posts_de_perfil_publico(self, ig_user_id: str, username: str, limite: int = 30) -> list[dict]:
+        """Posts recentes de outra conta comercial/criador (business discovery)."""
+        campos = (f"business_discovery.username({username}){{media.limit({limite})"
+                  "{caption,media_type,like_count,comments_count,timestamp,permalink}}")
+        resposta = await self._get(f"/{ig_user_id}", {"fields": campos})
+        return resposta.get("business_discovery", {}).get("media", {}).get("data", [])
+
     async def comentar(self, media_id: str, texto: str) -> str:
         """Comenta no post como o próprio perfil (o "primeiro comentário")."""
         comentario = await self._post(f"/{media_id}/comments", {"message": texto})

@@ -541,6 +541,18 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   via Graph API (post 18095711492653597).
 - `produzir.py` usa `indice_fotos.json` (número da foto → arquivo do BANCO IMAGENS).
 
+### Radar de referências do Instagram (08/10/2026)
+
+- `app/services/radar_referencias.py`: `vigiar(db, tenant_id, leitor, perfis, agora)`.
+  Lê perfis públicos via business discovery (`InstagramAPI.posts_de_perfil_publico`),
+  e post dos últimos 3 dias com engajamento ≥ 2× a mediana do perfil vira pauta
+  `sugerida` (origem `referencia_instagram`, fonte `@perfil`, sem data editorial,
+  link no `apuracao`, nunca repete). Máx. 3 por perfil. Job `job_referencias` 07h10.
+- Perfis em `TenantConfig.canais["referencias_instagram"]` (hoje: diariojustica,
+  atualizacao_trabalhista, trtespiritosanto). Só funciona com conta comercial/criador.
+- Capas de carrossel v2 (`_saida_producao_1510/capa_v2.py`, recorte com rembg
+  `u2net_human_seg`) e cartão de pergunta refinado (`pergunta_refinada.py`).
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 0. **Chave da OpenAI para o Jornalista** (opcional — terceira fonte):

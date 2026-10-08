@@ -28,6 +28,7 @@ from app.services.instagram_metrics import coletar_metricas_diarias
 from app.services.instagram_publisher import publicar_agendamentos_prontos
 from app.services.chaves_api import obter_chave
 from app.services.jornalista import apurar, criar_jornalista
+from app.services.radar_referencias import LeitorInstagram, vigiar
 from app.services.verificacao_atualidade import verificar_atualidade
 from app.services.agendamento_horario import hoje_brasilia
 
@@ -138,6 +139,33 @@ async def job_jornalista() -> None:
                 logger.exception("Jornalista falhou para %s", tenant.slug)
 
 
+async def job_referencias() -> None:
+    """Radar de referências (07h10): posts que bombaram nos perfis escolhidos pela
+    Letícia (`TenantConfig.canais["referencias_instagram"]`) viram pautas sugeridas."""
+    from datetime import datetime, timezone
+
+    from app.core.crypto import decrypt_token
+    from app.integrations.social.instagram_api import InstagramAPI
+    from app.models.social_connection import SocialConnection
+    from app.models.tenant import TenantConfig
+
+    async with SessionLocal() as db:
+        for tenant in (await db.execute(select(Tenant).where(Tenant.ativo))).scalars().all():
+            config = (await db.execute(select(TenantConfig).where(TenantConfig.tenant_id == tenant.id))).scalar_one_or_none()
+            perfis = ((config.canais or {}).get("referencias_instagram") if config else None) or []
+            conexao = (await db.execute(select(SocialConnection).where(
+                SocialConnection.tenant_id == tenant.id, SocialConnection.plataforma == "instagram",
+                SocialConnection.status == "ativo"))).scalars().first()
+            if not perfis or conexao is None:
+                continue
+            leitor = LeitorInstagram(InstagramAPI(decrypt_token(conexao.access_token_encrypted)), conexao.ig_user_id)
+            try:
+                pautas = await vigiar(db, tenant.id, leitor, perfis, datetime.now(timezone.utc))
+                logger.info("Radar de referências: %d pautas novas para %s.", len(pautas), tenant.slug)
+            except Exception:
+                logger.exception("Radar de referências falhou para %s", tenant.slug)
+
+
 def criar_scheduler() -> AsyncIOScheduler:
     scheduler = AsyncIOScheduler(timezone="UTC")
     # a cada 5 min: post agendado para 19:00 sai até 19:05
@@ -148,4 +176,5 @@ def criar_scheduler() -> AsyncIOScheduler:
     scheduler.add_job(job_verificacao_atualidade, CronTrigger(hour=5))
     # Todo dia 10:40 UTC = 07:40 em Brasília: pautas prontas quando ela abre o Orbit às 8h
     scheduler.add_job(job_jornalista, CronTrigger(hour=10, minute=40))
+    scheduler.add_job(job_referencias, CronTrigger(hour=10, minute=10))  # 07h10 em Brasília
     return scheduler
