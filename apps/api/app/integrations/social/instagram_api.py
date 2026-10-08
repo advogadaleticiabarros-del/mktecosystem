@@ -7,9 +7,24 @@ GRAPH_URL = "https://graph.facebook.com/v21.0"
 
 
 class InstagramAPI:
+    _espera_segundos = 3
+    _tentativas_status = 40
+
     def __init__(self, page_token: str, transport: httpx.AsyncBaseTransport | None = None) -> None:
         self._page_token = page_token
         self._transport = transport
+
+    async def _aguardar(self, container_id: str) -> None:
+        """A Meta processa a imagem antes de aceitar a publicação; publicar antes do
+        FINISHED dá erro ("media not ready"). Resposta sem status = pronto."""
+        for _ in range(self._tentativas_status):
+            estado = (await self._get(f"/{container_id}", {"fields": "status_code"})).get("status_code")
+            if estado in (None, "FINISHED", "PUBLISHED"):
+                return
+            if estado in ("ERROR", "EXPIRED"):
+                raise RuntimeError(f"A Meta recusou a mídia do container {container_id} ({estado})")
+            await asyncio.sleep(self._espera_segundos)
+        raise RuntimeError(f"A Meta não terminou de processar o container {container_id}")
 
     async def _post(self, path: str, data: dict) -> dict:
         async with httpx.AsyncClient(transport=self._transport, timeout=60) as client:
@@ -29,6 +44,7 @@ class InstagramAPI:
 
     async def publicar_imagem_unica(self, ig_user_id: str, image_url: str, legenda: str = "") -> str:
         container = await self._post(f"/{ig_user_id}/media", {"image_url": image_url, "caption": legenda})
+        await self._aguardar(container["id"])
         publicado = await self._post(f"/{ig_user_id}/media_publish", {"creation_id": container["id"]})
         return publicado["id"]
 
@@ -38,12 +54,14 @@ class InstagramAPI:
             container = await self._post(
                 f"/{ig_user_id}/media", {"image_url": url, "is_carousel_item": "true"}
             )
+            await self._aguardar(container["id"])
             containers_ids.append(container["id"])
 
         container_pai = await self._post(
             f"/{ig_user_id}/media",
             {"media_type": "CAROUSEL", "children": ",".join(containers_ids), "caption": legenda},
         )
+        await self._aguardar(container_pai["id"])
         publicado = await self._post(f"/{ig_user_id}/media_publish", {"creation_id": container_pai["id"]})
         return publicado["id"]
 

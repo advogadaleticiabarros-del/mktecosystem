@@ -9,6 +9,8 @@ async def test_carrossel_envia_legenda_no_container_pai():
     enviados = []
 
     def responder(request: httpx.Request) -> httpx.Response:
+        if request.method == "GET":
+            return httpx.Response(200, json={"status_code": "FINISHED"})
         dados = dict(httpx.QueryParams(request.content.decode()))
         enviados.append((request.url.path, dados))
         return httpx.Response(200, json={"id": f"c{len(enviados)}"})
@@ -94,3 +96,35 @@ async def test_raio_x_da_conta_junta_perfil_series_totais_e_publico():
     assert raio_x["serie_seguidores"] == [["2026-10-07", 3]]
     assert raio_x["demografia"]["cidades"] == {"Vitória, Espírito Santo": 10}
     assert raio_x["demografia"]["genero"] == {"F": 10}
+
+
+@pytest.mark.anyio
+async def test_espera_a_meta_processar_antes_de_publicar(monkeypatch):
+    estados = iter(["IN_PROGRESS", "IN_PROGRESS", "FINISHED"])
+    ordem = []
+
+    def responder(request: httpx.Request) -> httpx.Response:
+        if request.method == "GET":
+            ordem.append("status")
+            return httpx.Response(200, json={"status_code": next(estados)})
+        ordem.append(request.url.path.rsplit("/", 1)[-1])
+        return httpx.Response(200, json={"id": "c1"})
+
+    api = InstagramAPI("tok", transport=httpx.MockTransport(responder))
+    monkeypatch.setattr(api, "_espera_segundos", 0)
+    await api.publicar_imagem_unica("999", "https://x/1.jpg", legenda="L")
+
+    assert ordem == ["media", "status", "status", "status", "media_publish"]
+
+
+@pytest.mark.anyio
+async def test_imagem_recusada_pela_meta_vira_erro(monkeypatch):
+    def responder(request: httpx.Request) -> httpx.Response:
+        if request.method == "GET":
+            return httpx.Response(200, json={"status_code": "ERROR"})
+        return httpx.Response(200, json={"id": "c1"})
+
+    api = InstagramAPI("tok", transport=httpx.MockTransport(responder))
+    monkeypatch.setattr(api, "_espera_segundos", 0)
+    with pytest.raises(RuntimeError):
+        await api.publicar_imagem_unica("999", "https://x/1.jpg")

@@ -140,7 +140,8 @@ async def job_jornalista() -> None:
 
 def criar_scheduler() -> AsyncIOScheduler:
     scheduler = AsyncIOScheduler(timezone="UTC")
-    scheduler.add_job(job_envios, CronTrigger(minute=15))
+    # a cada 5 min: post agendado para 19:00 sai até 19:05
+    scheduler.add_job(job_envios, CronTrigger(minute="*/5"))
     # Segunda 11:00 UTC = 08:00 em Brasília
     scheduler.add_job(job_rascunho_newsletter, CronTrigger(day_of_week="mon", hour=11))
     scheduler.add_job(job_metricas_fontes_externas, CronTrigger(hour=6))
