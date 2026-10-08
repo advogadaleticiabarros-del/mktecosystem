@@ -221,7 +221,7 @@ function Detalhe({
     <Card className="gap-0 p-0 hover:translate-y-0">
       <div className="border-b p-6">
         <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="rounded-full bg-accent px-2 py-0.5 font-medium text-accent-foreground">{pauta.area}</span>
+          <span className="rounded-full bg-accent px-2 py-0.5 font-medium text-accent-foreground">{pauta.area || "Sem área"}</span>
           <span className="text-muted-foreground">{pauta.angulo === "sinceridade" ? "Ângulo: cautela" : "Ângulo: direitos"}</span>
           <Urgencia u={pauta.urgencia} />
           {a?.local_es && (
@@ -491,15 +491,15 @@ export default function PlanejamentoPage() {
               {lista.map((p) => {
                 const ativo = atual?.id === p.id;
                 return (
+                  <div key={p.id}>
                   <button
-                    key={p.id}
                     onClick={() => setSelecionada(p.id)}
                     className={`block w-full rounded-xl bg-card p-4 text-left ring-1 transition-all focus-visible:outline-2 focus-visible:outline-primary ${
                       ativo ? "ring-2 ring-primary" : "ring-foreground/10 hover:ring-primary/40"
                     }`}
                   >
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-xs font-medium text-primary">{p.area}</span>
+                      <span className="text-xs font-medium text-primary">{p.area || "Sem área"}</span>
                       <Urgencia u={p.urgencia} />
                       <span className="ml-auto font-mono text-[11px] text-muted-foreground">{quando(p.criado_em)}</span>
                     </div>
@@ -508,13 +508,22 @@ export default function PlanejamentoPage() {
                     <div className="mt-3 flex flex-wrap items-center gap-3">
                       <Selo v={p.apuracao?.verificacao} />
                       {p.apuracao?.fontes && (
-                        <span className="text-[11px] text-muted-foreground">{p.apuracao.fontes.length} fontes</span>
+                        <span className="text-[11px] text-muted-foreground">
+                          {p.apuracao.fontes.length} {p.apuracao.fontes.length === 1 ? "fonte" : "fontes"}
+                        </span>
                       )}
                       <span className="ml-auto">
                         <Relevancia valor={p.relevancia} />
                       </span>
                     </div>
                   </button>
+                  {/* No celular a apuração abre logo abaixo do card tocado */}
+                  {selecionada === p.id && (
+                    <div className="mt-2.5 lg:hidden">
+                      <Detalhe pauta={p} onStatus={(st) => mudarStatus(p.id, st)} onGerar={() => gerar(p)} />
+                    </div>
+                  )}
+                  </div>
                 );
               })}
               {!lista.length && (
@@ -526,7 +535,7 @@ export default function PlanejamentoPage() {
               )}
               <NovaPauta onCriada={carregar} />
             </div>
-            <div className="lg:sticky lg:top-6 lg:self-start">
+            <div className="hidden lg:sticky lg:top-6 lg:block lg:self-start">
               {atual ? (
                 <Detalhe pauta={atual} onStatus={(s) => mudarStatus(atual.id, s)} onGerar={() => gerar(atual)} />
               ) : (
