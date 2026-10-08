@@ -185,3 +185,13 @@ async def test_sem_noticias_nao_chama_o_redator(db_session):
     assert await apurar(db_session, tenant.id, BuscadorFalso([]), redator, QUINTA) == []
     assert redator.prompts == []
     assert (await db_session.execute(select(Pauta))).scalars().all() == []
+
+
+@pytest.mark.anyio
+async def test_aceita_chave_traduzida_e_numero_em_texto(db_session):
+    tenant = await _tenant(db_session)
+    sugestao = _pauta_redator([], "Golpe do Pix: quando o banco devolve", area="Consumidor")
+    del sugestao["grupos"]
+    sugestao["groups"] = ["1"]
+    pautas = await apurar(db_session, tenant.id, BuscadorFalso([PIX_BLOG]), RedatorFalso([sugestao]), QUINTA)
+    assert len(pautas) == 1

@@ -228,7 +228,18 @@ async def apurar(
     vistos = [_normalizar(t) for t in recentes]
     pautas: list[Pauta] = []
     for s in sugestoes:
-        numeros = [n for n in s.get("grupos", []) if isinstance(n, int) and 1 <= n <= len(grupos)]
+        # o modelo às vezes traduz a chave ("groups"); o que vale é a lista de números
+        citados = s.get("grupos") or s.get("groups") or s.get("grupo") or []
+        if isinstance(citados, int):
+            citados = [citados]
+        numeros = []
+        for n in citados:
+            try:
+                n = int(n)
+            except (TypeError, ValueError):
+                continue
+            if 1 <= n <= len(grupos):
+                numeros.append(n)
         manchete = str(s.get("manchete") or "").strip()
         if not numeros or not manchete or _repetido(manchete, vistos):
             continue
