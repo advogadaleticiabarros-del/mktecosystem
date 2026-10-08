@@ -115,6 +115,8 @@ async def test_publica_agendamento_pronto(db_session):
     await db_session.refresh(agendamento)
     assert agendamento.status == "publicado"
     assert agendamento.platform_post_id == "https://advogadaleticiabarros.com.br/blog/carga-horaria-maxima-clt.html"
+    piece = await db_session.get(ContentPiece, agendamento.content_piece_id)
+    assert piece.status == "publicado"  # conta como postada no Editorial
     # 4 uploads: HTML do artigo, capa, index.html, sitemap.xml
     assert instancia.upload.await_count == 4
     instancia.garantir_diretorio.assert_awaited_once_with("capas")

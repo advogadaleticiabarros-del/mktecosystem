@@ -204,3 +204,12 @@ def test_pecas_publicaveis_pedem_primeiro_comentario():
 
     for tipo in ("carrossel", "estatico", "frase", "pergunta"):
         assert '\\"primeiro_comentario\\"' in PROMPTS[tipo] or '"primeiro_comentario"' in PROMPTS[tipo], tipo
+
+
+def test_nenhum_prompt_pede_para_o_publico_contar_o_proprio_caso():
+    """CED art. 42 I (docs/MANUAL_CONTEUDO_REDES.md): convidar a pessoa a relatar o
+    caso nos comentários vira consulta pública habitual."""
+    from app.routers.content import PROMPTS
+
+    for tipo, prompt in PROMPTS.items():
+        assert "me conta nos comentários" not in prompt.lower(), tipo

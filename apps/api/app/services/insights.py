@@ -60,7 +60,7 @@ async def _coletar_dados(db: AsyncSession, tenant_id: uuid.UUID) -> str:
         select(ContentPiece.tipo, func.count(ContentPiece.id))
         .where(
             ContentPiece.tenant_id == tenant_id,
-            ContentPiece.status == "aprovado",
+            ContentPiece.status.in_(("aprovado", "publicado")),
             ContentPiece.criado_em >= janela,
         )
         .group_by(ContentPiece.tipo)

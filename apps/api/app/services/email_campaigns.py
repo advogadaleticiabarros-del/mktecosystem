@@ -116,7 +116,8 @@ async def gerar_rascunho_newsletter(
         .where(
             ContentPiece.tenant_id == tenant_id,
             ContentPiece.tipo.in_(["artigo", "jornal"]),
-            ContentPiece.status == "aprovado",
+            # "publicado" = já foi ao ar pelo publicador; continua valendo pra newsletter.
+            ContentPiece.status.in_(("aprovado", "publicado")),
             ContentPiece.criado_em >= since,
         )
     )

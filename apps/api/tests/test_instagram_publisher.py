@@ -1,6 +1,8 @@
 from datetime import date, timedelta
 from unittest.mock import AsyncMock, patch
 
+from sqlalchemy import select
+
 import pytest
 
 from app.core.crypto import encrypt_token
@@ -211,3 +213,17 @@ async def test_sem_primeiro_comentario_nao_comenta(db_session, tmp_path):
         await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
 
     api.comentar.assert_not_awaited()
+
+
+@pytest.mark.anyio
+async def test_peca_publicada_passa_a_contar_como_postada_no_editorial(db_session, tmp_path):
+    await _setup(db_session)
+
+    with patch("app.services.instagram_publisher.InstagramAPI") as MockAPI, patch(
+        "app.services.instagram_publisher.MEDIA_DIR", tmp_path
+    ):
+        _api_falsa(MockAPI)
+        await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
+
+    piece = (await db_session.execute(select(ContentPiece))).scalar_one()
+    assert piece.status == "publicado"

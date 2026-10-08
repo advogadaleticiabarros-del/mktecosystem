@@ -116,6 +116,7 @@ async def publicar_agendamentos_prontos(
 
         agendamento.status = "publicado"
         agendamento.platform_post_id = post_id
+        piece.status = "publicado"  # conta como postada no Editorial
         await db.commit()
         publicados += 1
 

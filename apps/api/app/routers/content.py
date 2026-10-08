@@ -137,8 +137,9 @@ PROMPTS = {
         "Escreva a dúvida real de uma cliente sobre '{titulo}' (ângulo: {angulo}), "
         "do jeito que ela falaria no WhatsApp, em primeira pessoa e com no máximo "
         "18 palavras (ex.: 'Fui demitida grávida. E agora?'). A legenda responde a "
-        "pergunta de forma curta e clara, sem juridiquês, e termina com 'Já passou "
-        "por isso? Me conta nos comentários'.\n"
+        "pergunta de forma curta e clara, sem juridiquês, e termina com 'Salva esse "
+        "post e manda pra quem precisa saber disso'. Nunca convide a pessoa a contar "
+        "o caso dela nos comentários (vira consulta pública, CED art. 42 I).\n"
         + PRIMEIRO_COMENTARIO
         + "{voz}\nResponda em JSON: {{\"pergunta\": str, \"legenda\": str, "
         "\"primeiro_comentario\": str}}"

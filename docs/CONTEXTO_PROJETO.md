@@ -509,6 +509,21 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   `pages_manage_engagement`). Ainda não validado contra a Meta em produção: conferir
   no log do primeiro post publicado se o comentário entrou.
 
+### Editorial reflete o que foi postado (08/10/2026)
+
+- Publicadores (Instagram e blog) agora marcam a `ContentPiece` como `publicado`
+  junto com o agendamento: o contador "x/y" do Editorial (`dia-list.tsx` conta
+  `status == "publicado"`) passa a refletir o que foi ao ar.
+- Por isso newsletter semanal (`email_campaigns.py`) e insights aceitam
+  `aprovado` OU `publicado`; filtrar só `aprovado` faria o artigo publicado sumir
+  da newsletter.
+- Prompt `pergunta` não termina mais com "Me conta nos comentários" (CED art. 42 I);
+  travado por teste.
+- Editorial agrupa por `Pauta.data_editorial` = data em que vai ao ar. A
+  programação de 08/10 criou pautas-cópia sem data; corrigido: assédio (pergunta)
+  em 08/10, pet em 09/10 (com o story), duplicatas em rascunho das pautas de 28/09
+  e 30/09 removidas (backup `pre-editorial-datas-*` em /root/orbit-backups).
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 0. **Chave da OpenAI para o Jornalista** (opcional — terceira fonte):

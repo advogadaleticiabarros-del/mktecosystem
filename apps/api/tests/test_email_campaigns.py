@@ -151,3 +151,33 @@ async def test_gerar_newsletter_inclui_artigos_e_jornal_aprovados(client, db_ses
         )
     assert resp.status_code == 200
     assert resp.json()["tipo"] == "newsletter"
+
+
+@pytest.mark.anyio
+async def test_newsletter_inclui_artigo_ja_publicado_no_blog(db_session):
+    """O publicador marca a peça como "publicado" ao postar; a newsletter da
+    semana precisa continuar incluindo esse artigo (é justamente o que já está no ar)."""
+    from app.services.email_campaigns import gerar_rascunho_newsletter
+
+    tenant, _ = await _make_tenant_and_user(db_session)
+    pauta = Pauta(
+        tenant_id=tenant.id, titulo="Guarda compartilhada de pet", angulo="direitos",
+        area="Família", origem="manual", fonte="manual",
+        relevante_para_conteudo=True, status="sugerida",
+    )
+    db_session.add(pauta)
+    await db_session.flush()
+    db_session.add(
+        ContentPiece(
+            tenant_id=tenant.id, pauta_id=pauta.id, tipo="artigo",
+            corpo={"titulo": "Pet no divórcio"}, status="publicado",
+        )
+    )
+    await db_session.commit()
+
+    mock_ai = AsyncMock()
+    mock_ai.generate_json.return_value = {"assunto": "a", "corpo_html": "<p>x</p>", "corpo_texto": "x"}
+    campanha = await gerar_rascunho_newsletter(db_session, tenant.id, mock_ai)
+
+    assert campanha is not None
+    assert "Guarda compartilhada de pet" in str(mock_ai.generate_json.await_args)
