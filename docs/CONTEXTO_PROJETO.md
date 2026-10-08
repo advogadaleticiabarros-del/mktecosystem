@@ -461,6 +461,19 @@ rotas `GET/PUT/DELETE /chaves/{provedor}`. O Jornalista recebe a chave via
 A chave da OpenAI atual foi colocada pela usuária no `.env` da VPS em 08/10
 (veio colada 3x pelo `read -s`; corrigida para uma cópia, validada: 200).
 
+### IA com reserva: Gemini + OpenAI (08/10/2026)
+
+**A chave do Gemini é do plano GRATUITO**: 20 pedidos/dia no gemini-2.5-flash
+(descoberto com um 429 RESOURCE_EXHAUSTED). Cada geração de pauta gasta 8.
+`app/integrations/ai/fabrica.py::criar_ia(openai_key)` agora é o ponto único:
+Gemini principal + `OpenAIClient` (Chat Completions, gpt-4.1-mini) de reserva
+automática (`IAComReserva`: qualquer falha da principal → mesma pergunta na
+reserva, com log de aviso). Usado por content, dashboard, email, scheduler e
+Jornalista. A pesquisa web da OpenAI entra só em pedidos sob encomenda e
+descarta matéria antiga pela data (na ronda diária trazia notícias de meses
+atrás); resposta pedida em texto com citações (JSON não traz `url_citation`).
+Pendência: decidir se vale ativar o faturamento do Gemini.
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 0. **Chave da OpenAI para o Jornalista** (opcional — terceira fonte):
