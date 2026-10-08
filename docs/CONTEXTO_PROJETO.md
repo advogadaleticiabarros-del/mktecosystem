@@ -524,6 +524,24 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   em 08/10, pet em 09/10 (com o story), duplicatas em rascunho das pautas de 28/09
   e 30/09 removidas (backup `pre-editorial-datas-*` em /root/orbit-backups).
 
+### Produção 15/10 a 02/11/2026 (rascunho, aguardando aprovação)
+
+- 39 posts (10 dias de tema + 9 "Mito ou Lei" nos dias de respiro) em
+  `apps/api/_saida_producao_1510/`: `conteudo.py` (textos, fatos conferidos),
+  `produzir.py` (artes: carrossel capa/itens/final, pergunta creme sem selo de
+  verificado e com logo no avatar, frase, Mito ou Lei; JPEG 1080×1350), `plano.json`,
+  `subir_rascunhos.py` (roda no container). Peças `rascunho` com
+  `corpo.programacao = {data, hora}`; cada dia numa pauta com `data_editorial` = data
+  de postagem. **Nada agendado**: após aprovação da Letícia (doc
+  https://claude.ai/code/artifact/2f39add3-ba5e-4eb5-bc0e-47fae877428d, coluna
+  Aprovação), criar `ScheduledPost` a partir de `corpo.programacao` e marcar `aprovado`.
+- Pautas do Jornalista fundidas (04d86f1b, 2dede71c, dccbb606) ficaram `guardada`,
+  sem data. Programação de 10–14/10 ajustada (5 hashtags, primeiro comentário, CTA).
+- 08/10 19h: primeira publicação automática real + primeiro comentário confirmados
+  via Graph API (post 18095711492653597).
+- `produzir.py` lê o índice de fotos de `%TEMP%/sheets/index.json` (gerado na sessão);
+  para rerodar, regerar o índice do BANCO IMAGENS na mesma ordem.
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 0. **Chave da OpenAI para o Jornalista** (opcional — terceira fonte):
