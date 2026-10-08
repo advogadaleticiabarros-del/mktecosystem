@@ -114,3 +114,21 @@ async def test_arte_ja_enviada_e_usada_sem_renderizar(tmp_path):
     assert m1.imagens == ["https://api/media/arte.png"]
     assert m2.imagens == ["https://api/media/1.png", "https://api/media/2.png"]
     assert render.chamadas == []
+
+
+@pytest.mark.anyio
+async def test_primeiro_comentario_vem_do_corpo(tmp_path):
+    piece = _piece("frase", {"frase": "Frase", "legenda": "L", "primeiro_comentario": "  Base legal: art. 1º.  "})
+
+    midia = await _montar(piece, tmp_path)
+
+    assert midia.primeiro_comentario == "Base legal: art. 1º."
+
+
+@pytest.mark.anyio
+async def test_peca_sem_primeiro_comentario_fica_vazia(tmp_path):
+    piece = _piece("carrossel", {"imagens": ["https://x/1.png", "https://x/2.png"], "legenda": "L"})
+
+    midia = await _montar(piece, tmp_path)
+
+    assert midia.primeiro_comentario == ""

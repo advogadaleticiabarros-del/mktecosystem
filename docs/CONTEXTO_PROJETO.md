@@ -500,6 +500,14 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 - **Pendente**: templates de render ainda geram 1080×1350; padrão novo do manual é
   1080×1440 (grid 3:4) com conteúdo crítico na faixa central 1350. Subtítulo da marca
   em `carrossel_slide.html` está em 12 px (mínimo do manual: 22 px).
+- **Primeiro comentário automático**: prompts de carrossel/estático/frase/pergunta
+  pedem `primeiro_comentario` (constante `PRIMEIRO_COMENTARIO` em `content.py`);
+  `Midia.primeiro_comentario` (`midia_instagram.py`); o publicador chama
+  `InstagramAPI.comentar(post_id, texto)` depois de publicar, e falha ali só loga
+  (post já está no ar). Editável no Editorial (sheet da peça). Peças geradas antes
+  disso não têm o campo e publicam sem comentário. Facebook ainda manual (falta
+  `pages_manage_engagement`). Ainda não validado contra a Meta em produção: conferir
+  no log do primeiro post publicado se o comentário entrou.
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 

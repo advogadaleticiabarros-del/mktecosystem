@@ -128,3 +128,20 @@ async def test_imagem_recusada_pela_meta_vira_erro(monkeypatch):
     monkeypatch.setattr(api, "_espera_segundos", 0)
     with pytest.raises(RuntimeError):
         await api.publicar_imagem_unica("999", "https://x/1.jpg")
+
+
+@pytest.mark.anyio
+async def test_comentar_publica_comentario_no_proprio_post():
+    enviados = []
+
+    def responder(request: httpx.Request) -> httpx.Response:
+        enviados.append((request.url.path, dict(httpx.QueryParams(request.content.decode()))))
+        return httpx.Response(200, json={"id": "coment_1"})
+
+    api = InstagramAPI("tok", transport=httpx.MockTransport(responder))
+    comentario_id = await api.comentar("post_123", "Base legal: art. 7º da CF.")
+
+    caminho, dados = enviados[0]
+    assert caminho.endswith("/post_123/comments")
+    assert dados["message"] == "Base legal: art. 7º da CF."
+    assert comentario_id == "coment_1"

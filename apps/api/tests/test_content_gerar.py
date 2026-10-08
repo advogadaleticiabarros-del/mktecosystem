@@ -195,3 +195,12 @@ def test_nenhum_prompt_pede_mais_de_5_hashtags():
     for tipo, prompt in PROMPTS.items():
         for qtd in re.findall(r"(\d+)\s+hashtags", prompt):
             assert int(qtd) <= 5, f"prompt '{tipo}' pede {qtd} hashtags"
+
+
+def test_pecas_publicaveis_pedem_primeiro_comentario():
+    """Regra do manual (08/10/2026): todo post publicado leva o primeiro
+    comentário do próprio perfil (base legal + pergunta de conversa)."""
+    from app.routers.content import PROMPTS
+
+    for tipo in ("carrossel", "estatico", "frase", "pergunta"):
+        assert '\\"primeiro_comentario\\"' in PROMPTS[tipo] or '"primeiro_comentario"' in PROMPTS[tipo], tipo

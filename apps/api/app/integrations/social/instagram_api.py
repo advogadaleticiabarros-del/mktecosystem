@@ -65,6 +65,11 @@ class InstagramAPI:
         publicado = await self._post(f"/{ig_user_id}/media_publish", {"creation_id": container_pai["id"]})
         return publicado["id"]
 
+    async def comentar(self, media_id: str, texto: str) -> str:
+        """Comenta no post como o próprio perfil (o "primeiro comentário")."""
+        comentario = await self._post(f"/{media_id}/comments", {"message": texto})
+        return comentario["id"]
+
     async def listar_publicacoes(self, ig_user_id: str, limite: int = 2000) -> list[dict]:
         """Todas as publicações do perfil, cada uma com `insights` = {métrica: valor}.
 

@@ -85,16 +85,36 @@ sRGB, PNG para texto, JPG 90+ para foto. Reels: MP4 H.264, 30 fps, áudio AAC, 2
 - Reels: 0-3 s gancho falado e escrito; 3-10 s problema; 10-35 s regra com corte a cada
   2-4 s; fechamento com ressalva + "manda pra quem precisa", emendando no início (replay).
 
-## 6. Algoritmo e métricas
+## 6. Primeiro comentário do próprio perfil (obrigatório)
+
+Todo post do feed (carrossel, frase, pergunta, estático) recebe, logo depois de
+publicado, um comentário do próprio @adv.leticiabarros2.
+
+- Formato: linha 1 `📚 Base legal: <lei e artigo>` (só se conferido; na dúvida, sem a
+  linha); linha 2 `💬 <pergunta de conversa sobre experiência ou opinião>`.
+- Até 300 caracteres, sem hashtag (hashtag fica na legenda: indexa na hora e o limite
+  de 5 é somado), sem link (não é clicável no Instagram), sem repetir a legenda.
+- Nunca "conta seu caso que eu analiso" (CED art. 42 I) nem oferta de atendimento.
+- Não aumenta alcance sozinho (interação do próprio autor não conta); vale por dar
+  credibilidade e puxar comentários de terceiros. Fixar no app na primeira hora (a API
+  não fixa) e responder quem comentar.
+- Automático: o gerador escreve `corpo.primeiro_comentario`; a Letícia confere na
+  aprovação (ou no Editorial → peça → "Primeiro comentário"); o publicador posta via
+  `POST /{media-id}/comments` logo após publicar. Falha no comentário não desfaz o post.
+- Facebook: primeiro comentário com o link do artigo do blog, quando houver (Meta
+  orienta link no comentário; link na legenda reduz alcance). Manual por enquanto:
+  o token não tem `pages_manage_engagement`.
+
+## 7. Algoritmo e métricas
 
 - Sinais que importam: tempo assistido, envios por alcance (3-5x a curtida),
   curtidas por alcance; salvamentos como indicador de valor.
-- Primeira hora: responder todos os comentários.
+- Primeira hora: primeiro comentário fixado; responder todos os comentários.
 - Mínimo 2 Reels/semana, um testado como Trial Reels.
 - Avaliar após 7 dias: envios e salvamentos por alcance, % até o último slide,
   retenção nos 3 primeiros segundos, visitas ao perfil.
 
-## 7. Não fazemos
+## 8. Não fazemos
 
 Trend de dancinha, "POV: cliente ganhou a causa", quiz "você tem direito?" que termina
 em convite a contratar, grid em mosaico, repost de vídeo alheio.

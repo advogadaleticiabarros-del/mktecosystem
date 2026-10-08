@@ -7,6 +7,10 @@ Formatos: carrossel e post de imagem única (frase, pergunta, estático). A
 transformação peça → imagens + legenda fica em `midia_instagram`; peças sem
 imagem própria (legenda solta, stories, reels) continuam como "pronto" para
 publicação manual, sem gastar tentativas.
+
+Depois de publicar, posta o primeiro comentário do próprio perfil quando a peça
+traz um (regra de docs/MANUAL_CONTEUDO_REDES.md). Falha no comentário só gera
+log: o post já está no ar e não pode ser republicado.
 """
 import logging
 import uuid
@@ -114,5 +118,11 @@ async def publicar_agendamentos_prontos(
         agendamento.platform_post_id = post_id
         await db.commit()
         publicados += 1
+
+        if midia.primeiro_comentario:
+            try:
+                await api.comentar(post_id, midia.primeiro_comentario)
+            except Exception:
+                logger.exception("Post %s publicado, mas o primeiro comentário falhou", post_id)
 
     return publicados

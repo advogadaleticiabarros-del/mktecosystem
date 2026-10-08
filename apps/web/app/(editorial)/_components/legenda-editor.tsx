@@ -6,9 +6,13 @@ import { useEffect, useRef, useState } from "react";
 export function LegendaEditor({
   legendaInicial,
   onSalvar,
+  placeholder = "Legenda ainda não escrita",
+  rotuloCopiar = "Copiar legenda",
 }: {
   legendaInicial: string;
   onSalvar: (legenda: string) => Promise<void>;
+  placeholder?: string;
+  rotuloCopiar?: string;
 }) {
   const [legenda, setLegenda] = useState(legendaInicial);
   const [salvando, setSalvando] = useState(false);
@@ -60,7 +64,7 @@ export function LegendaEditor({
         value={legenda}
         onChange={(e) => setLegenda(e.target.value)}
         onBlur={salvar}
-        placeholder="Legenda ainda não escrita"
+        placeholder={placeholder}
       />
       <div className="editorial-action-row">
         <button
@@ -71,7 +75,7 @@ export function LegendaEditor({
           disabled={!legenda}
         >
           {copiado ? <Check size={16} /> : <Copy size={16} />}
-          {copiado ? "Copiado" : "Copiar legenda"}
+          {copiado ? "Copiado" : rotuloCopiar}
         </button>
       </div>
       <div className="editorial-status-line">

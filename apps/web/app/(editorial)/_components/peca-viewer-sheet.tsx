@@ -8,6 +8,8 @@ import { ImageCarousel } from "./image-carousel";
 import { LegendaEditor } from "./legenda-editor";
 import { StatusToggle } from "./status-toggle";
 
+const TIPOS_COM_PRIMEIRO_COMENTARIO = ["carrossel", "frase", "pergunta", "estatico"];
+
 export function PecaViewerSheet({
   peca,
   onFechar,
@@ -20,6 +22,10 @@ export function PecaViewerSheet({
   const imagens = imagensDaPeca(peca);
   const legendaAtual = legendaDaPeca(peca);
   const ehArtigo = peca.tipo === "artigo";
+  // Peças que viram post no feed levam o primeiro comentário do próprio perfil,
+  // publicado junto pelo Orbit (docs/MANUAL_CONTEUDO_REDES.md).
+  const temPrimeiroComentario = TIPOS_COM_PRIMEIRO_COMENTARIO.includes(peca.tipo);
+  const primeiroComentario = String((peca.corpo as Record<string, unknown>).primeiro_comentario ?? "");
   const corpoArtigo = ehArtigo ? (peca.corpo as { html?: string; titulo?: string }) : null;
 
   async function salvarLegenda(novaLegenda: string) {
@@ -28,6 +34,12 @@ export function PecaViewerSheet({
     // etc.) já que o PATCH substitui o objeto inteiro.
     const chave = peca.tipo === "legenda" ? "texto" : "legenda";
     const corpoAtualizado = { ...peca.corpo, [chave]: novaLegenda } as Record<string, unknown>;
+    const atualizado = await atualizarPeca(peca.id, { corpo: corpoAtualizado });
+    onAtualizar(atualizado);
+  }
+
+  async function salvarPrimeiroComentario(texto: string) {
+    const corpoAtualizado = { ...peca.corpo, primeiro_comentario: texto } as Record<string, unknown>;
     const atualizado = await atualizarPeca(peca.id, { corpo: corpoAtualizado });
     onAtualizar(atualizado);
   }
@@ -96,6 +108,18 @@ export function PecaViewerSheet({
             <ArtigoLeitura html={corpoArtigo?.html ?? ""} titulo={corpoArtigo?.titulo} />
           ) : (
             <LegendaEditor legendaInicial={legendaAtual} onSalvar={salvarLegenda} />
+          )}
+
+          {temPrimeiroComentario && (
+            <div style={{ marginTop: 16 }}>
+              <div style={{ fontSize: 15, fontWeight: 700, padding: "0 0 6px" }}>Primeiro comentário</div>
+              <LegendaEditor
+                legendaInicial={primeiroComentario}
+                onSalvar={salvarPrimeiroComentario}
+                placeholder="Base legal + pergunta de conversa. O Orbit publica logo depois do post."
+                rotuloCopiar="Copiar comentário"
+              />
+            </div>
           )}
 
           <div className="editorial-action-row">

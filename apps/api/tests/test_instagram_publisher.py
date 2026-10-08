@@ -164,3 +164,50 @@ async def test_falha_incrementa_tentativas_e_marca_erro_apos_3(db_session, tmp_p
     await db_session.refresh(agendamento)
     assert agendamento.status == "erro"
     assert agendamento.tentativas == 3
+
+
+@pytest.mark.anyio
+async def test_publica_primeiro_comentario_do_perfil_depois_do_post(db_session, tmp_path):
+    corpo = {"slides": ["a", "b"], "legenda": "L", "primeiro_comentario": "Base legal: art. 7º."}
+    await _setup(db_session, corpo=corpo)
+
+    with patch("app.services.instagram_publisher.InstagramAPI") as MockAPI, patch(
+        "app.services.instagram_publisher.MEDIA_DIR", tmp_path
+    ):
+        api = _api_falsa(MockAPI)
+        api.comentar = AsyncMock(return_value="c1")
+        await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
+
+    api.comentar.assert_awaited_once_with("post_123", "Base legal: art. 7º.")
+
+
+@pytest.mark.anyio
+async def test_falha_no_primeiro_comentario_nao_desfaz_a_publicacao(db_session, tmp_path):
+    corpo = {"slides": ["a", "b"], "legenda": "L", "primeiro_comentario": "Base legal: art. 7º."}
+    _, agendamento = await _setup(db_session, corpo=corpo)
+
+    with patch("app.services.instagram_publisher.InstagramAPI") as MockAPI, patch(
+        "app.services.instagram_publisher.MEDIA_DIR", tmp_path
+    ):
+        api = _api_falsa(MockAPI)
+        api.comentar = AsyncMock(side_effect=RuntimeError("permissão negada"))
+        publicados = await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
+
+    assert publicados == 1
+    await db_session.refresh(agendamento)
+    assert agendamento.status == "publicado"
+    assert agendamento.platform_post_id == "post_123"
+
+
+@pytest.mark.anyio
+async def test_sem_primeiro_comentario_nao_comenta(db_session, tmp_path):
+    await _setup(db_session)
+
+    with patch("app.services.instagram_publisher.InstagramAPI") as MockAPI, patch(
+        "app.services.instagram_publisher.MEDIA_DIR", tmp_path
+    ):
+        api = _api_falsa(MockAPI)
+        api.comentar = AsyncMock()
+        await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
+
+    api.comentar.assert_not_awaited()

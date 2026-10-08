@@ -1,8 +1,9 @@
 """Transforma uma peça aprovada nas imagens e na legenda que vão pro Instagram.
 
-Interface: `montar_midia(piece, ...)` devolve `Midia(imagens, legenda)` — uma
-URL pública por imagem já renderizada em `pasta`. Uma imagem = post único;
-várias = carrossel. Quem publica não precisa saber o formato da peça. Se a
+Interface: `montar_midia(piece, ...)` devolve `Midia(imagens, legenda,
+primeiro_comentario)` — uma URL pública por imagem já renderizada em `pasta`, e o
+comentário que o próprio perfil publica logo depois do post ("" = nenhum). Uma
+imagem = post único; várias = carrossel. Quem publica não precisa saber o formato da peça. Se a
 peça já traz arte pronta (`imagem` / `imagens` no corpo), ela é usada como está.
 
 `publicavel(tipo)` diz se o tipo tem imagem própria (os demais — legenda,
@@ -24,6 +25,7 @@ class PecaSemConteudo(ValueError):
 class Midia:
     imagens: list[str]
     legenda: str
+    primeiro_comentario: str = ""
 
 
 class Renderizador(Protocol):
@@ -60,6 +62,14 @@ def _legenda(corpo: dict) -> str:
     return "\n\n".join(p for p in partes if p)
 
 
+def _midia(imagens: list[str], corpo: dict) -> Midia:
+    return Midia(
+        imagens=imagens,
+        legenda=_legenda(corpo),
+        primeiro_comentario=(corpo.get("primeiro_comentario") or "").strip(),
+    )
+
+
 async def montar_midia(
     piece: ContentPiece,
     *,
@@ -79,9 +89,9 @@ async def montar_midia(
 
     # Arte já enviada à mão (POST /media/upload) tem prioridade sobre a gerada.
     if piece.tipo == "carrossel" and corpo.get("imagens"):
-        return Midia(imagens=list(corpo["imagens"]), legenda=_legenda(corpo))
+        return _midia(list(corpo["imagens"]), corpo)
     if piece.tipo in _IMAGEM_UNICA and corpo.get("imagem"):
-        return Midia(imagens=[corpo["imagem"]], legenda=_legenda(corpo))
+        return _midia([corpo["imagem"]], corpo)
 
     if piece.tipo == "carrossel":
         slides = [s for s in corpo.get("slides", []) if s]
@@ -92,7 +102,7 @@ async def montar_midia(
             local, url = caminho(i)
             await render.slide(texto, i, len(slides), identidade_visual, local)
             urls.append(url)
-        return Midia(imagens=urls, legenda=_legenda(corpo))
+        return _midia(urls, corpo)
 
     if piece.tipo not in _IMAGEM_UNICA:
         raise PecaSemConteudo(f"tipo '{piece.tipo}' não tem imagem para o Instagram")
@@ -103,4 +113,4 @@ async def montar_midia(
         raise PecaSemConteudo(f"{piece.tipo} sem '{campo}'")
     local, url = caminho(0)
     await getattr(render, metodo)(texto, identidade_visual, local)
-    return Midia(imagens=[url], legenda=_legenda(corpo))
+    return _midia([url], corpo)

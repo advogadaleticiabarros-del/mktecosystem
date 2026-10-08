@@ -47,6 +47,19 @@ PROIBIÇÕES:
 Identificação: {oab}
 """
 
+# Regra de docs/MANUAL_CONTEUDO_REDES.md: todo post publicado leva o primeiro
+# comentário do próprio perfil, postado automaticamente pelo publicador.
+PRIMEIRO_COMENTARIO = (
+    "Escreva também o primeiro comentário, que o próprio perfil publica logo "
+    "depois do post: até 300 caracteres, sem hashtag, sem link, sem repetir a "
+    "legenda. Linha 1: '📚 Base legal: ' + lei e artigo exatos que fundamentam o "
+    "post, só se tiver certeza absoluta; na dúvida, omita essa linha. Linha 2: "
+    "'💬 ' + uma pergunta de conversa sobre experiência ou opinião, que se "
+    "responde em uma frase (ex.: 'Você sabia disso? Marca aqui quem precisa "
+    "saber'). Nunca peça para a pessoa contar o caso dela, nunca ofereça "
+    "atendimento.\n"
+)
+
 PROMPTS = {
     "artigo": (
         "Escreva um artigo de blog completo (1200-1800 palavras) sobre '{titulo}' "
@@ -68,7 +81,9 @@ PROMPTS = {
         "O último slide pede para salvar e mandar para quem precisa. Escreva também a "
         "legenda do post: gancho na primeira linha, 2 parágrafos curtos, convite para "
         "salvar e 5 hashtags do setor.\n"
-        "{voz}\nResponda em JSON: {{\"slides\": [str, ...], \"legenda\": str}}"
+        + PRIMEIRO_COMENTARIO
+        + "{voz}\nResponda em JSON: {{\"slides\": [str, ...], \"legenda\": str, "
+        "\"primeiro_comentario\": str}}"
     ),
     "legenda": (
         "Escreva a legenda do post de Instagram sobre '{titulo}' (ângulo: {angulo}). "
@@ -103,8 +118,9 @@ PROMPTS = {
         "na imagem), o texto de overlay (curto, direto, legível em miniatura), "
         "e a legenda do post. Formato quadrado ou 4:5, sem depender de vídeo ou "
         "carrossel.\n"
-        "{voz}\nResponda em JSON: {{\"conceito_visual\": str, \"texto_overlay\": "
-        "str, \"legenda\": str, \"cta\": str}}"
+        + PRIMEIRO_COMENTARIO
+        + "{voz}\nResponda em JSON: {{\"conceito_visual\": str, \"texto_overlay\": "
+        "str, \"legenda\": str, \"cta\": str, \"primeiro_comentario\": str}}"
     ),
     "frase": (
         "Escreva uma frase de impacto para um card de Instagram sobre '{titulo}' "
@@ -113,7 +129,9 @@ PROMPTS = {
         "compartilhada. Marque com <em>...</em> as 2 a 4 palavras decisivas (ficam "
         "em dourado). Escreva também a legenda: 1 parágrafo que explica a frase e "
         "um convite para mandar a quem precisa ouvir isso.\n"
-        "{voz}\nResponda em JSON: {{\"frase\": str, \"legenda\": str}}"
+        + PRIMEIRO_COMENTARIO
+        + "{voz}\nResponda em JSON: {{\"frase\": str, \"legenda\": str, "
+        "\"primeiro_comentario\": str}}"
     ),
     "pergunta": (
         "Escreva a dúvida real de uma cliente sobre '{titulo}' (ângulo: {angulo}), "
@@ -121,7 +139,9 @@ PROMPTS = {
         "18 palavras (ex.: 'Fui demitida grávida. E agora?'). A legenda responde a "
         "pergunta de forma curta e clara, sem juridiquês, e termina com 'Já passou "
         "por isso? Me conta nos comentários'.\n"
-        "{voz}\nResponda em JSON: {{\"pergunta\": str, \"legenda\": str}}"
+        + PRIMEIRO_COMENTARIO
+        + "{voz}\nResponda em JSON: {{\"pergunta\": str, \"legenda\": str, "
+        "\"primeiro_comentario\": str}}"
     ),
 }
 
