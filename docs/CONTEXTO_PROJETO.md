@@ -562,6 +562,14 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   fontes carregarem. 13 perguntas agendadas às 12h de 09/10 a 02/11. Resto do lote
   15/10–02/11 continua rascunho por pedido dela. Ver `docs/PASSAGEM_DE_CONTEXTO.md`.
 
+### Mito ou Lei v3 = padrão oficial (09/10/2026)
+
+- Aprovado pela Letícia: selo encaixado no topo do cartão de vidro (afirmação + explicação
+  no mesmo cartão), escolhido por sobreviver ao corte 3:4 da grade e pela leitura em linha
+  reta. Gerador oficial `templates/mito_card.html` + `render_criativo.html_mito_ou_lei /
+  renderizar_mito_ou_lei` (valida veredito MITO/LEI, abrevia referência longa), com testes.
+  9 peças agendadas às 19h de 16/10 a 01/11. Ver `docs/PASSAGEM_DE_CONTEXTO.md`.
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 0. **Chave da OpenAI para o Jornalista** (opcional — terceira fonte):

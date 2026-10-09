@@ -168,6 +168,69 @@ async def renderizar_pergunta(
     await _fotografar(html, caminho_saida)
 
 
+def _textura_svg(filtro: str, largura: int, altura: int) -> str:
+    svg = (f"<svg xmlns='http://www.w3.org/2000/svg' width='{largura}' height='{altura}'><filter id='t'>{filtro}"
+           "<feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(#t)'/></svg>")
+    return "data:image/svg+xml;utf8," + svg.replace("#", "%23")
+
+
+_GRAO = _textura_svg("<feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch'/>", 300, 300)
+_MANCHA = _textura_svg("<feTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='3' seed='7'/>", 1080, 1350)
+
+
+def _referencia_curta(referencia: str) -> str:
+    """Abrevia a referência legal para caber numa linha da pílula."""
+    return referencia.replace("Código Eleitoral", "Cód. Eleitoral").replace("Resolução", "Res.")
+
+
+def html_mito_ou_lei(
+    afirmacao: str,
+    veredito: str,
+    explicacao: str,
+    referencia: str,
+    identidade_visual: dict,
+    *,
+    nome_conta: str = "Letícia Barros",
+    oab: str = "OAB/ES 39.948",
+) -> str:
+    """Mito ou Lei no padrão aprovado (v3, 09/10/2026): cartão de vidro com a afirmação
+    (riscada se MITO) e a explicação, selo do veredito encaixado no topo do cartão."""
+    veredito = veredito.upper()
+    if veredito not in ("MITO", "LEI"):
+        raise ValueError(f"veredito deve ser MITO ou LEI, veio {veredito!r}")
+    cores = identidade_visual.get("cores", {})
+    afirmacao = afirmacao.rstrip(".")
+    n = len(afirmacao)
+    return _env.get_template("mito_card.html").render(
+        afirmacao=afirmacao,
+        veredito=veredito,
+        explicacao=explicacao,
+        referencia=_referencia_curta(referencia),
+        tamanho_fonte=60 if n < 55 else 54 if n < 75 else 50,
+        fundo=cores.get("fundo_escuro", "#1E1814"),
+        dourado=cores.get("dourado", "#C9A962"),
+        areia=cores.get("areia", "#E8DED1"),
+        nome_conta=nome_conta,
+        oab=oab,
+        logo_src=_logo_data_uri(),
+        grao=_GRAO,
+        mancha=_MANCHA,
+    )
+
+
+async def renderizar_mito_ou_lei(
+    afirmacao: str,
+    veredito: str,
+    explicacao: str,
+    referencia: str,
+    identidade_visual: dict,
+    caminho_saida: str,
+    **opcoes,
+) -> None:
+    html = html_mito_ou_lei(afirmacao, veredito, explicacao, referencia, identidade_visual, **opcoes)
+    await _fotografar(html, caminho_saida)
+
+
 async def _fotografar(html: str, caminho_saida: str) -> None:
     async with async_playwright() as p:
         browser = await p.chromium.launch()

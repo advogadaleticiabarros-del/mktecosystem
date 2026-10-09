@@ -59,6 +59,21 @@ Aprovado por ela como "nosso novo padrão". Regra gravada em `PROCESSO_PRODUCAO_
   `_fotos_pexels/<id>.jpg`).
 - Prévia: https://api.orbit.advogadaleticiabarros.com.br/media/perguntas-v6-tira.jpg
 
+## PADRÃO APROVADO — Mito ou Lei (v3, 09/10/2026)
+
+Aprovado por ela ("aprovado... salve como o novo padrão"). Regra completa no item 9 de
+`PROCESSO_PRODUCAO_CARROSSEL.md`.
+
+- Afirmação e explicação no **mesmo cartão de vidro**; selo-medalhão gravado (sem brilho de
+  moeda) **encaixado no topo do cartão, centralizado**. Nunca entre os blocos (ela reprovou:
+  quebra a leitura) e nunca no canto (a grade 3:4 do perfil corta as laterais).
+- MITO: afirmação riscada com fio dourado fino + rótulo "A VERDADE". LEI: sem risco +
+  "O QUE DIZ A LEI". Referência legal em pílula de uma linha. "✦ Salve para consultar
+  quando precisar ✦" abaixo do cartão (meta da série: salvamentos).
+- Código: `app/templates/mito_card.html` + `render_criativo.renderizar_mito_ou_lei(afirmacao,
+  veredito, explicacao, referencia, identidade, caminho)`. Lote: `_saida_producao_1510/mito_v3.py`.
+- Prévia: https://api.orbit.advogadaleticiabarros.com.br/media/mito-v3-lote.jpg
+
 ### Regra: recorte automático não entra em peça
 
 Ela reprovou duas vezes recortes feitos com rembg (borda serrilhada, sombra residual,
@@ -78,10 +93,9 @@ discreta no topo, cartões de vidro flutuando. Usar isso nas próximas frentes.
 - **Agendado (ScheduledPost "pronto", Instagram, 12h)**: perguntas v6 de
   11/10 (abandono), 13/10 (férias da colega), 15, 17, 19, 21, 23, 25, 27, 29, 31/10 e 02/11.
   Também estão agendados os carrosséis/frases de 09–14/10 (programação anterior).
-- **Rascunho, aguardando ela** (NÃO agendar): carrosséis v5, frases v2 e 9 Mito ou Lei v3 (selo no topo do cartão; prévia
-  https://api.orbit.advogadaleticiabarros.com.br/media/mito-v3-lote.jpg; backup do banco antes da troca em
-  `/root/orbit-backups/antes-mito-v3-20261009.sql.gz`)
-  do lote 15/10–02/11. Ela disse: "ainda não programe os demais, ainda vamos mudar
+- **Agendado (Instagram, 19h)**: os 9 Mito ou Lei v3 aprovados em 09/10 — 16, 18, 20, 22,
+  24, 26, 28, 30/10 e 01/11 (backup antes: `/root/orbit-backups/antes-mito-v3-20261009.sql.gz`).
+- **Rascunho, aguardando ela** (NÃO agendar): carrosséis v5 e frases v2 do lote 15/10–02/11. Ela disse: "ainda não programe os demais, ainda vamos mudar
   algumas coisas". Doc de aprovação do lote:
   https://claude.ai/code/artifact/2f39add3-ba5e-4eb5-bc0e-47fae877428d
 - Para agendar uma peça aprovada: criar `ScheduledPost(canal="instagram", formato="post"
@@ -91,8 +105,8 @@ discreta no topo, cartões de vidro flutuando. Usar isso nas próximas frentes.
 
 ## Próximos passos prováveis
 
-1. Levar o padrão novo (foto inteira + objeto + vidro) para **frases**, **capas de
-   carrossel** e **Mito ou Lei**, mostrando prévia antes de trocar em massa.
+1. Levar o padrão novo (foto inteira + objeto + vidro) para **frases** e **capas de
+   carrossel**, mostrando prévia antes de trocar em massa (Mito ou Lei já feito: v3).
 2. Depois da aprovação dela, agendar o resto do lote 15/10–02/11.
 3. Escolha automática de foto Pexels por tema (hoje é curadoria manual por folha de contato).
 4. Pendências antigas: em `CONTEXTO_PROJETO.md` → "Pendências conhecidas".

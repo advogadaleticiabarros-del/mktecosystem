@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!-- Mito ou Lei: padrão aprovado pela Letícia em 09/10/2026 (v3). Afirmação e explicação no
+     mesmo cartão de vidro; selo-medalhão encaixado no topo do cartão, centralizado (nunca entre
+     os blocos: quebra a leitura; nunca no canto: a grade 3:4 do perfil corta as laterais). -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; } html { font-variant-numeric: lining-nums; font-feature-settings:"lnum" 1; }
+.c { width:1080px; height:1350px; position:relative; overflow:hidden; font-family:'Inter',sans-serif; color:{{ areia }};
+  background: radial-gradient(ellipse at 50% 38%, #3D332A 0%, #2A231E 55%, {{ fundo }} 100%); }
+.mancha { position:absolute; inset:0; opacity:.12; mix-blend-mode:soft-light; background-image:url("{{ mancha }}"); }
+.marca { position:absolute; width:1180px; left:50%; top:50%; transform:translate(-50%,-48%); opacity:.035; }
+.vinheta { position:absolute; inset:0; background: radial-gradient(ellipse at 50% 45%, transparent 48%, rgba(0,0,0,.38) 100%); }
+.luz { position:absolute; inset:0; mix-blend-mode:soft-light; background: radial-gradient(ellipse at 22% 10%, rgba(233,211,152,.40), transparent 46%); }
+.moldura { position:absolute; inset:36px; border:1.5px solid {{ dourado }}70; border-radius:18px; z-index:6; }
+.grao { position:absolute; inset:0; z-index:9; opacity:.13; mix-blend-mode:overlay; background-image:url("{{ grao }}"); }
+
+.topo { position:absolute; top:92px; left:0; right:0; display:flex; justify-content:center; align-items:center; gap:22px; z-index:4; }
+.topo span { font-size:22px; font-weight:600; letter-spacing:7px; text-transform:uppercase; color:{{ dourado }}; }
+.fio { width:90px; height:1.5px; background:linear-gradient(90deg, transparent, {{ dourado }}); } .fio.d { background:linear-gradient(90deg, {{ dourado }}, transparent); }
+
+.palco { position:absolute; left:0; right:0; top:262px; bottom:186px; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:5; }
+.card { position:relative; width:860px; border-radius:26px;
+  background: linear-gradient(180deg, rgba(58,48,40,.72) 0%, rgba(36,29,24,.78) 100%);
+  border:1.5px solid {{ dourado }}9e; box-shadow: 0 34px 80px rgba(0,0,0,.50), inset 0 1px 0 rgba(255,240,200,.18); }
+.sec1 { padding:164px 70px 40px; text-align:center; }
+.kicker { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:40px; color:#E2C77F; margin-bottom:18px; }
+.af { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:{{ tamanho_fonte }}px; line-height:1.12; color:#FAF6F0; text-wrap:balance; }
+.af.mito { color:#FAF6F0c4; text-decoration: line-through; text-decoration-color:{{ dourado }}d0; text-decoration-thickness:2px; }
+.af .aspa { color:{{ dourado }}; text-decoration:none; }
+.sec2 { margin:0 70px; padding:36px 0 52px; border-top:1px solid {{ dourado }}59; text-align:center; }
+.rot { font-size:22px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:{{ dourado }}; margin-bottom:16px; }
+.ex { font-size:30px; line-height:1.5; color:{{ areia }}; text-wrap:pretty; }
+.ref { margin-top:26px; display:inline-block; font-size:22px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:{{ dourado }};
+  border:1.5px solid {{ dourado }}99; padding:9px 18px; border-radius:999px; white-space:nowrap; }
+.ref.longa { letter-spacing:1.5px; }
+.salve { margin-top:30px; font-size:22px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:{{ areia }}d9; }
+.salve b { color:{{ dourado }}; font-weight:600; }
+
+/* selo: medalha gravada, sem brilho de moeda */
+.selo { position:absolute; width:268px; aspect-ratio:1; border-radius:50%; z-index:7; left:50%; top:-134px; transform:translateX(-50%);
+  background: radial-gradient(circle at 34% 26%, #F4E6BC 0%, #DCC385 28%, #C3A25A 58%, #9C7B3A 84%, #7A5E28 100%);
+  box-shadow: 0 22px 44px rgba(0,0,0,.55), 0 0 0 6px rgba(30,24,20,.85), 0 0 0 7.5px {{ dourado }}a6,
+              inset 0 2px 4px rgba(255,248,225,.55), inset 0 -5px 10px rgba(70,48,14,.45); }
+.selo .raios { position:absolute; inset:0; border-radius:50%; opacity:.22; mix-blend-mode:multiply;
+  background: repeating-conic-gradient(from 0deg, rgba(90,62,20,.9) 0deg 1deg, transparent 1deg 4deg);
+  -webkit-mask-image: radial-gradient(circle, transparent 0 60%, #000 61% 100%); }
+.selo .a1 { position:absolute; inset:10px; border-radius:50%; border:1.5px solid rgba(70,48,14,.55); }
+.selo .a2 { position:absolute; inset:46px; border-radius:50%; border:1.5px solid rgba(70,48,14,.50); box-shadow: inset 0 0 0 4px rgba(255,240,200,.18); }
+.selo svg { position:absolute; inset:0; }
+.selo .miolo { position:absolute; inset:46px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; }
+.selo .ver { font-size:13px; font-weight:700; letter-spacing:4px; color:rgba(58,40,14,.85); padding-left:4px; }
+.selo .palavra { font-family:'Cormorant Garamond',serif; font-weight:700; font-size:{{ 60 if veredito == 'MITO' else 76 }}px; line-height:1; letter-spacing:2px; color:#3A2A14;
+  text-shadow: 0 1px 0 rgba(255,244,210,.6), 0 -1px 0 rgba(60,40,10,.3); }
+.selo .est { font-size:13px; color:rgba(58,40,14,.75); }
+
+.ass { position:absolute; left:0; right:0; bottom:96px; display:flex; flex-direction:column; align-items:center; gap:12px; z-index:4; }
+.linha-ass { display:flex; align-items:center; gap:22px; }
+.ass img { width:54px; height:54px; }
+.ass .nome { font-size:23px; font-weight:600; letter-spacing:6px; text-transform:uppercase; color:{{ areia }}; }
+.ass .oab { font-size:22px; font-weight:600; letter-spacing:4px; color:{{ dourado }}; }
+</style>
+</head>
+<body><div class="c">
+<div class="mancha"></div><img class="marca" src="{{ logo_src }}"><div class="vinheta"></div><div class="luz"></div><div class="moldura"></div>
+<div class="topo"><div class="fio"></div><span>Série · Mito ou Lei</span><div class="fio d"></div></div>
+<div class="palco"><div class="card">
+  <div class="selo"><div class="raios"></div><div class="a1"></div><div class="a2"></div>
+    <svg viewBox="0 0 200 200"><defs><path id="circ" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs>
+      <text font-family="Inter" font-size="10.4" font-weight="700" letter-spacing="3.1" fill="rgba(58,40,14,.82)"><textPath href="#circ" startOffset="0">{{ nome_conta|upper }} ✦ ADVOCACIA ✦ {{ oab }} ✦</textPath></text></svg>
+    <div class="miolo"><span class="ver">VEREDITO</span><span class="palavra">{{ veredito }}</span><span class="est">✦</span></div>
+  </div>
+  <div class="sec1"><div class="kicker">Você acredita que…</div>
+    <div class="af{{ ' mito' if veredito == 'MITO' else '' }}"><span class="aspa">“</span>{{ afirmacao }}<span class="aspa">”</span></div></div>
+  <div class="sec2"><div class="rot">{{ 'A verdade' if veredito == 'MITO' else 'O que diz a lei' }}</div>
+    <div class="ex">{{ explicacao }}</div><div class="ref{{ ' longa' if referencia|length > 40 else '' }}">{{ referencia }}</div></div>
+</div><div class="salve"><b>✦</b> Salve para consultar quando precisar <b>✦</b></div></div>
+<div class="ass"><div class="linha-ass"><div class="fio"></div><img src="{{ logo_src }}"><span class="nome">{{ nome_conta }} · Advocacia</span><div class="fio d"></div></div><span class="oab">{{ oab }}</span></div>
+<div class="grao"></div>
+</div></body>
+</html>
