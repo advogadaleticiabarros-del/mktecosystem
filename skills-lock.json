@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "instagram-marketing": {
+      "source": "sergebulaev/instagram-skills",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "5f1c263b94857527776de6fdf7e8f9443c9db29882287a7721a1431f7e92402e"
+    }
+  }
+}

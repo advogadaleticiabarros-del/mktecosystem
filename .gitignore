@@ -10,3 +10,7 @@ apps/web/out/
 .claude/settings.json
 .claude/settings.local.json
 graphify-out/
+
+# skills de terceiros: reinstalar com npx skills (ver skills-lock.json)
+.agents/
+.claude/skills/instagram-marketing

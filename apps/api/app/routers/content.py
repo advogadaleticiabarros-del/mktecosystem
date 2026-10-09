@@ -60,6 +60,21 @@ PRIMEIRO_COMENTARIO = (
     "atendimento.\n"
 )
 
+# Regras da skill instagram-marketing (ig-caption-writer, ig-hashtag-strategist,
+# ig-humanizer), adaptadas à OAB e à voz da Letícia em 09/10/2026.
+REGRAS_LEGENDA = (
+    "Regras da legenda: os primeiros 125 caracteres (o que aparece antes do 'mais') "
+    "entregam o gancho com a palavra-chave do tema e fazem sentido sozinhos. Corpo em "
+    "linhas curtas, uma ideia por bloco. Um único convite específico para salvar ou "
+    "enviar (ex.: 'Salva pra quando precisar', 'Manda pra quem está passando por "
+    "isso'), nunca 'o que você acha?'. De 3 a 5 hashtags dimensionadas: 1 ou 2 de "
+    "nicho (ex.: #DireitosDaGestante), 1 ou 2 da área (ex.: #DireitoTrabalhista) e "
+    "1 local (#AdvogadaVitóriaES). Nunca invente número, data, nome ou resultado; "
+    "sem dado concreto, deixe a afirmação de fora. Sem marcas de texto de IA: sem "
+    "travessão, sem 'não é só X, é Y', sem listas de três por hábito, sem "
+    "'descubra', 'desvende', 'jornada', 'crucial', 'fundamental'.\n"
+)
+
 PROMPTS = {
     "artigo": (
         "Escreva um artigo de blog completo (1200-1800 palavras) sobre '{titulo}' "
@@ -81,6 +96,7 @@ PROMPTS = {
         "O último slide pede para salvar e mandar para quem precisa. Escreva também a "
         "legenda do post: gancho na primeira linha, 2 parágrafos curtos, convite para "
         "salvar e 5 hashtags do setor.\n"
+        + REGRAS_LEGENDA
         + PRIMEIRO_COMENTARIO
         + "{voz}\nResponda em JSON: {{\"slides\": [str, ...], \"legenda\": str, "
         "\"primeiro_comentario\": str}}"
@@ -89,7 +105,8 @@ PROMPTS = {
         "Escreva a legenda do post de Instagram sobre '{titulo}' (ângulo: {angulo}). "
         "Gancho + 3 parágrafos + chamada para o blog + gancho do próximo post + "
         "5 hashtags específicas do tema, em CamelCase.\n"
-        "{voz}\nResponda em JSON: {{\"texto\": str}}"
+        + REGRAS_LEGENDA
+        + "{voz}\nResponda em JSON: {{\"texto\": str}}"
     ),
     "stories": (
         "Crie um roteiro de 3 stories (9:16) sobre '{titulo}' (ângulo: {angulo}): "
@@ -108,7 +125,8 @@ PROMPTS = {
         "tensa', 'som de suspense que resolve') para buscar na biblioteca nativa "
         "do Instagram/TikTok — não invente nome de música específica, já que não "
         "há acesso ao catálogo real de áudios da plataforma.\n"
-        "{voz}\nResponda em JSON: {{\"gancho\": str, \"roteiro\": "
+        + REGRAS_LEGENDA
+        + "{voz}\nResponda em JSON: {{\"gancho\": str, \"roteiro\": "
         "[{{\"tempo\": str, \"cena\": str, \"texto_tela\": str}}, ...], "
         "\"legenda\": str, \"cta\": str, \"audio_sugestao\": str}}"
     ),
@@ -118,6 +136,7 @@ PROMPTS = {
         "na imagem), o texto de overlay (curto, direto, legível em miniatura), "
         "e a legenda do post. Formato quadrado ou 4:5, sem depender de vídeo ou "
         "carrossel.\n"
+        + REGRAS_LEGENDA
         + PRIMEIRO_COMENTARIO
         + "{voz}\nResponda em JSON: {{\"conceito_visual\": str, \"texto_overlay\": "
         "str, \"legenda\": str, \"cta\": str, \"primeiro_comentario\": str}}"
@@ -129,6 +148,7 @@ PROMPTS = {
         "compartilhada. Marque com <em>...</em> as 2 a 4 palavras decisivas (ficam "
         "em dourado). Escreva também a legenda: 1 parágrafo que explica a frase e "
         "um convite para mandar a quem precisa ouvir isso.\n"
+        + REGRAS_LEGENDA
         + PRIMEIRO_COMENTARIO
         + "{voz}\nResponda em JSON: {{\"frase\": str, \"legenda\": str, "
         "\"primeiro_comentario\": str}}"
@@ -140,6 +160,7 @@ PROMPTS = {
         "pergunta de forma curta e clara, sem juridiquês, e termina com 'Salva esse "
         "post e manda pra quem precisa saber disso'. Nunca convide a pessoa a contar "
         "o caso dela nos comentários (vira consulta pública, CED art. 42 I).\n"
+        + REGRAS_LEGENDA
         + PRIMEIRO_COMENTARIO
         + "{voz}\nResponda em JSON: {{\"pergunta\": str, \"legenda\": str, "
         "\"primeiro_comentario\": str}}"

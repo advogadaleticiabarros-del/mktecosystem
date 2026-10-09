@@ -213,3 +213,16 @@ def test_nenhum_prompt_pede_para_o_publico_contar_o_proprio_caso():
 
     for tipo, prompt in PROMPTS.items():
         assert "me conta nos comentários" not in prompt.lower(), tipo
+
+
+def test_legendas_seguem_as_regras_de_legenda_do_instagram():
+    """Regras da skill instagram-marketing (ig-caption-writer / ig-hashtag-strategist /
+    ig-humanizer), aplicadas em 09/10/2026: gancho nos 125 caracteres antes do "mais",
+    hashtags dimensionadas, CTA único de salvar/enviar e nada inventado."""
+    from app.routers.content import PROMPTS
+
+    for tipo in ("carrossel", "legenda", "estatico", "frase", "pergunta", "reels"):
+        prompt = PROMPTS[tipo]
+        assert "125 caracteres" in prompt, tipo
+        assert "nicho" in prompt and "local" in prompt, tipo
+        assert "nunca invente" in prompt.lower(), tipo
