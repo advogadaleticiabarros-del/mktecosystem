@@ -3,75 +3,73 @@
 <head>
 <meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   * { font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { margin: 0; }
 
+  /* Frase editorial com acabamento fosco (09/10/2026): café aveludado, granulação de
+     papel impresso, vinheta suave e o logotipo dourado como marca d'água. */
   .card {
     width: 1080px; height: 1350px;
     position: relative; overflow: hidden;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 140px 104px;
+    padding: 150px 110px;
     font-family: 'Inter', sans-serif;
     color: {{ areia }};
     text-align: center;
-    background:
-      radial-gradient(circle at 82% 12%, {{ dourado }}29, transparent 42%),
-      radial-gradient(circle at 12% 90%, {{ dourado }}1f, transparent 46%),
-      linear-gradient(160deg, {{ fundo }} 0%, {{ fundo }} 100%);
+    background: radial-gradient(ellipse at 60% 28%, #3B3129 0%, #2A231E 55%, #1F1915 100%);
   }
-
   .card::before {
-    content: '';
-    position: absolute;
-    inset: 36px;
-    border: 1.5px solid {{ dourado }}8c;
-    border-radius: 18px;
-    pointer-events: none;
-    z-index: 3;
+    content: ''; position: absolute; inset: 36px;
+    border: 1.5px solid {{ dourado }}8c; border-radius: 18px;
+    pointer-events: none; z-index: 5;
   }
+  .vinheta { position: absolute; inset: 0; z-index: 1;
+    background: radial-gradient(ellipse at 50% 50%, transparent 52%, rgba(0,0,0,.32) 100%); }
+  .mancha { position: absolute; inset: 0; z-index: 1; opacity: .12; mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1080' height='1350'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='3' seed='7'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23m)'/></svg>"); }
+  .grao { position: absolute; inset: 0; z-index: 6; opacity: .14; mix-blend-mode: overlay; pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>"); }
+  .marca { position: absolute; z-index: 1; width: 1050px; right: -380px; bottom: -300px; opacity: .07; }
 
+  .conteudo { position: relative; z-index: 4; display: flex; flex-direction: column; align-items: center; }
   .aspas {
-    font-family: 'Playfair Display', serif;
-    font-size: 180px;
-    line-height: 1;
-    color: {{ dourado }};
-    opacity: .55;
-    margin-bottom: -40px;
+    font-family: 'Cormorant Garamond', serif; font-weight: 600;
+    font-size: 220px; line-height: .6; height: 110px;
+    color: {{ dourado }}; opacity: .8;
   }
-
   .frase {
-    font-family: 'Playfair Display', serif;
-    font-weight: 800;
-    font-size: {{ tamanho_fonte }}px;
-    line-height: 1.32;
-    max-width: 880px;
+    font-family: 'Cormorant Garamond', serif; font-weight: 600;
+    font-size: {{ tamanho_fonte + 14 }}px; line-height: 1.16;
+    max-width: 860px; color: #FAF6F0;
   }
-  .frase em {
-    font-style: normal;
-    color: {{ dourado }};
-  }
+  .frase em { font-style: italic; color: {{ dourado }}; }
 
-  .assinatura {
-    margin-top: 64px;
-    display: flex; flex-direction: column; align-items: center; gap: 14px;
-  }
-  .assinatura img { width: 60px; height: 60px; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,.4)); }
-  .assinatura .nome { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; }
-  .assinatura .oab { font-size: 14px; letter-spacing: 2px; text-transform: uppercase; color: {{ dourado }}; }
+  .assinatura { margin-top: 70px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .fio { width: 120px; height: 2px; background: {{ dourado }}; }
+  .assinatura img { width: 64px; height: 64px; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,.4)); }
+  .assinatura .nome { font-size: 24px; font-weight: 600; letter-spacing: 6px; text-transform: uppercase; color: {{ areia }}; }
+  .assinatura .oab { font-size: 22px; font-weight: 600; letter-spacing: 3px; color: {{ dourado }}; }
 </style>
 </head>
 <body>
   <div class="card">
-    <div class="aspas">&ldquo;</div>
-    <p class="frase">{{ frase|safe }}</p>
-    <div class="assinatura">
-      <img src="{{ logo_src }}" alt="{{ nome_conta }}">
-      <span class="nome">{{ nome_conta }}</span>
-      <span class="oab">{{ oab }}</span>
+    <div class="mancha"></div>
+    <img class="marca" src="{{ logo_src }}" alt="">
+    <div class="vinheta"></div>
+    <div class="conteudo">
+      <div class="aspas">&ldquo;</div>
+      <p class="frase">{{ frase|safe }}</p>
+      <div class="assinatura">
+        <div class="fio"></div>
+        <img src="{{ logo_src }}" alt="{{ nome_conta }}">
+        <span class="nome">{{ nome_conta }} · Advocacia</span>
+        <span class="oab">{{ oab }}</span>
+      </div>
     </div>
+    <div class="grao"></div>
   </div>
 </body>
 </html>
