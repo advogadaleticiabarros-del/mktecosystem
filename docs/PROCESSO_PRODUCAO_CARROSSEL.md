@@ -67,3 +67,25 @@ número/letra gigante ao fundo). Tradução na identidade dela:
 - Carrossel renderizado como panorama contínuo (7 × 1080 px) e fatiado, para que arcos e
   recortes atravessem os slides.
 - Faixas douradas de topo e rodapé em todos os slides (obrigatório).
+
+## Diagramação de peças únicas (pergunta, frase, Mito ou Lei) — 09/10/2026
+
+Princípios aprovados depois da revisão do Mito ou Lei:
+
+1. Eixo único centralizado: peça de imagem única é simétrica (mais elegante e
+   sobrevive ao corte 3:4 da grade do perfil).
+2. Um único ponto focal por peça (selo, frase ou composição de objetos).
+3. Centro óptico: o bloco principal fica levemente acima do centro geométrico.
+4. Espaçamentos em múltiplos de 8 px, respiro igual entre blocos.
+5. Duas famílias: Cormorant Garamond (títulos/frases, itálico de destaque, algarismos
+   alinhados) e Inter (texto, rótulos). Nada abaixo de 22 px.
+6. Linhas curtas: 20–26 caracteres nos títulos, 45–60 no texto corrido.
+7. Rodapé de assinatura padrão: fio dourado · logo · LETÍCIA BARROS · ADVOCACIA · fio,
+   OAB abaixo. Cabeçalho em versalete com fios dourados.
+8. Acabamento fosco (granulação, vinheta, manchas suaves) e logo como marca d'água.
+9. Mito ou Lei: selo-medalhão dourado metálico (anel duplo, "VEREDITO · LETÍCIA BARROS"
+   em volta, palavra gravada); afirmação riscada em dourado (MITO) ou sublinhada (LEI).
+   Modelo: `apps/api/_saida_producao_1510/mito_v2.py`.
+10. Pergunta: composição de objetos (não só pessoas) em primeiro plano sobre a borda
+    do cartão, apoiada em linha de chão com sombra; recortes sem corte seco.
+    Modelo: `apps/api/_saida_producao_1510/pergunta_v4.py`.
