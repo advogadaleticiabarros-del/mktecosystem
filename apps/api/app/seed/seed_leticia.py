@@ -53,7 +53,7 @@ IDENTIDADE_VISUAL = {
         "whatsapp": "#25D366",
     },
     "fontes": {
-        "titulo_grande": "Cormorant Garamond",
+        "titulo_grande": "EB Garamond",
         "subtitulo": "Playfair Display",
         "corpo": "Inter",
     },

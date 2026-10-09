@@ -85,6 +85,23 @@ function quando(p: ContentPiece): string {
   return `Sai em ${d}/${m}${prog.hora ? ` às ${prog.hora}` : ""}`;
 }
 
+// Abas: o que espera aprovação, o que voltou para ajuste, o que já foi aprovado (para ver
+// todos os criativos do mês) e os rascunhos antigos gerados pela IA sem arte nem data.
+type Aba = "rascunho" | "ajuste" | "aprovado" | "antigo";
+const ABAS: [Aba, string][] = [
+  ["rascunho", "Aguardando você"], ["ajuste", "Alteração pedida"], ["aprovado", "Aprovados e agendados"], ["antigo", "Rascunhos antigos sem arte"],
+];
+const VAZIO: Record<Aba, string> = {
+  rascunho: "Nada esperando aprovação por aqui.", ajuste: "Nenhuma alteração pendente.",
+  aprovado: "Nenhum conteúdo aprovado ainda.", antigo: "Nenhum rascunho antigo.",
+};
+function abaDa(p: ContentPiece): Aba {
+  if (p.status === "aprovado") return "aprovado";
+  if (p.status === "ajuste") return "ajuste";
+  const semData = !(p.corpo.programacao as { data?: string } | undefined)?.data;
+  return semData && imagens(p).length === 0 ? "antigo" : "rascunho";
+}
+
 function PecaRevisao({ peca, pauta, onAtualizar }: { peca: ContentPiece; pauta?: Pauta; onAtualizar: (p: ContentPiece) => void }) {
   const [escrevendo, setEscrevendo] = useState(false);
   const [texto, setTexto] = useState("");
@@ -182,9 +199,13 @@ function PecaRevisao({ peca, pauta, onAtualizar }: { peca: ContentPiece; pauta?:
           <Button size="sm" variant="outline" onClick={() => setEscrevendo(true)} disabled={pendente}>
             <MessageSquareText className="h-4 w-4" /> Pedir alteração
           </Button>
-          <Button size="sm" onClick={() => enviar({ status: "aprovado" }, "Não foi possível aprovar. Tente de novo.")} disabled={pendente}>
-            <Check className="h-4 w-4" /> {pendente ? "Aprovando…" : "Aprovar e agendar"}
-          </Button>
+          {peca.status === "aprovado" ? (
+            <span className="flex items-center gap-1 text-sm font-medium text-primary"><Check className="h-4 w-4" /> Aprovado</span>
+          ) : (
+            <Button size="sm" onClick={() => enviar({ status: "aprovado" }, "Não foi possível aprovar. Tente de novo.")} disabled={pendente}>
+              <Check className="h-4 w-4" /> {pendente ? "Aprovando…" : "Aprovar e agendar"}
+            </Button>
+          )}
         </div>
       )}
       {erro && <p className="text-sm text-destructive">{erro}</p>}
@@ -198,21 +219,22 @@ function AprovacaoContent() {
   const router = useRouter();
   const [pecas, setPecas] = useState<ContentPiece[]>([]);
   const [pautas, setPautas] = useState<Record<string, Pauta>>({});
-  const [aba, setAba] = useState<"rascunho" | "ajuste">("rascunho");
+  const [aba, setAba] = useState<Aba>("rascunho");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const carregar = useCallback(async () => {
     try {
       const filtro = pautaId ? `&pauta_id=${pautaId}` : "";
-      const [r1, r2, r3] = await Promise.all([
+      const [r1, r2, r4, r3] = await Promise.all([
         apiFetch(`/content?status=rascunho${filtro}`),
         apiFetch(`/content?status=ajuste${filtro}`),
+        apiFetch(`/content?status=aprovado${filtro}`),
         apiFetch("/pautas"),
       ]);
       if (r1.status === 401) return router.push("/login");
-      if (!r1.ok || !r2.ok || !r3.ok) throw new Error();
-      setPecas([...(await r1.json()), ...(await r2.json())]);
+      if (!r1.ok || !r2.ok || !r3.ok || !r4.ok) throw new Error();
+      setPecas([...(await r1.json()), ...(await r2.json()), ...(await r4.json())]);
       const lista: Pauta[] = await r3.json();
       setPautas(Object.fromEntries(lista.map((p) => [p.id, p])));
     } catch {
@@ -231,9 +253,9 @@ function AprovacaoContent() {
       const prog = p.corpo.programacao as { data?: string; hora?: string } | undefined;
       return prog?.data ? `${prog.data} ${prog.hora ?? ""}` : "9999";
     };
-    return pecas.filter((p) => p.status === aba).sort((a, b) => chave(a).localeCompare(chave(b)));
+    return pecas.filter((p) => abaDa(p) === aba).sort((a, b) => chave(a).localeCompare(chave(b)));
   }, [pecas, aba]);
-  const n = (s: string) => pecas.filter((p) => p.status === s).length;
+  const n = (s: Aba) => pecas.filter((p) => abaDa(p) === s).length;
 
   function atualizar(p: ContentPiece) {
     setPecas((prev) => prev.map((x) => (x.id === p.id ? p : x)));
@@ -253,9 +275,9 @@ function AprovacaoContent() {
       <div className="grid gap-8 lg:grid-cols-[1fr_260px]">
         <div className="space-y-5">
           <div className="flex gap-2">
-            {(["rascunho", "ajuste"] as const).map((s) => (
+            {ABAS.map(([s, rotulo]) => (
               <Button key={s} size="sm" variant={aba === s ? "default" : "outline"} onClick={() => setAba(s)}>
-                {s === "rascunho" ? "Aguardando você" : "Alteração pedida"} ({n(s)})
+                {rotulo} ({n(s)})
               </Button>
             ))}
           </div>
@@ -263,7 +285,7 @@ function AprovacaoContent() {
           {error && <p className="text-sm text-destructive">{error}</p>}
           {!loading && !error && ordenadas.length === 0 && (
             <p className="text-sm text-muted-foreground">
-              {aba === "rascunho" ? "Nada esperando aprovação por aqui." : "Nenhuma alteração pendente."}
+              {VAZIO[aba]}
             </p>
           )}
           {ordenadas.map((p) => (

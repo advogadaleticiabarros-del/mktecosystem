@@ -68,7 +68,7 @@ sRGB, PNG para texto, JPG 90+ para foto. Reels: MP4 H.264, 30 fps, áudio AAC, 2
 - **Proibido**: texto dourado em fundo claro (1,9:1) e texto branco em fundo dourado (2,1:1).
 - Proporção 60-30-10: fundos escuros / texto branco-areia / dourado. Slide claro
   (areia_light + café) no máximo 1 a cada 4.
-- Escala no canvas 1080: gancho Cormorant Garamond 96-120 px; título Playfair Display
+- Escala no canvas 1080: gancho EB Garamond 96-120 px; título Playfair Display
   60-72 px; destaque Playfair itálico dourado (1 a 3 palavras); corpo Inter 32-36 px
   (até 40 palavras/slide); kicker Inter 600 caixa-alta 24-26 px; rodapé 22-24 px.
   **Nada abaixo de 22 px.**

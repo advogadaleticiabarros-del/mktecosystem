@@ -22,7 +22,7 @@ from conteudo import MITO_OU_LEI  # noqa: E402
 AQUI = Path(__file__).resolve().parent
 
 HTML = Template(r"""<!doctype html><html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; } html { font-variant-numeric: lining-nums; font-feature-settings:"lnum" 1; }
 .c { width:1080px; height:1350px; position:relative; overflow:hidden; font-family:'Inter',sans-serif; color:#E8DED1; text-align:center;
@@ -38,8 +38,8 @@ HTML = Template(r"""<!doctype html><html><head><meta charset="utf-8">
 .fio { width:90px; height:1.5px; background:linear-gradient(90deg, transparent, #C9A962); } .fio.d { background:linear-gradient(90deg, #C9A962, transparent); }
 
 .miolo { position:absolute; left:110px; right:110px; top:190px; bottom:230px; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:4; }
-.pergunta { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:46px; color:#E8DED1cc; margin-bottom:24px; }
-.af { position:relative; font-family:'Cormorant Garamond',serif; font-weight:600; font-size:{{ fs }}px; line-height:1.1; color:#FAF6F0; max-width:820px; }
+.pergunta { font-family:'EB Garamond',serif; font-style:italic; font-weight:500; font-size:46px; color:#E8DED1cc; margin-bottom:24px; }
+.af { position:relative; font-family:'EB Garamond',serif; font-weight:600; font-size:{{ fs }}px; line-height:1.1; color:#FAF6F0; max-width:820px; }
 .af .aspa { color:#C9A962; }
 .af.mito { color:#FAF6F0b8; }
 .risco { position:absolute; left:-2%; right:-2%; top:52%; height:5px; border-radius:3px; transform:rotate(-4deg);
@@ -53,7 +53,7 @@ HTML = Template(r"""<!doctype html><html><head><meta charset="utf-8">
 .selo::before { content:''; position:absolute; inset:14px; border-radius:50%; border:2px solid rgba(80,55,15,.55); box-shadow: inset 0 0 0 6px rgba(255,240,200,.25); }
 .selo::after { content:''; position:absolute; inset:30px; border-radius:50%; border:1.5px dashed rgba(80,55,15,.45); }
 .selo .anel { position:absolute; inset:0; }
-.selo .palavra { position:relative; z-index:2; font-family:'Cormorant Garamond',serif; font-weight:700; font-size:{{ 78 if veredito == 'MITO' else 104 }}px; letter-spacing:3px; color:#3A2A14;
+.selo .palavra { position:relative; z-index:2; font-family:'EB Garamond',serif; font-weight:700; font-size:{{ 78 if veredito == 'MITO' else 104 }}px; letter-spacing:3px; color:#3A2A14;
   text-shadow: 0 1px 0 rgba(255,240,200,.55), 0 -1px 0 rgba(60,40,10,.35); }
 
 .ex { font-size:32px; line-height:1.5; color:#E8DED1; max-width:780px; }

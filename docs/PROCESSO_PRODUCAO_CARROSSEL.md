@@ -57,7 +57,7 @@ número/letra gigante ao fundo). Tradução na identidade dela:
 
 - Ritmo alternado: capa escura com foto recortada da Letícia → slides claros (areia com
   textura de papel) → slide escuro café → slide com foto → fechamento escuro.
-- Cormorant Garamond (títulos, itálico no destaque) + Inter (texto), sempre com
+- EB Garamond (títulos, itálico no destaque) + Inter (texto), sempre com
   algarismos alinhados.
 - Dourado para elementos (arcos, linhas, números gigantes, selos) e texto destacado só
   sobre fundo escuro. Em fundo claro o destaque é café itálico com sublinhado dourado
@@ -77,7 +77,7 @@ Princípios aprovados depois da revisão do Mito ou Lei:
 2. Um único ponto focal por peça (selo, frase ou composição de objetos).
 3. Centro óptico: o bloco principal fica levemente acima do centro geométrico.
 4. Espaçamentos em múltiplos de 8 px, respiro igual entre blocos.
-5. Duas famílias: Cormorant Garamond (títulos/frases, itálico de destaque, algarismos
+5. Duas famílias: EB Garamond (títulos/frases, itálico de destaque, algarismos
    alinhados) e Inter (texto, rótulos). Nada abaixo de 22 px.
 6. Linhas curtas: 20–26 caracteres nos títulos, 45–60 no texto corrido.
 7. Rodapé de assinatura padrão: fio dourado · logo · LETÍCIA BARROS · ADVOCACIA · fio,

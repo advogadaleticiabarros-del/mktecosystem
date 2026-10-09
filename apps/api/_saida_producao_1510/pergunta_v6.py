@@ -23,7 +23,7 @@ AQUI = Path(__file__).resolve().parent
 FOTOS = AQUI / "_fotos_pexels"
 
 HTML = Template(r"""<!doctype html><html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; } html { font-variant-numeric: lining-nums; font-feature-settings:"lnum" 1; }
 .c { width:1080px; height:1350px; position:relative; overflow:hidden; font-family:'Inter',sans-serif; background:#1E1814; }
@@ -42,7 +42,7 @@ HTML = Template(r"""<!doctype html><html><head><meta charset="utf-8">
 .faixa { background: linear-gradient(180deg, #EBDBAE 0%, #D4BC7D 45%, #C9A962 100%); text-align:center; padding:16px 0;
   font-size:23px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:#3B2E1D; }
 .corpo { padding:44px 64px 40px; text-align:center; }
-.q { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:{{ fs }}px; line-height:1.14; color:#FAF6F0; }
+.q { font-family:'EB Garamond',serif; font-weight:600; font-size:{{ fs }}px; line-height:1.14; color:#FAF6F0; }
 .q em { font-style:italic; color:#E2C77F; }
 .perfil { margin-top:34px; padding-top:24px; border-top:1px solid rgba(201,169,98,.35); display:flex; align-items:center; justify-content:center; gap:14px; }
 .av { width:54px; height:54px; border-radius:50%; object-fit:cover; object-position:50% 25%; border:2px solid #C9A962; }

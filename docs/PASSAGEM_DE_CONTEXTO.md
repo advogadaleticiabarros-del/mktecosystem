@@ -33,9 +33,12 @@ Prioridade em conflito: OAB > Meta > design system > criatividade.
 ## Identidade visual (não negociável)
 
 - Café escuro `#231E1A`/`#1E1814`, dourado `#C9A962`, areia `#E8DED1`.
+- **Fonte de títulos: EB Garamond (desde 09/10/2026), nunca Cormorant.** A família Cormorant
+  desenha o circunflexo e o agudo altos e soltos da letra ("sobreviv^ência", "Voc^ê") e a
+  Letícia reprovou: "esse erro não pode acontecer". Conferir acentos em toda prévia.
 - **Faixas douradas no topo e no rodapé de toda peça** (`render_criativo._aplicar_acabamento_dourado`).
   Ela já reclamou quando sumiram: "não tire minha identidade".
-- Cormorant Garamond (títulos, itálico dourado no destaque) + Inter (texto, rótulos),
+- EB Garamond (títulos, itálico dourado no destaque) + Inter (texto, rótulos),
   algarismos alinhados (`font-variant-numeric: lining-nums`). Nada abaixo de 22 px.
 - Acabamento fosco (granulação), logo dourada como marca d'água onde fizer sentido.
 - Sem selo de verificado falso. Sem marca de terceiros nem texto em inglês nas fotos.

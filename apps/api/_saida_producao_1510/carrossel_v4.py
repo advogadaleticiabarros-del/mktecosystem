@@ -52,7 +52,7 @@ RUIDO = ("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width=
          "<rect width='300' height='300' filter='url(%23n)'/></svg>")
 
 HTML = Template(r"""<!doctype html><html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 html { font-variant-numeric: lining-nums; font-feature-settings:"lnum" 1; }
@@ -69,13 +69,13 @@ body { width:7560px; height:1350px; }
 .rod { position:absolute; bottom:80px; left:84px; right:84px; display:flex; justify-content:space-between; align-items:center; font-size:22px; font-weight:600; z-index:6; }
 .claro .rod { color:#3D2B1F; } .escuro .rod, .foto .rod { color:#E8DED1; }
 .rod .pg { letter-spacing:3px; }
-.cg { font-family:'Cormorant Garamond',serif; }
-.marca { position:absolute; font-family:'Cormorant Garamond',serif; font-weight:600; line-height:.8; z-index:1; }
+.cg { font-family:'EB Garamond',serif; }
+.marca { position:absolute; font-family:'EB Garamond',serif; font-weight:600; line-height:.8; z-index:1; }
 .claro .marca { color:#3D2B1F; opacity:.07; } .escuro .marca { color:#C9A962; opacity:.12; }
 .bloco { position:absolute; left:84px; z-index:5; }
-.num { font-family:'Cormorant Garamond',serif; font-weight:700; font-size:120px; line-height:1; color:#C9A962; }
+.num { font-family:'EB Garamond',serif; font-weight:700; font-size:120px; line-height:1; color:#C9A962; }
 .claro .num { color:#B8943F; }
-.tit { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:84px; line-height:1.02; margin-top:10px; }
+.tit { font-family:'EB Garamond',serif; font-weight:600; font-size:84px; line-height:1.02; margin-top:10px; }
 .claro .tit em { font-style:italic; color:#3D2B1F; border-bottom:4px solid #C9A962; }
 .escuro .tit em, .foto .tit em { font-style:italic; color:#C9A962; }
 .txt { font-size:35px; line-height:1.45; margin-top:34px; max-width:600px; }

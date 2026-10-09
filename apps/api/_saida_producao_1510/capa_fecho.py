@@ -18,12 +18,12 @@ RETRATOS = AQUI / "_retratos"
 # Ordem do rodízio: alterna escritório com logo, estúdio, janela, poltrona e a foto real.
 ORDEM_RETRATOS = [
     "escritorio-logo-blusa-branca", "estudio-escuro-banco", "janela-cafe", "real-perfil", "poltrona-terno-cinza",
-    "escritorio-logo-escrevendo", "estudio-livros", "tablet-blazer-marrom", "escritorio-cafe-blazer-preto",
+    "escritorio-logo-escrevendo", "estudio-claro-cadeira", "tablet-blazer-marrom", "escritorio-cafe-blazer-preto",
     "lendo-documentos", "escritorio-cafe-blazer-bege", "escritorio-documentos",
 ]
 # Onde fica o rosto em cada retrato (object-position), para o enquadramento do fechamento.
 FOCO = {"real-perfil": "50% 20%", "estudio-escuro-banco": "50% 12%", "poltrona-terno-cinza": "50% 10%", "estudio-livros": "50% 8%",
-        "lendo-documentos": "50% 0%", "tablet-blazer-marrom": "50% 5%"}
+        "lendo-documentos": "50% 0%", "tablet-blazer-marrom": "50% 5%", "estudio-claro-cadeira": "50% 8%"}
 
 CSS = """
 .capa-foto { position:absolute; left:0; width:1080px; object-fit:cover; z-index:1;
@@ -47,9 +47,9 @@ def foto_uri(caminho: Path, w: int = 1080, h: int = 1350, foco: tuple[float, flo
     return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
 
 
-def retrato(indice: int) -> tuple[str, str]:
-    """(data URI, object-position) do retrato da vez no rodízio."""
-    nome = ORDEM_RETRATOS[indice % len(ORDEM_RETRATOS)]
+def retrato(indice: int | str) -> tuple[str, str]:
+    """(data URI, object-position) do retrato da vez no rodízio, ou de um retrato pelo nome."""
+    nome = indice if isinstance(indice, str) else ORDEM_RETRATOS[indice % len(ORDEM_RETRATOS)]
     caminho = RETRATOS / f"{nome}.jpg"
     return "data:image/jpeg;base64," + base64.b64encode(caminho.read_bytes()).decode(), FOCO.get(nome, "50% 15%")
 
@@ -74,7 +74,7 @@ def capa(foto: str, *, area: str, linha1: str, titulo: str, linha3: str, apoio: 
 </div>"""
 
 
-def fecho(indice_retrato: int, *, area: str, titulo: str, sub: str, apoio: str, cta: str = "Procure uma advogada", left: int = 0) -> str:
+def fecho(indice_retrato: int | str, *, area: str, titulo: str, sub: str, apoio: str, cta: str = "Procure uma advogada", left: int = 0) -> str:
     foto, posicao = retrato(indice_retrato)
     return f"""
 <div class="s escuro textura" style="left:{left}px">

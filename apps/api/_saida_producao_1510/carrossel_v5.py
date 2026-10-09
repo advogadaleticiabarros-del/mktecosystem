@@ -42,7 +42,7 @@ EXTRA = """
 """
 
 PAGINAS = Template(r"""<!doctype html><html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>{{ css }}{{ extra }}{{ css_capa }}</style></head><body><div class="pano">
 
 {{ capa_html }}

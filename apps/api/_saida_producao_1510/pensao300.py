@@ -53,7 +53,7 @@ def reais(v: int) -> str:
 
 
 HTML = Template(r"""<!doctype html><html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <style>
 {{ css_v4 }}
 {{ css_capa }}
@@ -77,7 +77,7 @@ body { width:1080px; height:1350px; }
 .cupom .tot.neg { margin-top:6px; font-size:31px; }
 .cupom .tot.neg span:last-child { background:#2B231C; color:#FCFAF5; padding:0 10px; }
 .cupom .obs { text-align:center; font-size:22px; margin-top:16px; opacity:.7; }
-.piada { position:absolute; left:84px; right:84px; text-align:center; font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:50px; line-height:1.12; z-index:5; }
+.piada { position:absolute; left:84px; right:84px; text-align:center; text-wrap:balance; font-family:'EB Garamond',serif; font-style:italic; font-weight:600; font-size:50px; line-height:1.12; z-index:5; }
 .claro .piada em { font-style:italic; border-bottom:3px solid #C9A962; }
 .escuro .piada { color:#FAF6F0; } .escuro .piada em { color:#C9A962; font-style:italic; }
 .linha-tit { position:absolute; left:84px; right:84px; top:168px; display:flex; align-items:baseline; gap:26px; z-index:5; }
@@ -91,7 +91,7 @@ body { width:1080px; height:1350px; }
 .conta { position:absolute; left:84px; right:84px; top:330px; z-index:5; }
 .conta .lin { display:flex; justify-content:space-between; align-items:baseline; padding:26px 0; border-bottom:1px solid #C9A96266; }
 .conta .lin span:first-child { font-size:30px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:#E8DED1cc; }
-.conta .lin span:last-child { font-family:'Cormorant Garamond',serif; font-weight:700; font-size:92px; line-height:1; color:#FAF6F0; }
+.conta .lin span:last-child { font-family:'EB Garamond',serif; font-weight:700; font-size:92px; line-height:1; color:#FAF6F0; }
 .conta .lin.falta { border-bottom:none; }
 .conta .lin.falta span:last-child { color:#C9A962; font-size:124px; }
 </style></head><body><div class="pano">
@@ -164,7 +164,7 @@ async def main() -> None:
                      apoio='Fizemos as contas do mês. <span class="mt">Spoiler: não fecha.</span>', total=f"{TOTAL:02d}",
                      desce=360, posicao="50% 0%", titulo_px=98),
                  fecho_html=capa_fecho.fecho(
-                     0, area=AREA, titulo="A piada acaba aqui. A conta, <em>não</em>.",
+                     "estudio-livros", area=AREA, titulo="A piada acaba aqui. A conta, <em>não</em>.",
                      sub="Ninguém deveria fazer milagre sozinha.",
                      apoio='<span class="mt">Salve este post</span> e mande para a amiga que faz milagre todo mês.'))
     async with async_playwright() as p:

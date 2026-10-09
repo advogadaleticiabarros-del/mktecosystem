@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowUpRight, Loader2, RefreshCw, Sparkles } from "lucide-react";
 import { apiFetch } from "@/lib/api";
 import { AppShell } from "@/components/app-shell";
@@ -179,6 +180,7 @@ function Ranking({ analise }: { analise: Analise }) {
 }
 
 export default function CrescimentoPage() {
+  const router = useRouter();
   const [analise, setAnalise] = useState<Analise | null>(null);
   const [erro, setErro] = useState<string | null>(null);
   const [atualizando, setAtualizando] = useState(false);
@@ -209,6 +211,9 @@ export default function CrescimentoPage() {
       {analise?.atualizado_em && (
         <span className="hidden text-xs text-muted-foreground sm:inline">Atualizado em {quando(analise.atualizado_em)}</span>
       )}
+      <Button size="sm" variant="outline" onClick={() => router.push("/crescimento/auditoria")}>
+        Auditoria do perfil
+      </Button>
       <Button size="sm" variant="outline" onClick={atualizar} disabled={atualizando}>
         {atualizando ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RefreshCw className="h-3.5 w-3.5" />}
         {atualizando ? "Buscando no Instagram…" : "Atualizar dados"}
