@@ -62,6 +62,20 @@ Aprovado por ela como "nosso novo padrão". Regra gravada em `PROCESSO_PRODUCAO_
   `_fotos_pexels/<id>.jpg`).
 - Prévia: https://api.orbit.advogadaleticiabarros.com.br/media/perguntas-v6-tira.jpg
 
+## PADRÃO APROVADO — Capa de carrossel "Ouro editorial" (09/10/2026)
+
+Escolhida pela Letícia entre 4 opções (`_saida_producao_1510/capas_opcoes.py`, prévia
+`pecas/capas-opcoes/`). Ela reprovou capas "sem brilho, sem personalidade, fotos cortadas".
+- Foto do tema em tela cheia, ORIGINAL em alta do Pexels (`_fotos_pexels/original-<chave>.jpg`,
+  ~2400×3600), enquadrada pelo rosto detectado (OpenCV 4.10): pessoa à direita, rosto a ~34%
+  da altura. Sem rosto frontal: foco manual em `FOCO_CAPA` (carrossel_v5.py).
+- Tratamento de cinema, véu escuro à esquerda e embaixo, luz dourada no canto, grão.
+- Título em ouro metalizado (EB Garamond 800, até 150 px, ajuste pela largura do texto),
+  subtítulo itálico, apoio com marca-texto e pílula da lei, moldura fina com cantoneiras.
+- Render em 2x (2160×2700) reduzido para 1080×1350 em todo o carrossel.
+- Código: `capa_fecho.capa_ouro` + `capa_fecho.enquadrar`. Fechamento: retrato inteiro da
+  Letícia em rodízio (`capa_fecho.fecho`). A Letícia não aparece na capa.
+
 ## PADRÃO APROVADO — Mito ou Lei (v3, 09/10/2026)
 
 Aprovado por ela ("aprovado... salve como o novo padrão"). Regra completa no item 9 de

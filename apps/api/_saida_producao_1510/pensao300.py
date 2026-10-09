@@ -156,20 +156,18 @@ async def main() -> None:
     comum = dict(css_v4=CSS_V4.replace("{{ ruido }}", v4.RUIDO).replace("{{ fibra }}", v4.FIBRA)
                  .replace("{{ mancha }}", v4.MANCHA).replace("{{ grao }}", v4.GRAO),
                  ruido=v4.RUIDO, total=f"{TOTAL:02d}", area=AREA, pensao=PENSAO, gastos=gastos, reais=reais,
-                 css_capa=capa_fecho.CSS,
-                 capa_html=capa_fecho.capa(
-                     capa_fecho.foto_uri(AQUI / "_fotos_pexels" / "6919708.jpg", 1080, 990, (0.5, 0.72)), area="Pensão alimentícia",
-                     linha1='Pensão alimentícia de <span style="white-space:nowrap">R$ 300</span>:',
-                     titulo="Guia de sobrevivência", linha3="para mães que fazem milagre",
-                     apoio='Fizemos as contas do mês. <span class="mt">Spoiler: não fecha.</span>', total=f"{TOTAL:02d}",
-                     desce=360, posicao="50% 0%", titulo_px=98),
+                 css_capa=capa_fecho.CSS + capa_fecho.CSS_OURO,
+                 capa_html=capa_fecho.capa_ouro(
+                     capa_fecho.enquadrar(AQUI / "_fotos_pexels" / "original-pensao300.jpg"), area="Pensão alimentícia",
+                     kicker="Pensão de R$ 300", titulo="Guia de<br>sobrevivência", subtitulo="para mães que fazem milagre",
+                     apoio='Fizemos as contas do mês.<br><span class="co-mt">Spoiler: não fecha.</span>', total=f"{TOTAL:02d}"),
                  fecho_html=capa_fecho.fecho(
                      "estudio-livros", area=AREA, titulo="A piada acaba aqui. A conta, <em>não</em>.",
                      sub="Ninguém deveria fazer milagre sozinha.",
                      apoio='<span class="mt">Salve este post</span> e mande para a amiga que faz milagre todo mês.'))
     async with async_playwright() as p:
         browser = await p.chromium.launch()
-        page = await browser.new_page(viewport={"width": 1080, "height": 1350})
+        page = await browser.new_page(viewport={"width": 1080, "height": 1350}, device_scale_factor=2)
         for slide in range(1, TOTAL + 1):
             cupom = CUPONS[slide - 2] if 2 <= slide <= 5 else None
             extra = {}
@@ -180,9 +178,11 @@ async def main() -> None:
             await page.set_content(HTML.render(slide=slide, cupom=cupom, **comum, **extra), wait_until="networkidle")
             await page.evaluate("document.fonts.ready")
             destino = AQUI / "pecas" / f"pensao300-{slide}.png"
+            await page.evaluate("""() => { const el = document.getElementById('big'); if (!el) return; let fs = 150; el.style.fontSize = fs + 'px';
+                while (el.offsetWidth > 620 && fs > 70) { fs -= 2; el.style.fontSize = fs + 'px'; } }""")
             await page.screenshot(path=str(destino))
             render_criativo._aplicar_acabamento_dourado(str(destino))
-            Image.open(destino).convert("RGB").save(destino.with_suffix(".jpg"), "JPEG", quality=92, optimize=True)
+            Image.open(destino).convert("RGB").resize((1080, 1350), Image.LANCZOS).save(destino.with_suffix(".jpg"), "JPEG", quality=93, optimize=True)
             destino.unlink()
             print("ok", slide)
         await browser.close()

@@ -21,7 +21,7 @@ from playwright.async_api import async_playwright  # noqa: E402
 from app.services import render_criativo  # noqa: E402
 
 AQUI = Path(__file__).resolve().parent
-FOTO = AQUI / "_fotos_pexels" / "original-6919708.jpg"  # 3905×5857; rosto ~(0.52, 0.27), cupom ~(0.72, 0.63)
+FOTO = AQUI / "_fotos_pexels" / "original-pensao300.jpg"  # 3905×5857; rosto ~(0.52, 0.27), cupom ~(0.72, 0.63)
 SAIDA = AQUI / "pecas" / "capas-opcoes"
 
 

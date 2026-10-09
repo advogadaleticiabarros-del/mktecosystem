@@ -120,34 +120,38 @@ def retrato(nome: str) -> str:
     return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
 
 
+# Fotos de capa sem rosto frontal detectável: ponto de foco manual (fração da foto).
+FOCO_CAPA = {"violencia-domestica-inss": (0.42, 0.30), "mesario-folga": (0.48, 0.32), "separacao-bens-70": (0.5, 0.45)}
+
+
 async def renderizar(chave: str, page) -> None:
     d = CARROSSEIS[chave]
     tema_px, n = d["foto5"]
     foto5 = v4.FOTOS / f"{PEXELS[tema_px][n]['id']}.jpg"
     ordem = list(CARROSSEIS).index(chave)
-    capa_html = capa_fecho.capa(
-        capa_fecho.foto_uri(AQUI / "_fotos_pexels" / f"capa-{chave}.jpg", 1080, 990, (0.5, 0.4)), area=d["tag"],
-        linha1=d["capa"][0], titulo=d["capa"][1], linha3=d["capa"][2],
-        apoio=f'{d["capa"][3]}<div class="lei">{d["capa"][4]}</div>', total="07", desce=360, posicao="50% 0%", titulo_px=140)
+    capa_html = capa_fecho.capa_ouro(
+        capa_fecho.enquadrar(AQUI / "_fotos_pexels" / f"original-{chave}.jpg", foco=FOCO_CAPA.get(chave)), area=d["tag"],
+        kicker=d["capa"][0], titulo=d["capa"][1], subtitulo=d["capa"][2],
+        apoio=f'{d["capa"][3]}<span class="co-lei">{d["capa"][4]}</span>', total="07")
     fecho_html = capa_fecho.fecho(
         ordem + 1, area=d["tag"], titulo=d["fecho"][0], sub=d["fecho"][1],
         apoio=f'<span class="mt">Salve este post</span> e {d["fecho"][2]}', left=6480)
     html = PAGINAS.render(
         css=CSS, extra=EXTRA, d=d, logo=render_criativo._logo_data_uri(),
         grao=v4.GRAO, mancha=v4.MANCHA, fibra=v4.FIBRA, ruido=v4.RUIDO,
-        capa_html=capa_html, fecho_html=fecho_html, css_capa=capa_fecho.CSS, foto5=v4.foto(foto5, foco=0.25),
+        capa_html=capa_html, fecho_html=fecho_html, css_capa=capa_fecho.CSS + capa_fecho.CSS_OURO, foto5=v4.foto(foto5, foco=0.25),
         obj1=v4.png(d["objetos"][0]), obj2=v4.png(d["objetos"][1]), obj3=v4.png(d["objetos"][2]),
     )
     # o CSS do v4 usa variáveis do Jinja ({{ grao }} etc.): renderiza de novo para resolvê-las
     html = Template(html).render(grao=v4.GRAO, mancha=v4.MANCHA, fibra=v4.FIBRA, ruido=v4.RUIDO)
     await page.set_content(html, wait_until="networkidle")
     await page.evaluate("document.fonts.ready")
-    await page.evaluate("""() => { const el=document.getElementById('big'); let fs=140; el.style.fontSize=fs+'px';
-        while (el.scrollWidth > 900 && fs > 80) { fs -= 4; el.style.fontSize = fs + 'px'; } }""")
+    await page.evaluate("""() => { const el=document.getElementById('big'); let fs=150; el.style.fontSize=fs+'px';
+        while (el.offsetWidth > 620 && fs > 70) { fs -= 4; el.style.fontSize = fs + 'px'; } }""")
     pano = Image.open(io.BytesIO(await page.screenshot(type="png"))).convert("RGB")
     for i in range(7):
         destino = AQUI / "pecas" / f"{chave}-v5-{i + 1}.png"
-        pano.crop((i * 1080, 0, (i + 1) * 1080, 1350)).save(destino)
+        pano.crop((i * 2160, 0, (i + 1) * 2160, 2700)).resize((1080, 1350), Image.LANCZOS).save(destino)
         render_criativo._aplicar_acabamento_dourado(str(destino))
         Image.open(destino).convert("RGB").save(destino.with_suffix(".jpg"), "JPEG", quality=92, optimize=True)
         destino.unlink()
@@ -157,7 +161,7 @@ async def renderizar(chave: str, page) -> None:
 async def main(filtro: set[str]) -> None:
     async with async_playwright() as p:
         browser = await p.chromium.launch()
-        page = await browser.new_page(viewport={"width": 7560, "height": 1350})
+        page = await browser.new_page(viewport={"width": 7560, "height": 1350}, device_scale_factor=2)
         for chave in CARROSSEIS:
             if not filtro or chave in filtro:
                 await renderizar(chave, page)
