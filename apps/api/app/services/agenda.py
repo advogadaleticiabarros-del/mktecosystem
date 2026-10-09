@@ -118,6 +118,25 @@ async def vaga_no_ciclo(db: AsyncSession, piece: ContentPiece) -> tuple[date, st
     return dia, horario
 
 
+def _programacao_combinada(piece: ContentPiece) -> tuple[date, str] | None:
+    """Data/hora já combinadas com a Letícia na produção (`corpo.programacao`), se houver."""
+    prog = (piece.corpo or {}).get("programacao") or {}
+    try:
+        return date.fromisoformat(prog["data"]), prog.get("hora") or "12:00"
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
+async def cancelar_agendamento_pendente(db: AsyncSession, piece: ContentPiece) -> None:
+    """Tira do calendário a peça que voltou para ajuste; o que já foi publicado fica."""
+    resultado = await db.execute(
+        select(ScheduledPost).where(ScheduledPost.content_piece_id == piece.id)
+    )
+    agendamento = resultado.scalar_one_or_none()
+    if agendamento is not None and agendamento.status != "publicado":
+        await db.delete(agendamento)
+
+
 async def agendar_conteudo_aprovado(
     db: AsyncSession, piece: ContentPiece
 ) -> ScheduledPost | None:
@@ -133,7 +152,10 @@ async def agendar_conteudo_aprovado(
     ).scalar_one_or_none()
     titulo = pauta.titulo if pauta else f"Conteúdo {piece.tipo}"
 
-    if piece.tipo in HORARIO_DIA_DE_TEMA or piece.tipo in HORARIO_DIA_DE_RESPIRO:
+    programacao = _programacao_combinada(piece)
+    if programacao:
+        dia, horario = programacao
+    elif piece.tipo in HORARIO_DIA_DE_TEMA or piece.tipo in HORARIO_DIA_DE_RESPIRO:
         dia, horario = await vaga_no_ciclo(db, piece)
     else:
         dia, horario = await proxima_vaga(db, piece.tenant_id)

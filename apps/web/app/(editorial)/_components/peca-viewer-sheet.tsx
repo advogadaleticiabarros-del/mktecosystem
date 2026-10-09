@@ -3,6 +3,7 @@
 import { Download, X } from "lucide-react";
 import { atualizarPeca } from "../_lib/editorial-api";
 import { TIPO_LABEL, imagensDaPeca, legendaDaPeca, type ContentPieceEditorial } from "../_lib/types";
+import { AprovacaoAcoes } from "./aprovacao-acoes";
 import { ArtigoLeitura } from "./artigo-leitura";
 import { ImageCarousel } from "./image-carousel";
 import { LegendaEditor } from "./legenda-editor";
@@ -103,6 +104,8 @@ export function PecaViewerSheet({
               Sem imagem gerada para esta peça ainda.
             </div>
           )}
+
+          <AprovacaoAcoes peca={peca} onAtualizar={onAtualizar} />
 
           {ehArtigo ? (
             <ArtigoLeitura html={corpoArtigo?.html ?? ""} titulo={corpoArtigo?.titulo} />

@@ -570,6 +570,16 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   renderizar_mito_ou_lei` (valida veredito MITO/LEI, abrevia referência longa), com testes.
   9 peças agendadas às 19h de 16/10 a 01/11. Ver `docs/PASSAGEM_DE_CONTEXTO.md`.
 
+### Editorial: aprovar ou pedir alteração (09/10/2026)
+
+- Pedido da Letícia ("preciso de um botão de alteração ou aprovação"). No Editorial (celular),
+  cada peça tem "Aprovar e agendar" e "Pedir alteração" (`_components/aprovacao-acoes.tsx`).
+- Aprovar (`PATCH status=aprovado`) agenda na data/hora de `corpo.programacao` quando existe
+  (`agenda._programacao_combinada`); sem ela, segue o ciclo de vagas.
+- Pedir alteração grava `corpo.pedido_alteracao {texto, em}`, status `ajuste`, e
+  `cancelar_agendamento_pendente` tira do calendário (post já publicado fica). Ao ver
+  peças em `ajuste`, o Claude lê o pedido, refaz a peça e devolve para `rascunho`.
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 0. **Chave da OpenAI para o Jornalista** (opcional — terceira fonte):

@@ -99,3 +99,50 @@ async def test_partial_corpo_update_writes_edit_memory_only(client, db_session):
     memory = result.scalar_one()
     assert memory.metricas == {"tipo_evento": "edicao"}
     assert memory.aprendizado is not None
+
+
+@pytest.mark.anyio
+async def test_pedir_alteracao_guarda_o_pedido_e_cancela_o_agendamento_pendente(client, db_session):
+    from datetime import date
+
+    from app.models.scheduled_post import ScheduledPost
+
+    tenant, user, pauta, piece = await _setup(db_session)
+    piece.status = "aprovado"
+    db_session.add(ScheduledPost(tenant_id=tenant.id, content_piece_id=piece.id, titulo="Tema X",
+                                 canal="instagram", formato="post", data_agendada=date(2026, 10, 10),
+                                 horario="15:00", status="pronto"))
+    await db_session.commit()
+    token = create_access_token(user.id)
+
+    response = await client.patch(
+        f"/content/{piece.id}",
+        json={"status": "ajuste", "corpo": {"titulo": "rascunho", "pedido_alteracao": {"texto": "Trocar a foto da capa"}}},
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "ajuste"
+    assert response.json()["corpo"]["pedido_alteracao"]["texto"] == "Trocar a foto da capa"
+    restante = await db_session.execute(select(ScheduledPost).where(ScheduledPost.content_piece_id == piece.id))
+    assert restante.scalar_one_or_none() is None
+
+
+@pytest.mark.anyio
+async def test_pedir_alteracao_nao_apaga_post_ja_publicado(client, db_session):
+    from datetime import date
+
+    from app.models.scheduled_post import ScheduledPost
+
+    tenant, user, pauta, piece = await _setup(db_session)
+    db_session.add(ScheduledPost(tenant_id=tenant.id, content_piece_id=piece.id, titulo="Tema X",
+                                 canal="instagram", formato="post", data_agendada=date(2026, 10, 1),
+                                 horario="15:00", status="publicado"))
+    await db_session.commit()
+    token = create_access_token(user.id)
+
+    await client.patch(f"/content/{piece.id}", json={"status": "ajuste"},
+                       headers={"Authorization": f"Bearer {token}"})
+
+    restante = await db_session.execute(select(ScheduledPost).where(ScheduledPost.content_piece_id == piece.id))
+    assert restante.scalar_one().status == "publicado"

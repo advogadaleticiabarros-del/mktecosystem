@@ -83,3 +83,34 @@ async def test_estatico_aprovado_agenda_no_instagram_formato_post(db_session):
     assert agendamento is not None
     assert agendamento.canal == "instagram"
     assert agendamento.formato == "post"
+
+
+@pytest.mark.anyio
+async def test_aprovado_com_programacao_agenda_na_data_e_hora_combinadas(db_session):
+    """Peça produzida com data marcada (corpo.programacao) sai exatamente nessa data/hora,
+    não na próxima vaga do ciclo (aprovação pelo Editorial, 09/10/2026)."""
+    from datetime import date
+
+    tenant = Tenant(nome="Letícia", slug="leticia-barros", nicho="juridico")
+    db_session.add(tenant)
+    await db_session.flush()
+    pauta = Pauta(
+        tenant_id=tenant.id, titulo="Pensão de R$ 300", angulo="humor", area="Família",
+        origem="manual", fonte="manual", relevante_para_conteudo=True, status="em_producao",
+    )
+    db_session.add(pauta)
+    await db_session.flush()
+    piece = ContentPiece(
+        tenant_id=tenant.id, pauta_id=pauta.id, tipo="carrossel",
+        corpo={"imagens": ["a.jpg"], "programacao": {"data": "2026-10-10", "hora": "15:00"}},
+        status="aprovado", versao=1,
+    )
+    db_session.add(piece)
+    await db_session.flush()
+
+    agendamento = await agendar_conteudo_aprovado(db_session, piece)
+
+    assert agendamento.data_agendada == date(2026, 10, 10)
+    assert agendamento.horario == "15:00"
+    assert agendamento.formato == "carrossel"
+    assert agendamento.titulo == "Pensão de R$ 300"

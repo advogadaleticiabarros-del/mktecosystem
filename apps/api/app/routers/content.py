@@ -24,7 +24,7 @@ from app.schemas.content_piece import (
     ContentPieceUpdate,
     GerarRequest,
 )
-from app.services.agenda import agendar_conteudo_aprovado
+from app.services.agenda import agendar_conteudo_aprovado, cancelar_agendamento_pendente
 from app.services.chaves_api import obter_chave
 from app.services.cerebro import memorias_de_edicao, registrar_edicao
 from app.services.verificacao_atualidade import verificar_atualidade
@@ -360,6 +360,8 @@ async def atualizar_content_piece(
             )
         )
         await agendar_conteudo_aprovado(db, piece)
+    elif payload.status in ("ajuste", "rejeitado"):
+        await cancelar_agendamento_pendente(db, piece)
 
     await db.commit()
     await db.refresh(piece)
