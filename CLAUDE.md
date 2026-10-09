@@ -17,6 +17,10 @@ checklist. Prioridade em conflito: OAB > Meta > design system > criatividade. Ao
 prompts de geração (`app/routers/content.py`) ou templates (`app/templates/`), alinhar
 com esse manual. Pedido da usuária em 08/10/2026.
 
+Estratégia (base de conhecimento): `docs/ESTRATEGIA_CRESCIMENTO_ORGANICO.md` define pilares,
+funil, táticas de crescimento, plano de 90 dias e métricas. Use em toda decisão de pauta,
+formato, calendário e análise de desempenho.
+
 ## graphify
 
 This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
