@@ -29,7 +29,7 @@ const NAV_ITEMS = [
   // a directly-navigable destination, but its nav icon still highlights
   // when the user is on that route. Clicking it from elsewhere sends them
   // to Planejamento, where they pick a pauta to generate content for.
-  { href: "/planejamento", label: "Aprovação", icon: ShieldCheck, matchPrefix: "/aprovacao" },
+  { href: "/aprovacao", label: "Aprovação", icon: ShieldCheck, matchPrefix: "/aprovacao" },
   { href: "/calendario", label: "Calendário editorial", icon: CalendarDays },
   { href: "/criativos", label: "Estúdio de criativos", icon: ImageIcon },
   { href: "/emails", label: "E-mails", icon: Mail },

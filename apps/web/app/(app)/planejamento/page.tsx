@@ -307,7 +307,7 @@ function Detalhe({
 
       <div className="flex flex-wrap items-center gap-2 border-t bg-accent/40 p-4">
         <Button onClick={onGerar}>
-          {pauta.status === "em_producao" ? "Ver conteúdo" : "Aprovar e gerar conteúdo"} <ArrowRight className="h-4 w-4" />
+          {pauta.status === "em_producao" ? "Revisar conteúdo" : "Aprovar pauta e revisar"} <ArrowRight className="h-4 w-4" />
         </Button>
         {pauta.status !== "guardada" && (
           <Button variant="ghost" size="sm" onClick={() => onStatus("guardada")}>
