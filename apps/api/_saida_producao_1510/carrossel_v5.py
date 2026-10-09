@@ -1,4 +1,4 @@
-"""Carrossel editorial v5: o padrão aprovado do v4 (fosco, papel, Cormorant, recortes
+"""Carrossel editorial v5 (capa com foto do tema e fechamento com retrato inteiro desde 09/10/2026, sem recorte da Letícia): o padrão aprovado do v4 (fosco, papel, Cormorant, recortes
 e arco contínuos, faixas douradas) aplicado a todos os temas, com as melhorias da
 análise de 09/10/2026: títulos-gancho (slide 2 = segunda capa), números em bronze nos
 slides claros (contraste), selo "Salve para conferir" no checklist, lei na capa e o
@@ -20,6 +20,7 @@ from jinja2 import Template  # noqa: E402
 from PIL import Image  # noqa: E402
 from playwright.async_api import async_playwright  # noqa: E402
 
+import capa_fecho  # noqa: E402
 import carrossel_v4 as v4  # noqa: E402
 from app.services import render_criativo  # noqa: E402
 from carrosseis_v5_dados import CARROSSEIS  # noqa: E402
@@ -42,21 +43,9 @@ EXTRA = """
 
 PAGINAS = Template(r"""<!doctype html><html><head><meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>{{ css }}{{ extra }}</style></head><body><div class="pano">
+<style>{{ css }}{{ extra }}{{ css_capa }}</style></head><body><div class="pano">
 
-<div class="s escuro textura" style="left:0">
-  <div class="cab"><span>Letícia Barros · Advocacia</span><span>{{ d.tag }}</span></div>
-  <div class="bloco" style="top:240px; width:560px;">
-    <div class="cg" style="font-style:italic; font-size:58px; color:#E8DED1; line-height:1.05;">{{ d.capa[0] }}</div>
-    <div class="cg" id="big" style="font-size:150px; font-weight:700; line-height:.95; color:#C9A962; margin-top:16px; white-space:nowrap;">{{ d.capa[1] }}</div>
-    <div class="cg" style="font-style:italic; font-size:56px; color:#E8DED1; line-height:1.1; margin-top:14px;">{{ d.capa[2] }}</div>
-    <div style="width:120px; height:2px; background:#C9A962; margin:40px 0 24px;"></div>
-    <div style="font-size:30px; line-height:1.45; color:#E8DED1; width:470px;">{{ d.capa[3] }}</div>
-    <div class="lei">{{ d.capa[4] }}</div>
-  </div>
-  <img class="obj" src="{{ leticia_capa }}" style="right:-80px; bottom:0; height:930px; max-height:none; max-width:none;">
-  <div class="rod"><span>Arraste pro lado ›</span><span class="pg">01 / 07</span></div>
-</div>
+{{ capa_html }}
 
 {% for i in range(4) %}{% set it = d.itens[i] %}{% set esc = (i == 1) %}
 {% if i < 3 %}
@@ -101,17 +90,7 @@ PAGINAS = Template(r"""<!doctype html><html><head><meta charset="utf-8">
   <div class="rod"><span>Arraste pro lado ›</span><span class="pg">06 / 07</span></div>
 </div>
 
-<div class="s escuro textura" style="left:6480px">
-  <div class="cab"><span>Letícia Barros · Advocacia</span><span>{{ d.tag }}</span></div>
-  <div class="bloco" style="top:300px; left:500px; width:520px;">
-    <div class="cg" style="font-size:72px; font-weight:600; line-height:1.04; color:#FAF6F0;">{{ d.fecho[0] | replace('<em>', '<em style="font-style:italic; color:#C9A962;">') }}</div>
-    <div class="cg" style="font-style:italic; font-size:50px; color:#E8DED1; margin-top:18px; line-height:1.1;">{{ d.fecho[1] }}</div>
-    <div style="font-size:30px; line-height:1.45; color:#E8DED1; margin-top:40px;"><span class="mt">Salve este post</span> e {{ d.fecho[2] }}</div>
-    <div style="margin-top:46px;"><span class="btn">⚖️ Procure uma advogada</span></div>
-  </div>
-  <img class="obj" src="{{ leticia_fecho }}" style="left:-70px; bottom:0; height:800px; max-height:none; max-width:none;">
-  <div class="rod"><span>@adv.leticiabarros2</span><span class="pg">OAB/ES 39.948</span></div>
-</div>
+{{ fecho_html }}
 
 <div class="arco" style="left:1700px; top:860px; width:1150px; height:1150px;"></div>
 <div class="arco" style="left:4950px; top:-620px; width:1000px; height:1000px;"></div>
@@ -145,19 +124,26 @@ async def renderizar(chave: str, page) -> None:
     d = CARROSSEIS[chave]
     tema_px, n = d["foto5"]
     foto5 = v4.FOTOS / f"{PEXELS[tema_px][n]['id']}.jpg"
-    lc, lf = d["leticia"]
+    ordem = list(CARROSSEIS).index(chave)
+    capa_html = capa_fecho.capa(
+        capa_fecho.foto_uri(AQUI / "_fotos_pexels" / f"capa-{chave}.jpg", 1080, 990, (0.5, 0.4)), area=d["tag"],
+        linha1=d["capa"][0], titulo=d["capa"][1], linha3=d["capa"][2],
+        apoio=f'{d["capa"][3]}<div class="lei">{d["capa"][4]}</div>', total="07", desce=360, posicao="50% 0%", titulo_px=140)
+    fecho_html = capa_fecho.fecho(
+        ordem + 1, area=d["tag"], titulo=d["fecho"][0], sub=d["fecho"][1],
+        apoio=f'<span class="mt">Salve este post</span> e {d["fecho"][2]}', left=6480)
     html = PAGINAS.render(
         css=CSS, extra=EXTRA, d=d, logo=render_criativo._logo_data_uri(),
         grao=v4.GRAO, mancha=v4.MANCHA, fibra=v4.FIBRA, ruido=v4.RUIDO,
-        leticia_capa=retrato(lc), leticia_fecho=retrato(lf), foto5=v4.foto(foto5, foco=0.25),
+        capa_html=capa_html, fecho_html=fecho_html, css_capa=capa_fecho.CSS, foto5=v4.foto(foto5, foco=0.25),
         obj1=v4.png(d["objetos"][0]), obj2=v4.png(d["objetos"][1]), obj3=v4.png(d["objetos"][2]),
     )
     # o CSS do v4 usa variáveis do Jinja ({{ grao }} etc.): renderiza de novo para resolvê-las
     html = Template(html).render(grao=v4.GRAO, mancha=v4.MANCHA, fibra=v4.FIBRA, ruido=v4.RUIDO)
     await page.set_content(html, wait_until="networkidle")
     await page.evaluate("document.fonts.ready")
-    await page.evaluate("""() => { const el=document.getElementById('big'); let fs=150; el.style.fontSize=fs+'px';
-        while (el.scrollWidth > 560 && fs > 80) { fs -= 4; el.style.fontSize = fs + 'px'; } }""")
+    await page.evaluate("""() => { const el=document.getElementById('big'); let fs=140; el.style.fontSize=fs+'px';
+        while (el.scrollWidth > 900 && fs > 80) { fs -= 4; el.style.fontSize = fs + 'px'; } }""")
     pano = Image.open(io.BytesIO(await page.screenshot(type="png"))).convert("RGB")
     for i in range(7):
         destino = AQUI / "pecas" / f"{chave}-v5-{i + 1}.png"

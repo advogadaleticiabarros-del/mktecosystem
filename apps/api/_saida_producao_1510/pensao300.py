@@ -1,4 +1,4 @@
-"""Carrossel cômico "Guia de sobrevivência com pensão de R$ 300" (10/10/2026).
+"""Carrossel cômico (capa com foto do tema e fechamento com retrato inteiro, sem recorte) "Guia de sobrevivência com pensão de R$ 300" (10/10/2026).
 
 Releitura do guia de agosto/2025 (8 slides em papel bege) na linguagem do carrossel v5:
 capa escura com a Letícia, slides de papel, cupom fiscal como piada visual em cada gasto,
@@ -19,6 +19,7 @@ from jinja2 import Template  # noqa: E402
 from PIL import Image  # noqa: E402
 from playwright.async_api import async_playwright  # noqa: E402
 
+import capa_fecho  # noqa: E402
 import carrossel_v4 as v4  # noqa: E402
 from app.services import render_criativo  # noqa: E402
 
@@ -55,6 +56,7 @@ HTML = Template(r"""<!doctype html><html><head><meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <style>
 {{ css_v4 }}
+{{ css_capa }}
 body { width:1080px; height:1350px; }
 .s { left:0; }
 /* cupom fiscal: a piada visual */
@@ -94,19 +96,7 @@ body { width:1080px; height:1350px; }
 .conta .lin.falta span:last-child { color:#C9A962; font-size:124px; }
 </style></head><body><div class="pano">
 {% if slide == 1 %}
-<div class="s escuro textura">
-  <div class="cab"><span>Letícia Barros · Advocacia</span><span>Pensão alimentícia</span></div>
-  <div class="marca" style="right:-60px; top:150px; font-size:760px;">300</div>
-  <div class="bloco" style="top:230px; width:600px;">
-    <div class="cg" style="font-style:italic; font-size:54px; color:#E8DED1; line-height:1.08;">Pensão alimentícia<br>de <span style="white-space:nowrap">R$ 300</span>:</div>
-    <div class="cg" style="font-size:104px; font-weight:700; line-height:.95; color:#C9A962; margin-top:22px; white-space:nowrap;">Guia de<br>sobrevivência</div>
-    <div class="cg" style="font-style:italic; font-size:56px; color:#E8DED1; line-height:1.1; margin-top:20px;">para mães que fazem milagre</div>
-    <div style="width:120px; height:2px; background:#C9A962; margin:44px 0 26px;"></div>
-    <div style="font-size:31px; line-height:1.45; color:#E8DED1; width:470px;">Fizemos as contas do mês. <span class="mt">Spoiler: não fecha.</span></div>
-  </div>
-  <img class="obj" src="{{ leticia_capa }}" style="right:-120px; bottom:0; height:900px; filter:drop-shadow(-20px 10px 40px rgba(0,0,0,.45)); z-index:4;">
-  <div class="rod"><span>Arraste pro lado ›</span><span class="pg">01 / {{ total }}</span></div>
-</div>
+{{ capa_html }}
 {% elif cupom %}
 <div class="s {{ cupom.fundo }} textura">
   <div class="cab"><span>Letícia Barros · Advocacia</span><span>Pensão de R$ 300</span></div>
@@ -155,17 +145,7 @@ body { width:1080px; height:1350px; }
   <div class="rod"><span>Arraste pro lado ›</span><span class="pg">07 / {{ total }}</span></div>
 </div>
 {% else %}
-<div class="s escuro textura">
-  <div class="cab"><span>Letícia Barros · Advocacia</span><span>{{ area }}</span></div>
-  <div class="bloco" style="top:250px; left:470px; width:530px;">
-    <div class="tit" style="font-size:80px; margin-top:0;">A piada acaba aqui. A conta, <em>não</em>.</div>
-    <div class="cg" style="font-style:italic; font-size:46px; color:#E8DED1; margin-top:26px; line-height:1.15;">Ninguém deveria fazer milagre sozinha.</div>
-    <div style="font-size:30px; line-height:1.45; color:#E8DED1; margin-top:34px;"><span class="mt">Salve este post</span> e mande para a amiga que faz milagre todo mês.</div>
-    <div style="margin-top:40px;"><span class="btn">⚖️ Procure uma advogada</span></div>
-  </div>
-  <img class="obj" src="{{ leticia_fecho }}" style="left:-60px; bottom:0; height:860px; z-index:4;">
-  <div class="rod"><span>@adv.leticiabarros2</span><span class="pg">OAB/ES 39.948</span></div>
-</div>
+{{ fecho_html }}
 {% endif %}
 <div class="fosco grao"></div><div class="fosco veu"></div>
 </div></body></html>""")
@@ -176,7 +156,17 @@ async def main() -> None:
     comum = dict(css_v4=CSS_V4.replace("{{ ruido }}", v4.RUIDO).replace("{{ fibra }}", v4.FIBRA)
                  .replace("{{ mancha }}", v4.MANCHA).replace("{{ grao }}", v4.GRAO),
                  ruido=v4.RUIDO, total=f"{TOTAL:02d}", area=AREA, pensao=PENSAO, gastos=gastos, reais=reais,
-                 leticia_capa=v4.png("leticia-real-sentada.png"), leticia_fecho=v4.png("leticia-real-sorrindo.png"))
+                 css_capa=capa_fecho.CSS,
+                 capa_html=capa_fecho.capa(
+                     capa_fecho.foto_uri(AQUI / "_fotos_pexels" / "6919708.jpg", 1080, 990, (0.5, 0.72)), area="Pensão alimentícia",
+                     linha1='Pensão alimentícia de <span style="white-space:nowrap">R$ 300</span>:',
+                     titulo="Guia de sobrevivência", linha3="para mães que fazem milagre",
+                     apoio='Fizemos as contas do mês. <span class="mt">Spoiler: não fecha.</span>', total=f"{TOTAL:02d}",
+                     desce=360, posicao="50% 0%", titulo_px=98),
+                 fecho_html=capa_fecho.fecho(
+                     0, area=AREA, titulo="A piada acaba aqui. A conta, <em>não</em>.",
+                     sub="Ninguém deveria fazer milagre sozinha.",
+                     apoio='<span class="mt">Salve este post</span> e mande para a amiga que faz milagre todo mês.'))
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         page = await browser.new_page(viewport={"width": 1080, "height": 1350})
