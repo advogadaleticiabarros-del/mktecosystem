@@ -28,8 +28,14 @@ e Código de Ética e Disciplina.
 - Impulsionar só conteúdo informativo, sem oferta de serviço.
 - Proibido ostentação (carro, viagem, bens), símbolos oficiais da OAB, pagar por
   ranking/prêmio, comprar engajamento.
-- Imagem gerada por IA nunca representa a Letícia, clientes ou o escritório
-  (induz a erro, art. 3º II). Último slide usa foto real dela.
+- Fotos da Letícia, em ordem de preferência: (1) ensaio real recortado em
+  `Desktop/PROJETOS/modelo-visual-site/assets/images/` (alta resolução:
+  `hero-leticia-ternomarromsentada-sem-fundo.png`, `hero-leticia-sem-fundo.png`;
+  os `*-removebg-preview.png` são 408×612, só para uso pequeno); (2) foto de perfil do
+  Instagram; (3) retratos dela feitos com IA a partir do rosto real
+  (`BANCO IMAGENS/Advogada/`), liberados por ela em 09/10/2026. Aviso: imagens do
+  ChatGPT/Gemini carregam marca C2PA e o Instagram pode exibir "Informações de IA".
+  Nunca IA para criar cliente, caso, evento ou situação que não existiu (art. 3º II).
 - OAB/ES 39.948 na legenda ou no último slide.
 
 ## 2. Meta (eliminatório)

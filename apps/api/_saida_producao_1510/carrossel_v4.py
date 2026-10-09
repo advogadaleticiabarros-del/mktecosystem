@@ -91,7 +91,7 @@ body { width:7560px; height:1350px; }
     <div style="width:120px; height:2px; background:#C9A962; margin:44px 0 26px;"></div>
     <div style="font-size:30px; line-height:1.45; color:#E8DED1; width:470px;">Exames, FGTS e proteção contra demissão: o que a lei garante <span class="mt">neste Outubro Rosa</span>.</div>
   </div>
-  <img class="obj" src="{{ leticia }}" style="right:-120px; bottom:0; height:900px; filter:drop-shadow(-20px 10px 40px rgba(0,0,0,.45)); z-index:4;">
+  <img class="obj" src="{{ leticia_capa }}" style="right:-90px; bottom:0; height:940px; filter:drop-shadow(-20px 10px 40px rgba(0,0,0,.45)); z-index:4;">
   <div class="rod"><span>Arraste pro lado ›</span><span class="pg">01 / 07</span></div>
 </div>
 
@@ -166,15 +166,15 @@ body { width:7560px; height:1350px; }
 <!-- 7 FECHAMENTO (escuro) -->
 <div class="s escuro textura" style="left:6480px">
   <div class="cab"><span>Letícia Barros · Advocacia</span><span>Outubro Rosa</span></div>
-  <div class="bloco" style="top:330px; left:430px; width:580px;">
-    <div class="cg" style="font-size:86px; font-weight:600; line-height:1.02; color:#FAF6F0;">Cuidar da saúde<br>é <em style="font-style:italic; color:#C9A962;">direito</em>.</div>
+  <div class="bloco" style="top:330px; left:500px; width:520px;">
+    <div class="cg" style="font-size:78px; font-weight:600; line-height:1.02; color:#FAF6F0;">Cuidar da saúde<br>é <em style="font-style:italic; color:#C9A962;">direito</em>.</div>
     <div class="cg" style="font-style:italic; font-size:56px; color:#E8DED1; margin-top:18px;">Não é favor da empresa.</div>
     <div style="font-size:30px; line-height:1.45; color:#E8DED1; margin-top:40px;"><span class="mt">Salve este post</span> e mande para uma colega de trabalho.</div>
     <div style="margin-top:48px;"><span class="btn">⚖️ Procure uma advogada</span></div>
   </div>
   <div class="rod"><span>@adv.leticiabarros2</span><span class="pg">OAB/ES 39.948</span></div>
 </div>
-<img class="obj" src="{{ leticia }}" style="left:6440px; bottom:0; height:820px; z-index:4;">
+<img class="obj" src="{{ leticia_fecho }}" style="left:6400px; bottom:0; height:800px; z-index:4;">
 
 <!-- elementos contínuos -->
 <div class="arco" style="left:1700px; top:860px; width:1150px; height:1150px;"></div>
@@ -187,7 +187,7 @@ body { width:7560px; height:1350px; }
 
 async def main() -> None:
     html = HTML.render(
-        ruido=RUIDO, leticia=png("corte-leticia.png"), estetoscopio=png("corte-estetoscopio.png"),
+        ruido=RUIDO, leticia_capa=png("leticia-real-sentada.png"), leticia_fecho=png("leticia-real-sorrindo.png"), estetoscopio=png("corte-estetoscopio.png"),
         laco=png("corte-laco2.png"), reais=png("corte-reais.png"),
         foto5=foto(FOTOS / "8872674.jpg", foco=0.2),
     )
