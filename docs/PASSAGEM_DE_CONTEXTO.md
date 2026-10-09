@@ -73,7 +73,9 @@ discreta no topo, cartões de vidro flutuando. Usar isso nas próximas frentes.
 ## Estado do conteúdo (09/10/2026)
 
 - **Publicado**: 08/10 19h (relato assédio) — primeira publicação automática + primeiro comentário.
-- **Agendado (ScheduledPost "pronto", Instagram, 12h)**: perguntas v6 de 09/10 (pet),
+  09/10: frase do pet (9h) e pergunta do pet v6 (12h, post 18096433796113138, já com a arte nova;
+  ela pediu para atrasar às 12h02, quando já tinha saído).
+- **Agendado (ScheduledPost "pronto", Instagram, 12h)**: perguntas v6 de
   11/10 (abandono), 13/10 (férias da colega), 15, 17, 19, 21, 23, 25, 27, 29, 31/10 e 02/11.
   Também estão agendados os carrosséis/frases de 09–14/10 (programação anterior).
 - **Rascunho, aguardando ela** (NÃO agendar): carrosséis v5, frases v2 e 9 Mito ou Lei v2
