@@ -27,16 +27,16 @@ HTML = Template(r"""<!doctype html><html><head><meta charset="utf-8">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; } html { font-variant-numeric: lining-nums; font-feature-settings:"lnum" 1; }
 .c { width:1080px; height:1350px; position:relative; overflow:hidden; font-family:'Inter',sans-serif; background:#1E1814; }
-.foto { position:absolute; left:0; top:430px; width:100%; height:920px; object-fit:cover; object-position:{{ pos }};
+.foto { position:absolute; left:0; top:0; width:100%; height:100%; object-fit:cover; object-position:{{ pos }};
   filter: sepia(.22) saturate(.82) contrast(1.06) brightness({{ brilho }}); }
 .veu { position:absolute; inset:0; background:
-  linear-gradient(180deg, #1E1814 0%, #1E1814 32%, rgba(30,24,20,.7) 40%, rgba(30,24,20,.12) 54%, rgba(30,24,20,0) 66%, rgba(30,24,20,.1) 82%, rgba(30,24,20,.8) 100%); }
+  linear-gradient(180deg, rgba(30,24,20,.92) 0%, rgba(30,24,20,.55) 16%, rgba(30,24,20,.25) 34%, rgba(30,24,20,.25) 66%, rgba(30,24,20,.55) 84%, rgba(30,24,20,.92) 100%); }
 .luz { position:absolute; inset:0; mix-blend-mode:soft-light; background: radial-gradient(ellipse at 18% 8%, rgba(233,211,152,.55), transparent 45%); }
 .grao { position:absolute; inset:0; z-index:9; opacity:.13; mix-blend-mode:overlay; background-image:url("{{ grao }}"); }
 .topo { position:absolute; top:84px; left:84px; right:84px; display:flex; justify-content:space-between; z-index:4;
   font-size:22px; font-weight:600; letter-spacing:5px; text-transform:uppercase; line-height:1.35; color:#E8DED1; }
 .topo .d { text-align:right; color:#C9A962; }
-.card { position:absolute; left:50%; top:196px; transform:translateX(-50%); width:880px; z-index:5; border-radius:26px; overflow:hidden;
+.card { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:880px; z-index:5; border-radius:26px; overflow:hidden;
   background: rgba(36,29,24,.58); backdrop-filter: blur(22px) saturate(1.1); border:1.5px solid rgba(201,169,98,.62);
   box-shadow: 0 30px 70px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,240,200,.18); }
 .faixa { background: linear-gradient(180deg, #EBDBAE 0%, #D4BC7D 45%, #C9A962 100%); text-align:center; padding:16px 0;
@@ -52,7 +52,7 @@ HTML = Template(r"""<!doctype html><html><head><meta charset="utf-8">
   padding:14px 30px; border-radius:999px; border:1.5px solid rgba(201,169,98,.8); background:rgba(30,24,20,.55); backdrop-filter:blur(10px); }
 .cta b { color:#C9A962; }
 </style></head><body><div class="c">
-<img class="foto" src="{{ foto }}"><div class="veu"></div><div class="luz"></div>
+<img class="foto" src="{{ foto }}"{% if desce %} style="top:{{ desce }}px; height:auto; -webkit-mask-image:linear-gradient(180deg, transparent 0, #000 22%);"{% endif %}><div class="veu"></div><div class="luz"></div>
 <div class="topo"><div>Letícia Barros<br>Advocacia</div><div class="d">{{ area1 }}<br>{{ area2 }}</div></div>
 <div class="card"><div class="faixa">{{ topo }}</div>
   <div class="corpo"><p class="q">{{ pergunta }}</p>
@@ -70,11 +70,11 @@ PECAS = {
         "Tenho uma dívida no cartão. O banco pode <em>tirar dinheiro direto do meu salário?</em>", CONS),
     "banco-encerra-conta": ("banco-encerra-conta-pergunta-v6.jpg", 6969809, "50% 62%", .95, PERG,
         "O banco avisou que vai encerrar minha conta. <em>Ele pode fazer isso?</em>", CONS),
-    "bebe-pensao-morte": ("bebe-pensao-morte-pergunta-v6.jpg", 35119986, "50% 32%", .95, PERG,
+    "bebe-pensao-morte": ("bebe-pensao-morte-pergunta-v6.jpg", 35119986, "50% 0%", .95, PERG,
         "Meu namorado morreu quando eu estava grávida. <em>Meu bebê tem direito à pensão?</em>", PREV),
     "cancer-inss": ("cancer-inss-pergunta-v6.jpg", 5482984, "50% 28%", .9, PERG,
         "Descobri um câncer de mama e só contribuí 4 meses. <em>O INSS vai me pagar?</em>", PREV),
-    "licenca-adotante": ("licenca-adotante-pergunta-v6.jpg", 6338775, "50% 45%", .92, PERG,
+    "licenca-adotante": ("licenca-adotante-pergunta-v6.jpg", 7475804, "50% 0%", 1.05, PERG,
         "Vou adotar uma criança de 6 anos. <em>Tenho direito à licença-maternidade inteira?</em>", TRAB),
     "mesario-folga": ("mesario-folga-pergunta-v6.jpg", 29509519, "30% 60%", .9, PERG,
         "Fui mesária na eleição. <em>A empresa pode descontar o dia ou negar minha folga?</em>", TRAB),
@@ -92,6 +92,9 @@ PECAS = {
         "Cobri as férias de uma colega. <em>Tenho direito a receber o salário dela?</em>", TRAB),
 }
 
+# Fotos cujo objeto ficaria atrás da caixa centralizada: desce a foto (px) para o objeto aparecer abaixo dela.
+DESCE = {"bebe-pensao-morte": 330, "licenca-adotante": 300}
+
 
 async def main(filtro: set[str]) -> None:
     perfil = uri(PERFIL)
@@ -105,7 +108,7 @@ async def main(filtro: set[str]) -> None:
             fs = 62 if n <= 70 else 58 if n <= 85 else 54
             curta = area[1]
             await page.set_content(HTML.render(foto=uri(FOTOS / f"{foto}.jpg"), pos=pos, brilho=brilho, topo=topo, pergunta=pergunta,
-                                               area1=area[0], area2=area[1], area_curta=curta, fs=fs, perfil=perfil, grao=v4.GRAO),
+                                               area1=area[0], area2=area[1], area_curta=curta, fs=fs, desce=DESCE.get(chave, 0), perfil=perfil, grao=v4.GRAO),
                                    wait_until="networkidle")
             await page.evaluate("document.fonts.ready")
             destino = AQUI / "pecas" / nome.replace(".jpg", ".png")
