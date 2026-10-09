@@ -32,7 +32,7 @@ def uri(p: Path) -> str:
 HTML = Template("""<!doctype html><html><head><meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
+* { margin:0; padding:0; box-sizing:border-box; } html { font-variant-numeric: lining-nums; font-feature-settings:"lnum" 1; }
 .c { width:1080px; height:1350px; position:relative; overflow:hidden; font-family:'Inter',sans-serif;
   background: radial-gradient(ellipse at 50% 18%, #FDF9F0 0%, #F4EBD7 48%, #E8DABD 100%); }
 .mono { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.5;

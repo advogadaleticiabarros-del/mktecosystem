@@ -44,7 +44,7 @@ BASE_CSS = """
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
 <style>
 :root { --d:#C9A962; --f:#231E1A; --a:#E8DED1; --b:#FAF6F0; }
-* { margin:0; padding:0; box-sizing:border-box; }
+* { margin:0; padding:0; box-sizing:border-box; } html { font-variant-numeric: lining-nums; font-feature-settings:"lnum" 1; }
 .slide { width:1080px; height:1350px; position:relative; overflow:hidden; font-family:'Inter',sans-serif; color:var(--a);
   background: radial-gradient(circle at 82% 10%, #C9A96233, transparent 45%), radial-gradient(circle at 10% 95%, #C9A9621f, transparent 40%), var(--f); }
 .slide::before { content:''; position:absolute; inset:36px; border:1.5px solid #C9A9628c; border-radius:18px; z-index:5; pointer-events:none; }
