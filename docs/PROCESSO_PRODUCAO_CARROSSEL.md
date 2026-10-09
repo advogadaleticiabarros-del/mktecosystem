@@ -86,12 +86,14 @@ Princípios aprovados depois da revisão do Mito ou Lei:
 9. Mito ou Lei: selo-medalhão dourado metálico (anel duplo, "VEREDITO · LETÍCIA BARROS"
    em volta, palavra gravada); afirmação riscada em dourado (MITO) ou sublinhada (LEI).
    Modelo: `apps/api/_saida_producao_1510/mito_v2.py`.
-10. Pergunta (v6, substitui a v4): **sem recortes**. Foto inteira de banco (Pexels) com UM
+10. Pergunta (v6, **PADRÃO APROVADO pela Letícia em 09/10/2026**, substitui a v4): **sem recortes**. Foto inteira de banco (Pexels) com UM
     único objeto ou gesto ligado ao tema, com luz real, ocupando a metade de baixo; o topo
     funde em café sólido. Cartão "Me faça uma pergunta" em vidro fosco com faixa dourada,
     pergunta em Cormorant com o trecho-chave em itálico dourado, perfil no rodapé do
-    cartão. Cabeçalho: nome à esquerda e área à direita. Pílula "A resposta está na
-    legenda" embaixo. Modelo: `apps/api/_saida_producao_1510/pergunta_v6.py`.
+    cartão, caixa **centralizada na vertical e na horizontal** (se o objeto ficar atrás dela,
+    descer a foto ou trocar). Cabeçalho: nome à esquerda e área à direita. Pílula "A resposta está na
+    legenda" embaixo. Gerador oficial: `app/templates/pergunta_card.html`; lote:
+    `apps/api/_saida_producao_1510/pergunta_v6.py`.
 
 ### Regra: recorte automático não entra em peça (09/10/2026)
 

@@ -2,7 +2,7 @@
 
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
-> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-08**
+> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-09**
 > (migração de deploy Railway → VPS Hostinger, DNS ainda pendente).
 
 ## O que é o Orbit
@@ -552,6 +552,15 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   atualizacao_trabalhista, trtespiritosanto). Só funciona com conta comercial/criador.
 - Capas de carrossel v2 (`_saida_producao_1510/capa_v2.py`, recorte com rembg
   `u2net_human_seg`) e cartão de pergunta refinado (`pergunta_refinada.py`).
+
+### Pergunta v6 = padrão oficial (09/10/2026)
+
+- Aprovado pela Letícia: foto inteira com um objeto do tema (sem recorte), caixa de vidro
+  centralizada, destaque em itálico dourado. Gerador oficial reescrito
+  (`templates/pergunta_card.html`, `render_criativo.html_pergunta/renderizar_pergunta`
+  com `foto_path`, `area`, `foto_posicao`, `brilho`, `desce`); `_fotografar` agora espera
+  fontes carregarem. 13 perguntas agendadas às 12h de 09/10 a 02/11. Resto do lote
+  15/10–02/11 continua rascunho por pedido dela. Ver `docs/PASSAGEM_DE_CONTEXTO.md`.
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 

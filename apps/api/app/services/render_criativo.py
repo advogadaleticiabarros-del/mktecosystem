@@ -1,4 +1,5 @@
 import base64
+import re
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
@@ -75,7 +76,8 @@ async def renderizar_slide(
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         page = await browser.new_page(viewport={"width": 1080, "height": 1350})
-        await page.set_content(html)
+        await page.set_content(html, wait_until="networkidle")
+        await page.evaluate("document.fonts.ready")
         await page.screenshot(path=caminho_saida)
         await browser.close()
 
@@ -109,28 +111,60 @@ async def renderizar_frase_impacto(
     await _fotografar(html, caminho_saida)
 
 
+PERFIL_PATH = ASSETS_DIR / "perfil-leticia.jpg"
+
+# Linha de cima do cabeçalho conforme a área ("Direito do / Consumidor").
+_PREFIXO_AREA = {"Consumidor": "Direito do", "Família": "Direito de"}
+
+
+def html_pergunta(
+    pergunta: str,
+    identidade_visual: dict,
+    *,
+    area: str = "Advocacia",
+    rotulo: str = "Me faça uma pergunta",
+    foto_src: str | None = None,
+    foto_posicao: str = "50% 50%",
+    brilho: float = 0.95,
+    desce: int = 0,
+    nome_conta: str = "Letícia Barros",
+    instagram: str = "adv.leticiabarros2",
+) -> str:
+    """Pergunta no padrão aprovado (v6, 09/10/2026): foto inteira com um objeto do tema,
+    caixa de vidro centralizada, trecho-chave em `<em>` (itálico dourado). `desce` empurra
+    a foto para baixo quando o objeto ficaria atrás da caixa."""
+    cores = identidade_visual.get("cores", {})
+    n = len(re.sub(r"<[^>]+>", "", pergunta))
+    return _env.get_template("pergunta_card.html").render(
+        pergunta=pergunta,
+        rotulo=rotulo,
+        area=area if area != "Advocacia" else "OAB/ES 39.948",
+        area_linha1=_PREFIXO_AREA.get(area, "Direito") if area != "Advocacia" else "Advogada",
+        fundo=cores.get("fundo_escuro", "#231E1A"),
+        dourado=cores.get("dourado", "#C9A962"),
+        areia=cores.get("areia", "#E8DED1"),
+        tamanho_fonte=62 if n <= 70 else 58 if n <= 85 else 54 if n <= 110 else 48,
+        nome_conta=nome_conta,
+        instagram=instagram,
+        logo_src=_logo_data_uri(),
+        perfil_src=_foto_data_uri(str(PERFIL_PATH)),
+        foto_src=foto_src,
+        foto_posicao=foto_posicao,
+        brilho=brilho,
+        desce=desce,
+    )
+
+
 async def renderizar_pergunta(
     pergunta: str,
     identidade_visual: dict,
     caminho_saida: str,
-    rotulo: str = "Pergunta que eu recebo",
-    nome_conta: str = "Letícia Barros",
-    oab: str = "OAB/ES 39.948",
+    *,
+    foto_path: str | None = None,
+    **opcoes,
 ) -> None:
-    """Card da dúvida real de uma cliente, em balão de conversa; a resposta vai na legenda."""
-    cores = identidade_visual.get("cores", {})
-    tamanho_fonte = 76 if len(pergunta) < 70 else 64 if len(pergunta) < 120 else 54
-    html = _env.get_template("pergunta_card.html").render(
-        pergunta=pergunta,
-        rotulo=rotulo,
-        fundo=cores.get("fundo_escuro", "#231E1A"),
-        dourado=cores.get("dourado", "#C9A962"),
-        areia=cores.get("areia", "#E8DED1"),
-        tamanho_fonte=tamanho_fonte,
-        nome_conta=nome_conta,
-        oab=oab,
-        logo_src=_logo_data_uri(),
-    )
+    """Card da dúvida real de uma cliente; a resposta vai na legenda."""
+    html = html_pergunta(pergunta, identidade_visual, foto_src=_foto_data_uri(foto_path) if foto_path else None, **opcoes)
     await _fotografar(html, caminho_saida)
 
 
@@ -138,7 +172,8 @@ async def _fotografar(html: str, caminho_saida: str) -> None:
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         page = await browser.new_page(viewport={"width": 1080, "height": 1350})
-        await page.set_content(html)
+        await page.set_content(html, wait_until="networkidle")
+        await page.evaluate("document.fonts.ready")
         await page.screenshot(path=caminho_saida)
         await browser.close()
 

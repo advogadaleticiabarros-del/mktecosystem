@@ -2,94 +2,51 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<!-- Pergunta: padrão aprovado pela Letícia em 09/10/2026 (v6). Foto inteira com UM objeto
+     do tema (sem recorte), caixa de vidro centralizada, destaque em itálico dourado.
+     Sem foto: fundo café com a logo em marca d'água. -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { margin: 0; }
-
-  .card {
-    width: 1080px; height: 1350px;
-    position: relative; overflow: hidden;
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 140px 104px;
-    font-family: 'Inter', sans-serif;
-    color: {{ areia }};
-    background:
-      radial-gradient(circle at 85% 10%, {{ dourado }}29, transparent 42%),
-      radial-gradient(circle at 10% 92%, {{ dourado }}1f, transparent 46%),
-      linear-gradient(160deg, {{ fundo }} 0%, {{ fundo }} 100%);
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 36px;
-    border: 1.5px solid {{ dourado }}8c;
-    border-radius: 18px;
-    pointer-events: none;
-  }
-
-  .rotulo {
-    align-self: flex-start;
-    font-size: 22px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
-    color: {{ fundo }};
-    background: {{ dourado }};
-    padding: 12px 26px;
-    border-radius: 999px;
-    margin-bottom: 56px;
-  }
-
-  .balao {
-    position: relative;
-    background: {{ areia }}14;
-    border: 1.5px solid {{ dourado }}66;
-    border-radius: 36px 36px 36px 8px;
-    padding: 64px 64px 72px;
-  }
-  .balao .aspas {
-    position: absolute; top: -70px; left: 40px;
-    font-family: 'Playfair Display', serif; font-size: 170px; line-height: 1;
-    color: {{ dourado }};
-  }
-  .pergunta {
-    font-family: 'Playfair Display', serif;
-    font-weight: 800;
-    font-size: {{ tamanho_fonte }}px;
-    line-height: 1.28;
-  }
-
-  .resposta {
-    margin-top: 56px;
-    font-size: 28px; font-weight: 600;
-    color: {{ dourado }};
-    letter-spacing: 1px;
-  }
-
-  .assinatura {
-    position: absolute; left: 104px; right: 104px; bottom: 96px;
-    display: flex; align-items: center; gap: 18px;
-  }
-  .assinatura img { width: 56px; height: 56px; object-fit: contain; }
-  .assinatura .nome { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; }
-  .assinatura .oab { font-size: 14px; letter-spacing: 2px; text-transform: uppercase; color: {{ dourado }}; }
+* { margin:0; padding:0; box-sizing:border-box; } html { font-variant-numeric: lining-nums; font-feature-settings:"lnum" 1; }
+.c { width:1080px; height:1350px; position:relative; overflow:hidden; font-family:'Inter',sans-serif;
+  background: radial-gradient(ellipse at 50% 40%, #3D332A 0%, {{ fundo }} 60%, #1A1511 100%); }
+.foto { position:absolute; left:0; width:100%; object-fit:cover; object-position:{{ foto_posicao }};
+  filter: sepia(.22) saturate(.82) contrast(1.06) brightness({{ brilho }});
+  {% if desce %}top:{{ desce }}px; height:auto; -webkit-mask-image:linear-gradient(180deg, transparent 0, #000 22%);{% else %}top:0; height:100%;{% endif %} }
+.marca { position:absolute; width:1000px; left:50%; top:50%; transform:translate(-50%,-50%); opacity:.06; }
+.veu { position:absolute; inset:0; background: linear-gradient(180deg, rgba(30,24,20,.92) 0%, rgba(30,24,20,.55) 16%, rgba(30,24,20,.25) 34%, rgba(30,24,20,.25) 66%, rgba(30,24,20,.55) 84%, rgba(30,24,20,.92) 100%); }
+.luz { position:absolute; inset:0; mix-blend-mode:soft-light; background: radial-gradient(ellipse at 18% 8%, rgba(233,211,152,.55), transparent 45%); }
+.grao { position:absolute; inset:0; z-index:9; opacity:.13; mix-blend-mode:overlay; pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>"); }
+.topo { position:absolute; top:84px; left:84px; right:84px; display:flex; justify-content:space-between; z-index:4;
+  font-size:22px; font-weight:600; letter-spacing:5px; text-transform:uppercase; line-height:1.35; color:{{ areia }}; }
+.topo .d { text-align:right; color:{{ dourado }}; }
+.card { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:880px; z-index:5; border-radius:26px; overflow:hidden;
+  background: rgba(36,29,24,.58); backdrop-filter: blur(22px) saturate(1.1); border:1.5px solid {{ dourado }}9e;
+  box-shadow: 0 30px 70px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,240,200,.18); }
+.faixa { background: linear-gradient(180deg, #EBDBAE 0%, #D4BC7D 45%, {{ dourado }} 100%); text-align:center; padding:16px 0;
+  font-size:23px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:#3B2E1D; }
+.corpo { padding:44px 64px 40px; text-align:center; }
+.q { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:{{ tamanho_fonte }}px; line-height:1.14; color:#FAF6F0; }
+.q em { font-style:italic; color:#E2C77F; }
+.perfil { margin-top:34px; padding-top:24px; border-top:1px solid {{ dourado }}59; display:flex; align-items:center; justify-content:center; gap:14px; }
+.av { width:54px; height:54px; border-radius:50%; object-fit:cover; object-position:50% 25%; border:2px solid {{ dourado }}; }
+.h { font-weight:700; font-size:23px; color:#FAF6F0; text-align:left; } .s { font-weight:500; font-size:22px; color:{{ dourado }}; text-align:left; }
+.cta { position:absolute; left:50%; bottom:92px; transform:translateX(-50%); z-index:5; white-space:nowrap;
+  font-size:22px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:#FAF6F0;
+  padding:14px 30px; border-radius:999px; border:1.5px solid {{ dourado }}cc; background:rgba(30,24,20,.55); backdrop-filter:blur(10px); }
+.cta b { color:{{ dourado }}; }
 </style>
 </head>
-<body>
-  <div class="card">
-    <span class="rotulo">{{ rotulo }}</span>
-    <div class="balao">
-      <span class="aspas">&ldquo;</span>
-      <p class="pergunta">{{ pergunta }}</p>
-    </div>
-    <p class="resposta">A resposta está na legenda &rarr;</p>
-    <div class="assinatura">
-      <img src="{{ logo_src }}" alt="{{ nome_conta }}">
-      <div>
-        <div class="nome">{{ nome_conta }}</div>
-        <div class="oab">{{ oab }}</div>
-      </div>
-    </div>
-  </div>
-</body>
+<body><div class="c">
+{% if foto_src %}<img class="foto" src="{{ foto_src }}">{% else %}<img class="marca" src="{{ logo_src }}">{% endif %}
+<div class="veu"></div><div class="luz"></div>
+<div class="topo"><div>{{ nome_conta }}<br>Advocacia</div><div class="d">{{ area_linha1 }}<br>{{ area }}</div></div>
+<div class="card"><div class="faixa">{{ rotulo }}</div>
+  <div class="corpo"><p class="q">{{ pergunta }}</p>
+    <div class="perfil"><img class="av" src="{{ perfil_src }}"><div><div class="h">{{ instagram }}</div><div class="s">{% if area_linha1 == 'Advogada' %}{{ area }}{% else %}Advogada · {{ area }}{% endif %}</div></div></div>
+  </div></div>
+<div class="cta">A resposta está na <b>legenda</b></div>
+<div class="grao"></div>
+</div></body>
 </html>

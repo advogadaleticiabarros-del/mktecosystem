@@ -88,6 +88,8 @@ PECAS = {
         "Tenho medida protetiva e não consigo trabalhar. <em>Vou perder meu emprego?</em>", PREV),
     "abandono": ("relato-abandono-v6.jpg", 34393435, "50% 30%", .95, "Me conta o que aconteceu",
         "Você cresceu com um pai ou mãe presente só de nome? <em>Como isso te marcou?</em>", FAM),
+    "pet": ("pergunta-pet-v6.jpg", 13898221, "50% 40%", 1.05, PERG,
+        "Meu ex ficou com o cachorro depois da separação. <em>Eu ainda tenho algum direito sobre ele?</em>", FAM),
     "clt": ("pergunta-clt-v6.jpg", 14792097, "45% 62%", .92, PERG,
         "Cobri as férias de uma colega. <em>Tenho direito a receber o salário dela?</em>", TRAB),
 }

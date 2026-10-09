@@ -1,5 +1,8 @@
 ## Contexto do projeto
 
+**Perfil novo do Claude? Leia primeiro `docs/PASSAGEM_DE_CONTEXTO.md`** (quem é a usuária,
+como ela trabalha, padrões visuais aprovados, estado do conteúdo, infra e acesso).
+
 Antes de qualquer trabalho neste repositório, leia `docs/CONTEXTO_PROJETO.md` — é o
 resumo vivo do estado do projeto (arquitetura, o que está pronto, pendências,
 decisões não-óbvias), mantido pra evitar reler tudo a cada sessão. Ao terminar uma
