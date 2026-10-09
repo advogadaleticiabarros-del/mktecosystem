@@ -47,11 +47,15 @@
   }
   .frase em { font-style: italic; color: {{ dourado }}; }
 
-  .assinatura { margin-top: 70px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-  .fio { width: 120px; height: 2px; background: {{ dourado }}; }
-  .assinatura img { width: 64px; height: 64px; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,.4)); }
-  .assinatura .nome { font-size: 24px; font-weight: 600; letter-spacing: 6px; text-transform: uppercase; color: {{ areia }}; }
-  .assinatura .oab { font-size: 22px; font-weight: 600; letter-spacing: 3px; color: {{ dourado }}; }
+  .conteudo { margin-top: -60px; }
+  .assinatura { position: absolute; left: 0; right: 0; bottom: 96px; z-index: 4;
+    display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .linha-ass { display: flex; align-items: center; gap: 22px; }
+  .fio { width: 110px; height: 1.5px; background: linear-gradient(90deg, transparent, {{ dourado }}); }
+  .fio.dir { background: linear-gradient(90deg, {{ dourado }}, transparent); }
+  .assinatura img { width: 54px; height: 54px; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,.4)); }
+  .assinatura .nome { font-size: 23px; font-weight: 600; letter-spacing: 6px; text-transform: uppercase; color: {{ areia }}; }
+  .assinatura .oab { font-size: 22px; font-weight: 600; letter-spacing: 4px; color: {{ dourado }}; }
 </style>
 </head>
 <body>
@@ -62,12 +66,10 @@
     <div class="conteudo">
       <div class="aspas">&ldquo;</div>
       <p class="frase">{{ frase|safe }}</p>
-      <div class="assinatura">
-        <div class="fio"></div>
-        <img src="{{ logo_src }}" alt="{{ nome_conta }}">
-        <span class="nome">{{ nome_conta }} · Advocacia</span>
-        <span class="oab">{{ oab }}</span>
-      </div>
+    </div>
+    <div class="assinatura">
+      <div class="linha-ass"><div class="fio"></div><img src="{{ logo_src }}" alt="{{ nome_conta }}"><span class="nome">{{ nome_conta }} · Advocacia</span><div class="fio dir"></div></div>
+      <span class="oab">{{ oab }}</span>
     </div>
     <div class="grao"></div>
   </div>
