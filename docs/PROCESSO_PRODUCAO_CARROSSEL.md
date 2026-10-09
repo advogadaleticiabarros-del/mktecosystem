@@ -86,6 +86,27 @@ Princípios aprovados depois da revisão do Mito ou Lei:
 9. Mito ou Lei: selo-medalhão dourado metálico (anel duplo, "VEREDITO · LETÍCIA BARROS"
    em volta, palavra gravada); afirmação riscada em dourado (MITO) ou sublinhada (LEI).
    Modelo: `apps/api/_saida_producao_1510/mito_v2.py`.
-10. Pergunta: composição de objetos (não só pessoas) em primeiro plano sobre a borda
-    do cartão, apoiada em linha de chão com sombra; recortes sem corte seco.
-    Modelo: `apps/api/_saida_producao_1510/pergunta_v4.py`.
+10. Pergunta (v6, substitui a v4): **sem recortes**. Foto inteira de banco (Pexels) com UM
+    único objeto ou gesto ligado ao tema, com luz real, ocupando a metade de baixo; o topo
+    funde em café sólido. Cartão "Me faça uma pergunta" em vidro fosco com faixa dourada,
+    pergunta em Cormorant com o trecho-chave em itálico dourado, perfil no rodapé do
+    cartão. Cabeçalho: nome à esquerda e área à direita. Pílula "A resposta está na
+    legenda" embaixo. Modelo: `apps/api/_saida_producao_1510/pergunta_v6.py`.
+
+### Regra: recorte automático não entra em peça (09/10/2026)
+
+A Letícia reprovou duas vezes os recortes (borda serrilhada, sombra residual, objetos
+sem sentido, vários objetos juntos). O recorte automático (rembg) não chega à qualidade
+de estúdio, então não é usado em peças publicadas. No lugar dele vale a foto inteira com
+um objeto em primeiro plano e luz real, que é o que as referências dela fazem (maleta,
+ampulheta, papel amassado, cadeira). Se uma peça exigir recorte perfeito, avisar a
+Letícia antes em vez de entregar recorte ruim.
+
+Estudo das referências enviadas em 09/10/2026, aplicado na identidade dela:
+- Um objeto só, grande, com luz dramática e sombra real; nunca colagem de vários.
+- Fundo atmosférico (escuro com luz quente lateral, desfoque de ambiente) e grão fílmico.
+- Tipografia com contraste de escala: serifa grande + sans pequena; destaque em itálico
+  dourado ou em caixa marca-texto; um destaque por peça.
+- Marca discreta: nome em versalete pequeno no topo, área no canto oposto.
+- Cartões de vidro fosco (glass) flutuando sobre a foto dão profundidade sem recorte.
+- Sem marca de terceiros nas fotos (cartão com logo, por exemplo) nem texto em inglês.
