@@ -35,6 +35,17 @@ def foto(caminho: Path, w: int = 1080, h: int = 1350, foco: float = 0.25) -> str
     return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
 
 
+def _svg(corpo: str, w: int = 400, h: int = 400) -> str:
+    return ("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='%d' height='%d'>%s</svg>" % (w, h, corpo)).replace("#", "%23")
+
+
+GRAO = _svg("<filter id='g'><feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch'/>"
+            "<feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(#g)'/>", 300, 300)
+MANCHA = _svg("<filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='3' seed='7'/>"
+              "<feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(#m)'/>", 1080, 1350)
+FIBRA = _svg("<filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.012 .55' numOctaves='2' seed='3'/>"
+             "<feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(#f)'/>", 600, 600)
+
 RUIDO = ("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'>"
          "<filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/>"
          "<feColorMatrix values='0 0 0 0 .5  0 0 0 0 .4  0 0 0 0 .3  0 0 0 .55 0'/></filter>"
@@ -78,6 +89,18 @@ body { width:7560px; height:1350px; }
 .papel { position:absolute; background:#FAF6F0; color:#231E1A; padding:64px 60px; box-shadow:0 30px 60px rgba(0,0,0,.35); z-index:5; }
 .papel::after { content:''; position:absolute; inset:0; background-image:url("{{ ruido }}"); opacity:.18; mix-blend-mode:multiply; }
 .btn { background:#C9A962; color:#231E1A; font-weight:800; font-size:27px; padding:18px 34px; border-radius:999px; }
+
+/* acabamento fosco */
+.escuro { background:radial-gradient(ellipse at 65% 25%, #3B3129 0%, #2A231E 55%, #211B17 100%) !important; }
+.escuro::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0,0,0,.28) 100%); z-index:0; pointer-events:none; }
+.claro { background:#F0E8DB !important; }
+.claro::before { content:''; position:absolute; inset:0; background-image:url("{{ fibra }}"); opacity:.10; mix-blend-mode:multiply; z-index:0; pointer-events:none; }
+.textura::after { background-image:url("{{ mancha }}") !important; opacity:.10 !important; mix-blend-mode:soft-light !important; }
+.foto img:first-child { filter:contrast(.88) brightness(1.04) saturate(.85) sepia(.12); }
+.fosco { position:absolute; inset:0; pointer-events:none; z-index:20; }
+.fosco.grao { background-image:url("{{ grao }}"); opacity:.13; mix-blend-mode:overlay; }
+.fosco.veu { background:rgba(240,232,219,.035); mix-blend-mode:screen; }
+.obj { filter:drop-shadow(0 24px 30px rgba(35,30,26,.35)) contrast(.92) saturate(.9) !important; }
 </style></head><body><div class="pano">
 
 <!-- 1 CAPA -->
@@ -182,12 +205,13 @@ body { width:7560px; height:1350px; }
 <img class="obj" src="{{ estetoscopio }}" style="left:1640px; top:930px; width:720px; transform:rotate(-12deg);">
 <img class="obj" src="{{ laco }}" style="left:2900px; top:930px; height:620px; transform:rotate(58deg);">
 <img class="obj" src="{{ reais }}" style="left:3800px; top:960px; width:700px; transform:rotate(-8deg);">
+<div class="fosco grao"></div><div class="fosco veu"></div>
 </div></body></html>""")
 
 
 async def main() -> None:
     html = HTML.render(
-        ruido=RUIDO, leticia_capa=png("leticia-real-sentada.png"), leticia_fecho=png("leticia-real-sorrindo.png"), estetoscopio=png("corte-estetoscopio.png"),
+        grao=GRAO, mancha=MANCHA, fibra=FIBRA, ruido=RUIDO, leticia_capa=png("leticia-real-sentada.png"), leticia_fecho=png("leticia-real-sorrindo.png"), estetoscopio=png("corte-estetoscopio.png"),
         laco=png("corte-laco2.png"), reais=png("corte-reais.png"),
         foto5=foto(FOTOS / "8872674.jpg", foco=0.2),
     )
