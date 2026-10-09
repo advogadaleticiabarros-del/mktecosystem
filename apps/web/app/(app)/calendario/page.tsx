@@ -9,6 +9,7 @@ import { AppShell } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { GradeInstagram } from "./grade-instagram";
 
 type Agendamento = {
   id: string;
@@ -46,6 +47,7 @@ export default function CalendarioPage() {
   const [ano, setAno] = useState(hoje.getFullYear());
   const [mes, setMes] = useState(hoje.getMonth() + 1);
   const [itens, setItens] = useState<Agendamento[]>([]);
+  const [visao, setVisao] = useState<"grade" | "mes">("grade");
   const [editando, setEditando] = useState<Agendamento | null>(null);
   const [novoDia, setNovoDia] = useState<string | null>(null);
   const [novoTitulo, setNovoTitulo] = useState("");
@@ -137,6 +139,12 @@ export default function CalendarioPage() {
       title="Calendário editorial"
       description="Tudo que está planejado, pronto e publicado — conteúdo aprovado entra aqui sozinho"
       headerActions={
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex rounded-lg border border-border p-0.5">
+            <Button size="sm" variant={visao === "grade" ? "default" : "ghost"} onClick={() => setVisao("grade")}>Grade</Button>
+            <Button size="sm" variant={visao === "mes" ? "default" : "ghost"} onClick={() => setVisao("mes")}>Mês</Button>
+          </div>
+          {visao === "mes" && (
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={() => navegar(-1)} aria-label="Mês anterior">
             <ChevronLeft className="h-4 w-4" />
@@ -148,8 +156,11 @@ export default function CalendarioPage() {
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
+          )}
+        </div>
       }
     >
+      {visao === "grade" ? <GradeInstagram /> : (<>
       <div className="mb-4 flex items-center gap-5 text-xs text-muted-foreground">
         <span className="flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-primary" /> Instagram
@@ -351,6 +362,7 @@ export default function CalendarioPage() {
           </motion.div>
         )}
       </AnimatePresence>
+      </>)}
     </AppShell>
   );
 }

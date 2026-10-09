@@ -65,6 +65,12 @@ class InstagramAPI:
         publicado = await self._post(f"/{ig_user_id}/media_publish", {"creation_id": container_pai["id"]})
         return publicado["id"]
 
+    async def posts_com_imagem(self, ig_user_id: str, limite: int = 12) -> list[dict]:
+        """Últimos posts do próprio perfil com a URL da imagem (para a grade do calendário)."""
+        campos = "id,caption,media_type,media_url,thumbnail_url,permalink,timestamp"
+        resposta = await self._get(f"/{ig_user_id}/media", {"fields": campos, "limit": limite})
+        return resposta.get("data", [])
+
     async def posts_de_perfil_publico(self, ig_user_id: str, username: str, limite: int = 30) -> list[dict]:
         """Posts recentes de outra conta comercial/criador (business discovery)."""
         campos = (f"business_discovery.username({username}){{media.limit({limite})"

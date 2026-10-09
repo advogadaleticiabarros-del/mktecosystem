@@ -151,3 +151,24 @@ async def remover_agendamento(
         raise HTTPException(status_code=404, detail="Agendamento não encontrado")
     await db.delete(agendamento)
     await db.commit()
+
+
+@router.get("/grade")
+async def grade_instagram(
+    current_user: Annotated[User, Depends(get_current_user)],
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> list[dict]:
+    """O perfil do Instagram como vai ficar: rascunhos com data, agendados e publicados."""
+    from dataclasses import asdict
+
+    from app.core.crypto import decrypt_token
+    from app.integrations.social.instagram_api import InstagramAPI
+    from app.models.social_connection import SocialConnection
+    from app.services.grade_instagram import LeitorPublicados, montar_grade
+
+    conexao = (await db.execute(select(SocialConnection).where(
+        SocialConnection.tenant_id == current_user.tenant_id, SocialConnection.plataforma == "instagram",
+        SocialConnection.status == "ativo"))).scalars().first()
+    leitor = (LeitorPublicados(InstagramAPI(decrypt_token(conexao.access_token_encrypted)), conexao.ig_user_id)
+              if conexao else None)
+    return [asdict(p) for p in await montar_grade(db, current_user.tenant_id, leitor, hoje_brasilia())]
