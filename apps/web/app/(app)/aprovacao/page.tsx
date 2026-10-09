@@ -99,7 +99,7 @@ function abaDa(p: ContentPiece): Aba {
   if (p.status === "aprovado") return "aprovado";
   if (p.status === "ajuste") return "ajuste";
   const semData = !(p.corpo.programacao as { data?: string } | undefined)?.data;
-  return semData && imagens(p).length === 0 ? "antigo" : "rascunho";
+  return semData && imagens(p).length === 0 && !p.corpo.video ? "antigo" : "rascunho";
 }
 
 function PecaRevisao({ peca, pauta, onAtualizar }: { peca: ContentPiece; pauta?: Pauta; onAtualizar: (p: ContentPiece) => void }) {
@@ -146,6 +146,19 @@ function PecaRevisao({ peca, pauta, onAtualizar }: { peca: ContentPiece; pauta?:
               <img src={src} alt="" className="h-64 w-auto rounded-lg ring-1 ring-foreground/10" loading="lazy" />
             </a>
           ))}
+        </div>
+      )}
+
+      {typeof peca.corpo.video === "string" && (
+        <div className="flex flex-wrap items-end gap-3">
+          <video src={peca.corpo.video} controls playsInline preload="metadata" className="h-[420px] w-auto rounded-lg bg-black ring-1 ring-foreground/10" />
+          <div className="flex flex-col gap-1 text-xs">
+            <a className="text-primary underline" href={peca.corpo.video} download>Baixar vídeo</a>
+            {typeof peca.corpo.video_sem_musica === "string" && (
+              <a className="text-primary underline" href={peca.corpo.video_sem_musica} download>Baixar versão sem música</a>
+            )}
+            <span className="text-muted-foreground">Reels: postar pelo app do Instagram, com o rótulo “Informações de IA” ligado.</span>
+          </div>
         </div>
       )}
 
