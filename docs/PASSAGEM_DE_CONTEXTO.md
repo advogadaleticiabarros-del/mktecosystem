@@ -78,7 +78,9 @@ discreta no topo, cartões de vidro flutuando. Usar isso nas próximas frentes.
 - **Agendado (ScheduledPost "pronto", Instagram, 12h)**: perguntas v6 de
   11/10 (abandono), 13/10 (férias da colega), 15, 17, 19, 21, 23, 25, 27, 29, 31/10 e 02/11.
   Também estão agendados os carrosséis/frases de 09–14/10 (programação anterior).
-- **Rascunho, aguardando ela** (NÃO agendar): carrosséis v5, frases v2 e 9 Mito ou Lei v2
+- **Rascunho, aguardando ela** (NÃO agendar): carrosséis v5, frases v2 e 9 Mito ou Lei v3 (selo no topo do cartão; prévia
+  https://api.orbit.advogadaleticiabarros.com.br/media/mito-v3-lote.jpg; backup do banco antes da troca em
+  `/root/orbit-backups/antes-mito-v3-20261009.sql.gz`)
   do lote 15/10–02/11. Ela disse: "ainda não programe os demais, ainda vamos mudar
   algumas coisas". Doc de aprovação do lote:
   https://claude.ai/code/artifact/2f39add3-ba5e-4eb5-bc0e-47fae877428d

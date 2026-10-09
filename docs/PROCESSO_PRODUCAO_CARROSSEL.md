@@ -83,9 +83,16 @@ Princípios aprovados depois da revisão do Mito ou Lei:
 7. Rodapé de assinatura padrão: fio dourado · logo · LETÍCIA BARROS · ADVOCACIA · fio,
    OAB abaixo. Cabeçalho em versalete com fios dourados.
 8. Acabamento fosco (granulação, vinheta, manchas suaves) e logo como marca d'água.
-9. Mito ou Lei: selo-medalhão dourado metálico (anel duplo, "VEREDITO · LETÍCIA BARROS"
-   em volta, palavra gravada); afirmação riscada em dourado (MITO) ou sublinhada (LEI).
-   Modelo: `apps/api/_saida_producao_1510/mito_v2.py`.
+9. Mito ou Lei (v3, 09/10/2026, em aprovação): afirmação e explicação juntas num cartão
+   de vidro; o selo-medalhão (medalha gravada, sem brilho de moeda, anel "LETÍCIA BARROS ✦
+   ADVOCACIA ✦ OAB/ES 39.948", "VEREDITO" + palavra no miolo) fica **encaixado no topo do
+   cartão, centralizado**. Nunca no meio entre afirmação e explicação (quebra a leitura).
+   Por que topo e não canto: a grade 3:4 do perfil corta ~34 px de cada lado da arte 4:5
+   (selo no canto sairia cortado); leitura em linha reta selo → afirmação → explicação;
+   veredito legível no tamanho do celular. MITO: fio dourado fino riscando cada linha;
+   rótulo "A VERDADE" (MITO) ou "O QUE DIZ A LEI" (LEI); referência legal em pílula de uma
+   linha (abreviar se passar de 40 caracteres); "✦ Salve para consultar quando precisar ✦"
+   abaixo do cartão (meta da série: salvamentos). Modelo: `apps/api/_saida_producao_1510/mito_v3.py topo`.
 10. Pergunta (v6, **PADRÃO APROVADO pela Letícia em 09/10/2026**, substitui a v4): **sem recortes**. Foto inteira de banco (Pexels) com UM
     único objeto ou gesto ligado ao tema, com luz real, ocupando a metade de baixo; o topo
     funde em café sólido. Cartão "Me faça uma pergunta" em vidro fosco com faixa dourada,

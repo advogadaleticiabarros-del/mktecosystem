@@ -42,11 +42,11 @@ HTML = Template(r"""<!doctype html><html><head><meta charset="utf-8">
 .fio { width:90px; height:1.5px; background:linear-gradient(90deg, transparent, #C9A962); } .fio.d { background:linear-gradient(90deg, #C9A962, transparent); }
 
 /* palco: área útil entre o topo e a assinatura, cartão no centro óptico */
-.palco { position:absolute; left:0; right:0; top:{{ 160 if pos == 'canto' else 236 }}px; bottom:{{ 210 if pos == 'canto' else 196 }}px; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:5; }
+.palco { position:absolute; left:0; right:0; top:{{ 160 if pos == 'canto' else 262 }}px; bottom:{{ 210 if pos == 'canto' else 186 }}px; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:5; }
 .card { position:relative; width:{{ 880 if pos == 'canto' else 860 }}px; border-radius:26px;
   background: linear-gradient(180deg, rgba(58,48,40,.72) 0%, rgba(36,29,24,.78) 100%);
   border:1.5px solid #C9A9629e; box-shadow: 0 34px 80px rgba(0,0,0,.50), inset 0 1px 0 rgba(255,240,200,.18); }
-.sec1 { padding:{{ '64px 64px 44px' if pos == 'canto' else '150px 70px 44px' }}; text-align:{{ 'left' if pos == 'canto' else 'center' }}; }
+.sec1 { padding:{{ '64px 64px 44px' if pos == 'canto' else '164px 70px 40px' }}; text-align:{{ 'left' if pos == 'canto' else 'center' }}; }
 .kicker { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:40px; color:#E2C77F; margin-bottom:18px; }
 .af { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:{{ fs }}px; line-height:1.12; color:#FAF6F0; text-wrap:balance;
   {% if pos == 'canto' %}max-width:700px;{% endif %} }
@@ -56,11 +56,12 @@ HTML = Template(r"""<!doctype html><html><head><meta charset="utf-8">
 .rot { font-size:22px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:#C9A962; margin-bottom:16px; }
 .ex { font-size:30px; line-height:1.5; color:#E8DED1; text-wrap:pretty; }
 .ref { margin-top:26px; display:inline-block; font-size:22px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:#C9A962;
-  border:1.5px solid #C9A96299; padding:9px 18px; border-radius:999px; }
+  border:1.5px solid #C9A96299; padding:9px 18px; border-radius:999px; white-space:nowrap; }
+.ref.longa { letter-spacing:1.5px; }
 
 /* selo: medalha gravada, sem brilho de moeda */
-.selo { position:absolute; width:{{ 236 if pos == 'canto' else 228 }}px; aspect-ratio:1; border-radius:50%; z-index:7;
-  {% if pos == 'canto' %}right:-46px; top:-92px; transform:rotate(-11deg);{% else %}left:50%; top:-114px; transform:translateX(-50%);{% endif %}
+.selo { position:absolute; width:{{ 236 if pos == 'canto' else 268 }}px; aspect-ratio:1; border-radius:50%; z-index:7;
+  {% if pos == 'canto' %}right:-46px; top:-92px; transform:rotate(-11deg);{% else %}left:50%; top:-134px; transform:translateX(-50%);{% endif %}
   background: radial-gradient(circle at 34% 26%, #F4E6BC 0%, #DCC385 28%, #C3A25A 58%, #9C7B3A 84%, #7A5E28 100%);
   box-shadow: 0 22px 44px rgba(0,0,0,.55), 0 0 0 6px rgba(30,24,20,.85), 0 0 0 7.5px #C9A962a6,
               inset 0 2px 4px rgba(255,248,225,.55), inset 0 -5px 10px rgba(70,48,14,.45); }
@@ -71,9 +72,11 @@ HTML = Template(r"""<!doctype html><html><head><meta charset="utf-8">
 .selo .a2 { position:absolute; inset:46px; border-radius:50%; border:1.5px solid rgba(70,48,14,.50); box-shadow: inset 0 0 0 4px rgba(255,240,200,.18); }
 .selo svg { position:absolute; inset:0; }
 .selo .miolo { position:absolute; inset:46px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; }
-.selo .ver { font-size:12px; font-weight:700; letter-spacing:4px; color:rgba(58,40,14,.85); padding-left:4px; }
-.selo .palavra { font-family:'Cormorant Garamond',serif; font-weight:700; font-size:{{ 52 if veredito == 'MITO' else 64 }}px; line-height:1; letter-spacing:2px; color:#3A2A14;
+.selo .ver { font-size:{{ 12 if pos == 'canto' else 13 }}px; font-weight:700; letter-spacing:4px; color:rgba(58,40,14,.85); padding-left:4px; }
+.selo .palavra { font-family:'Cormorant Garamond',serif; font-weight:700; font-size:{{ (52 if veredito == 'MITO' else 64) if pos == 'canto' else (60 if veredito == 'MITO' else 76) }}px; line-height:1; letter-spacing:2px; color:#3A2A14;
   text-shadow: 0 1px 0 rgba(255,244,210,.6), 0 -1px 0 rgba(60,40,10,.3); }
+.salve { margin-top:30px; font-size:22px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:#E8DED1d9; }
+.salve b { color:#C9A962; font-weight:600; }
 .selo .est { font-size:13px; color:rgba(58,40,14,.75); }
 
 .ass { position:absolute; left:0; right:0; bottom:96px; display:flex; flex-direction:column; align-items:center; gap:12px; z-index:4; }
@@ -93,11 +96,16 @@ HTML = Template(r"""<!doctype html><html><head><meta charset="utf-8">
   <div class="sec1"><div class="kicker">Você acredita que…</div>
     <div class="af {{ 'mito' if veredito == 'MITO' else '' }}"><span class="aspa">“</span>{{ afirmacao }}<span class="aspa">”</span></div></div>
   <div class="sec2"><div class="rot">{{ 'A verdade' if veredito == 'MITO' else 'O que diz a lei' }}</div>
-    <div class="ex">{{ explicacao }}</div><div class="ref">{{ ref }}</div></div>
-</div></div>
+    <div class="ex">{{ explicacao }}</div><div class="ref{{ ' longa' if ref|length > 40 else '' }}">{{ ref }}</div></div>
+</div>{% if pos == 'topo' %}<div class="salve"><b>✦</b> Salve para consultar quando precisar <b>✦</b></div>{% endif %}</div>
 <div class="ass"><div class="linha-ass"><div class="fio"></div><img src="{{ logo }}"><span class="nome">Letícia Barros · Advocacia</span><div class="fio d"></div></div><span class="oab">OAB/ES 39.948</span></div>
 <div class="grao"></div>
 </div></body></html>""")
+
+
+def ref_curta(ref: str) -> str:
+    """Abrevia a referência legal para caber numa linha da pílula."""
+    return ref.replace("Código Eleitoral", "Cód. Eleitoral").replace("Resolução", "Res.")
 
 
 def tamanho_fonte(afirmacao: str) -> int:
@@ -113,7 +121,7 @@ async def main(pos: str, dias: list[str]) -> None:
         for dia, _k, af, ver, ex, ref, _tags in MITO_OU_LEI:
             if dias and dia not in dias:
                 continue
-            await page.set_content(HTML.render(afirmacao=af.rstrip("."), veredito=ver, explicacao=ex, ref=ref, pos=pos,
+            await page.set_content(HTML.render(afirmacao=af.rstrip("."), veredito=ver, explicacao=ex, ref=ref_curta(ref), pos=pos,
                                                fs=tamanho_fonte(af) + (4 if pos == 'canto' else 0), logo=logo, mancha=v4.MANCHA, grao=v4.GRAO),
                                    wait_until="networkidle")
             await page.evaluate("document.fonts.ready")
