@@ -6,8 +6,9 @@ comentário que o próprio perfil publica logo depois do post ("" = nenhum). Uma
 imagem = post único; várias = carrossel. Quem publica não precisa saber o formato da peça. Se a
 peça já traz arte pronta (`imagem` / `imagens` no corpo), ela é usada como está.
 
-`publicavel(tipo)` diz se o tipo tem imagem própria (os demais — legenda,
-stories, reels, artigo, jornal — não passam por aqui).
+`publicavel(tipo)` diz se o tipo vai para o feed do Instagram: imagem própria, ou
+Reels com vídeo já pronto em `corpo.video` (Midia.video). Legenda, stories, artigo e
+jornal não passam por aqui.
 """
 from dataclasses import dataclass
 from pathlib import Path
@@ -26,6 +27,7 @@ class Midia:
     imagens: list[str]
     legenda: str
     primeiro_comentario: str = ""
+    video: str | None = None
 
 
 class Renderizador(Protocol):
@@ -54,7 +56,7 @@ _IMAGEM_UNICA = {
 
 
 def publicavel(tipo: str) -> bool:
-    return tipo == "carrossel" or tipo in _IMAGEM_UNICA
+    return tipo in ("carrossel", "reels") or tipo in _IMAGEM_UNICA
 
 
 def _legenda(corpo: dict) -> str:
@@ -86,6 +88,12 @@ async def montar_midia(
     def caminho(i: int) -> tuple[str, str]:
         nome = f"{prefixo}-{i}.png"
         return str(pasta / nome), f"{base_url}/{nome}"
+
+    if piece.tipo == "reels":
+        if not corpo.get("video"):
+            raise PecaSemConteudo("reels sem vídeo pronto")
+        return Midia(imagens=[], legenda=_legenda(corpo), video=corpo["video"],
+                     primeiro_comentario=(corpo.get("primeiro_comentario") or "").strip())
 
     # Arte já enviada à mão (POST /media/upload) tem prioridade sobre a gerada.
     if piece.tipo == "carrossel" and corpo.get("imagens"):

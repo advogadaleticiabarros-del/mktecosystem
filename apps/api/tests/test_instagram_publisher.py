@@ -227,3 +227,25 @@ async def test_peca_publicada_passa_a_contar_como_postada_no_editorial(db_sessio
 
     piece = (await db_session.execute(select(ContentPiece))).scalar_one()
     assert piece.status == "publicado"
+
+
+@pytest.mark.anyio
+async def test_publica_reels_agendado_com_legenda_e_primeiro_comentario(db_session, tmp_path):
+    corpo = {"video": "https://api.exemplo/media/reel.mp4", "legenda": "Legenda do reel",
+             "primeiro_comentario": "📚 Base legal"}
+    tenant, agendamento = await _setup(db_session, tipo="reels", corpo=corpo, formato="reels")
+
+    with patch("app.services.instagram_publisher.InstagramAPI") as MockAPI, patch(
+        "app.services.instagram_publisher.MEDIA_DIR", tmp_path
+    ):
+        api = _api_falsa(MockAPI, post_id="reel_1")
+        api.publicar_reels = AsyncMock(return_value="reel_1")
+        api.comentar = AsyncMock()
+        publicados = await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
+
+    assert publicados == 1
+    assert api.publicar_reels.await_args.args[1:] == ("https://api.exemplo/media/reel.mp4",)
+    assert api.publicar_reels.await_args.kwargs["legenda"] == "Legenda do reel"
+    api.comentar.assert_awaited_once_with("reel_1", "📚 Base legal")
+    await db_session.refresh(agendamento)
+    assert agendamento.status == "publicado"

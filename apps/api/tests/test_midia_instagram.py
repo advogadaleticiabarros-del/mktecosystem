@@ -95,10 +95,11 @@ async def test_peca_sem_texto_da_imagem_falha_com_erro_proprio(tmp_path):
         await _montar(_piece("carrossel", {"slides": []}), tmp_path)
 
 
-def test_publicavel_so_aceita_tipos_com_imagem():
-    for tipo in ("carrossel", "frase", "pergunta", "estatico"):
+def test_publicavel_so_aceita_tipos_do_feed():
+    """Imagem própria ou Reels com vídeo pronto (desde 09/10/2026)."""
+    for tipo in ("carrossel", "frase", "pergunta", "estatico", "reels"):
         assert publicavel(tipo)
-    for tipo in ("legenda", "stories", "reels", "artigo", "jornal"):
+    for tipo in ("legenda", "stories", "artigo", "jornal"):
         assert not publicavel(tipo)
 
 
@@ -132,3 +133,23 @@ async def test_peca_sem_primeiro_comentario_fica_vazia(tmp_path):
     midia = await _montar(piece, tmp_path)
 
     assert midia.primeiro_comentario == ""
+
+
+@pytest.mark.anyio
+async def test_reels_com_video_pronto_vira_midia_de_video(tmp_path):
+    piece = _piece("reels", {"video": "https://api.exemplo/media/reel.mp4", "legenda": "Legenda",
+                             "primeiro_comentario": "📚 Base legal"})
+
+    midia = await _montar(piece, tmp_path)
+
+    assert publicavel("reels")
+    assert midia.video == "https://api.exemplo/media/reel.mp4"
+    assert midia.imagens == []
+    assert midia.legenda == "Legenda"
+    assert midia.primeiro_comentario == "📚 Base legal"
+
+
+@pytest.mark.anyio
+async def test_reels_sem_video_nao_publica(tmp_path):
+    with pytest.raises(PecaSemConteudo):
+        await _montar(_piece("reels", {"roteiro": []}), tmp_path)

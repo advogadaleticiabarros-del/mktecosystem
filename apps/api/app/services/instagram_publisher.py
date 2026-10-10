@@ -42,7 +42,7 @@ async def _agendamentos_prontos(db: AsyncSession) -> list[tuple[ScheduledPost, C
         .join(ContentPiece, ContentPiece.id == ScheduledPost.content_piece_id)
         .where(
             ScheduledPost.canal == "instagram",
-            ScheduledPost.formato.in_(["carrossel", "post"]),
+            ScheduledPost.formato.in_(["carrossel", "post", "reels"]),
             ScheduledPost.status == "pronto",
             ScheduledPost.data_agendada <= agora.date(),
             ContentPiece.status == "aprovado",
@@ -93,7 +93,9 @@ async def publicar_agendamentos_prontos(
                 prefixo=str(agendamento.id),
                 renderizador=renderizador,
             )
-            if len(midia.imagens) == 1:
+            if midia.video:
+                post_id = await api.publicar_reels(conexao.ig_user_id, midia.video, legenda=midia.legenda)
+            elif len(midia.imagens) == 1:
                 post_id = await api.publicar_imagem_unica(
                     conexao.ig_user_id, midia.imagens[0], legenda=midia.legenda
                 )

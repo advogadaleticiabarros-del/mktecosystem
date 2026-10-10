@@ -14,10 +14,10 @@ class InstagramAPI:
         self._page_token = page_token
         self._transport = transport
 
-    async def _aguardar(self, container_id: str) -> None:
+    async def _aguardar(self, container_id: str, tentativas: int | None = None) -> None:
         """A Meta processa a imagem antes de aceitar a publicação; publicar antes do
         FINISHED dá erro ("media not ready"). Resposta sem status = pronto."""
-        for _ in range(self._tentativas_status):
+        for _ in range(tentativas or self._tentativas_status):
             estado = (await self._get(f"/{container_id}", {"fields": "status_code"})).get("status_code")
             if estado in (None, "FINISHED", "PUBLISHED"):
                 return
@@ -45,6 +45,17 @@ class InstagramAPI:
     async def publicar_imagem_unica(self, ig_user_id: str, image_url: str, legenda: str = "") -> str:
         container = await self._post(f"/{ig_user_id}/media", {"image_url": image_url, "caption": legenda})
         await self._aguardar(container["id"])
+        publicado = await self._post(f"/{ig_user_id}/media_publish", {"creation_id": container["id"]})
+        return publicado["id"]
+
+    async def publicar_reels(self, ig_user_id: str, video_url: str, legenda: str = "") -> str:
+        """Reels com vídeo já pronto (URL pública, MP4 H.264/AAC). O vídeo leva minutos para a
+        Meta processar, por isso a espera é bem maior que a de imagem (até ~10 min)."""
+        container = await self._post(
+            f"/{ig_user_id}/media",
+            {"media_type": "REELS", "video_url": video_url, "caption": legenda, "share_to_feed": "true"},
+        )
+        await self._aguardar(container["id"], tentativas=self._tentativas_status * 5)
         publicado = await self._post(f"/{ig_user_id}/media_publish", {"creation_id": container["id"]})
         return publicado["id"]
 

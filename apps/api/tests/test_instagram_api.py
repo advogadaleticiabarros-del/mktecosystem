@@ -145,3 +145,30 @@ async def test_comentar_publica_comentario_no_proprio_post():
     assert caminho.endswith("/post_123/comments")
     assert dados["message"] == "Base legal: art. 7º da CF."
     assert comentario_id == "coment_1"
+
+
+@pytest.mark.anyio
+async def test_reels_cria_container_de_video_espera_processar_e_publica(monkeypatch):
+    """Reels pela Graph API: container media_type=REELS com video_url e legenda,
+    espera o vídeo ficar FINISHED (demora mais que imagem) e só então publica."""
+    estados = iter(["IN_PROGRESS", "FINISHED"])
+    enviados = []
+
+    def responder(request: httpx.Request) -> httpx.Response:
+        if request.method == "GET":
+            return httpx.Response(200, json={"status_code": next(estados)})
+        enviados.append((request.url.path, dict(httpx.QueryParams(request.content.decode()))))
+        return httpx.Response(200, json={"id": f"r{len(enviados)}"})
+
+    api = InstagramAPI("tok", transport=httpx.MockTransport(responder))
+    monkeypatch.setattr(api, "_espera_segundos", 0)
+    post_id = await api.publicar_reels("999", "https://x/reel.mp4", legenda="Legenda do reel")
+
+    caminho, dados = enviados[0]
+    assert caminho.endswith("/999/media")
+    assert dados["media_type"] == "REELS"
+    assert dados["video_url"] == "https://x/reel.mp4"
+    assert dados["caption"] == "Legenda do reel"
+    assert dados["share_to_feed"] == "true"
+    assert enviados[-1] == ("/v21.0/999/media_publish", {"creation_id": "r1", "access_token": "tok"})
+    assert post_id == "r2"
