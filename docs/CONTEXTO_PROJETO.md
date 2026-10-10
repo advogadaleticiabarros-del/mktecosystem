@@ -591,6 +591,16 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   `cancelar_agendamento_pendente` tira do calendário (post já publicado fica). Ao ver
   peças em `ajuste`, o Claude lê o pedido, refaz a peça e devolve para `rascunho`.
 
+### Produção de novembro/2026 em rascunho (09/10/2026)
+
+- Plano `docs/PLANO_CONTEUDO_NOV_2026.md` aprovado e produzido no padrão: 13 dias de tema
+  (pergunta v6 12h, frase v2 15h, carrossel v5 Ouro editorial 18h), 15 Mito ou Lei v3 (19h) e
+  4 artigos de blog (segundas 9h), todos em rascunho com `corpo.programacao`, nas pautas de
+  novembro. Dados: `_saida_producao_1510/conteudo_nov.py` e `artigos_nov.py`. Reels esperam os
+  áudios (`docs/REELS_NOTEBOOKLM_NOV_2026.md`).
+- "Revisar e aprovar" agora mostra o texto do artigo ("Ler o artigo"), para ela aprovar sem sair
+  do Orbit; o aviso dos Reels diz que o Orbit publica sozinho.
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 0. **Chave da OpenAI para o Jornalista** (opcional — terceira fonte):

@@ -102,7 +102,7 @@ Um objeto grande com luz dramática (maleta, ampulheta, cadeira de couro, papel 
 fundo atmosférico com grão, serifa grande + sans pequena, um destaque por peça, marca
 discreta no topo, cartões de vidro flutuando. Usar isso nas próximas frentes.
 
-## Estado do conteúdo (09/10/2026)
+## Estado do conteúdo (atualizado em 09/10/2026, noite)
 
 - **Publicado**: 08/10 19h (relato assédio) — primeira publicação automática + primeiro comentário.
   09/10: frase do pet (9h) e pergunta do pet v6 (12h, post 18096433796113138, já com a arte nova;
@@ -112,9 +112,16 @@ discreta no topo, cartões de vidro flutuando. Usar isso nas próximas frentes.
   Também estão agendados os carrosséis/frases de 09–14/10 (programação anterior).
 - **Agendado (Instagram, 19h)**: os 9 Mito ou Lei v3 aprovados em 09/10 — 16, 18, 20, 22,
   24, 26, 28, 30/10 e 01/11 (backup antes: `/root/orbit-backups/antes-mito-v3-20261009.sql.gz`).
-- **Rascunho, aguardando ela** (NÃO agendar): carrosséis v5 e frases v2 do lote 15/10–02/11. Ela disse: "ainda não programe os demais, ainda vamos mudar
-  algumas coisas". Doc de aprovação do lote:
-  https://claude.ai/code/artifact/2f39add3-ba5e-4eb5-bc0e-47fae877428d
+- **Agendado depois (09/10)**: os 10 carrosséis v5 com capa Ouro editorial (18h, 15/10–02/11), o
+  carrossel cômico da pensão (10/10 15h) e os 3 Reels da série gestante (15, 17 e 19/10, 20h30,
+  publicação automática pelo Orbit).
+- **Novembro (03/11–02/12), em rascunho aguardando ela** (NÃO agendar sem aprovação): plano
+  `docs/PLANO_CONTEUDO_NOV_2026.md`, produzido em 09/10 no padrão aprovado: 13 dias de tema
+  (pergunta 12h, frase 15h, carrossel 18h), 15 Mito ou Lei (19h, dias pares) e 4 artigos de blog
+  (segundas 9h). Fonte: `_saida_producao_1510/conteudo_nov.py` e `artigos_nov.py`; geradores
+  `DADOS=nov carrossel_v5.py`, `pergunta_v6.py`, `producao_nov.py`, `capas_artigos_nov.py`;
+  envio `subir_nov.py`. Reels de novembro: esperando os áudios dela (comandos do NotebookLM em
+  `docs/REELS_NOTEBOOKLM_NOV_2026.md`).
 - Para agendar uma peça aprovada: criar `ScheduledPost(canal="instagram", formato="post"
   ou "carrossel", data/hora de corpo.programacao, status="pronto")` e mudar a peça para
   `aprovado`. Modelo de script: `/c/tmp/v6/agendar.py` (copiado em

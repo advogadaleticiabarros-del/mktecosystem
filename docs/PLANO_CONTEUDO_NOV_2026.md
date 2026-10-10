@@ -77,11 +77,18 @@ Reels: série "INSS da mulher" 1/3 ter 24 · 2/3 qui 26 · 3/3 sáb 28.
 
 ## Totais (30 dias)
 
-15 perguntas · 15 frases · 15 carrosséis · 15 Mito ou Lei · 12 Reels (4 séries) · 4 artigos de blog.
+13 perguntas · 13 frases · 13 carrosséis (um por dia de tema da tabela) · 15 Mito ou Lei · 12 Reels
+(4 séries) · 4 artigos de blog. (A primeira versão deste resumo dizia 15 de cada formato: erro de
+contagem; a tabela aprovada tem 13 dias de tema.)
+
+## Produção (09/10/2026)
+
+Tudo produzido no padrão aprovado e enviado ao Orbit como rascunho com data e hora, em "Revisar e
+aprovar". Os 🔎 acima foram conferidos (fontes no fim de `apps/api/_saida_producao_1510/conteudo_nov.py`).
+Reels: aguardam o áudio; comandos do NotebookLM em `docs/REELS_NOTEBOOKLM_NOV_2026.md`.
 
 ## O que depende da Letícia
 
-- **Áudio dos Reels**: o padrão usa só o áudio. Para cada série, eu entrego o roteiro/fonte para
-  ela gerar a narração no NotebookLM (como o vídeo da gestante) ou gravar; com o áudio, produzo
-  no padrão motion.
-- Aprovar este plano (ou trocar temas) antes da produção.
+- **Áudio dos Reels**: o padrão usa só o áudio. Fonte e instrução de cada série para o NotebookLM
+  em `docs/REELS_NOTEBOOKLM_NOV_2026.md`; com o áudio, produzo no padrão motion.
+- Aprovar as peças em "Revisar e aprovar" (o plano foi aprovado em 09/10/2026).

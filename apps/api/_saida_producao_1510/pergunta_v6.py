@@ -94,6 +94,13 @@ PECAS = {
         "Cobri as férias de uma colega. <em>Tenho direito a receber o salário dela?</em>", TRAB),
 }
 
+# Plano de novembro/2026 (conteudo_nov.py): mesmo modelo, dados no módulo do mês.
+from conteudo_nov import TEMAS as _NOV  # noqa: E402
+
+for _t in _NOV:
+    _p = _t["pergunta"]
+    PECAS[_t["chave"]] = (f"{_t['chave']}-pergunta-v6.jpg", _p["foto"], _p["pos"], _p["brilho"], PERG, _p["html"], _p["area"])
+
 # Fotos cujo objeto ficaria atrás da caixa centralizada: desce a foto (px) para o objeto aparecer abaixo dela.
 DESCE = {"bebe-pensao-morte": 330, "licenca-adotante": 300}
 

@@ -157,11 +157,23 @@ function PecaRevisao({ peca, pauta, onAtualizar }: { peca: ContentPiece; pauta?:
             {typeof peca.corpo.video_sem_musica === "string" && (
               <a className="text-primary underline" href={peca.corpo.video_sem_musica} download>Baixar versão sem música</a>
             )}
-            <span className="text-muted-foreground">Reels: postar pelo app do Instagram, com o rótulo “Informações de IA” ligado.</span>
+            <span className="text-muted-foreground">Aprovado, o Orbit publica sozinho no horário, com a legenda e o primeiro comentário.</span>
           </div>
         </div>
       )}
 
+      {typeof peca.corpo.html === "string" && (
+        <details className="rounded-lg bg-muted/40 p-3">
+          <summary className="cursor-pointer text-xs font-semibold text-foreground">
+            Ler o artigo{typeof peca.corpo.titulo === "string" ? `: ${peca.corpo.titulo}` : ""}
+          </summary>
+          {/* HTML do próprio artigo (escrito por nós e salvo no Orbit), para revisar antes de publicar */}
+          <div
+            className="mt-3 space-y-3 text-sm text-muted-foreground [&_.callout-box]:rounded-md [&_.callout-box]:bg-primary/5 [&_.callout-box]:p-3 [&_h2]:pt-2 [&_h2]:font-display [&_h2]:text-base [&_h2]:font-semibold [&_h2]:text-foreground [&_h3]:font-semibold [&_h3]:text-foreground [&_h4]:font-semibold [&_h4]:text-foreground [&_strong]:text-foreground [&_table]:w-full [&_td]:border [&_td]:border-border [&_td]:p-2 [&_th]:border [&_th]:border-border [&_th]:p-2 [&_th]:text-left [&_ul]:list-disc [&_ul]:pl-5"
+            dangerouslySetInnerHTML={{ __html: peca.corpo.html }}
+          />
+        </details>
+      )}
       {legenda && (
         <details className="rounded-lg bg-muted/40 p-3">
           <summary className="cursor-pointer text-xs font-semibold text-foreground">Legenda</summary>

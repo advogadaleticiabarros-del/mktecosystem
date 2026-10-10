@@ -23,7 +23,16 @@ from playwright.async_api import async_playwright  # noqa: E402
 import capa_fecho  # noqa: E402
 import carrossel_v4 as v4  # noqa: E402
 from app.services import render_criativo  # noqa: E402
-from carrosseis_v5_dados import CARROSSEIS  # noqa: E402
+import os  # noqa: E402
+
+if os.environ.get("DADOS") == "nov":  # plano 03/11–02/12/2026 (conteudo_nov.py)
+    from conteudo_nov import TEMAS as _NOV  # noqa: E402
+    CARROSSEIS = {t["chave"]: t["carrossel"] for t in _NOV}
+    # continua o rodízio de outubro de onde parou, sem repetir retrato no mês
+    RODIZIO = capa_fecho.ORDEM_RETRATOS[11:] + capa_fecho.ORDEM_RETRATOS[:11] + ["estudio-livros"]
+else:
+    from carrosseis_v5_dados import CARROSSEIS  # noqa: E402
+    RODIZIO = None
 
 AQUI = Path(__file__).resolve().parent
 PEXELS = json.loads((AQUI / "pexels_candidatas.json").read_text(encoding="utf-8"))
@@ -121,20 +130,24 @@ def retrato(nome: str) -> str:
 
 
 # Fotos de capa sem rosto frontal detectável: ponto de foco manual (fração da foto).
-FOCO_CAPA = {"violencia-domestica-inss": (0.42, 0.30), "mesario-folga": (0.48, 0.32), "separacao-bens-70": (0.5, 0.45)}
+FOCO_CAPA = {"violencia-domestica-inss": (0.42, 0.30), "mesario-folga": (0.48, 0.32), "separacao-bens-70": (0.5, 0.45),
+             "amamentacao-trabalho": (0.42, 0.22)}
 
 
 async def renderizar(chave: str, page) -> None:
     d = CARROSSEIS[chave]
-    tema_px, n = d["foto5"]
-    foto5 = v4.FOTOS / f"{PEXELS[tema_px][n]['id']}.jpg"
+    if isinstance(d["foto5"], int):  # id Pexels direto (novembro em diante)
+        foto5 = v4.FOTOS / f"{d['foto5']}.jpg"
+    else:
+        tema_px, n = d["foto5"]
+        foto5 = v4.FOTOS / f"{PEXELS[tema_px][n]['id']}.jpg"
     ordem = list(CARROSSEIS).index(chave)
     capa_html = capa_fecho.capa_ouro(
         capa_fecho.enquadrar(AQUI / "_fotos_pexels" / f"original-{chave}.jpg", foco=FOCO_CAPA.get(chave)), area=d["tag"],
         kicker=d["capa"][0], titulo=d["capa"][1], subtitulo=d["capa"][2],
         apoio=f'{d["capa"][3]}<span class="co-lei">{d["capa"][4]}</span>', total="07")
     fecho_html = capa_fecho.fecho(
-        ordem + 1, area=d["tag"], titulo=d["fecho"][0], sub=d["fecho"][1],
+        RODIZIO[ordem] if RODIZIO else ordem + 1, area=d["tag"], titulo=d["fecho"][0], sub=d["fecho"][1],
         apoio=f'<span class="mt">Salve este post</span> e {d["fecho"][2]}', left=6480)
     html = PAGINAS.render(
         css=CSS, extra=EXTRA, d=d, logo=render_criativo._logo_data_uri(),
