@@ -158,3 +158,14 @@ Outros temas com muita busca:
   https://claude.ai/artifact/2Y8ZraLYmWB49cMST554Kr. Ele guarda casos típicos, endereço oficial,
   áudios dos Reels, Search Console, Perfil da Empresa, avaliações e o selo "5.0 no Google". Ler as
   respostas com `ArtifactData` nas coleções `casos`, `dados/nap` e `tarefas`.
+
+### 10/10/2026: Perfil da Empresa no Google
+
+- Manual com checklist para ela: https://claude.ai/artifact/JETQMCUpDvMJSqfN5L42mz. Tem acesso, como
+  completar o perfil (descrição e serviços prontos), como publicar pelo celular e pelo computador, regras
+  e problemas comuns.
+- **Posts prontos**: ficam no banco do artefato (coleção `posts`; doc = slug, com `data`, `titulo`,
+  `texto`, `link` e `imagem` em data URI de 1200×900). Gerados por `_saida_producao_1510/posts_google.py`.
+  A cada artigo novo, acrescentar o post com `ArtifactData`. A marcação "Publiquei" dela fica em
+  `publicados`.
+- Os 2 artigos do grupo Gestante (12 e 15/10) foram aprovados e agendados em 10/10.
