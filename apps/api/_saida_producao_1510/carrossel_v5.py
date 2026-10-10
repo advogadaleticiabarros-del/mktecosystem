@@ -131,7 +131,7 @@ def retrato(nome: str) -> str:
 
 # Fotos de capa sem rosto frontal detectável: ponto de foco manual (fração da foto).
 FOCO_CAPA = {"violencia-domestica-inss": (0.42, 0.30), "mesario-folga": (0.48, 0.32), "separacao-bens-70": (0.5, 0.45),
-             "amamentacao-trabalho": (0.42, 0.22)}
+             "amamentacao-trabalho": (0.42, 0.22), "pensao-13": (0.6, 0.3)}
 
 
 async def renderizar(chave: str, page) -> None:

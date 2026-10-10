@@ -96,6 +96,14 @@ Aprovado por ela ("aprovado... salve como o novo padrão"). Regra completa no it
 Ela reprovou duas vezes recortes feitos com rembg (borda serrilhada, sombra residual,
 objetos sem sentido, vários objetos). Não usar. Foto inteira com um objeto resolve.
 
+### Regras de 10/10/2026: representatividade e objetos
+
+- O público é miscigenado, com maioria negra: nas fotos de pessoas usar **mais pessoas negras**
+  (identificação), sem deixar de usar pessoas brancas, só com menos frequência.
+- Objetos dos carrosséis sempre ligados ao tema do slide (no v5: 1º objeto no item 01, 2º no 02,
+  3º no 03). Só a biblioteca `_recortes` aprovada. Não usar `corte-caneta` (marca PARKER) nem
+  `corte-ursinho` (na verdade é uma ponta de caneta; o ursinho é `obj-ursinho2`).
+
 ### Estudo das referências dela (09/10/2026)
 
 Um objeto grande com luz dramática (maleta, ampulheta, cadeira de couro, papel amassado),

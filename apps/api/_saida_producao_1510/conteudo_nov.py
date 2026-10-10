@@ -136,7 +136,7 @@ t["carrossel"] = dict(
     ],
     checklist=["Contracheques do ano", "Datas de início e fim da licença", "Recibos da 1ª e da 2ª parcela"],
     fecho=("Licença-maternidade<br><em>não é</em> falta.", "É tempo protegido pela lei.", "mande para uma amiga de licença."),
-    objetos=["corte-sapatinho.png", "corte-calculadora.png", "corte-ursinho.png"], foto5=30699348,
+    objetos=["corte-sapatinho.png", "corte-calculadora.png", "corte-cofrinho.png"], foto5=30699348,
     legenda=legenda(t,
         "Gestante de licença-maternidade recebe o 13º inteiro? Sim. Arrasta pro lado e confere quem paga e como conferir. 👶",
         "A licença-maternidade conta como tempo de trabalho para o 13º. Na carteira assinada, a empresa paga o valor completo "
@@ -187,7 +187,7 @@ t["carrossel"] = dict(
     ],
     checklist=["Decisão ou acordo da pensão", "Extratos com os depósitos", "Contracheque do genitor, se tiver"],
     fecho=("Pensão é <em>do filho</em>.", "E o 13º também conta.", "mande para quem recebe pensão."),
-    objetos=["corte-cofrinho.png", "corte-pasta.png", "corte-martelo.png"], foto5=3171117,
+    objetos=["corte-cofrinho.png", "obj-envelope.png", "corte-martelo.png"], foto5=3171117,
     legenda=legenda(t,
         "Pensão alimentícia e 13º salário: quando o desconto vale também no fim do ano? Arrasta pro lado. 🎄",
         "A resposta depende de como a pensão foi fixada. Em percentual do salário, o STJ decidiu que o desconto incide sobre o 13º "
@@ -240,7 +240,7 @@ t["carrossel"] = dict(
     ],
     checklist=["Certidão de nascimento do bebê", "Pedido das pausas por escrito", "Registro de ponto dos dias"],
     fecho=("Amamentar <em>é direito</em><br>de quem trabalha.", "E do seu bebê também.", "mande para uma mãe que voltou ao trabalho."),
-    objetos=["corte-ampulheta.png", "corte-ursinho.png", "corte-celular.png"], foto5=8430560,
+    objetos=["corte-ampulheta.png", "corte-sapatinho-azul.png", "corte-estetoscopio.png"], foto5=8430560,
     legenda=legenda(t,
         "Amamentação no trabalho: até os 6 meses, a mãe tem 2 pausas de meia hora por dia. Arrasta pro lado e confere. 🍼",
         "A CLT garante dois descansos especiais de 30 minutos para amamentar, dentro do expediente, até o bebê completar 6 meses. "
@@ -290,7 +290,7 @@ t["carrossel"] = dict(
     ],
     checklist=["Se existe auxílio-creche e o valor", "Até que idade do filho vale", "Como pedir o reembolso"],
     fecho=("Mãe que trabalha<br>precisa de <em>rede</em>.", "E a empresa faz parte dela.", "mande para uma colega que vai voltar da licença."),
-    objetos=["obj-ursinho2.png", "corte-chaves.png", "corte-cafe.png"], foto5=6692931,
+    objetos=["obj-cadeira.png", "corte-sapatinho.png", "obj-ursinho2.png"], foto5=6692931,
     legenda=legenda(t,
         "Creche e trabalho: empresa com 30 mulheres ou mais tem obrigação com os bebês das funcionárias. Arrasta pro lado. 🧸",
         "O estabelecimento com pelo menos 30 mulheres acima de 16 anos precisa de local para as mães deixarem os filhos no período de "
@@ -396,7 +396,7 @@ t["carrossel"] = dict(
     ],
     checklist=["Registro de ponto do dia 20", "Contracheque do mês seguinte", "Data da folga, se houve troca"],
     fecho=("Feriado trabalhado<br>tem <em>preço</em>.", "E ele está na lei.", "mande para quem trabalha no dia 20."),
-    objetos=["corte-cafe.png", "corte-reais.png", "corte-carimbo.png"], foto5=36703589,
+    objetos=["corte-carimbo.png", "corte-cofrinho.png", "corte-cafe.png"], foto5=36703589,
     legenda=legenda(t,
         "20 de novembro é feriado nacional. Quem trabalha recebe em dobro ou ganha folga. Arrasta pro lado. 🗓️",
         "A Lei 14.759/2023 tornou o Dia Nacional de Zumbi e da Consciência Negra feriado em todo o país. "
@@ -448,7 +448,7 @@ t["carrossel"] = dict(
     ],
     checklist=["Prints, áudios e e-mails", "Nomes de quem presenciou", "Datas e o que foi dito"],
     fecho=("Racismo <em>não é</em><br>brincadeira.", "É crime, inclusive no trabalho.", "mande para quem precisa ouvir isso."),
-    objetos=["corte-celular.png", "corte-caneta.png", "corte-martelo.png"], foto5=5386496,
+    objetos=["corte-martelo.png", "corte-celular.png", "corte-pasta.png"], foto5=5386496,
     legenda=legenda(t,
         "Racismo no trabalho: injúria racial é crime, e a piada aumenta a pena. Arrasta pro lado e confere como reunir provas. ✊🏾",
         "Desde a Lei 14.532/2023, a injúria racial tem pena de 2 a 5 anos de reclusão. Se a ofensa vem em tom de piada ou "
@@ -501,7 +501,7 @@ t["carrossel"] = dict(
     ],
     checklist=["Exames e comprovantes de gastos", "Conversas e fotos com o pai", "O que souber da renda dele"],
     fecho=("A pensão do seu filho<br>começa <em>na barriga</em>.", "A lei não espera o parto.", "mande para uma amiga grávida."),
-    objetos=["corte-ultrassom.png", "corte-sapatinho-azul.png", "corte-martelo.png"], foto5=19785770,
+    objetos=["corte-ultrassom.png", "corte-remedios.png", "corte-celular.png"], foto5=19785770,
     legenda=legenda(t,
         "Alimentos gravídicos: a gestante pode pedir pensão ao pai antes do bebê nascer. Arrasta pro lado. 🤰",
         "A Lei 11.804/2008 garante à gestante ajuda do pai com as despesas da gravidez, como consultas, exames, remédios e parto. "
@@ -555,7 +555,7 @@ t["carrossel"] = dict(
     ],
     checklist=["Extrato do CNIS no Meu INSS", "Carteiras de trabalho antigas", "Carnês e períodos sem registro"],
     fecho=("Cada ano de trabalho<br><em>conta</em>.", "Confira se o INSS registrou todos.", "mande para quem está perto de se aposentar."),
-    objetos=["corte-pasta.png", "corte-calculadora.png", "corte-ampulheta.png"], foto5=31005426,
+    objetos=["corte-ampulheta.png", "corte-calculadora.png", "corte-pasta.png"], foto5=39993576,
     legenda=legenda(t,
         "Aposentadoria da mulher em 2026: 62 anos, 93 pontos, 59 anos e meio ou pedágio. Arrasta pro lado e confere as 5 regras. 👵🏾",
         "Depois da Reforma da Previdência, a mulher tem regras de transição. Em 2026: por idade, 62 anos e 15 de contribuição; "
@@ -607,7 +607,7 @@ t["carrossel"] = dict(
     ],
     checklist=["Carteira de trabalho e rescisão", "Extrato do CNIS", "Certidão de nascimento ou atestado"],
     fecho=("Desemprego <em>não apaga</em><br>o que você contribuiu.", "O INSS ainda protege você.", "mande para uma amiga grávida e sem emprego."),
-    objetos=["corte-sapatinho.png", "corte-pasta.png", "corte-celular.png"], foto5=28259754,
+    objetos=["corte-sapatinho.png", "corte-ampulheta.png", "corte-pasta.png"], foto5=28259754,
     legenda=legenda(t,
         "Desempregada e grávida: o INSS paga o salário-maternidade no período de graça. Arrasta pro lado. 👶",
         "Quem deixa de contribuir continua segurada por 12 meses depois da última contribuição, prazo que pode chegar a 36 meses "
@@ -658,7 +658,7 @@ t["carrossel"] = dict(
     ],
     checklist=["Folha resumo do CadÚnico", "Número do NIT ou PIS", "Guias pagas com o código 1929"],
     fecho=("Trabalho de casa<br><em>também</em> é trabalho.", "E pode virar aposentadoria.", "mande para uma mãe que cuida da casa."),
-    objetos=["corte-cofrinho.png", "corte-chaves.png", "corte-cafe.png"], foto5=3807113,
+    objetos=["corte-chaves.png", "corte-cofrinho.png", "corte-prancheta.png"], foto5=3807113,
     legenda=legenda(t,
         "Dona de casa e INSS: com R$ 81,05 por mês em 2026, a mulher de baixa renda garante a aposentadoria por idade. Arrasta pro lado. 🏠",
         "A dona de casa sem renda própria, de família inscrita no CadÚnico e com renda de até 2 salários mínimos, contribui "
@@ -712,7 +712,7 @@ t["carrossel"] = dict(
     ],
     checklist=["O acordo ou a decisão da guarda", "Datas combinadas por escrito", "Autorização de viagem, se houver"],
     fecho=("O centro de tudo<br>é <em>a criança</em>.", "As datas se organizam em volta dela.", "mande para quem vai dividir as festas."),
-    objetos=["obj-ursinho2.png", "corte-chaves.png", "corte-celular.png"], foto5=4546012,
+    objetos=["corte-pasta.png", "corte-ampulheta.png", "obj-ursinho2.png"], foto5=4546012,
     legenda=legenda(t,
         "Guarda compartilhada no Natal e nas férias: com quem o seu filho fica? Arrasta pro lado e confere. 🎄",
         "O Código Civil manda dividir o tempo de convívio com equilíbrio na guarda compartilhada. As festas e as férias seguem "
