@@ -125,7 +125,7 @@ discreta no topo, cartões de vidro flutuando. Usar isso nas próximas frentes.
   publicação automática pelo Orbit).
 - **Novembro aprovado em 10/10**: os 13 carrosséis, 13 frases e 13 perguntas foram aprovados por ela e
   agendados (12h/15h/18h, backup `/root/orbit-backups/antes-aprovar-nov-20261010.sql.gz`). Ainda em
-  rascunho: os 15 Mito ou Lei e os 4 artigos.
+  rascunho: os 15 Mito ou Lei. Os 4 artigos foram aprovados e agendados também em 10/10 (segundas 9h).
 - **Novembro (03/11–02/12), em rascunho aguardando ela** (NÃO agendar sem aprovação): plano
   `docs/PLANO_CONTEUDO_NOV_2026.md`, produzido em 09/10 no padrão aprovado: 13 dias de tema
   (pergunta 12h, frase 15h, carrossel 18h), 15 Mito ou Lei (19h, dias pares) e 4 artigos de blog
