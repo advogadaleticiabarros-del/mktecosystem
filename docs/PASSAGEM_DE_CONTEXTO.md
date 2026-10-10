@@ -123,9 +123,9 @@ discreta no topo, cartões de vidro flutuando. Usar isso nas próximas frentes.
 - **Agendado depois (09/10)**: os 10 carrosséis v5 com capa Ouro editorial (18h, 15/10–02/11), o
   carrossel cômico da pensão (10/10 15h) e os 3 Reels da série gestante (15, 17 e 19/10, 20h30,
   publicação automática pelo Orbit).
-- **Novembro aprovado em 10/10**: os 13 carrosséis, 13 frases e 13 perguntas foram aprovados por ela e
+- **Novembro aprovado em 10/10 (tudo, menos Reels)**: os 13 carrosséis, 13 frases e 13 perguntas foram aprovados por ela e
   agendados (12h/15h/18h, backup `/root/orbit-backups/antes-aprovar-nov-20261010.sql.gz`). Ainda em
-  rascunho: os 15 Mito ou Lei. Os 4 artigos foram aprovados e agendados também em 10/10 (segundas 9h).
+  rascunho: nada (os 15 Mito ou Lei também foram aprovados em 10/10, 19h). Os 4 artigos foram aprovados e agendados também em 10/10 (segundas 9h).
 - **Novembro (03/11–02/12), em rascunho aguardando ela** (NÃO agendar sem aprovação): plano
   `docs/PLANO_CONTEUDO_NOV_2026.md`, produzido em 09/10 no padrão aprovado: 13 dias de tema
   (pergunta 12h, frase 15h, carrossel 18h), 15 Mito ou Lei (19h, dias pares) e 4 artigos de blog
