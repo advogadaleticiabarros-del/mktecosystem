@@ -578,7 +578,7 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   da série gestante FINISHED em ~30 s.
 - A API não liga o rótulo "Informações de IA": a legenda leva "🔊 Narração produzida com
   inteligência artificial.".
-- Produção: skill `leticia-reels-motion` + motor congelado em `C:	mpideos-reels\_padrao-motion`.
+- Produção: skill `leticia-reels-motion` + motor congelado em `C:\tmp\videos-reels\_padrao-motion`.
   Série gestante agendada: 15, 17 e 19/10 às 20h30.
 
 ### Editorial: aprovar ou pedir alteração (09/10/2026)
