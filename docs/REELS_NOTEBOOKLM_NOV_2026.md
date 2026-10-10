@@ -3,6 +3,8 @@
 Para a Letícia gerar a narração das 4 séries do plano (`docs/PLANO_CONTEUDO_NOV_2026.md`). O vídeo é
 produzido por nós a partir do áudio, no padrão motion (skill `leticia-reels-motion`).
 
+Página para ela (celular, com botões de copiar e roteiro falado da série 1): https://claude.ai/artifact/Uxj3u5dK7TA2YQbQYFgjTe
+
 ## Como gerar (igual para as 4 séries)
 
 1. No NotebookLM, crie **um caderno por série** (ex.: "Reels 13º sem susto").
