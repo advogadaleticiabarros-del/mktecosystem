@@ -107,3 +107,22 @@ Para cada série eu entrego o roteiro com as falas, a fonte e a instrução do N
 - Aprovar este plano (ou trocar temas).
 - Áudios das 4 séries de dezembro, com até 7 dias de antecedência.
 - O caso típico dos artigos, no formulário de pendências.
+
+## Produção (10/10/2026)
+
+Aprovado por ela em 10/10 e produzido no mesmo dia, no padrão aprovado. Está tudo em rascunho, com data e hora, em
+"Revisar e aprovar" (backup `/root/orbit-backups/antes-dez-rascunhos-20261010.sql.gz`).
+
+- **Temas e Mito ou Lei**: 13 dias de tema (pergunta, frase, carrossel) e 14 Mito ou Lei.
+  - Fonte: `_saida_producao_1510/conteudo_dez.py`.
+  - Geradores: `DADOS=dez carrossel_v5.py`, `pergunta_v6.py` e `MES=dez producao_nov.py`.
+  - Envio: `MES=dez subir_nov.py`.
+- **Blog**: 9 artigos (`artigos_dez.py` + `artigos_dez_extras.py`), cada um com o post do Google.
+  - Os posts estão no manual do Perfil no Google (coleção `posts`) e no campo "Legenda" do rascunho.
+  - As capas do blog e as imagens dos posts são geradas por `posts_google_dez.py`.
+- **Reels**: roteiros das 4 séries (fonte + instrução do NotebookLM) em `roteiros_reels.py` e na página
+  https://claude.ai/artifact/Uxj3u5dK7TA2YQbQYFgjTe.
+  - Prazos do áudio: 24/11, 01/12, 08/12 e 15/12.
+- **Fotos**: capas com predominância de pessoas negras (regra de 10/10).
+  - A foto da temporária foi trocada porque tinha placas em inglês.
+  - Na capa da licença-paternidade, o foco foi ajustado para mostrar o bebê.

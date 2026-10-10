@@ -142,7 +142,7 @@ discreta no topo, cartões de vidro flutuando. Usar isso nas próximas frentes.
   (seg e qui, 9h), grupo Gestante CLT primeiro. Antes de escrever cada artigo, ler os "casos típicos" que ela
   deixa no artefato https://claude.ai/artifact/2Y8ZraLYmWB49cMST554Kr (`ArtifactData`, coleção `casos`).
 
-- **Dezembro (10/10)**: plano em `docs/PLANO_CONTEUDO_DEZ_2026.md`, aguardando aprovação dela. As 40 pautas foram criadas como sugestão no Planejamento.
+- **Dezembro (10/10)**: plano aprovado e produzido (62 rascunhos aguardando aprovação dela). Detalhes em `docs/PLANO_CONTEUDO_DEZ_2026.md`, seção Produção.
 
 ## Próximos passos prováveis
 

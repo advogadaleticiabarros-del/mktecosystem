@@ -95,9 +95,10 @@ PECAS = {
 }
 
 # Plano de novembro/2026 (conteudo_nov.py): mesmo modelo, dados no módulo do mês.
+from conteudo_dez import TEMAS as _DEZ  # noqa: E402
 from conteudo_nov import TEMAS as _NOV  # noqa: E402
 
-for _t in _NOV:
+for _t in _NOV + _DEZ:
     _p = _t["pergunta"]
     PECAS[_t["chave"]] = (f"{_t['chave']}-pergunta-v6.jpg", _p["foto"], _p["pos"], _p["brilho"], PERG, _p["html"], _p["area"])
 

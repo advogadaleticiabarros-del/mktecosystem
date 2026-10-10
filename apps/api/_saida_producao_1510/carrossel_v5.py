@@ -25,11 +25,13 @@ import carrossel_v4 as v4  # noqa: E402
 from app.services import render_criativo  # noqa: E402
 import os  # noqa: E402
 
-if os.environ.get("DADOS") == "nov":  # plano 03/11–02/12/2026 (conteudo_nov.py)
-    from conteudo_nov import TEMAS as _NOV  # noqa: E402
-    CARROSSEIS = {t["chave"]: t["carrossel"] for t in _NOV}
-    # continua o rodízio de outubro de onde parou, sem repetir retrato no mês
-    RODIZIO = capa_fecho.ORDEM_RETRATOS[11:] + capa_fecho.ORDEM_RETRATOS[:11] + ["estudio-livros"]
+if os.environ.get("DADOS") in ("nov", "dez"):  # planos mensais (conteudo_nov.py, conteudo_dez.py)
+    import importlib  # noqa: E402
+    _MES = importlib.import_module("conteudo_" + os.environ["DADOS"])
+    CARROSSEIS = {t["chave"]: t["carrossel"] for t in _MES.TEMAS}
+    # cada mês continua o rodízio de onde o anterior parou, sem repetir retrato dentro do mês
+    _INICIO = {"nov": 11, "dez": 4}[os.environ["DADOS"]]
+    RODIZIO = capa_fecho.ORDEM_RETRATOS[_INICIO:] + capa_fecho.ORDEM_RETRATOS[:_INICIO] + ["estudio-livros"]
 else:
     from carrosseis_v5_dados import CARROSSEIS  # noqa: E402
     RODIZIO = None
@@ -131,7 +133,8 @@ def retrato(nome: str) -> str:
 
 # Fotos de capa sem rosto frontal detectável: ponto de foco manual (fração da foto).
 FOCO_CAPA = {"violencia-domestica-inss": (0.42, 0.30), "mesario-folga": (0.48, 0.32), "separacao-bens-70": (0.5, 0.45),
-             "amamentacao-trabalho": (0.42, 0.22), "pensao-13": (0.6, 0.3)}
+             "amamentacao-trabalho": (0.42, 0.22), "pensao-13": (0.6, 0.3),
+             "licenca-paternidade-2027": (0.42, 0.62)}
 
 
 async def renderizar(chave: str, page) -> None:

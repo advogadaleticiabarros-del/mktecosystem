@@ -20,15 +20,24 @@ from app.models.tenant import Tenant
 
 AQUI = Path(__file__).resolve().parent
 sys.path.insert(0, str(AQUI))
-from artigos_nov import ARTIGOS  # noqa: E402
-from conteudo_nov import MITO_OU_LEI, TEMAS, legenda_mito  # noqa: E402
+import importlib, os  # noqa: E402
+MES = os.environ.get("MES", "nov")
+ARTIGOS = importlib.import_module("artigos_" + MES).ARTIGOS
+_C = importlib.import_module("conteudo_" + MES)
+MITO_OU_LEI, TEMAS = _C.MITO_OU_LEI, _C.TEMAS
+from conteudo_nov import legenda_mito  # noqa: E402
 
-V = "nov1"
+V = MES + "1"
 MIDIA = f"{settings.PUBLIC_API_URL}/media"
 
 
 def url(nome: str) -> str:
     return f"{MIDIA}/{nome}?v={V}"
+
+
+def capa(artigo: dict) -> str:
+    # novembro usou PNG; de dezembro em diante as capas do blog são JPG leves
+    return f"capa-{artigo['slug']}.{'png' if MES == 'nov' else 'jpg'}"
 
 
 def texto(html: str) -> str:
@@ -81,7 +90,9 @@ async def main():
             p = await pauta_do_dia(db, tid, a["data"], "artigo", a["pauta"])
             n += await criar(db, tid, p, "artigo", {
                 "titulo": a["titulo"], "slug": a["slug"], "html": a["html"], "meta_description": a["meta"],
-                "resumo": a["resumo"], "capa_arquivo": f"capa-{a['slug']}.png", "imagem_capa": url(f"capa-{a['slug']}.png"),
+                "resumo": a["resumo"], "capa_arquivo": capa(a), "imagem_capa": url(capa(a)),
+                **({"legenda": "Post para o Perfil da Empresa no Google (Adicionar atualização):\n\n" + a["post_google"]}
+                   if a.get("post_google") else {}),
                 "programacao": {"data": a["data"], "hora": "09:00"}})
         await db.commit()
         print("peças criadas em rascunho:", n)
