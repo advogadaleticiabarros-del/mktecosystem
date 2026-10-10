@@ -138,6 +138,10 @@ discreta no topo, cartões de vidro flutuando. Usar isso nas próximas frentes.
   `aprovado`. Modelo de script: `/c/tmp/v6/agendar.py` (copiado em
   `apps/api/_saida_producao_1510/agendar_perguntas_v6.py`).
 
+- **SEO (10/10)**: plano em `docs/SEO_PLANO_GOOGLE_IA.md` (seção Execução). 2 artigos de blog por semana
+  (seg e qui, 9h), grupo Gestante CLT primeiro. Antes de escrever cada artigo, ler os "casos típicos" que ela
+  deixa no artefato https://claude.ai/artifact/2Y8ZraLYmWB49cMST554Kr (`ArtifactData`, coleção `casos`).
+
 ## Próximos passos prováveis
 
 1. Levar o padrão novo (foto inteira + objeto + vidro) para **frases** e **capas de

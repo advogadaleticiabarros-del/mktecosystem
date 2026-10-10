@@ -131,3 +131,30 @@ Outros temas com muita busca:
 - [Site da OAB sobre marketing jurídico](https://www.oab.org.br/noticia/60188/oab-lanca-site-para-esclarecer-duvidas-sobre-o-marketing-juridico)
 - Google, guia oficial de recursos de IA na busca (skill `ai-seo`): sem marcação especial; conteúdo útil
   e organizado; não escrever separado "para IA".
+
+## Execução
+
+### 10/10/2026: Frente A feita e conteúdo iniciado
+
+- **Site no ar** (`apps/api/_saida_producao_1510/seo_site.py`; backup dos textos em
+  `/root/orbit-backups/site-textos-antes-seo-20261010.tgz`): 65 arquivos e 127 trocas.
+  - Saíram "especialista", "Fale comigo", "envie o seu caso", "análise gratuita" e "sem compromisso".
+  - "Deficiência" virou "necessidades especiais" e "ex" virou "genitor"/"pai".
+  - O valor do BPC foi atualizado para R$ 1.621.
+  - 2 endereços novos, com 301: `pai-nao-paga-pensao-o-que-fazer` e `bpc-para-crianca-com-necessidades-especiais-...`.
+  - Schema completo em 38 artigos (FAQPage em 32).
+  - "Continue lendo" por assunto em todos os artigos; links do blog na home e nas áreas; títulos locais nas áreas.
+  - Mapa do site de 24 para 59 URLs (9 artigos estavam fora); `llms.txt` publicado.
+  - Capas em JPG (de 12,8 MB para 1,3 MB).
+  - A pasta `.claude` exposta foi removida e os arquivos ocultos agora dão 404.
+- **Orbit**: `app/services/blog_seo.py` aplica schema, FAQ, breadcrumb, "Continue lendo" e capa JPG em
+  todo artigo publicado automaticamente (testes em `tests/test_blog_seo.py`).
+- **Grupo Gestante CLT**:
+  - 10 pautas criadas, segundas e quintas às 9h, de 12/10 a 26/11.
+  - Prontos em rascunho: o guia completo (12/10) e o de contrato de experiência/temporário (15/10), cada um com o
+    texto do post para o Perfil da Empresa em `corpo.legenda`.
+  - Fonte: `_saida_producao_1510/artigos_cluster_gestante.py`.
+- **Pendências dela** (artefato com campos que salvam para o Claude):
+  https://claude.ai/artifact/2Y8ZraLYmWB49cMST554Kr. Ele guarda casos típicos, endereço oficial,
+  áudios dos Reels, Search Console, Perfil da Empresa, avaliações e o selo "5.0 no Google". Ler as
+  respostas com `ArtifactData` nas coleções `casos`, `dados/nap` e `tarefas`.
