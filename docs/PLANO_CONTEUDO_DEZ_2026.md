@@ -130,3 +130,5 @@ Aprovado por ela em 10/10 e produzido no mesmo dia, no padrão aprovado. Está t
   têm uma foto do tema que atravessa os slides 3 e 4 ("complemento de duas páginas"), em `?v=dez3`
   (backup `/root/orbit-backups/antes-dez3-carrosseis-20261010.sql.gz`).
   - Fotos horizontais do Pexels, uma por tema (ids em `objetos` de `conteudo_dez.py`).
+- **Aprovação (10/10, noite)**: ela aprovou tudo; os 62 itens estão aprovados e programados (Instagram + blog), sem
+  choque de horário (backup `/root/orbit-backups/antes-aprovar-dez-20261010.sql.gz`). Falta só o áudio dos Reels.
