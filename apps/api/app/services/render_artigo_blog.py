@@ -70,7 +70,7 @@ def renderizar_artigo_html(
         resumo=resumo,
         corpo_html=corpo_html,
         canonical_url=f"{BLOG_BASE_URL}{slug}.html",
-        capa_url=f"{BLOG_BASE_URL}capas/{slug}.png",
+        capa_url=f"{BLOG_BASE_URL}capas/{slug}.jpg",
         data_iso=data_publicacao.isoformat(),
         data_extenso=data_extenso,
         tempo_leitura=estimar_tempo_leitura(corpo_html),

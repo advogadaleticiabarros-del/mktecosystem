@@ -208,5 +208,5 @@ async def test_artigo_com_capa_pronta_e_slug_definido_usa_os_dois(db_session, tm
 
     renderizar.assert_not_awaited()
     enviados = {c.args[0]: c.args[1] for c in instancia.upload.await_args_list}
-    assert enviados["capas/guarda-de-pet.png"] == b"foto-de-verdade"
+    assert enviados["capas/guarda-de-pet.jpg"] == b"foto-de-verdade"  # bytes inválidos seguem como vieram
     assert "guarda-de-pet.html" in enviados

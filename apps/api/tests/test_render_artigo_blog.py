@@ -41,7 +41,7 @@ def test_renderiza_html_do_artigo_com_campos_principais():
     assert "21 de julho de 2026" in html
     assert (
         '<meta property="og:image" '
-        'content="https://advogadaleticiabarros.com.br/blog/capas/carga-horaria-maxima-clt.png">'
+        'content="https://advogadaleticiabarros.com.br/blog/capas/carga-horaria-maxima-clt.jpg">'
         in html
     )
 

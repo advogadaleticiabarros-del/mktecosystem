@@ -19,6 +19,7 @@ from app.models.scheduled_post import ScheduledPost
 from app.models.tenant import TenantConfig
 from app.services.agendamento_horario import horario_ja_chegou, hoje_brasilia
 from app.services.blog_index_editor import inserir_card, inserir_sitemap_entry
+from app.services.blog_seo import aplicar_seo, capa_para_jpg, cards_do_indice, escolher_relacionados
 from app.services.blog_slug import gerar_slug
 from app.services.render_artigo_blog import (
     estimar_tempo_leitura,
@@ -155,10 +156,15 @@ async def _publicar_artigo(
     index_atual = (await sftp.download(f"{settings.BLOG_SFTP_PATH}index.html")).decode("utf-8")
     sitemap_atual = (await sftp.download(f"{settings.BLOG_SFTP_PATH}../sitemap.xml")).decode("utf-8")
 
+    # SEO (schema com autora/OAB, FAQ, breadcrumb e "Continue lendo") e capa leve em JPG.
+    relacionados = escolher_relacionados(cards_do_indice(index_atual), slug=slug, categoria_slug=categoria_slug)
+    html_artigo = aplicar_seo(html_artigo, slug=slug, relacionados=relacionados, data_iso=hoje_brasilia().isoformat())
+    capa_bytes = capa_para_jpg(capa_bytes)
+
     index_novo = inserir_card(
         index_atual,
         url=f"{slug}.html",
-        imagem=f"capas/{slug}.png",
+        imagem=f"capas/{slug}.jpg",
         categoria=categoria,
         categoria_slug=categoria_slug,
         titulo=titulo,
@@ -171,7 +177,7 @@ async def _publicar_artigo(
 
     await sftp.upload(f"{settings.BLOG_SFTP_PATH}{slug}.html", html_artigo.encode("utf-8"))
     await sftp.garantir_diretorio(f"{settings.BLOG_SFTP_PATH}capas")
-    await sftp.upload(f"{settings.BLOG_SFTP_PATH}capas/{slug}.png", capa_bytes)
+    await sftp.upload(f"{settings.BLOG_SFTP_PATH}capas/{slug}.jpg", capa_bytes)
     await sftp.upload(f"{settings.BLOG_SFTP_PATH}index.html", index_novo.encode("utf-8"))
     await sftp.upload(f"{settings.BLOG_SFTP_PATH}../sitemap.xml", sitemap_novo.encode("utf-8"))
     return url_artigo
