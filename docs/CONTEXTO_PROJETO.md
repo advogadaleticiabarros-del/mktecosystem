@@ -570,6 +570,17 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   renderizar_mito_ou_lei` (valida veredito MITO/LEI, abrevia referência longa), com testes.
   9 peças agendadas às 19h de 16/10 a 01/11. Ver `docs/PASSAGEM_DE_CONTEXTO.md`.
 
+### Reels: publicação automática e padrão de produção (09/10/2026)
+
+- `InstagramAPI.publicar_reels` (container REELS com video_url, espera FINISHED, publica);
+  `montar_midia` aceita `tipo="reels"` com `corpo.video`; o publicador busca `formato="reels"`.
+  Vídeo: 1080×1920, H.264, AAC 128 kbps (192 é recusado). Teste real sem publicar: container
+  da série gestante FINISHED em ~30 s.
+- A API não liga o rótulo "Informações de IA": a legenda leva "🔊 Narração produzida com
+  inteligência artificial.".
+- Produção: skill `leticia-reels-motion` + motor congelado em `C:	mpideos-reels\_padrao-motion`.
+  Série gestante agendada: 15, 17 e 19/10 às 20h30.
+
 ### Editorial: aprovar ou pedir alteração (09/10/2026)
 
 - Pedido da Letícia ("preciso de um botão de alteração ou aprovação"). No Editorial (celular),
