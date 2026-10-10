@@ -50,6 +50,11 @@ EXTRA = """
 .check { margin-top:26px; font-size:32px; line-height:1.75; color:#231E1A; }
 .check span { display:inline-block; width:26px; height:26px; border:2.5px solid #8F7032; border-radius:4px; margin-right:16px; vertical-align:-3px; }
 .obj img, img.obj { max-width:760px; max-height:470px; object-fit:contain; }
+/* Objeto em arco (desde 10/10/2026): foto real do objeto do tema, ou recorte aprovado, dentro de um arco dourado. */
+.arco-obj { position:absolute; width:380px; height:470px; border-radius:190px 190px 14px 14px; overflow:hidden; z-index:3;
+  border:3px solid #C9A962; box-shadow:0 26px 52px rgba(35,30,26,.30); background:radial-gradient(circle at 50% 40%, #F7F0E4, #E6D9C4); }
+.arco-obj img { width:100%; height:100%; object-fit:cover; filter:sepia(.12) saturate(.92) contrast(1.03); }
+.arco-obj.recorte img { object-fit:contain; padding:46px 34px; filter:drop-shadow(0 14px 18px rgba(35,30,26,.28)); }
 """
 
 PAGINAS = Template(r"""<!doctype html><html><head><meta charset="utf-8">
@@ -105,9 +110,7 @@ PAGINAS = Template(r"""<!doctype html><html><head><meta charset="utf-8">
 
 <div class="arco" style="left:1700px; top:860px; width:1150px; height:1150px;"></div>
 <div class="arco" style="left:4950px; top:-620px; width:1000px; height:1000px;"></div>
-<img class="obj" src="{{ obj1 }}" style="left:1700px; top:930px; transform:rotate(-10deg);">
-<img class="obj" src="{{ obj2 }}" style="left:2880px; top:900px; transform:rotate(10deg);">
-<img class="obj" src="{{ obj3 }}" style="left:3820px; top:930px; transform:rotate(-7deg);">
+{{ objetos_html }}
 <div class="fosco grao"></div><div class="fosco veu"></div>
 </div></body></html>""")
 
@@ -129,6 +132,24 @@ def retrato(nome: str) -> str:
         im.putalpha(ImageChops.multiply(a, grad))
     buf = io.BytesIO(); im.save(buf, "PNG")
     return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
+
+
+POSICOES_LEGADO = [("1700px", "930px", -10), ("2880px", "900px", 10), ("3820px", "930px", -7)]
+ARCO_LEFT = [1680, 2760, 3840]  # mesmo ponto em cada slide (x 600 do slide), longe do texto e da paginação
+
+
+def objetos_html(objetos: list) -> str:
+    """Recorte solto (padrão até nov/2026) ou objeto em arco: "foto:<id Pexels>" ou "arco:<recorte>.png"."""
+    partes = []
+    for i, o in enumerate(objetos):
+        if isinstance(o, str) and o.startswith("foto:"):
+            partes.append(f'<div class="arco-obj" style="left:{ARCO_LEFT[i]}px; top:740px;"><img src="{v4.foto(v4.FOTOS / (o[5:] + '.jpg'), w=760, h=940, foco=0.45)}"></div>')
+        elif isinstance(o, str) and o.startswith("arco:"):
+            partes.append(f'<div class="arco-obj recorte" style="left:{ARCO_LEFT[i]}px; top:740px;"><img src="{v4.png(o[5:])}"></div>')
+        else:
+            left, top, rot = POSICOES_LEGADO[i]
+            partes.append(f'<img class="obj" src="{v4.png(o)}" style="left:{left}; top:{top}; transform:rotate({rot}deg);">')
+    return "\n".join(partes)
 
 
 # Fotos de capa sem rosto frontal detectável: ponto de foco manual (fração da foto).
@@ -156,7 +177,7 @@ async def renderizar(chave: str, page) -> None:
         css=CSS, extra=EXTRA, d=d, logo=render_criativo._logo_data_uri(),
         grao=v4.GRAO, mancha=v4.MANCHA, fibra=v4.FIBRA, ruido=v4.RUIDO,
         capa_html=capa_html, fecho_html=fecho_html, css_capa=capa_fecho.CSS + capa_fecho.CSS_OURO, foto5=v4.foto(foto5, foco=0.25),
-        obj1=v4.png(d["objetos"][0]), obj2=v4.png(d["objetos"][1]), obj3=v4.png(d["objetos"][2]),
+        objetos_html=objetos_html(d["objetos"]),
     )
     # o CSS do v4 usa variáveis do Jinja ({{ grao }} etc.): renderiza de novo para resolvê-las
     html = Template(html).render(grao=v4.GRAO, mancha=v4.MANCHA, fibra=v4.FIBRA, ruido=v4.RUIDO)
