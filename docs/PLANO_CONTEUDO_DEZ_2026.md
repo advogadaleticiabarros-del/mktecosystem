@@ -126,3 +126,7 @@ Aprovado por ela em 10/10 e produzido no mesmo dia, no padrão aprovado. Está t
 - **Fotos**: capas com predominância de pessoas negras (regra de 10/10).
   - A foto da temporária foi trocada porque tinha placas em inglês.
   - Na capa da licença-paternidade, o foco foi ajustado para mostrar o bebê.
+- **Objetos dos carrosséis (10/10, tarde)**: ela reprovou os objetos soltos e depois o arco. Os 13 carrosséis agora
+  têm uma foto do tema que atravessa os slides 3 e 4 ("complemento de duas páginas"), em `?v=dez3`
+  (backup `/root/orbit-backups/antes-dez3-carrosseis-20261010.sql.gz`).
+  - Fotos horizontais do Pexels, uma por tema (ids em `objetos` de `conteudo_dez.py`).

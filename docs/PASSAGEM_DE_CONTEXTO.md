@@ -104,9 +104,9 @@ objetos sem sentido, vários objetos). Não usar. Foto inteira com um objeto res
   3º no 03). Só a biblioteca `_recortes` aprovada. Não usar `corte-caneta` (marca PARKER) nem
   `corte-ursinho` (na verdade é uma ponta de caneta; o ursinho é `obj-ursinho2`).
 
-- **Objeto em arco (10/10, tarde)**: ela reprovou de novo os objetos soltos ("não batem com os temas"). De dezembro em
-  diante, cada item tem uma foto real do objeto exato, dentro de um arco dourado. Em `carrossel_v5.py`, use
-  `objetos=["foto:<id Pexels>", ...]`; recortes aprovados que encaixam entram como `"arco:corte-x.png"`.
+- **Objeto entre duas páginas (10/10, tarde)**: ela reprovou os objetos soltos sem relação com o tema e depois
+  reprovou o arco. O padrão atual é uma foto real do tema que atravessa do slide 3 para o 4, sem moldura e
+  dissolvendo no fundo. Em `carrossel_v5.py`: `objetos=["nenhum", "ponte:<id Pexels>", "nenhum"]`.
 
 ### Estudo das referências dela (09/10/2026)
 

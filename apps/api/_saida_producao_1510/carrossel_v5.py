@@ -54,6 +54,13 @@ EXTRA = """
 .arco-obj { position:absolute; width:380px; height:470px; border-radius:190px 190px 14px 14px; overflow:hidden; z-index:3;
   border:3px solid #C9A962; box-shadow:0 26px 52px rgba(35,30,26,.30); background:radial-gradient(circle at 50% 40%, #F7F0E4, #E6D9C4); }
 .arco-obj img { width:100%; height:100%; object-fit:cover; filter:sepia(.12) saturate(.92) contrast(1.03); }
+.sangra-obj { position:absolute; width:1080px; height:560px; top:790px; z-index:2; overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 42%); mask-image:linear-gradient(180deg, transparent 0%, #000 42%); }
+.sangra-obj img { width:100%; height:100%; object-fit:cover; filter:sepia(.14) saturate(.9) contrast(1.02); }
+.ponte-obj { position:absolute; height:430px; top:830px; z-index:2; overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 34%, #000 86%, transparent 100%), linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-composite:source-in; mask-image:linear-gradient(180deg, transparent 0%, #000 34%, #000 86%, transparent 100%), linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%); mask-composite:intersect; }
+.ponte-obj img { width:100%; height:100%; object-fit:cover; filter:sepia(.14) saturate(.9) contrast(1.02); }
 .arco-obj.recorte img { object-fit:contain; padding:46px 34px; filter:drop-shadow(0 14px 18px rgba(35,30,26,.28)); }
 """
 
@@ -144,6 +151,15 @@ def objetos_html(objetos: list) -> str:
     for i, o in enumerate(objetos):
         if isinstance(o, str) and o.startswith("foto:"):
             partes.append(f'<div class="arco-obj" style="left:{ARCO_LEFT[i]}px; top:740px;"><img src="{v4.foto(v4.FOTOS / (o[5:] + '.jpg'), w=760, h=940, foco=0.45)}"></div>')
+        elif isinstance(o, str) and o.startswith("sangra:"):
+            # foto do objeto ocupando a base do slide, sem moldura, dissolvendo no papel
+            partes.append(f'<div class="sangra-obj" style="left:{ARCO_LEFT[i] - 600}px;"><img src="{v4.foto(v4.FOTOS / (o[7:] + '.jpg'), w=2160, h=1120, foco=0.5)}"></div>')
+        elif isinstance(o, str) and o.startswith("ponte:"):
+            # foto que atravessa a divisão entre este slide e o próximo (continua quando a pessoa arrasta)
+            esquerda = 1080 * (i + 1) + 380  # começa no slide do item e termina antes do fim do slide seguinte
+            partes.append(f'<div class="ponte-obj" style="left:{esquerda}px; width:1400px;"><img src="{v4.foto(v4.FOTOS / (o[6:] + '.jpg'), w=2800, h=860, foco=0.42)}"></div>')
+        elif o in (None, "", "nenhum"):
+            continue
         elif isinstance(o, str) and o.startswith("arco:"):
             partes.append(f'<div class="arco-obj recorte" style="left:{ARCO_LEFT[i]}px; top:740px;"><img src="{v4.png(o[5:])}"></div>')
         else:
