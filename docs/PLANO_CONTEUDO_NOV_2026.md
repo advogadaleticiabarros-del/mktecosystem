@@ -98,7 +98,7 @@ Reels: aguardam o áudio; comandos do NotebookLM em `docs/REELS_NOTEBOOKLM_NOV_2
 A narração chegou em 10/10 (vídeo do NotebookLM "Para Trabalhadoras"). Os 3 Reels foram feitos no novo padrão motion v2
 procedural: pó de ouro, poeira reativa à voz, transições "tinta" e "luz" e verificador automático da área limpa.
 - Código e legendas: repo `videos-reels`, pasta `13-reels-procedural` (skill `leticia-reels-motion`).
-- Estão como **rascunho** no Orbit (ter 03/11, qui 05/11, sáb 07/11, 20h30), esperando a aprovação dela.
+- Aprovados por ela em 10/10 e programados no Orbit: ter 03/11, qui 05/11 e sáb 07/11, às 20h30 (publicação automática).
 - Backup antes do envio: `/root/orbit-backups/antes-reels13-20261010.sql.gz`.
 - Recebidos também, para próximas peças: "Como calcular o 13º proporcional", "As 4 regras do 13º", 2 vídeos de pensão
   (mito dos 30%) e "Gestante e Trabalho" (7 min).
