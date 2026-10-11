@@ -102,3 +102,15 @@ procedural: pó de ouro, poeira reativa à voz, transições "tinta" e "luz" e v
 - Backup antes do envio: `/root/orbit-backups/antes-reels13-20261010.sql.gz`.
 - Recebidos também, para próximas peças: "Como calcular o 13º proporcional", "As 4 regras do 13º", 2 vídeos de pensão
   (mito dos 30%) e "Gestante e Trabalho" (7 min).
+
+### Reels extras (10/10/2026, a pedido dela: "pode produzir todos e programar")
+
+Feitos com os outros vídeos que ela mandou, no motor v2, e já **aprovados e programados** às 20h30
+(backup `/root/orbit-backups/antes-reels-extras-20261010.sql.gz`):
+- seg 09/11 · como calcular o 13º proporcional (exemplo de R$ 3.000 que dá R$ 1.250);
+- ter 10/11, qui 12/11 e sáb 14/11 · série "Gestante e insalubridade":
+  - substitui a série "Depois do parto", então ela não precisa gravar esse áudio;
+  - a creche fica para outra pauta;
+- seg 16/11 · pensão: o mito dos 30% (Família);
+- dom 29/11 · 13º: as 4 regras (véspera da 1ª parcela).
+Faltam os áudios de "Pensão desde a barriga" (17/11, prazo 10/11) e "INSS da mulher" (24/11, prazo 17/11).
