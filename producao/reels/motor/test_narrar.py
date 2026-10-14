@@ -36,6 +36,12 @@ def test_palavras_no_formato_whisper_com_deslocamento():
     assert ws == [{"word": " Oi", "start": 2.0, "end": 2.2}, {"word": " gente", "start": 2.3, "end": 2.8}]
 
 
+def test_config_em_json_ou_duas_linhas():
+    assert n.ler_config('{"api_key": "sk_1", "voice_id": "v1"}') == {"api_key": "sk_1", "voice_id": "v1"}
+    assert n.ler_config("sk_1\r\nv1\r\n") == {"api_key": "sk_1", "voice_id": "v1"}
+    assert n.ler_config("sk_1") == {"api_key": "sk_1", "voice_id": None}
+
+
 def test_narrar_junta_partes_com_pausa_e_usa_cache(tmp_path):
     chamadas = []
 

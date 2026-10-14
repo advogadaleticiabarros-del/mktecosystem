@@ -8,7 +8,7 @@ Saída (na pasta indicada, normalmente fontes/):
 
 Uso: py narrar.py roteiro.txt [pasta_saida] [--checar]
 Chave e voz: variáveis ELEVENLABS_API_KEY e ELEVENLABS_VOICE_ID, ou o arquivo
-C:\\Users\\prosy\\.elevenlabs-leticia.json com {"api_key": "...", "voice_id": "..."} (fora do git).
+C:\\Users\\prosy\\.elevenlabs-leticia.json (fora do git): chave na 1ª linha e ID da voz na 2ª, ou JSON.
 
 Boas práticas (adaptadas do OpenMontage, 14/10/2026):
 - endpoint /with-timestamps: o tempo de cada palavra vem junto com o áudio;
@@ -130,10 +130,19 @@ def narrar(partes: list[dict], cfg: dict, post, cache: Path, decodificar) -> tup
 
 
 # --------------------------------------------------------------------------- execução
+def ler_config(texto: str) -> dict:
+    """Aceita JSON {"api_key", "voice_id"} ou texto simples: chave na 1ª linha, ID da voz na 2ª."""
+    texto = texto.strip()
+    if texto.startswith("{"):
+        return json.loads(texto)
+    linhas = [l.strip() for l in texto.splitlines() if l.strip() and "COLE" not in l]
+    return {"api_key": linhas[0] if linhas else None, "voice_id": linhas[1] if len(linhas) > 1 else None}
+
+
 def carregar_cfg() -> dict:
     cfg = {"api_key": os.environ.get("ELEVENLABS_API_KEY"), "voice_id": os.environ.get("ELEVENLABS_VOICE_ID")}
     if CONFIG_LOCAL.exists():
-        local = json.loads(CONFIG_LOCAL.read_text(encoding="utf-8"))
+        local = ler_config(CONFIG_LOCAL.read_text(encoding="utf-8-sig"))
         cfg = {k: cfg[k] or local.get(k) for k in cfg}
     falta = [k for k, v in cfg.items() if not v]
     if falta:
