@@ -1,0 +1,5 @@
+file 'C:/tmp/videos-reels/13-reels-procedural/work/audio_r6/voz_0.wav'
+file 'C:/tmp/videos-reels/13-reels-procedural/work/audio_r6/voz_1.wav'
+file 'C:/tmp/videos-reels/13-reels-procedural/work/audio_r6/voz_2.wav'
+file 'C:/tmp/videos-reels/13-reels-procedural/work/audio_r6/voz_3.wav'
+file 'C:/tmp/videos-reels/13-reels-procedural/work/audio_r6/voz_4.wav'

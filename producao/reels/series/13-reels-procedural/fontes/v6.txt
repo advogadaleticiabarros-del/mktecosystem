@@ -1,0 +1,14 @@
+   0.00    2.08  Trabalhou só alguns meses nesse ano?
+   2.60    5.26  O seu 13º proporcional está garantido por lei.
+   5.80    9.92  Entrar no meio do ano corta o bono cheio, mas a matemática do pagamento ajusta.
+  10.42   14.94  Imagine um salário de R$ 3.000 no contrato que começou só no dia 10 de agosto.
+  15.46   18.48  A regra básica divide a remuneração em 12 avos.
+  18.88   22.46  O salário é fatiado em 12 partes iguais, representando cada mês do ano.
+  23.00   24.68  Mas e os meses incompletos?
+  24.68   30.40  Como o trabalho começou no dia 10, esse primeiro mês entra inteiro na conta ou fica quebrado?
+  30.96   32.78  A solução está na regra dos 15 dias.
+  33.32   36.70  Quem trabalha pelo menos 15 dias no mês garante aquela fatia inteira.
+  37.24   43.02  Somando agosto, com setembro, outubro, novembro e dezembro, o trabalhador acumula cinco fatias garantidas.
+  43.60   47.96  Agora, é só multiplicar o valor de uma única fatia por esses cinco meses validados.
+  48.36   51.02  E com esse cálculo, aquele funcionário que começou em agosto
+  51.02   55.16  recebe exatamente R$ 1250 no fim do ano.

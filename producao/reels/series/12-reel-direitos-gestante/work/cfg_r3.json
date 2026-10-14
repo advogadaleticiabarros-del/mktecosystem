@@ -1,0 +1,1326 @@
+{
+ "serie": "Série gestante · 3/3",
+ "total": 42.62,
+ "cenas": [
+  {
+   "a": 0,
+   "trans": "corte",
+   "bg": {
+    "seq": "seq/r3_cama",
+    "n": 247,
+    "vel": 1.0,
+    "kb": [
+     1.2,
+     1.04,
+     0,
+     0,
+     -40,
+     0
+    ]
+   },
+   "veu": "linear-gradient(180deg, rgba(26,21,17,.85), rgba(26,21,17,.35) 50%, rgba(26,21,17,.9))",
+   "els": [
+    {
+     "tipo": "texto",
+     "html": "E se o bebê|ficar <em>internado</em>?",
+     "at": 0.06,
+     "anim": "mascara",
+     "cls": "cg",
+     "style": {
+      "top": "380px",
+      "left": "70px",
+      "right": "70px",
+      "fontSize": "128px",
+      "lineHeight": "1.02",
+      "textAlign": "left",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    },
+    {
+     "html": "A licença-maternidade espera?",
+     "cls": "pill",
+     "at": 0.98,
+     "anim": "pop",
+     "style": {
+      "top": "670px",
+      "left": "70px"
+     }
+    },
+    {
+     "tipo": "traco",
+     "html": "<svg width=\"240\" height=\"240\" viewBox=\"0 0 240 240\" fill=\"none\" stroke=\"#C9A962\" stroke-width=\"7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"filter:drop-shadow(0 0 14px rgba(201,169,98,.55))\"><rect class=\"desenha\" x=\"20\" y=\"20\" width=\"200\" height=\"200\" rx=\"30\"/><path class=\"desenha\" d=\"M120 60 L120 180 M60 120 L180 120\"/></svg>",
+     "at": 5.38,
+     "durTraco": 1.0,
+     "stagger": 0.0,
+     "style": {
+      "top": "800px",
+      "left": "70px"
+     }
+    }
+   ]
+  },
+  {
+   "a": 7.45,
+   "trans": "whip",
+   "bg": {
+    "seq": "seq/r3_calendario",
+    "n": 144,
+    "vel": 1.0,
+    "blur": 4
+   },
+   "veu": "rgba(26,21,17,.62)",
+   "els": [
+    {
+     "html": "A regra",
+     "cls": "kick",
+     "at": 7.55,
+     "anim": "sobe",
+     "style": {
+      "top": "360px",
+      "left": "70px"
+     }
+    },
+    {
+     "tipo": "contador",
+     "de": 0,
+     "para": 120,
+     "at": 8.64,
+     "durConta": 1.4,
+     "anim": "fade",
+     "dur": 0.15,
+     "html": "<span class=\"cg num\" style=\"font-size:320px;font-weight:700;line-height:.9;color:#E2C77F;text-shadow:0 10px 50px rgba(0,0,0,.6)\">0</span><span class=\"cg\" style=\"font-size:96px;font-weight:600;font-style:italic;color:#FAF6F0;margin-left:18px\">dias</span>",
+     "style": {
+      "top": "430px",
+      "left": "70px"
+     }
+    },
+    {
+     "html": "com salário",
+     "cls": "pill",
+     "at": 11.02,
+     "anim": "pop",
+     "style": {
+      "top": "830px",
+      "left": "80px"
+     }
+    }
+   ]
+  },
+  {
+   "a": 11.45,
+   "trans": "whipV",
+   "bg": {
+    "seq": "seq/r3_amamenta",
+    "n": 268,
+    "vel": 1.0,
+    "kb": [
+     1.04,
+     1.13,
+     0,
+     0,
+     0,
+     -40
+    ]
+   },
+   "els": [
+    {
+     "html": "<div style=\"width:300px;height:300px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#FFF3CF,#DCC385 30%,#C3A25A 60%,#8E6E2E);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 8px rgba(26,21,17,.8),0 0 0 10px #C9A962,0 30px 60px rgba(0,0,0,.5);color:#3A2A14\"><span style=\"font-size:24px;font-weight:800;letter-spacing:3px\">PROGRAMA</span><span class=\"cg\" style=\"font-size:58px;font-weight:700;line-height:1;text-align:center\">Empresa<br>Cidadã</span></div>",
+     "at": 15.85,
+     "anim": "carimbo",
+     "rot": -10,
+     "style": {
+      "top": "380px",
+      "left": "640px"
+     }
+    },
+    {
+     "html": "+60 dias",
+     "cls": "pill",
+     "at": 18.790000000000003,
+     "anim": "pop",
+     "style": {
+      "top": "690px",
+      "left": "80px"
+     }
+    },
+    {
+     "tipo": "contador",
+     "de": 120,
+     "para": 180,
+     "at": 18.19,
+     "durConta": 1.0,
+     "anim": "fade",
+     "dur": 0.15,
+     "html": "<span class=\"cg num\" style=\"font-size:290px;font-weight:700;line-height:.9;color:#E2C77F;text-shadow:0 10px 50px rgba(0,0,0,.6)\">120</span><span class=\"cg\" style=\"font-size:87px;font-weight:600;font-style:italic;color:#FAF6F0;margin-left:18px\">dias</span>",
+     "style": {
+      "top": "770px",
+      "left": "70px"
+     }
+    }
+   ]
+  },
+  {
+   "a": 19.57,
+   "trans": "iris",
+   "irisY": 38,
+   "particulas": 22,
+   "els": [
+    {
+     "html": "ADI 6327",
+     "cls": "pill",
+     "at": 23.7,
+     "anim": "pop",
+     "style": {
+      "top": "360px",
+      "left": "50%",
+      "marginLeft": "-110px"
+     }
+    },
+    {
+     "tipo": "traco",
+     "html": "<svg width=\"540\" height=\"410\" viewBox=\"0 0 540 410\" fill=\"none\" stroke=\"#C9A962\" stroke-width=\"7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"filter:drop-shadow(0 0 14px rgba(201,169,98,.55))\"><path class=\"desenha\" d=\"M30 120 L270 30 L510 120 Z\"/><path class=\"desenha\" d=\"M60 150 L480 150\"/><path class=\"desenha\" d=\"M100 170 L100 360\"/><path class=\"desenha\" d=\"M200 170 L200 360\"/><path class=\"desenha\" d=\"M340 170 L340 360\"/><path class=\"desenha\" d=\"M440 170 L440 360\"/><path class=\"desenha\" d=\"M40 390 L500 390\"/></svg>",
+     "at": 19.62,
+     "durTraco": 1.4,
+     "stagger": 0.08,
+     "style": {
+      "top": "440px",
+      "left": "270px"
+     }
+    },
+    {
+     "tipo": "texto",
+     "html": "Decisão do|<em>STF</em>",
+     "at": 19.96,
+     "anim": "mascara",
+     "cls": "cg",
+     "style": {
+      "top": "870px",
+      "left": "70px",
+      "right": "70px",
+      "fontSize": "100px",
+      "lineHeight": "1.02",
+      "textAlign": "center",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    }
+   ]
+  },
+  {
+   "a": 24.57,
+   "trans": "zoom",
+   "bg": {
+    "seq": "seq/r3_cama2",
+    "n": 270,
+    "vel": 1.0,
+    "blur": 8
+   },
+   "veu": "rgba(26,21,17,.7)",
+   "els": [
+    {
+     "tipo": "texto",
+     "html": "A licença começa|<em>depois da alta</em>",
+     "at": 27.04,
+     "anim": "mascara",
+     "cls": "cg",
+     "style": {
+      "top": "380px",
+      "left": "70px",
+      "right": "70px",
+      "fontSize": "92px",
+      "lineHeight": "1.02",
+      "textAlign": "left",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    },
+    {
+     "tipo": "linha",
+     "html": "<div style=\"position:relative;height:8px;background:rgba(232,222,209,.22);border-radius:4px\"><div class=\"fill\" style=\"height:100%;width:0;background:linear-gradient(90deg,#8C7F72,#B7AA9C);border-radius:4px;\"></div></div>",
+     "at": 24.76,
+     "ateFim": 26.3,
+     "style": {
+      "top": "740px",
+      "left": "90px",
+      "width": "380px"
+     }
+    },
+    {
+     "html": "<div style=\"font-size:28px;font-weight:800;letter-spacing:2px;color:#E8DED1\">INTERNAÇÃO</div><div style=\"font-size:26px;color:#E8DED1cc\">mais de 2 semanas</div>",
+     "at": 24.76,
+     "anim": "sobe",
+     "style": {
+      "top": "640px",
+      "left": "90px"
+     }
+    },
+    {
+     "html": "<div style=\"width:34px;height:34px;border-radius:50%;background:#F4E6BC;box-shadow:0 0 0 8px rgba(201,169,98,.25),0 0 30px #C9A962;margin:0 auto\"></div><div style=\"margin-top:22px;font-size:30px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#FAF6F0;text-align:center;white-space:nowrap\">Alta</div>",
+     "at": 31.98,
+     "anim": "pop",
+     "style": {
+      "top": "731px",
+      "left": "380px",
+      "width": "240px"
+     }
+    },
+    {
+     "tipo": "linha",
+     "html": "<div style=\"position:relative;height:8px;background:rgba(232,222,209,.22);border-radius:4px\"><div class=\"fill\" style=\"height:100%;width:0;background:linear-gradient(90deg,#B8943F,#F4E6BC);border-radius:4px;box-shadow:0 0 22px #C9A962\"></div></div>",
+     "at": 32.13,
+     "ateFim": 33.28,
+     "style": {
+      "top": "740px",
+      "left": "530px",
+      "width": "460px"
+     }
+    },
+    {
+     "html": "<div class=\"cg\" style=\"font-size:66px;font-weight:700;color:#E2C77F\">120 dias</div><div style=\"font-size:26px;color:#E8DED1\">contam daqui</div>",
+     "at": 32.480000000000004,
+     "anim": "pop",
+     "style": {
+      "top": "830px",
+      "left": "640px"
+     }
+    }
+   ]
+  },
+  {
+   "a": 32.82,
+   "trans": "dissolve",
+   "bg": {
+    "seq": "seq/r3_mao",
+    "n": 175,
+    "vel": 1.0,
+    "kb": [
+     1.02,
+     1.16,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "els": [
+    {
+     "tipo": "texto",
+     "html": "Tempo em casa com o bebê,|<em>protegido</em>.",
+     "at": 33.77,
+     "anim": "mascara",
+     "cls": "cg",
+     "style": {
+      "top": "400px",
+      "left": "70px",
+      "right": "70px",
+      "fontSize": "84px",
+      "lineHeight": "1.02",
+      "textAlign": "left",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    }
+   ]
+  },
+  {
+   "a": 37.72,
+   "trans": "dissolve",
+   "bg": {
+    "src": "midia/recem-nascido-5.jpg",
+    "blur": 6,
+    "kb": [
+     1.1,
+     1.18,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "veu": "rgba(26,21,17,.7)",
+   "els": [
+    {
+     "tipo": "texto",
+     "html": "Informação|<em>é poder</em>.",
+     "at": 37.769999999999996,
+     "anim": "mascara",
+     "cls": "cg",
+     "style": {
+      "top": "600px",
+      "left": "70px",
+      "right": "70px",
+      "fontSize": "150px",
+      "lineHeight": "1.02",
+      "textAlign": "center",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    }
+   ]
+  },
+  {
+   "a": 39.22,
+   "trans": "dissolve",
+   "particulas": 18,
+   "els": [
+    {
+     "html": "<img src=\"midia/logo.png\" style=\"width:180px\">",
+     "at": 39.37,
+     "anim": "pop",
+     "style": {
+      "top": "360px",
+      "left": "450px"
+     }
+    },
+    {
+     "tipo": "texto",
+     "html": "Salve e mande para|<em>uma gestante</em>.",
+     "at": 39.519999999999996,
+     "anim": "mascara",
+     "cls": "cg",
+     "style": {
+      "top": "580px",
+      "left": "70px",
+      "right": "70px",
+      "fontSize": "92px",
+      "lineHeight": "1.02",
+      "textAlign": "center",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    },
+    {
+     "html": "Salve a série completa",
+     "cls": "pill",
+     "at": 39.92,
+     "anim": "pop",
+     "style": {
+      "top": "790px",
+      "left": "50%",
+      "marginLeft": "-330px",
+      "width": "660px",
+      "textAlign": "center"
+     }
+    },
+    {
+     "html": "Cada caso tem detalhes.<br>Procure uma advogada de confiança.",
+     "at": 40.12,
+     "anim": "sobe",
+     "style": {
+      "top": "900px",
+      "left": "70px",
+      "right": "70px",
+      "textAlign": "center",
+      "fontSize": "34px",
+      "fontWeight": "600",
+      "lineHeight": "1.4",
+      "color": "#E8DED1"
+     }
+    },
+    {
+     "tipo": "texto",
+     "html": "Dra. Letícia Barros,|a advogada da <em>Gestante trabalhadora</em>",
+     "at": 40.32,
+     "anim": "sobe",
+     "cls": "cg",
+     "style": {
+      "top": "1010px",
+      "left": "70px",
+      "right": "70px",
+      "fontSize": "44px",
+      "lineHeight": "1.02",
+      "textAlign": "center",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    },
+    {
+     "html": "OAB/ES 39.948 · @adv.leticiabarros2",
+     "cls": "kick",
+     "at": 40.47,
+     "anim": "sobe",
+     "style": {
+      "top": "1130px",
+      "left": "0",
+      "right": "0",
+      "textAlign": "center"
+     }
+    }
+   ]
+  }
+ ],
+ "leg": [
+  {
+   "a": 0.04,
+   "b": 1.28,
+   "w": [
+    {
+     "t": "o",
+     "a": 0.04,
+     "b": 0.14,
+     "d": false
+    },
+    {
+     "t": "que",
+     "a": 0.14,
+     "b": 0.22,
+     "d": false
+    },
+    {
+     "t": "acontece",
+     "a": 0.22,
+     "b": 0.7,
+     "d": false
+    },
+    {
+     "t": "com",
+     "a": 0.7,
+     "b": 0.9,
+     "d": false
+    },
+    {
+     "t": "a",
+     "a": 0.9,
+     "b": 0.98,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 0.98,
+   "b": 2.5599999999999996,
+   "w": [
+    {
+     "t": "licença",
+     "a": 0.98,
+     "b": 1.44,
+     "d": true
+    },
+    {
+     "t": "se",
+     "a": 1.44,
+     "b": 1.78,
+     "d": false
+    },
+    {
+     "t": "houver",
+     "a": 1.78,
+     "b": 1.96,
+     "d": false
+    },
+    {
+     "t": "alguma",
+     "a": 1.96,
+     "b": 2.26,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 2.26,
+   "b": 3.94,
+   "w": [
+    {
+     "t": "complicação",
+     "a": 2.26,
+     "b": 2.94,
+     "d": false
+    },
+    {
+     "t": "que",
+     "a": 2.94,
+     "b": 3.22,
+     "d": false
+    },
+    {
+     "t": "force",
+     "a": 3.22,
+     "b": 3.46,
+     "d": false
+    },
+    {
+     "t": "a",
+     "a": 3.46,
+     "b": 3.64,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 3.64,
+   "b": 5.68,
+   "w": [
+    {
+     "t": "mãe",
+     "a": 3.64,
+     "b": 3.82,
+     "d": false
+    },
+    {
+     "t": "ou",
+     "a": 3.82,
+     "b": 4.3,
+     "d": false
+    },
+    {
+     "t": "o",
+     "a": 4.3,
+     "b": 4.42,
+     "d": false
+    },
+    {
+     "t": "bebê",
+     "a": 4.42,
+     "b": 4.76,
+     "d": false
+    },
+    {
+     "t": "a",
+     "a": 4.76,
+     "b": 5.08,
+     "d": false
+    },
+    {
+     "t": "ficarem",
+     "a": 5.08,
+     "b": 5.38,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 5.38,
+   "b": 6.9799999999999995,
+   "w": [
+    {
+     "t": "internados",
+     "a": 5.38,
+     "b": 6.14,
+     "d": true
+    },
+    {
+     "t": "por",
+     "a": 6.14,
+     "b": 6.4,
+     "d": false
+    },
+    {
+     "t": "muito",
+     "a": 6.4,
+     "b": 6.68,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 6.68,
+   "b": 7.68,
+   "w": [
+    {
+     "t": "tempo",
+     "a": 6.68,
+     "b": 6.98,
+     "d": false
+    },
+    {
+     "t": "no",
+     "a": 6.98,
+     "b": 7.12,
+     "d": false
+    },
+    {
+     "t": "hospital.",
+     "a": 7.12,
+     "b": 7.38,
+     "d": true
+    }
+   ]
+  },
+  {
+   "a": 7.5,
+   "b": 8.940000000000001,
+   "w": [
+    {
+     "t": "o",
+     "a": 7.5,
+     "b": 7.58,
+     "d": false
+    },
+    {
+     "t": "padrão",
+     "a": 7.58,
+     "b": 7.94,
+     "d": false
+    },
+    {
+     "t": "no",
+     "a": 7.94,
+     "b": 8.1,
+     "d": false
+    },
+    {
+     "t": "Brasil",
+     "a": 8.1,
+     "b": 8.38,
+     "d": false
+    },
+    {
+     "t": "são",
+     "a": 8.38,
+     "b": 8.64,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 8.64,
+   "b": 10.48,
+   "w": [
+    {
+     "t": "120",
+     "a": 8.64,
+     "b": 9.3,
+     "d": true
+    },
+    {
+     "t": "dias",
+     "a": 9.3,
+     "b": 9.7,
+     "d": true
+    },
+    {
+     "t": "de",
+     "a": 9.7,
+     "b": 9.88,
+     "d": false
+    },
+    {
+     "t": "licença",
+     "a": 9.88,
+     "b": 10.18,
+     "d": true
+    }
+   ]
+  },
+  {
+   "a": 10.18,
+   "b": 11.75,
+   "w": [
+    {
+     "t": "maternidade",
+     "a": 10.18,
+     "b": 10.82,
+     "d": false
+    },
+    {
+     "t": "com",
+     "a": 10.82,
+     "b": 11.02,
+     "d": false
+    },
+    {
+     "t": "salário,",
+     "a": 11.02,
+     "b": 11.45,
+     "d": true
+    }
+   ]
+  },
+  {
+   "a": 11.51,
+   "b": 13.370000000000001,
+   "w": [
+    {
+     "t": "Mas",
+     "a": 11.51,
+     "b": 11.83,
+     "d": false
+    },
+    {
+     "t": "uma",
+     "a": 11.83,
+     "b": 12.15,
+     "d": false
+    },
+    {
+     "t": "boa",
+     "a": 12.15,
+     "b": 12.33,
+     "d": false
+    },
+    {
+     "t": "notícia",
+     "a": 12.33,
+     "b": 12.79,
+     "d": false
+    },
+    {
+     "t": "é",
+     "a": 12.79,
+     "b": 13.07,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 13.07,
+   "b": 14.430000000000001,
+   "w": [
+    {
+     "t": "que",
+     "a": 13.07,
+     "b": 13.23,
+     "d": false
+    },
+    {
+     "t": "empresas",
+     "a": 13.23,
+     "b": 13.67,
+     "d": false
+    },
+    {
+     "t": "que",
+     "a": 13.67,
+     "b": 13.89,
+     "d": false
+    },
+    {
+     "t": "fazem",
+     "a": 13.89,
+     "b": 14.13,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 14.13,
+   "b": 15.290000000000001,
+   "w": [
+    {
+     "t": "parte",
+     "a": 14.13,
+     "b": 14.49,
+     "d": false
+    },
+    {
+     "t": "do",
+     "a": 14.49,
+     "b": 14.65,
+     "d": false
+    },
+    {
+     "t": "programa",
+     "a": 14.65,
+     "b": 14.99,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 14.99,
+   "b": 17.43,
+   "w": [
+    {
+     "t": "Empresa",
+     "a": 14.99,
+     "b": 15.85,
+     "d": false
+    },
+    {
+     "t": "Cidadã",
+     "a": 15.85,
+     "b": 16.37,
+     "d": true
+    },
+    {
+     "t": "podem",
+     "a": 16.37,
+     "b": 17.13,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 17.13,
+   "b": 18.27,
+   "w": [
+    {
+     "t": "estender",
+     "a": 17.13,
+     "b": 17.49,
+     "d": false
+    },
+    {
+     "t": "esse",
+     "a": 17.49,
+     "b": 17.73,
+     "d": false
+    },
+    {
+     "t": "período",
+     "a": 17.73,
+     "b": 17.97,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 17.97,
+   "b": 19.77,
+   "w": [
+    {
+     "t": "para",
+     "a": 17.97,
+     "b": 18.19,
+     "d": false
+    },
+    {
+     "t": "180",
+     "a": 18.19,
+     "b": 18.67,
+     "d": true
+    },
+    {
+     "t": "dias.",
+     "a": 18.67,
+     "b": 19.47,
+     "d": true
+    }
+   ]
+  },
+  {
+   "a": 19.6,
+   "b": 20.7,
+   "w": [
+    {
+     "t": "veio",
+     "a": 19.6,
+     "b": 19.76,
+     "d": false
+    },
+    {
+     "t": "uma",
+     "a": 19.76,
+     "b": 19.96,
+     "d": false
+    },
+    {
+     "t": "decisão",
+     "a": 19.96,
+     "b": 20.4,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 20.4,
+   "b": 22.720000000000002,
+   "w": [
+    {
+     "t": "importantíssima",
+     "a": 20.4,
+     "b": 22.1,
+     "d": false
+    },
+    {
+     "t": "do",
+     "a": 22.1,
+     "b": 22.42,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 22.42,
+   "b": 23.32,
+   "w": [
+    {
+     "t": "Supremo",
+     "a": 22.42,
+     "b": 22.68,
+     "d": false
+    },
+    {
+     "t": "Tribunal",
+     "a": 22.68,
+     "b": 23.02,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 23.02,
+   "b": 24.8,
+   "w": [
+    {
+     "t": "Federal,",
+     "a": 23.02,
+     "b": 23.32,
+     "d": false
+    },
+    {
+     "t": "o",
+     "a": 23.62,
+     "b": 23.7,
+     "d": false
+    },
+    {
+     "t": "STF.",
+     "a": 23.7,
+     "b": 24.5,
+     "d": true
+    }
+   ]
+  },
+  {
+   "a": 24.62,
+   "b": 25.900000000000002,
+   "w": [
+    {
+     "t": "Se",
+     "a": 24.62,
+     "b": 24.68,
+     "d": false
+    },
+    {
+     "t": "a",
+     "a": 24.68,
+     "b": 24.76,
+     "d": false
+    },
+    {
+     "t": "internação",
+     "a": 24.76,
+     "b": 25.26,
+     "d": true
+    },
+    {
+     "t": "passar",
+     "a": 25.26,
+     "b": 25.6,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 25.6,
+   "b": 27.34,
+   "w": [
+    {
+     "t": "de",
+     "a": 25.6,
+     "b": 25.82,
+     "d": false
+    },
+    {
+     "t": "duas",
+     "a": 25.82,
+     "b": 26.1,
+     "d": false
+    },
+    {
+     "t": "semanas,",
+     "a": 26.1,
+     "b": 26.54,
+     "d": true
+    },
+    {
+     "t": "o",
+     "a": 26.92,
+     "b": 27.04,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 27.04,
+   "b": 28.92,
+   "w": [
+    {
+     "t": "relógio",
+     "a": 27.04,
+     "b": 27.44,
+     "d": false
+    },
+    {
+     "t": "dos",
+     "a": 27.44,
+     "b": 27.56,
+     "d": false
+    },
+    {
+     "t": "120",
+     "a": 27.56,
+     "b": 27.96,
+     "d": true
+    },
+    {
+     "t": "dias",
+     "a": 27.96,
+     "b": 28.48,
+     "d": true
+    },
+    {
+     "t": "de",
+     "a": 28.48,
+     "b": 28.62,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 28.62,
+   "b": 30.32,
+   "w": [
+    {
+     "t": "licença",
+     "a": 28.62,
+     "b": 29.02,
+     "d": true
+    },
+    {
+     "t": "só",
+     "a": 29.02,
+     "b": 29.38,
+     "d": false
+    },
+    {
+     "t": "começa",
+     "a": 29.38,
+     "b": 29.76,
+     "d": false
+    },
+    {
+     "t": "a",
+     "a": 29.76,
+     "b": 30.02,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 30.02,
+   "b": 32.739999999999995,
+   "w": [
+    {
+     "t": "contar",
+     "a": 30.02,
+     "b": 30.3,
+     "d": false
+    },
+    {
+     "t": "depois",
+     "a": 30.3,
+     "b": 31.42,
+     "d": false
+    },
+    {
+     "t": "da",
+     "a": 31.42,
+     "b": 31.98,
+     "d": false
+    },
+    {
+     "t": "alta",
+     "a": 31.98,
+     "b": 32.26,
+     "d": true
+    },
+    {
+     "t": "do",
+     "a": 32.26,
+     "b": 32.44,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 32.44,
+   "b": 33.059999999999995,
+   "w": [
+    {
+     "t": "hospital.",
+     "a": 32.44,
+     "b": 32.76,
+     "d": true
+    }
+   ]
+  },
+  {
+   "a": 32.89,
+   "b": 33.849999999999994,
+   "w": [
+    {
+     "t": "Isso",
+     "a": 32.89,
+     "b": 33.05,
+     "d": false
+    },
+    {
+     "t": "garante",
+     "a": 33.05,
+     "b": 33.31,
+     "d": false
+    },
+    {
+     "t": "que",
+     "a": 33.31,
+     "b": 33.39,
+     "d": false
+    },
+    {
+     "t": "aquele",
+     "a": 33.39,
+     "b": 33.55,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 33.55,
+   "b": 35.07,
+   "w": [
+    {
+     "t": "tempo",
+     "a": 33.55,
+     "b": 33.77,
+     "d": false
+    },
+    {
+     "t": "precioso",
+     "a": 33.77,
+     "b": 34.49,
+     "d": false
+    },
+    {
+     "t": "em",
+     "a": 34.49,
+     "b": 34.61,
+     "d": false
+    },
+    {
+     "t": "casa",
+     "a": 34.61,
+     "b": 34.77,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 34.77,
+   "b": 36.209999999999994,
+   "w": [
+    {
+     "t": "com",
+     "a": 34.77,
+     "b": 34.99,
+     "d": false
+    },
+    {
+     "t": "o",
+     "a": 34.99,
+     "b": 35.07,
+     "d": false
+    },
+    {
+     "t": "bebê",
+     "a": 35.07,
+     "b": 35.35,
+     "d": false
+    },
+    {
+     "t": "não",
+     "a": 35.35,
+     "b": 35.69,
+     "d": true
+    },
+    {
+     "t": "seja",
+     "a": 35.69,
+     "b": 35.91,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 35.91,
+   "b": 37.37,
+   "w": [
+    {
+     "t": "comido",
+     "a": 35.91,
+     "b": 36.45,
+     "d": false
+    },
+    {
+     "t": "pelos",
+     "a": 36.45,
+     "b": 36.69,
+     "d": false
+    },
+    {
+     "t": "dias",
+     "a": 36.69,
+     "b": 36.95,
+     "d": true
+    },
+    {
+     "t": "de",
+     "a": 36.95,
+     "b": 37.07,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 37.07,
+   "b": 37.91,
+   "w": [
+    {
+     "t": "internação.",
+     "a": 37.07,
+     "b": 37.61,
+     "d": true
+    }
+   ]
+  },
+  {
+   "a": 37.79,
+   "b": 39.33,
+   "w": [
+    {
+     "t": "E",
+     "a": 37.79,
+     "b": 37.91,
+     "d": false
+    },
+    {
+     "t": "informação",
+     "a": 37.91,
+     "b": 38.25,
+     "d": false
+    },
+    {
+     "t": "é",
+     "a": 38.25,
+     "b": 38.79,
+     "d": false
+    },
+    {
+     "t": "poder.",
+     "a": 38.79,
+     "b": 39.03,
+     "d": true
+    }
+   ]
+  }
+ ],
+ "flashes": [],
+ "semLegenda": [
+  [
+   39.22,
+   43.62
+  ]
+ ]
+}

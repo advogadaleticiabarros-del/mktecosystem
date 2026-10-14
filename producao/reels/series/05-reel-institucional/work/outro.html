@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { margin: 0; }
+  .card {
+    width: 1080px; height: 1920px;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: 'Inter', sans-serif;
+    color: #E8DED1;
+    text-align: center;
+    background:
+      radial-gradient(circle at 82% 12%, #C9A96229, transparent 42%),
+      radial-gradient(circle at 12% 90%, #C9A9621f, transparent 46%),
+      linear-gradient(160deg, #231E1A 0%, #231E1A 100%);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 44px;
+    border: 1.5px solid #C9A9628c;
+    border-radius: 20px;
+    pointer-events: none;
+  }
+  .selo { width: 150px; height: 150px; object-fit: contain; filter: drop-shadow(0 4px 18px #C9A96255); margin-bottom: 40px; }
+  .nome { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 40px; }
+  .oab { font-size: 20px; letter-spacing: 3px; text-transform: uppercase; color: #C9A962; margin-top: 14px; }
+  .handle { font-size: 22px; color: #E8DED1cc; margin-top: 28px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <img class="selo" src="{{ logo_src }}" alt="">
+    <div class="nome">Letícia Barros</div>
+    <div class="oab">OAB/ES 39.948</div>
+    <div class="handle">@adv.leticiabarros2</div>
+  </div>
+</body>
+</html>

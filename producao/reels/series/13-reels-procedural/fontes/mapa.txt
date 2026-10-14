@@ -1,0 +1,6 @@
+v1 = Gestante_e_Trabalho
+v2 = Como_a_Justiça_Calcula_a_Pensão_Alimentícia
+v3 = Como_a_Pensão_Alimentícia_é_Calculada
+v4 = O_Guia_Definitivo_do_Décimo_Terceiro
+v5 = O_Guia_Definitivo_do_Décimo_Terceiro_Para_Trabalhadoras
+v6 = Como_Calcular_o_13º_Proporcional

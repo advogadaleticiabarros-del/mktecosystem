@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { margin: 0; }
+  .card {
+    width: 1080px; height: 1920px;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 120px 96px;
+    font-family: 'Inter', sans-serif;
+    color: #E8DED1;
+    text-align: center;
+    background:
+      radial-gradient(circle at 82% 12%, #C9A96229, transparent 42%),
+      radial-gradient(circle at 12% 90%, #C9A9621f, transparent 46%),
+      linear-gradient(160deg, #231E1A 0%, #231E1A 100%);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    border: 1.5px solid #C9A9628c;
+    border-radius: 20px;
+    pointer-events: none;
+  }
+  .selo { width: 84px; height: 84px; object-fit: contain; position: absolute; top: 80px; left: 50%; transform: translateX(-50%); filter: drop-shadow(0 4px 14px #C9A96255); }
+  .numero {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: {{ numero_tamanho | default(220) }}px;
+    color: #C9A962;
+    line-height: 1;
+    opacity: 0.9;
+    margin-bottom: 8px;
+  }
+  .kicker {
+    font-size: 22px; font-weight: 800; letter-spacing: 5px; text-transform: uppercase;
+    color: #C9A962; margin-bottom: 28px;
+  }
+  .texto {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: {{ tamanho_fonte | default(58) }}px;
+    line-height: 1.32;
+    max-width: 880px;
+  }
+  .texto em { font-style: normal; color: #C9A962; }
+  .rodape {
+    position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .rodape .nome { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 22px; }
+  .rodape .sub { font-size: 14px; letter-spacing: 2px; text-transform: uppercase; color: #C9A962; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <img class="selo" src="{{ logo_src }}" alt="">
+    {% if kicker %}<div class="kicker">{{ kicker }}</div>{% endif %}
+    {% if numero %}<div class="numero">{{ numero }}</div>{% endif %}
+    <p class="texto">{{ texto|safe }}</p>
+    {% if rodape %}
+    <div class="rodape">
+      <span class="nome">Letícia Barros</span>
+      <span class="sub">{{ rodape }}</span>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>

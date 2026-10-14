@@ -1,0 +1,1393 @@
+{
+ "serie": "Série gestante · 2/3",
+ "total": 37.83,
+ "cenas": [
+  {
+   "a": 0,
+   "trans": "corte",
+   "bg": {
+    "seq": "seq/r2_consulta",
+    "n": 114,
+    "vel": 1.0,
+    "blur": 2
+   },
+   "veu": "linear-gradient(180deg, rgba(26,21,17,.85), rgba(26,21,17,.45) 50%, rgba(26,21,17,.9))",
+   "els": [
+    {
+     "tipo": "texto",
+     "html": "<em>Mito</em>",
+     "at": 0.05,
+     "anim": "mascara",
+     "cls": "cg",
+     "style": {
+      "top": "380px",
+      "left": "70px",
+      "right": "70px",
+      "fontSize": "200px",
+      "lineHeight": "1.02",
+      "textAlign": "left",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    },
+    {
+     "tipo": "texto",
+     "html": "“Faltar pro pré-natal|dá desconto no salário”",
+     "at": 0.81,
+     "anim": "sobe",
+     "cls": "cg",
+     "style": {
+      "top": "620px",
+      "left": "70px",
+      "right": "70px",
+      "fontSize": "70px",
+      "lineHeight": "1.02",
+      "textAlign": "left",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    },
+    {
+     "tipo": "risco",
+     "at": 2.09,
+     "largura": 900,
+     "html": "",
+     "style": {
+      "top": "690px",
+      "left": "70px",
+      "height": "7px",
+      "width": "0px",
+      "background": "#C9A962",
+      "borderRadius": "3px",
+      "boxShadow": "0 0 18px rgba(201,169,98,.6)"
+     }
+    }
+   ]
+  },
+  {
+   "a": 2.5,
+   "trans": "whip",
+   "bg": {
+    "seq": "seq/r2_ultra",
+    "n": 214,
+    "vel": 1.0,
+    "blur": 9
+   },
+   "veu": "rgba(26,21,17,.6)",
+   "cam": [
+    1.0,
+    1.06,
+    0,
+    0
+   ],
+   "els": [
+    {
+     "html": "<div class=\"papel\" style=\"padding:34px 40px;transform:rotate(-2deg)\"><div style=\"display:flex;justify-content:space-between;font-size:24px;font-weight:800;letter-spacing:3px;color:#8E6E2E\"><span>CONTRACHEQUE</span><span>OUTUBRO</span></div><div style=\"display:flex;justify-content:space-between;font-size:34px;margin-top:34px\"><span>Salário</span><b>R$ ••••••</b></div></div>",
+     "at": 2.6,
+     "anim": "sobe",
+     "style": {
+      "top": "400px",
+      "left": "110px",
+      "width": "860px"
+     }
+    },
+    {
+     "html": "<div class=\"papel\" style=\"padding:22px 40px;transform:rotate(-2deg)\"><div style=\"display:flex;justify-content:space-between;font-size:34px;color:#2B231C\"><span>Consulta pré-natal</span><b>Falta justificada ✓</b></div></div>",
+     "at": 4.73,
+     "anim": "desliza",
+     "style": {
+      "top": "590px",
+      "left": "110px",
+      "width": "860px"
+     }
+    },
+    {
+     "html": "<div class=\"papel\" style=\"padding:24px 40px;transform:rotate(-2deg)\"><div style=\"display:flex;justify-content:space-between;font-size:40px;color:#2B231C\"><span>Desconto</span><b style=\"background:#E9D398;padding:0 12px\">R$ 0,00</b></div></div>",
+     "at": 7.61,
+     "anim": "pop",
+     "style": {
+      "top": "720px",
+      "left": "110px",
+      "width": "860px"
+     }
+    },
+    {
+     "html": "Sem desconto",
+     "cls": "carimbo",
+     "at": 8.31,
+     "anim": "carimbo",
+     "rot": -7,
+     "style": {
+      "top": "900px",
+      "left": "260px",
+      "fontSize": "70px"
+     }
+    }
+   ]
+  },
+  {
+   "a": 8.75,
+   "trans": "zoom",
+   "bg": {
+    "src": "midia/consulta-4.jpg",
+    "kb": [
+     1.06,
+     1.18,
+     0,
+     -40,
+     0,
+     0
+    ]
+   },
+   "els": [
+    {
+     "html": "03 · Pré-natal",
+     "cls": "kick",
+     "at": 8.85,
+     "anim": "sobe",
+     "style": {
+      "top": "360px",
+      "left": "70px"
+     }
+    },
+    {
+     "tipo": "texto",
+     "html": "Você pode sair para|<em>consultas e exames</em>",
+     "at": 10.39,
+     "anim": "mascara",
+     "cls": "cg",
+     "style": {
+      "top": "410px",
+      "left": "70px",
+      "right": "70px",
+      "fontSize": "86px",
+      "lineHeight": "1.02",
+      "textAlign": "left",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    },
+    {
+     "tipo": "traco",
+     "html": "<svg width=\"940\" height=\"180\" viewBox=\"0 0 940 180\" fill=\"none\" stroke=\"#C9A962\" stroke-width=\"7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"filter:drop-shadow(0 0 14px rgba(201,169,98,.55))\"><path class=\"desenha\" d=\"M0 90 L250 90 L290 90 L315 20 L345 160 L370 60 L390 90 L560 90 L590 90 L615 30 L640 150 L662 90 L940 90\"/></svg>",
+     "at": 9.05,
+     "durTraco": 2.4,
+     "stagger": 0.0,
+     "style": {
+      "top": "620px",
+      "left": "70px"
+     }
+    },
+    {
+     "html": "1",
+     "cls": "pill",
+     "at": 13.07,
+     "anim": "pop",
+     "style": {
+      "top": "830px",
+      "left": "90px",
+      "fontSize": "44px",
+      "width": "120px",
+      "textAlign": "center"
+     }
+    },
+    {
+     "html": "2",
+     "cls": "pill",
+     "at": 13.21,
+     "anim": "pop",
+     "style": {
+      "top": "830px",
+      "left": "240px",
+      "fontSize": "44px",
+      "width": "120px",
+      "textAlign": "center"
+     }
+    },
+    {
+     "html": "3",
+     "cls": "pill",
+     "at": 13.35,
+     "anim": "pop",
+     "style": {
+      "top": "830px",
+      "left": "390px",
+      "fontSize": "44px",
+      "width": "120px",
+      "textAlign": "center"
+     }
+    },
+    {
+     "html": "4",
+     "cls": "pill",
+     "at": 13.49,
+     "anim": "pop",
+     "style": {
+      "top": "830px",
+      "left": "540px",
+      "fontSize": "44px",
+      "width": "120px",
+      "textAlign": "center"
+     }
+    },
+    {
+     "html": "5",
+     "cls": "pill",
+     "at": 13.63,
+     "anim": "pop",
+     "style": {
+      "top": "830px",
+      "left": "690px",
+      "fontSize": "44px",
+      "width": "120px",
+      "textAlign": "center"
+     }
+    },
+    {
+     "html": "6",
+     "cls": "pill",
+     "at": 13.77,
+     "anim": "pop",
+     "style": {
+      "top": "830px",
+      "left": "840px",
+      "fontSize": "44px",
+      "width": "120px",
+      "textAlign": "center"
+     }
+    },
+    {
+     "tipo": "texto",
+     "html": "no mínimo <em>6 consultas</em>",
+     "at": 13.37,
+     "anim": "sobe",
+     "cls": "cg",
+     "style": {
+      "top": "950px",
+      "left": "70px",
+      "right": "70px",
+      "fontSize": "76px",
+      "lineHeight": "1.02",
+      "textAlign": "left",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    }
+   ]
+  },
+  {
+   "a": 16.75,
+   "trans": "dissolve",
+   "bg": {
+    "seq": "seq/r2_ultra2",
+    "n": 364,
+    "vel": 1.0,
+    "blur": 10
+   },
+   "veu": "rgba(26,21,17,.74)",
+   "els": [
+    {
+     "html": "<span class=\"cg\" style=\"font-size:440px;font-weight:700;line-height:.8;color:#E2C77F;text-shadow:0 20px 80px rgba(0,0,0,.6)\">6</span>",
+     "at": 17.98,
+     "anim": "pop",
+     "style": {
+      "top": "380px",
+      "left": "130px"
+     }
+    },
+    {
+     "tipo": "risco",
+     "at": 19.06,
+     "largura": 420,
+     "html": "",
+     "style": {
+      "top": "760px",
+      "left": "90px",
+      "height": "8px",
+      "width": "0px",
+      "background": "#C9A962",
+      "borderRadius": "3px",
+      "boxShadow": "0 0 18px rgba(201,169,98,.6)"
+     }
+    },
+    {
+     "tipo": "texto",
+     "html": "é o <em>piso</em>,|não o teto",
+     "at": 19.06,
+     "anim": "mascara",
+     "cls": "cg",
+     "style": {
+      "top": "480px",
+      "left": "470px",
+      "right": "60px",
+      "fontSize": "88px",
+      "lineHeight": "1.02",
+      "textAlign": "left",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    },
+    {
+     "html": "+ consultas, se o médico pedir",
+     "cls": "pill",
+     "at": 21.96,
+     "anim": "desliza",
+     "style": {
+      "top": "840px",
+      "left": "90px"
+     }
+    },
+    {
+     "html": "com atestado ✓",
+     "cls": "pill",
+     "at": 26.24,
+     "anim": "pop",
+     "style": {
+      "top": "960px",
+      "left": "90px"
+     }
+    }
+   ]
+  },
+  {
+   "a": 27.6,
+   "trans": "sobe",
+   "bg": {
+    "seq": "seq/r2_negra",
+    "n": 244,
+    "vel": 1.0,
+    "kb": [
+     1.04,
+     1.12,
+     0,
+     0,
+     0,
+     -30
+    ]
+   },
+   "veu": "linear-gradient(180deg, rgba(26,21,17,.55) 0%, rgba(26,21,17,.1) 25%, rgba(26,21,17,.7) 45%, rgba(26,21,17,.92) 100%)",
+   "els": [
+    {
+     "html": "<div class=\"cartao\" style=\"padding:34px 40px;transform:none\"><div class=\"kick\">A empresa pediu</div><div class=\"cg\" style=\"font-size:70px;font-weight:700;line-height:1.02;margin-top:12px\">para compensar<br>as horas?</div></div>",
+     "at": 27.75,
+     "anim": "sobe",
+     "style": {
+      "top": "500px",
+      "left": "90px",
+      "width": "900px"
+     }
+    },
+    {
+     "html": "Não é obrigatório",
+     "cls": "carimbo",
+     "at": 30.97,
+     "anim": "carimbo",
+     "rot": -7,
+     "style": {
+      "top": "755px",
+      "left": "150px",
+      "fontSize": "56px"
+     }
+    },
+    {
+     "tipo": "texto",
+     "html": "Falta justificada|e <em>ponto final</em>.",
+     "at": 32.79,
+     "anim": "mascara",
+     "cls": "cg",
+     "style": {
+      "top": "905px",
+      "left": "70px",
+      "right": "70px",
+      "fontSize": "76px",
+      "lineHeight": "1.02",
+      "textAlign": "left",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    }
+   ]
+  },
+  {
+   "a": 34.43,
+   "trans": "dissolve",
+   "particulas": 18,
+   "els": [
+    {
+     "html": "<img src=\"midia/logo.png\" style=\"width:180px\">",
+     "at": 34.58,
+     "anim": "pop",
+     "style": {
+      "top": "360px",
+      "left": "450px"
+     }
+    },
+    {
+     "tipo": "texto",
+     "html": "Salve e mande para|<em>uma gestante</em>.",
+     "at": 34.73,
+     "anim": "mascara",
+     "cls": "cg",
+     "style": {
+      "top": "580px",
+      "left": "70px",
+      "right": "70px",
+      "fontSize": "92px",
+      "lineHeight": "1.02",
+      "textAlign": "center",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    },
+    {
+     "html": "Parte 3 · Licença e bebê internado",
+     "cls": "pill",
+     "at": 35.13,
+     "anim": "pop",
+     "style": {
+      "top": "790px",
+      "left": "50%",
+      "marginLeft": "-330px",
+      "width": "660px",
+      "textAlign": "center"
+     }
+    },
+    {
+     "html": "Cada caso tem detalhes.<br>Procure uma advogada de confiança.",
+     "at": 35.33,
+     "anim": "sobe",
+     "style": {
+      "top": "900px",
+      "left": "70px",
+      "right": "70px",
+      "textAlign": "center",
+      "fontSize": "34px",
+      "fontWeight": "600",
+      "lineHeight": "1.4",
+      "color": "#E8DED1"
+     }
+    },
+    {
+     "tipo": "texto",
+     "html": "Dra. Letícia Barros,|a advogada da <em>Gestante trabalhadora</em>",
+     "at": 35.53,
+     "anim": "sobe",
+     "cls": "cg",
+     "style": {
+      "top": "1010px",
+      "left": "70px",
+      "right": "70px",
+      "fontSize": "44px",
+      "lineHeight": "1.02",
+      "textAlign": "center",
+      "fontWeight": "700",
+      "textShadow": "0 6px 30px rgba(0,0,0,.55)"
+     }
+    },
+    {
+     "html": "OAB/ES 39.948 · @adv.leticiabarros2",
+     "cls": "kick",
+     "at": 35.68,
+     "anim": "sobe",
+     "style": {
+      "top": "1130px",
+      "left": "0",
+      "right": "0",
+      "textAlign": "center"
+     }
+    }
+   ]
+  }
+ ],
+ "leg": [
+  {
+   "a": 0.07,
+   "b": 1.4100000000000001,
+   "w": [
+    {
+     "t": "E",
+     "a": 0.07,
+     "b": 0.31,
+     "d": false
+    },
+    {
+     "t": "aqui",
+     "a": 0.31,
+     "b": 0.47,
+     "d": false
+    },
+    {
+     "t": "a",
+     "a": 0.47,
+     "b": 0.69,
+     "d": false
+    },
+    {
+     "t": "gente",
+     "a": 0.69,
+     "b": 0.79,
+     "d": false
+    },
+    {
+     "t": "precisa",
+     "a": 0.79,
+     "b": 1.11,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 1.11,
+   "b": 2.3899999999999997,
+   "w": [
+    {
+     "t": "quebrar",
+     "a": 1.11,
+     "b": 1.41,
+     "d": false
+    },
+    {
+     "t": "um",
+     "a": 1.41,
+     "b": 1.55,
+     "d": false
+    },
+    {
+     "t": "mito",
+     "a": 1.55,
+     "b": 1.77,
+     "d": true
+    },
+    {
+     "t": "bem",
+     "a": 1.77,
+     "b": 2.09,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 2.09,
+   "b": 2.69,
+   "w": [
+    {
+     "t": "comum.",
+     "a": 2.09,
+     "b": 2.39,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 2.55,
+   "b": 3.73,
+   "w": [
+    {
+     "t": "A",
+     "a": 2.55,
+     "b": 2.65,
+     "d": false
+    },
+    {
+     "t": "lei",
+     "a": 2.65,
+     "b": 2.77,
+     "d": false
+    },
+    {
+     "t": "é",
+     "a": 2.77,
+     "b": 2.89,
+     "d": false
+    },
+    {
+     "t": "clara,",
+     "a": 2.89,
+     "b": 3.23,
+     "d": false
+    },
+    {
+     "t": "a",
+     "a": 3.39,
+     "b": 3.43,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 3.43,
+   "b": 4.83,
+   "w": [
+    {
+     "t": "ausência",
+     "a": 3.43,
+     "b": 3.79,
+     "d": false
+    },
+    {
+     "t": "para",
+     "a": 3.79,
+     "b": 3.99,
+     "d": false
+    },
+    {
+     "t": "a",
+     "a": 3.99,
+     "b": 4.05,
+     "d": false
+    },
+    {
+     "t": "consulta",
+     "a": 4.05,
+     "b": 4.53,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 4.53,
+   "b": 6.2299999999999995,
+   "w": [
+    {
+     "t": "é",
+     "a": 4.53,
+     "b": 4.73,
+     "d": false
+    },
+    {
+     "t": "justificada",
+     "a": 4.73,
+     "b": 5.41,
+     "d": true
+    },
+    {
+     "t": "e",
+     "a": 5.41,
+     "b": 5.79,
+     "d": false
+    },
+    {
+     "t": "esse",
+     "a": 5.79,
+     "b": 5.93,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 5.93,
+   "b": 7.37,
+   "w": [
+    {
+     "t": "tempo",
+     "a": 5.93,
+     "b": 6.17,
+     "d": false
+    },
+    {
+     "t": "não",
+     "a": 6.17,
+     "b": 6.33,
+     "d": true
+    },
+    {
+     "t": "pode,",
+     "a": 6.33,
+     "b": 6.63,
+     "d": false
+    },
+    {
+     "t": "de",
+     "a": 6.75,
+     "b": 6.81,
+     "d": false
+    },
+    {
+     "t": "jeito",
+     "a": 6.81,
+     "b": 7.07,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 7.07,
+   "b": 8.450000000000001,
+   "w": [
+    {
+     "t": "nenhum,",
+     "a": 7.07,
+     "b": 7.35,
+     "d": false
+    },
+    {
+     "t": "ser",
+     "a": 7.51,
+     "b": 7.61,
+     "d": false
+    },
+    {
+     "t": "descontado",
+     "a": 7.61,
+     "b": 8.15,
+     "d": true
+    }
+   ]
+  },
+  {
+   "a": 8.15,
+   "b": 8.99,
+   "w": [
+    {
+     "t": "do",
+     "a": 8.15,
+     "b": 8.31,
+     "d": false
+    },
+    {
+     "t": "salário.",
+     "a": 8.31,
+     "b": 8.69,
+     "d": true
+    }
+   ]
+  },
+  {
+   "a": 8.83,
+   "b": 9.930000000000001,
+   "w": [
+    {
+     "t": "A",
+     "a": 8.83,
+     "b": 9.01,
+     "d": false
+    },
+    {
+     "t": "lei",
+     "a": 9.01,
+     "b": 9.13,
+     "d": false
+    },
+    {
+     "t": "garante",
+     "a": 9.13,
+     "b": 9.45,
+     "d": false
+    },
+    {
+     "t": "que",
+     "a": 9.45,
+     "b": 9.59,
+     "d": false
+    },
+    {
+     "t": "a",
+     "a": 9.59,
+     "b": 9.63,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 9.63,
+   "b": 10.690000000000001,
+   "w": [
+    {
+     "t": "gestante",
+     "a": 9.63,
+     "b": 9.95,
+     "d": false
+    },
+    {
+     "t": "pode",
+     "a": 9.95,
+     "b": 10.19,
+     "d": false
+    },
+    {
+     "t": "se",
+     "a": 10.19,
+     "b": 10.39,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 10.39,
+   "b": 11.73,
+   "w": [
+    {
+     "t": "ausentar",
+     "a": 10.39,
+     "b": 10.77,
+     "d": false
+    },
+    {
+     "t": "do",
+     "a": 10.77,
+     "b": 11.03,
+     "d": false
+    },
+    {
+     "t": "trabalho",
+     "a": 11.03,
+     "b": 11.43,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 11.43,
+   "b": 12.950000000000001,
+   "w": [
+    {
+     "t": "para",
+     "a": 11.43,
+     "b": 11.61,
+     "d": false
+    },
+    {
+     "t": "fazer,",
+     "a": 11.61,
+     "b": 11.97,
+     "d": false
+    },
+    {
+     "t": "no",
+     "a": 12.11,
+     "b": 12.31,
+     "d": false
+    },
+    {
+     "t": "mínimo,",
+     "a": 12.31,
+     "b": 12.65,
+     "d": true
+    }
+   ]
+  },
+  {
+   "a": 13.07,
+   "b": 14.950000000000001,
+   "w": [
+    {
+     "t": "seis",
+     "a": 13.07,
+     "b": 13.37,
+     "d": true
+    },
+    {
+     "t": "consultas",
+     "a": 13.37,
+     "b": 13.93,
+     "d": true
+    },
+    {
+     "t": "médicas",
+     "a": 13.93,
+     "b": 14.35,
+     "d": false
+    },
+    {
+     "t": "e",
+     "a": 14.35,
+     "b": 14.65,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 14.65,
+   "b": 16.07,
+   "w": [
+    {
+     "t": "todos",
+     "a": 14.65,
+     "b": 14.95,
+     "d": false
+    },
+    {
+     "t": "os",
+     "a": 14.95,
+     "b": 15.25,
+     "d": false
+    },
+    {
+     "t": "exames",
+     "a": 15.25,
+     "b": 15.55,
+     "d": true
+    },
+    {
+     "t": "que",
+     "a": 15.55,
+     "b": 15.67,
+     "d": false
+    },
+    {
+     "t": "o",
+     "a": 15.67,
+     "b": 15.77,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 15.91,
+   "b": 16.970000000000002,
+   "w": [
+    {
+     "t": "pré-natal",
+     "a": 15.91,
+     "b": 16.25,
+     "d": false
+    },
+    {
+     "t": "exige.",
+     "a": 16.25,
+     "b": 16.67,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 16.8,
+   "b": 17.94,
+   "w": [
+    {
+     "t": "E",
+     "a": 16.8,
+     "b": 16.96,
+     "d": false
+    },
+    {
+     "t": "um",
+     "a": 16.96,
+     "b": 17.04,
+     "d": false
+    },
+    {
+     "t": "ponto",
+     "a": 17.04,
+     "b": 17.22,
+     "d": false
+    },
+    {
+     "t": "importante",
+     "a": 17.22,
+     "b": 17.64,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 17.64,
+   "b": 18.28,
+   "w": [
+    {
+     "t": "aqui.",
+     "a": 17.64,
+     "b": 17.98,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 17.98,
+   "b": 20.48,
+   "w": [
+    {
+     "t": "Seis",
+     "a": 17.98,
+     "b": 18.82,
+     "d": true
+    },
+    {
+     "t": "é",
+     "a": 18.82,
+     "b": 18.98,
+     "d": false
+    },
+    {
+     "t": "o",
+     "a": 18.98,
+     "b": 19.06,
+     "d": false
+    },
+    {
+     "t": "piso,",
+     "a": 19.06,
+     "b": 19.48,
+     "d": true
+    },
+    {
+     "t": "o",
+     "a": 19.72,
+     "b": 19.88,
+     "d": false
+    },
+    {
+     "t": "mínimo.",
+     "a": 19.88,
+     "b": 20.18,
+     "d": true
+    }
+   ]
+  },
+  {
+   "a": 20.62,
+   "b": 21.560000000000002,
+   "w": [
+    {
+     "t": "Se",
+     "a": 20.62,
+     "b": 20.78,
+     "d": false
+    },
+    {
+     "t": "o",
+     "a": 20.78,
+     "b": 20.84,
+     "d": false
+    },
+    {
+     "t": "acompanhamento",
+     "a": 20.84,
+     "b": 21.26,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 21.26,
+   "b": 22.6,
+   "w": [
+    {
+     "t": "médico",
+     "a": 21.26,
+     "b": 21.6,
+     "d": false
+    },
+    {
+     "t": "exigir",
+     "a": 21.6,
+     "b": 21.96,
+     "d": false
+    },
+    {
+     "t": "mais",
+     "a": 21.96,
+     "b": 22.3,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 22.3,
+   "b": 23.94,
+   "w": [
+    {
+     "t": "consultas,",
+     "a": 22.3,
+     "b": 22.9,
+     "d": true
+    },
+    {
+     "t": "elas",
+     "a": 23.08,
+     "b": 23.26,
+     "d": false
+    },
+    {
+     "t": "também",
+     "a": 23.26,
+     "b": 23.64,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 23.64,
+   "b": 24.86,
+   "w": [
+    {
+     "t": "devem",
+     "a": 23.64,
+     "b": 23.92,
+     "d": false
+    },
+    {
+     "t": "ser",
+     "a": 23.92,
+     "b": 24.08,
+     "d": false
+    },
+    {
+     "t": "liberadas,",
+     "a": 24.08,
+     "b": 24.56,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 24.84,
+   "b": 26.54,
+   "w": [
+    {
+     "t": "claro,",
+     "a": 24.84,
+     "b": 25.18,
+     "d": false
+    },
+    {
+     "t": "desde",
+     "a": 25.62,
+     "b": 25.8,
+     "d": false
+    },
+    {
+     "t": "que",
+     "a": 25.8,
+     "b": 25.98,
+     "d": false
+    },
+    {
+     "t": "tenham",
+     "a": 25.98,
+     "b": 26.24,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 26.24,
+   "b": 27.8,
+   "w": [
+    {
+     "t": "atestado",
+     "a": 26.24,
+     "b": 26.82,
+     "d": true
+    },
+    {
+     "t": "justificando.",
+     "a": 26.82,
+     "b": 27.5,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 27.67,
+   "b": 28.87,
+   "w": [
+    {
+     "t": "Às",
+     "a": 27.67,
+     "b": 27.87,
+     "d": false
+    },
+    {
+     "t": "vezes",
+     "a": 27.87,
+     "b": 27.97,
+     "d": false
+    },
+    {
+     "t": "a",
+     "a": 27.97,
+     "b": 28.13,
+     "d": false
+    },
+    {
+     "t": "empresa",
+     "a": 28.13,
+     "b": 28.29,
+     "d": false
+    },
+    {
+     "t": "pode",
+     "a": 28.29,
+     "b": 28.57,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 28.57,
+   "b": 29.89,
+   "w": [
+    {
+     "t": "até",
+     "a": 28.57,
+     "b": 28.73,
+     "d": false
+    },
+    {
+     "t": "pedir",
+     "a": 28.73,
+     "b": 28.99,
+     "d": false
+    },
+    {
+     "t": "para",
+     "a": 28.99,
+     "b": 29.17,
+     "d": false
+    },
+    {
+     "t": "compensar",
+     "a": 29.17,
+     "b": 29.59,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 29.59,
+   "b": 30.95,
+   "w": [
+    {
+     "t": "as",
+     "a": 29.59,
+     "b": 29.71,
+     "d": false
+    },
+    {
+     "t": "horas,",
+     "a": 29.71,
+     "b": 29.89,
+     "d": false
+    },
+    {
+     "t": "mas",
+     "a": 30.11,
+     "b": 30.25,
+     "d": false
+    },
+    {
+     "t": "não",
+     "a": 30.25,
+     "b": 30.37,
+     "d": true
+    },
+    {
+     "t": "existe",
+     "a": 30.37,
+     "b": 30.65,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 30.65,
+   "b": 31.990000000000002,
+   "w": [
+    {
+     "t": "nenhuma",
+     "a": 30.65,
+     "b": 30.97,
+     "d": false
+    },
+    {
+     "t": "obrigação",
+     "a": 30.97,
+     "b": 31.43,
+     "d": true
+    },
+    {
+     "t": "legal",
+     "a": 31.43,
+     "b": 31.69,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 31.69,
+   "b": 32.629999999999995,
+   "w": [
+    {
+     "t": "de",
+     "a": 31.69,
+     "b": 31.83,
+     "d": false
+    },
+    {
+     "t": "fazer",
+     "a": 31.83,
+     "b": 32.03,
+     "d": false
+    },
+    {
+     "t": "isso.",
+     "a": 32.03,
+     "b": 32.33,
+     "d": false
+    }
+   ]
+  },
+  {
+   "a": 32.57,
+   "b": 33.989999999999995,
+   "w": [
+    {
+     "t": "É",
+     "a": 32.57,
+     "b": 32.69,
+     "d": false
+    },
+    {
+     "t": "uma",
+     "a": 32.69,
+     "b": 32.79,
+     "d": false
+    },
+    {
+     "t": "falta",
+     "a": 32.79,
+     "b": 33.01,
+     "d": false
+    },
+    {
+     "t": "justificada",
+     "a": 33.01,
+     "b": 33.69,
+     "d": true
+    }
+   ]
+  },
+  {
+   "a": 33.69,
+   "b": 34.669999999999995,
+   "w": [
+    {
+     "t": "e",
+     "a": 33.69,
+     "b": 33.99,
+     "d": false
+    },
+    {
+     "t": "ponto",
+     "a": 33.99,
+     "b": 34.17,
+     "d": false
+    },
+    {
+     "t": "final.",
+     "a": 34.17,
+     "b": 34.37,
+     "d": true
+    }
+   ]
+  }
+ ],
+ "flashes": [],
+ "semLegenda": [
+  [
+   34.43,
+   38.83
+  ]
+ ]
+}

@@ -1,0 +1,150 @@
+def outro(a, proxima):
+    # área segura do Reels: nada abaixo de y=1248 (legenda do post, perfil e botões)
+    return {"a": a, "trans": "dissolve", "particulas": 18, "els": [
+        {"html": '<img src="midia/logo.png" style="width:180px">', "at": a + .15, "anim": "pop", "style": {"top": "360px", "left": "450px"}},
+        texto("Salve e mande para|<em>uma gestante</em>.", a + .3, 580, size=92, align="center"),
+        pilula(proxima, a + .7, 790, left=0, style={"left": "50%", "marginLeft": "-330px", "width": "660px", "textAlign": "center"}),
+        {"html": "Cada caso tem detalhes.<br>Procure uma advogada de confiança.", "at": a + .9, "anim": "sobe",
+         "style": {"top": "900px", "left": "70px", "right": "70px", "textAlign": "center", "fontSize": "34px", "fontWeight": "600", "lineHeight": "1.4", "color": "#E8DED1"}},
+        {"html": "Dra. Letícia Barros, a advogada da <em>Gestante trabalhadora</em>", "cls": "cg", "at": a + 1.1, "anim": "sobe",
+         "style": {"top": "1030px", "left": "70px", "right": "70px", "textAlign": "center", "fontSize": "42px", "fontWeight": "600", "color": "#FAF6F0"}},
+        {"html": "OAB/ES 39.948 · @adv.leticiabarros2", "cls": "kick", "at": a + 1.25, "anim": "sobe",
+         "style": {"top": "1110px", "left": "0", "right": "0", "textAlign": "center"}},
+    ]}
+
+
+# --------------------------------------------------------------------------- os 3 roteiros
+# Área segura (Meta): topo 14% (269 px), base 35% (672 px), laterais 65 px. Gráficos entre
+# y=350 e y≈1085; legenda (engine) entre 1100 e 1240; nada encosta na coluna de botões.
+def reel1(W, seg, fim):
+    s = seg
+    return [
+        {"a": 0, "trans": "corte", "bg": {"src": foto("gestante-preocupada-5"), "kb": [1.24, 1.05, 0, 0, -60, 0]},
+         "cam": [1.0, 1.03, 0, 0], "els": [
+            texto("Grávida?", 0.06, 380, size=170),
+            texto("<em>E agora?</em>", W("agora") - .08, 560, size=150)]},
+        {"a": W("O"), "trans": "whip", "bg": {**preparar_seq("r1_escritorio", "v-gestante-escritorio-0-7572251.mp4", 1.0, 3.0), "kb": [1.04, 1.14, 0, -40, 0, 0]},
+         "els": [texto("O que muda no|<em>meu emprego</em>?", W("O") + .12, 380, size=104)]},
+        {"a": s[1], "trans": "iris", "irisY": 40, "bg": {"src": foto("gestante-negra-2"), "blur": 3, "kb": [1.12, 1.2, 60, 20, 0, 0]},
+         "veu": "linear-gradient(180deg, rgba(26,21,17,.86), rgba(26,21,17,.55) 45%, rgba(26,21,17,.92))", "cam": [1.0, 1.05, 0, 0], "els": [
+            kick("01 · Estabilidade", s[1] + .1, top=360),
+            traco(ESCUDO, s[1] + .15, 420, 150, 400, 460, dur=1.3),
+            texto("A lei protege|o seu <em>emprego</em>", s[1] + .55, 905, size=84),
+            bloco_html('<div style="font-size:24px;font-weight:800;letter-spacing:3px;color:#8E6E2E">COMUNICADO</div>'
+                       '<div class="cg" style="font-size:54px;font-weight:700;line-height:1;margin-top:8px">Aviso de<br>demissão</div>'
+                       '<div style="margin-top:16px;height:8px;background:#2B231C22;border-radius:4px"></div><div style="margin-top:10px;height:8px;width:70%;background:#2B231C22;border-radius:4px"></div>',
+                       W("demissão") - .15, 520, 590, 360, anim="desliza", cls="papel", dx=500, transform="rotate(4deg)"),
+            carimbo("Bloqueada", W("justa"), 660, 545, rot=-12, size=64)]},
+        {"a": W("E", W("causa.")), "trans": "zoom", "bg": {**preparar_seq("r1_janela", "v-gestante-janela-0-6967764.mp4", 0.5, 8.5), "blur": 7},
+         "veu": "rgba(26,21,17,.84)", "cam": [1.0, 1.04, 30, -30], "els": [
+            kick("Quando começa e quando termina", W("E", W("causa.")) + .1, top=360),
+            pilula("mesmo descobrindo depois", W("descoberta"), 470, left=100),
+            {"tipo": "linha", "html": LINHA_HTML, "at": W("concepção,"), "ateFim": W("parto.") + .25, "style": {"top": "660px", "left": "160px", "width": "760px"}},
+            no("Concepção", W("concepção,"), 177, top=660), no("Parto", W("parto.") - .05, 600, top=660), no("+5 meses", W("cinco"), 903, top=660),
+            texto("até <em>5 meses</em>|após o parto", W("cinco"), 860, size=100)]},
+        {"a": s[2], "trans": "corte", "particulas": 28, "els": [
+            {"html": '<div class="cg" style="width:250px;height:250px;border:6px solid #C9A962;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:190px;font-weight:700;color:#E2C77F;box-shadow:0 0 60px rgba(201,169,98,.35)">!</div>',
+             "at": s[2] + .05, "anim": "pop", "pulso": True, "style": {"top": "440px", "left": "415px"}},
+            texto("Um detalhe que|<em>muita gente</em> não sabe", W("detalhe"), 780, size=96, align="center")]},
+        {"a": W("Esse"), "trans": "sobe", "bg": {**preparar_seq("r1_tablet", "v-gestante-negra-1-6974514.mp4", 0.5, 7.5), "kb": [1.04, 1.12, 0, 0, 0, -40]},
+         "els": [
+            bloco_html('<div class="kick">Na hora da demissão</div><div class="cg" style="font-size:72px;font-weight:700;line-height:1.02;margin-top:14px">A empresa sabia<br>da gravidez?</div>',
+                       W("Esse") + .15, 620, 90, 900),
+            pilula("Não", W("soubesse"), 895, left=110, style={"fontSize": "40px"}),
+            carimbo("Vale igual", W("demissão.", W("soubesse")), 880, 360, rot=-8, size=66),
+            pilula("Proteção objetiva · STF, Tema 497", s[3] + .05, 1010, left=90, anim="desliza")]},
+        {"a": W("Basta"), "trans": "dissolve", "bg": {**preparar_seq("r1_janela2", "v-gestante-janela-0-6967764.mp4", 9.5, 7.5), "kb": [1.0, 1.14, 0, 0, 0, -50]},
+         "veu": "linear-gradient(180deg, rgba(26,21,17,.6) 0%, rgba(26,21,17,.15) 22%, rgba(26,21,17,.78) 40%, rgba(26,21,17,.93) 100%)",
+         "els": [
+            kick("Para ter o direito", W("Basta") + .1, top=700),
+            texto("A gravidez começou|com o <em>contrato ativo</em>.", W("provar"), 745, size=84),
+            carimbo("Direito garantido", W("garantido."), 960, 90, rot=-6, size=58)]},
+        outro(fim, "Parte 2 · Pré-natal sem desconto"),
+    ]
+
+
+def reel2(W, seg, fim):
+    s = seg
+    return [
+        {"a": 0, "trans": "corte", "bg": {**preparar_seq("r2_consulta", "v-medica-1-7089939.mp4", 1.0, 3.2), "blur": 2},
+         "veu": "linear-gradient(180deg, rgba(26,21,17,.85), rgba(26,21,17,.45) 50%, rgba(26,21,17,.9))", "els": [
+            texto("<em>Mito</em>", 0.05, 380, size=200),
+            texto("“Faltar pro pré-natal|dá desconto no salário”", W("quebrar") - .3, 620, size=70, anim="sobe"),
+            risco(W("comum."), 690, 70, 900, alt=7)]},
+        {"a": s[1], "trans": "whip", "bg": {**preparar_seq("r2_ultra", "v-ultrassom-2-7088945.mp4", 1.0, 6.5), "blur": 9},
+         "veu": "rgba(26,21,17,.6)", "cam": [1.0, 1.06, 0, 0], "els": [
+            bloco_html('<div style="display:flex;justify-content:space-between;font-size:24px;font-weight:800;letter-spacing:3px;color:#8E6E2E"><span>CONTRACHEQUE</span><span>OUTUBRO</span></div>'
+                       '<div style="display:flex;justify-content:space-between;font-size:34px;margin-top:34px"><span>Salário</span><b>R$ ••••••</b></div>',
+                       s[1] + .1, 400, 110, 860, cls="papel", transform="rotate(-2deg)"),
+            bloco_html('<div style="display:flex;justify-content:space-between;font-size:34px;color:#2B231C"><span>Consulta pré-natal</span><b>Falta justificada ✓</b></div>',
+                       W("justificada"), 590, 110, 860, cls="papel", anim="desliza", transform="rotate(-2deg)", padding="22px 40px"),
+            bloco_html('<div style="display:flex;justify-content:space-between;font-size:40px;color:#2B231C"><span>Desconto</span><b style="background:#E9D398;padding:0 12px">R$ 0,00</b></div>',
+                       W("descontado"), 720, 110, 860, cls="papel", anim="pop", transform="rotate(-2deg)", padding="24px 40px"),
+            carimbo("Sem desconto", W("salário.", W("descontado")), 900, 260, rot=-7, size=70)]},
+        {"a": s[2], "trans": "zoom", "bg": {"src": foto("consulta-4"), "kb": [1.06, 1.18, 0, -40, 0, 0]}, "els": [
+            kick("03 · Pré-natal", s[2] + .1, top=360),
+            texto("Você pode sair para|<em>consultas e exames</em>", W("ausentar"), 410, size=86),
+            traco(ECG, s[2] + .3, 620, 70, 940, 180, dur=2.4),
+            *[pilula(str(i + 1), W("seis") + i * .14, 830, left=90 + i * 150, style={"fontSize": "44px", "width": "120px", "textAlign": "center"}) for i in range(6)],
+            texto("no mínimo <em>6 consultas</em>", W("consultas", W("seis")), 950, size=76, anim="sobe")]},
+        {"a": s[3], "trans": "dissolve", "bg": {**preparar_seq("r2_ultra2", "v-ultrassom-1-7088947.mp4", 1.0, 11.5), "blur": 10},
+         "veu": "rgba(26,21,17,.74)", "els": [
+            {"html": '<span class="cg" style="font-size:440px;font-weight:700;line-height:.8;color:#E2C77F;text-shadow:0 20px 80px rgba(0,0,0,.6)">6</span>',
+             "at": W("Seis", s[3] - .01), "anim": "pop", "style": {"top": "380px", "left": "130px"}},
+            risco(W("piso,"), 760, 90, 420, alt=8),
+            texto("é o <em>piso</em>,|não o teto", W("piso,"), 480, size=88, left=470, right=60),
+            pilula("+ consultas, se o médico pedir", W("mais"), 840, left=90, anim="desliza"),
+            pilula("com atestado ✓", W("atestado"), 960, left=90)]},
+        {"a": s[4], "trans": "sobe", "bg": {**preparar_seq("r2_negra", "v-gestante-negra-0-6967705.mp4", 1.0, 7.5), "kb": [1.04, 1.12, 0, 0, 0, -30]},
+         "veu": "linear-gradient(180deg, rgba(26,21,17,.55) 0%, rgba(26,21,17,.1) 25%, rgba(26,21,17,.7) 45%, rgba(26,21,17,.92) 100%)",
+         "els": [
+            bloco_html('<div class="kick">A empresa pediu</div><div class="cg" style="font-size:70px;font-weight:700;line-height:1.02;margin-top:12px">para compensar<br>as horas?</div>',
+                       s[4] + .15, 560, 90, 900),
+            carimbo("Não é obrigatório", W("obrigação"), 815, 150, rot=-7, size=56),
+            texto("Falta justificada|e <em>ponto final</em>.", W("falta", W("isso.")), 925, size=78)]},
+        outro(fim, "Parte 3 · Licença e bebê internado"),
+    ]
+
+
+def reel3(W, seg, fim):
+    s = seg
+    return [
+        {"a": 0, "trans": "corte", "bg": {**preparar_seq("r3_cama", "v-mae-recem-nascido-3-7280809.mp4", 0.5, 7.6), "kb": [1.2, 1.04, 0, 0, -40, 0]},
+         "veu": "linear-gradient(180deg, rgba(26,21,17,.85), rgba(26,21,17,.35) 50%, rgba(26,21,17,.9))", "els": [
+            texto("E se o bebê|ficar <em>internado</em>?", 0.06, 380, size=128),
+            pilula("A licença-maternidade espera?", W("licença"), 670, left=70),
+            traco(HOSPITAL, W("internados"), 800, 70, 240, 240, dur=1.0)]},
+        {"a": s[1], "trans": "whip", "bg": {**preparar_seq("r3_calendario", "v-calendario-0-35332817.mp4", 0.2, 4.2), "blur": 4},
+         "veu": "rgba(26,21,17,.62)", "els": [
+            kick("A regra", s[1] + .1, top=360),
+            contador(0, 120, W("120"), 430, size=320),
+            pilula("com salário", W("salário,"), 830, left=80)]},
+        {"a": s[2], "trans": "whipV", "bg": {**preparar_seq("r3_amamenta", "v-mae-recem-nascido-1-6391713.mp4", 0.5, 8.3), "kb": [1.04, 1.13, 0, 0, 0, -40]},
+         "els": [
+            {"html": '<div style="width:300px;height:300px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#FFF3CF,#DCC385 30%,#C3A25A 60%,#8E6E2E);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 8px rgba(26,21,17,.8),0 0 0 10px #C9A962,0 30px 60px rgba(0,0,0,.5);color:#3A2A14"><span style="font-size:24px;font-weight:800;letter-spacing:3px">PROGRAMA</span><span class="cg" style="font-size:58px;font-weight:700;line-height:1;text-align:center">Empresa<br>Cidadã</span></div>',
+             "at": W("Cidadã"), "anim": "carimbo", "rot": -10, "style": {"top": "380px", "left": "640px"}},
+            pilula("+60 dias", W("180") + .6, 690, left=80),
+            contador(120, 180, W("180"), 770, size=290, dur=1.0)]},
+        {"a": s[3], "trans": "iris", "irisY": 38, "particulas": 22, "els": [
+            pilula("ADI 6327", W("STF."), 360, left=0, style={"left": "50%", "marginLeft": "-110px"}),
+            traco(COLUNAS, s[3] + .05, 440, 270, 540, 410, dur=1.4, stagger=.08),
+            texto("Decisão do|<em>STF</em>", W("decisão"), 870, size=100, align="center")]},
+        {"a": s[4], "trans": "zoom", "bg": {**preparar_seq("r3_cama2", "v-mae-recem-nascido-2-7279091.mp4", 0.5, 8.4), "blur": 8},
+         "veu": "rgba(26,21,17,.7)", "els": [
+            texto("A licença começa|<em>depois da alta</em>", W("relógio"), 380, size=92),
+            {"tipo": "linha", "html": LINHA_HTML.replace("#B8943F,#F4E6BC", "#8C7F72,#B7AA9C").replace("box-shadow:0 0 22px #C9A962", ""),
+             "at": W("internação"), "ateFim": W("semanas,") + .2, "style": {"top": "740px", "left": "90px", "width": "380px"}},
+            {"html": '<div style="font-size:28px;font-weight:800;letter-spacing:2px;color:#E8DED1">INTERNAÇÃO</div><div style="font-size:26px;color:#E8DED1cc">mais de 2 semanas</div>',
+             "at": W("internação"), "anim": "sobe", "style": {"top": "640px", "left": "90px"}},
+            no("Alta", W("alta"), 500, top=744),
+            {"tipo": "linha", "html": LINHA_HTML, "at": W("alta") + .15, "ateFim": W("alta") + 1.3, "style": {"top": "740px", "left": "530px", "width": "460px"}},
+            {"html": '<div class="cg" style="font-size:66px;font-weight:700;color:#E2C77F">120 dias</div><div style="font-size:26px;color:#E8DED1">contam daqui</div>',
+             "at": W("alta") + .5, "anim": "pop", "style": {"top": "830px", "left": "640px"}}]},
+        {"a": s[5], "trans": "dissolve", "bg": {**preparar_seq("r3_mao", "v-mao-bebe-0-6392156.mp4", 0.5, 5.2), "kb": [1.02, 1.16, 0, 0, 0, 0]},
+         "els": [texto("Tempo em casa com o bebê,|<em>protegido</em>.", W("precioso"), 400, size=84)]},
+        {"a": s[6], "trans": "dissolve", "bg": {"src": foto("recem-nascido-5"), "blur": 6, "kb": [1.1, 1.18, 0, 0, 0, 0]},
+         "veu": "rgba(26,21,17,.7)", "els": [texto("Informação|<em>é poder</em>.", s[6] + .05, 600, size=150, align="center")]},
+        outro(fim, "Salve a série completa"),
+    ]
+
+

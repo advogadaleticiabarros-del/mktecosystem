@@ -1,0 +1,4 @@
+file 'C:/tmp/videos-reels/12-reel-direitos-gestante/work/audio_r1/voz_0.wav'
+file 'C:/tmp/videos-reels/12-reel-direitos-gestante/work/audio_r1/voz_1.wav'
+file 'C:/tmp/videos-reels/12-reel-direitos-gestante/work/audio_r1/voz_2.wav'
+file 'C:/tmp/videos-reels/12-reel-direitos-gestante/work/audio_r1/voz_3.wav'

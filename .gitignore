@@ -14,3 +14,14 @@ graphify-out/
 # skills de terceiros: reinstalar com npx skills (ver skills-lock.json)
 .agents/
 .claude/skills/instagram-marketing
+
+# produção de Reels: só texto vai pro git (mídia fica em C:\tmp\videos-reels)
+producao/**/cache_voz/
+producao/**/*.mp4
+producao/**/*.mov
+producao/**/*.wav
+producao/**/*.mp3
+producao/**/*.m4a
+producao/**/*.png
+producao/**/*.jpg
+producao/**/.pytest_cache/

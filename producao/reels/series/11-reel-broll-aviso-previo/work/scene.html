@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { margin: 0; background: transparent; }
+  .card {
+    width: 1080px; height: 1920px;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    padding: 120px 96px 140px;
+    font-family: 'Inter', sans-serif;
+    color: #E8DED1;
+    text-align: center;
+    background: transparent;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    border: 1.5px solid #C9A9628c;
+    border-radius: 20px;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .scrim {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 62%;
+    background: linear-gradient(to top, rgba(20,16,12,0.92) 0%, rgba(20,16,12,0.72) 45%, rgba(20,16,12,0) 100%);
+    z-index: 1;
+  }
+  .scrim-top {
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 26%;
+    background: linear-gradient(to bottom, rgba(20,16,12,0.65) 0%, rgba(20,16,12,0) 100%);
+    z-index: 1;
+  }
+  .selo { width: 84px; height: 84px; object-fit: contain; position: absolute; top: 80px; left: 50%; transform: translateX(-50%); filter: drop-shadow(0 4px 14px #C9A96255); z-index: 2; }
+  .numero {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: {{ numero_tamanho | default(180) }}px;
+    color: #C9A962;
+    line-height: 1;
+    opacity: 0.9;
+    margin-bottom: 4px;
+    position: relative; z-index: 2;
+  }
+  .kicker {
+    font-size: 22px; font-weight: 800; letter-spacing: 5px; text-transform: uppercase;
+    color: #C9A962; margin-bottom: 24px;
+    position: relative; z-index: 2;
+  }
+  .texto {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: {{ tamanho_fonte | default(56) }}px;
+    line-height: 1.32;
+    max-width: 880px;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.55);
+    position: relative; z-index: 2;
+  }
+  .texto em { font-style: normal; color: #C9A962; }
+  .rodape {
+    margin-top: 26px;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    position: relative; z-index: 2;
+  }
+  .rodape .nome { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 22px; }
+  .rodape .sub { font-size: 14px; letter-spacing: 2px; text-transform: uppercase; color: #C9A962; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="scrim-top"></div>
+    <div class="scrim"></div>
+    <img class="selo" src="{{ logo_src }}" alt="">
+    {% if kicker %}<div class="kicker">{{ kicker }}</div>{% endif %}
+    {% if numero %}<div class="numero">{{ numero }}</div>{% endif %}
+    <p class="texto">{{ texto|safe }}</p>
+    {% if rodape %}
+    <div class="rodape">
+      <span class="nome">Letícia Barros</span>
+      <span class="sub">{{ rodape }}</span>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>

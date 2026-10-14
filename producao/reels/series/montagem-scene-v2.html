@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { margin: 0; }
+  .card {
+    width: 1080px; height: 1920px;
+    position: relative; overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+  }
+  .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,8,6,0.35) 0%, rgba(10,8,6,0.55) 45%, rgba(10,8,6,0.92) 100%);
+  }
+  .corner { position: absolute; width: 40px; height: 40px; border-color: #C9A962; z-index: 3; }
+  .corner.tl { top: 36px; left: 36px; border-top: 2px solid; border-left: 2px solid; }
+  .corner.tr { top: 36px; right: 36px; border-top: 2px solid; border-right: 2px solid; }
+  .corner.br { bottom: 36px; right: 36px; border-bottom: 2px solid; border-right: 2px solid; }
+
+  .conteudo {
+    position: absolute; left: 0; right: 0; bottom: 220px;
+    padding: 0 72px; z-index: 2;
+  }
+  .kicker {
+    display: inline-block;
+    background: linear-gradient(135deg, #E8D7A6, #C9A962, #A8863F);
+    color: #231E1A;
+    font-weight: 800; font-size: 22px; letter-spacing: 3px; text-transform: uppercase;
+    padding: 10px 26px; border-radius: 999px;
+    margin-bottom: 28px;
+  }
+  .headline {
+    font-weight: 800; font-size: {{ tamanho_fonte | default(58) }}px; line-height: 1.18;
+    margin-bottom: 24px;
+  }
+  .headline em { font-style: normal; color: #C9A962; }
+  .box {
+    border: 1.5px solid rgba(201,169,98,0.7);
+    border-radius: 16px;
+    padding: 26px 30px;
+    margin-bottom: 22px;
+    display: inline-block;
+  }
+  .box p { color: #E8D7A6; font-weight: 700; font-size: 32px; line-height: 1.35; }
+  .legenda { color: #C9A962; font-weight: 600; font-size: 26px; }
+  .pager { position: absolute; bottom: 90px; right: 72px; z-index: 3; color: #C9A962; font-weight: 600; font-size: 22px; letter-spacing: 2px; }
+
+  .fecho {
+    position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2;
+  }
+  .fecho .selo { width: 230px; height: 230px; object-fit: contain; filter: drop-shadow(0 6px 24px rgba(0,0,0,0.5)); margin-bottom: 28px; }
+  .fecho .marca { font-weight: 700; font-size: 26px; letter-spacing: 3px; text-transform: uppercase; color: #C9A962; }
+  .fecho .linha { width: 60px; height: 2px; background: #C9A962; margin-top: 18px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <img class="bg" src="{{ foto_src }}" alt="">
+    <div class="overlay"></div>
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner br"></div>
+
+    {% if fechamento %}
+    <div class="fecho">
+      <img class="selo" src="{{ logo_src }}" alt="">
+      <div class="marca">Advocacia &amp; Consultoria</div>
+      <div class="linha"></div>
+    </div>
+    {% else %}
+    <div class="conteudo">
+      {% if kicker %}<div class="kicker">{{ kicker }}</div>{% endif %}
+      <div class="headline">{{ texto|safe }}</div>
+      {% if box %}<div class="box"><p>{{ box|safe }}</p></div>{% endif %}
+      {% if legenda %}<div class="legenda">{{ legenda }}</div>{% endif %}
+    </div>
+    {% endif %}
+    <div class="pager">{{ pagina }} / {{ total }}</div>
+  </div>
+</body>
+</html>
