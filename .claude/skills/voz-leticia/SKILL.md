@@ -1,6 +1,6 @@
 ---
 name: voz-leticia
-description: Perfil de voz da Dra. Letícia Barros (OAB/ES 39.948), derivado dos artigos reais publicados no blog. Use SEMPRE que for escrever qualquer conteúdo em nome dela — artigos, legendas, carrosséis, stories, e-mails, recados ao cliente no CRM. Impede o texto genérico de IA e mantém a voz consistente em todos os canais.
+description: Perfil de voz da Dra. Letícia Barros (OAB/ES 39.948), derivado dos artigos reais publicados no blog. Use SEMPRE que for escrever qualquer conteúdo em nome dela — artigos, legendas, carrosséis, stories, e-mails, recados ao cliente no CRM. Impede o texto genérico de IA e mantém a voz consistente em todos os canais. É o TOM DA ESCRITA; não confundir com a voz clonada em áudio (ElevenLabs) usada na narração dos vídeos, que fica na skill leticia-reels-motion.
 ---
 
 # Voz da Dra. Letícia Barros

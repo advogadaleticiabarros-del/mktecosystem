@@ -87,7 +87,7 @@ Você é o **diretor**: cada quadro tem função (informar, prender, levar ao en
 ## Passo a passo
 
 1. Criar `C:\tmp\videos-reels\NN-nome\fontes\` com o vídeo ou o roteiro e `work\` com cópia de `producao\reels\motor` (do repositório) + `videos\` + `fotos\`.
-2. Áudio. **Padrão desde 14/10/2026: voz clonada da Letícia no ElevenLabs** (`narrar.py`):
+2. Áudio. **Padrão desde 14/10/2026: voz clonada da Letícia no ElevenLabs** (`narrar.py`). É a voz FALADA dos vídeos; o tom do texto do roteiro segue a skill `voz-leticia` (tom das escritas):
    - escrever `fontes\roteiro.txt` com uma parte por Reels (`## Parte 1`...), fatos conferidos ANTES, escrito como se fala (números, "13º", siglas e "art." por extenso);
    - `py narrar.py ..\fontes\roteiro.txt ..\fontes --checar` até sem AVISO; depois sem `--checar`;
    - sai `narracao.wav` (CFG `src`) + `transcricao.json` com tempo exato por palavra (não precisa de Whisper nem de `corrige`); o script imprime os `trechos` de cada parte;
