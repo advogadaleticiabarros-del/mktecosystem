@@ -2,8 +2,8 @@
 
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
-> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-09**
-> (migração de deploy Railway → VPS Hostinger, DNS ainda pendente).
+> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-14**
+> (narração dos Reels com a voz clonada da Letícia no ElevenLabs).
 
 ## O que é o Orbit
 
@@ -600,6 +600,20 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   áudios (`docs/REELS_NOTEBOOKLM_NOV_2026.md`).
 - "Revisar e aprovar" agora mostra o texto do artigo ("Ler o artigo"), para ela aprovar sem sair
   do Orbit; o aviso dos Reels diz que o Orbit publica sozinho.
+
+### Narração dos Reels com a voz da Letícia (ElevenLabs, 14/10/2026)
+
+- A Letícia já tem a voz clonada no ElevenLabs. `C:\tmp\videos-reels\_padrao-motion\narrar.py` (+ `test_narrar.py`)
+  transforma um roteiro (uma parte por Reels, `## Parte N`) em `narracao.wav` + `transcricao.json` no formato do
+  Whisper, com o tempo de cada palavra vindo do endpoint `/with-timestamps`. O motor motion consome sem mudança.
+- Substitui o NotebookLM como padrão: o texto falado é o nosso roteiro, com fatos conferidos antes; acaba a
+  correção de transcrição e a fala truncada. `--checar` avisa números/siglas a escrever por extenso, termos vetados
+  pela OAB e duração fora de 20–45 s.
+- Boas práticas vindas do OpenMontage (só ideias; o código dele é AGPL e não entra no Orbit): `previous_text`/
+  `next_text` entre partes, `seed` fixa, cache por conteúdo (`cache_voz/`, não cobra duas vezes). Chave e voice_id
+  em variáveis de ambiente ou `C:\Users\prosy\.elevenlabs-leticia.json` (fora do git). A legenda continua com o
+  aviso de narração por IA.
+- Atenção: o motor motion vive em `C:\tmp` e não está versionado.
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
