@@ -636,6 +636,16 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 - Pendente: a página de artefato do Perfil da Empresa (posts do Google) não respondeu ao `ArtifactData` nesta
   sessão; imagens e textos dos 6 posts estão em `pecas/google-post-*.jpg` e `pecas/posts_google_out.json`.
 
+### Estúdio de criativos com Reels e decisão (15/10/2026)
+
+- Pedido da Letícia: ver o Reels no Estúdio e dar o veredito ali. `apps/web/lib/pecas.ts` concentra mídia da
+  peça (vídeo ou imagens) + aprovar + pedir alteração, usado pelo Estúdio (`/criativos`) e pelo Editorial
+  (`aprovacao-acoes.tsx`). Estúdio: Reels no grid e player; botões Aprovar e Pedir ajuste; filtro "Alteração pedida".
+  Editorial: player do Reels no visualizador. Sem testes de frontend no projeto (validado por `tsc` + `next build`).
+- Pedidos de ajuste chegam ao Claude por verificação periódica na sessão (`apps/api/scripts/pedidos_ajuste.py`,
+  cópia em `/root/orbit-tools/` na VPS): lista peças em `ajuste` com o texto do pedido. O agendamento vive só
+  na sessão do Claude aberta (some ao fechar; expira em 7 dias). Fora dela, ao começar uma sessão, rodar o script.
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 0. **Chave da OpenAI para o Jornalista** (opcional — terceira fonte):
