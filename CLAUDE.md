@@ -23,6 +23,8 @@ com esse manual. Pedido da usuária em 08/10/2026.
 Estratégia (base de conhecimento): `docs/ESTRATEGIA_CRESCIMENTO_ORGANICO.md` define pilares,
 funil, táticas de crescimento, plano de 90 dias e métricas. Use em toda decisão de pauta,
 formato, calendário e análise de desempenho.
+Plano até 31/12/2026 ("sair da bolha", pilares novos Jornada 2026-2027 e Empresa em dia/B2B):
+`docs/PLANO_CRESCIMENTO_OUT_DEZ_2026.md`.
 Produção de carrossel: `docs/PROCESSO_PRODUCAO_CARROSSEL.md` (roteiro antes da arte, fonte
 primária, modelo fixo, curadoria de fotos, pendências e direção visual editorial).
 
