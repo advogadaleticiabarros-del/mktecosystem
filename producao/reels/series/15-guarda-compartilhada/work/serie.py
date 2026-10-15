@@ -48,7 +48,7 @@ def reel1(W, seg, fim):
     """1/3 · Compartilhada x unilateral: quem decide."""
     return [
         rosto(1, 0, 0, W("Na"), els=[
-            carimbo("Mais simples", W("simples"), 965, 290, rot=-6, size=70)]),
+            carimbo("Mais simples", W("simples"), 965, 300, rot=-5, size=60)]),
         corte(1, 1, W("Na"), W("Ambos"), trans="whip", els=[
             kick("Guarda compartilhada", W("Na") + .05),
             po("A regra", W("regra"), 540, 560, size=210),
