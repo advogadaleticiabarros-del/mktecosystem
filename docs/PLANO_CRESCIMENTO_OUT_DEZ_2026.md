@@ -9,6 +9,8 @@ somado ao editorial que já existe. Complementa (não substitui):
 
 Prioridade em conflito: OAB > Meta > design system > criatividade.
 
+Versão para leitura e comentários (Claude Docs): https://claude.ai/code/artifact/6e7a3c08-15d5-4102-af61-9cd0fb0e6dc5
+
 ## 1. O diagnóstico da bolha
 
 Hoje o perfil fala quase só com **mulheres trabalhadoras do ES, de 25 a 44 anos** (73% mulheres, 74% ES), nos temas
