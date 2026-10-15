@@ -646,6 +646,25 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   cópia em `/root/orbit-tools/` na VPS): lista peças em `ajuste` com o texto do pedido. O agendamento vive só
   na sessão do Claude aberta (some ao fechar; expira em 7 dias). Fora dela, ao começar uma sessão, rodar o script.
 
+### Motor 3D, série Guarda dos filhos e acervo de Reels (15/10/2026)
+
+- **Motor 3D** (`producao/reels/motor3d/`): mundo em miniatura three.js (argila + ouro sobre café), câmera
+  contínua por chaves, camada 2D (cabeçalho, capítulos, etiquetas com fio, selos, números em ouro, legenda palavra a
+  palavra, fechamento), render quadro a quadro no Chromium com WebGL por software (`--use-angle=swiftshader`),
+  verificador da área limpa (`window.checar`). Inspirado num Reels de referência (@explicandodireito.br, 6x1).
+  Primeiro roteiro: `reel_6x1.py`, com tempos estimados; **espera a gravação da Letícia**
+  (`Desktop\PROJETOS\ecosystemmkt\GRAVAR - Reels fim da 6x1.txt`). Gotcha: em three.js `position` é somente
+  leitura (usar `.position.set`, helper `em()`).
+- **Série Guarda dos filhos** (pedido de ajuste no acervo 04): 3 Reels com o rosto real dela (gravações 4K de
+  15/08/2025 em `Desktop\Leticia conteudos\novos videos\Guarda compartilhada x unilateral`) no motor v2: cenas de
+  rosto (pílulas no peito, `dy` para subir o vídeo na tomada longa) + cenas de corte com o vídeo desfocado. Fontes em
+  `producao/reels/series/15-guarda-compartilhada/`. No Orbit em rascunho, 21/23/25-10 às 20h30. A versão vertical
+  de outubro/2025 desse vídeo tem selo de verificado falso: não usar.
+- **Acervo**: Reels 01–11 antigos subidos como rascunho, sem data (`subir_acervo_reels.py`), com aviso para conferir
+  se já foram postados.
+- **Dia dos Professores**: v3 (sala vista do fundo, quadro com inglês desfocado) após pedido de ajuste.
+- Verificação de pedidos de ajuste: só quando a usuária avisar (ela pediu para parar a verificação periódica).
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 0. **Chave da OpenAI para o Jornalista** (opcional — terceira fonte):
