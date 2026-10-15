@@ -72,7 +72,7 @@ function ChaveServico({ status, onMudou }: { status: StatusChave; onMudou: () =>
       {status.configurada && !editando && (
         <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
           <span className="font-mono text-muted-foreground">
-            {status.final ? `sk-…${status.final}` : "guardada no servidor"}
+            {status.final ? `…${status.final}` : "guardada no servidor"}
           </span>
           {status.validada_em && (
             <span className="text-xs text-muted-foreground">

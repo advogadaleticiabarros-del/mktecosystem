@@ -90,3 +90,25 @@ async def test_rota_com_chave_recusada_responde_422_com_explicacao(client, db_se
     monkeypatch.setitem(__import__("app.services.chaves_api", fromlist=["x"]).PROVEDORES["openai"], "validar", recusa)
     r = await client.put("/chaves/openai", json={"chave": "sk-ruim-123456"}, headers=headers)
     assert r.status_code == 422 and "recusou" in r.json()["detail"]
+
+
+@pytest.mark.anyio
+async def test_validar_tiktok_pede_token_com_o_par_client_key_e_secret():
+    from app.services.chaves_api import separar_tiktok, validar_tiktok
+
+    def responder(request):
+        assert request.url.path == "/v2/oauth/token/"
+        corpo = dict(x.split("=") for x in request.content.decode().split("&"))
+        assert corpo["grant_type"] == "client_credentials"
+        if corpo["client_key"] == "chaveboa" and corpo["client_secret"] == "segredobom":
+            return httpx.Response(200, json={"access_token": "clt.x", "expires_in": 7200})
+        return httpx.Response(200, json={"error": "invalid_client", "error_description": "Client key or secret is incorrect."})
+
+    t = httpx.MockTransport(responder)
+    assert separar_tiktok(" chaveboa \n segredobom ") == ("chaveboa", "segredobom")
+    assert separar_tiktok("chaveboa:segredobom") == ("chaveboa", "segredobom")
+    await validar_tiktok("chaveboa segredobom", transport=t)
+    with pytest.raises(ChaveRecusada):
+        await validar_tiktok("chaveboa segredoruim", transport=t)
+    with pytest.raises(ChaveRecusada):
+        await validar_tiktok("sosemsegredo", transport=t)

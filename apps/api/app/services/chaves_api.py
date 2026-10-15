@@ -45,6 +45,27 @@ async def validar_pexels(chave: str, transport: httpx.AsyncBaseTransport | None 
     resposta.raise_for_status()
 
 
+def separar_tiktok(chave: str) -> tuple[str, str]:
+    """A TikTok entrega duas credenciais (Client Key e Client Secret); no painel elas vêm juntas, separadas por
+    espaço, quebra de linha ou dois-pontos."""
+    partes = chave.replace(":", " ").split()
+    if len(partes) != 2:
+        raise ChaveRecusada("Cole a Client Key e o Client Secret do app da TikTok, um depois do outro, separados por espaço.")
+    return partes[0], partes[1]
+
+
+async def validar_tiktok(chave: str, transport: httpx.AsyncBaseTransport | None = None) -> None:
+    client_key, client_secret = separar_tiktok(chave)
+    async with httpx.AsyncClient(transport=transport, timeout=20) as client:
+        resposta = await client.post("https://open.tiktokapis.com/v2/oauth/token/", data={
+            "client_key": client_key, "client_secret": client_secret, "grant_type": "client_credentials"})
+    corpo = resposta.json() if resposta.content else {}
+    if resposta.status_code in (400, 401, 403) or corpo.get("error") or not corpo.get("access_token"):
+        raise ChaveRecusada("A TikTok recusou essas credenciais. Confira a Client Key e o Client Secret na aba do app "
+                            "(Sandbox ou Production) em developers.tiktok.com.")
+    resposta.raise_for_status()
+
+
 PROVEDORES = {
     "openai": {
         "nome": "OpenAI",
@@ -57,6 +78,12 @@ PROVEDORES = {
         "uso": "Banco de fotos para capas e slides: busca a imagem certa para o tema de cada post.",
         "variavel": "PEXELS_API_KEY",
         "validar": validar_pexels,
+    },
+    "tiktok": {
+        "nome": "TikTok",
+        "uso": "Publicação automática dos Reels no TikTok. Cole a Client Key e o Client Secret do app, separados por espaço.",
+        "variavel": "TIKTOK_CLIENT",
+        "validar": validar_tiktok,
     },
 }
 
