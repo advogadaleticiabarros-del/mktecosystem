@@ -2,8 +2,8 @@
 
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
-> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-14**
-> (narração dos Reels com a voz clonada da Letícia no ElevenLabs).
+> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-15**
+> (6 artigos de atualidade + Stories + LP para empresas + plano até dezembro).
 
 ## O que é o Orbit
 
@@ -614,6 +614,27 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   em variáveis de ambiente ou `C:\Users\prosy\.elevenlabs-leticia.json` (fora do git). A legenda continua com o
   aviso de narração por IA.
 - Atenção: o motor motion vive em `C:\tmp` e não está versionado.
+
+### Atualidades de 15/10/2026, Stories e frente B2B
+
+- 6 artigos (`_saida_producao_1510/artigos_out.py` + `artigos_out_extras.py`), fatos conferidos em fonte primária
+  no mesmo dia (docstring lista as fontes): fim da 6x1 (PEC 221/2019 aprovada no Senado em 14/10, ainda sem
+  promulgação), licença-paternidade (Lei 15.371/2026), Lei 15.377/2026 + NR-1 (multas suspensas na ADPF 1.316),
+  TST Tema 215, pejotização (Tema 1.389), pensão para pais idosos no ES (33.560 processos, CNJ via Tribuna 12/10).
+  Formato novo: bloco "Resposta rápida" de 40–60 palavras logo após a abertura (alvo de citação em IA),
+  "Atualizado em", seção "Se você é empresa" nos trabalhistas.
+- Subidos em rascunho por `subir_out.py` (pautas do dia criadas pelo script; backup
+  `/root/orbit-backups/pre-out15-*.sql.gz`): artigos das 10h às 15h, 6 peças `stories` (xxh30, link + passo a passo
+  na legenda; o Orbit não publica Stories e o adesivo de link só existe no app) e a frase v2 do Dia dos Professores (10h).
+- **Padrão de Story "Leia o artigo no link"** (`producao_out.html_story`): a capa Ouro editorial do carrossel v5
+  (`capa_fecho.CSS_OURO`) em 1080×1920, com 250 px livres em cima e embaixo e espaço para o adesivo acima da base.
+  O template antigo `story_artigo_no_ar.html` (Playfair) ficou fora do padrão e não é mais usado.
+- LP nova `lp/empresas-adequacao-trabalhista-2026.html` (gerador `lp/_gerar_lp_empresas.py`, design da LP
+  assessoria-empresarial): **rascunho, ainda não publicada**. Botão "Solicitar contato" (sem "envie o seu caso").
+- Plano `docs/PLANO_CRESCIMENTO_OUT_DEZ_2026.md`: pilares 4 (Jornada 2026-2027) e 5 (Empresa em dia, B2B),
+  gatilho de 24 h na promulgação da 6x1, LinkedIn, contadores, grupos de SEO novos e metas.
+- Pendente: a página de artefato do Perfil da Empresa (posts do Google) não respondeu ao `ArtifactData` nesta
+  sessão; imagens e textos dos 6 posts estão em `pecas/google-post-*.jpg` e `pecas/posts_google_out.json`.
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
