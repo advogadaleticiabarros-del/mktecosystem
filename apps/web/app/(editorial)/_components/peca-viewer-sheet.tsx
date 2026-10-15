@@ -1,6 +1,7 @@
 "use client";
 
 import { Download, X } from "lucide-react";
+import { midiaDaPeca } from "@/lib/pecas";
 import { atualizarPeca } from "../_lib/editorial-api";
 import { TIPO_LABEL, imagensDaPeca, legendaDaPeca, type ContentPieceEditorial } from "../_lib/types";
 import { AprovacaoAcoes } from "./aprovacao-acoes";
@@ -9,7 +10,7 @@ import { ImageCarousel } from "./image-carousel";
 import { LegendaEditor } from "./legenda-editor";
 import { StatusToggle } from "./status-toggle";
 
-const TIPOS_COM_PRIMEIRO_COMENTARIO = ["carrossel", "frase", "pergunta", "estatico"];
+const TIPOS_COM_PRIMEIRO_COMENTARIO = ["carrossel", "frase", "pergunta", "estatico", "reels"];
 
 export function PecaViewerSheet({
   peca,
@@ -21,6 +22,7 @@ export function PecaViewerSheet({
   onAtualizar: (peca: ContentPieceEditorial) => void;
 }) {
   const imagens = imagensDaPeca(peca);
+  const midia = midiaDaPeca(peca.corpo as Record<string, unknown>);
   const legendaAtual = legendaDaPeca(peca);
   const ehArtigo = peca.tipo === "artigo";
   // Peças que viram post no feed levam o primeiro comentário do próprio perfil,
@@ -84,7 +86,23 @@ export function PecaViewerSheet({
         </div>
 
         <div className="editorial-sheet-scroll">
-          {imagens.length > 0 ? (
+          {midia.tipo === "video" ? (
+            <>
+              <video
+                src={midia.url}
+                controls
+                playsInline
+                preload="metadata"
+                style={{ width: "100%", maxHeight: "70vh", borderRadius: 14, background: "#000", aspectRatio: "9 / 16" }}
+              />
+              <div className="editorial-action-row">
+                <a className="editorial-button" data-variant="secondary" href={midia.url} download>
+                  <Download size={16} />
+                  Baixar vídeo
+                </a>
+              </div>
+            </>
+          ) : imagens.length > 0 ? (
             <>
               <ImageCarousel imagens={imagens} alt={TIPO_LABEL[peca.tipo]} />
               <div className="editorial-action-row">

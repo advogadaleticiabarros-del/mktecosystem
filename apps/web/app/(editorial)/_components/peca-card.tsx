@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Film } from "lucide-react";
 import { TIPO_LABEL, imagensDaPeca, type ContentPieceEditorial } from "../_lib/types";
 
 const SELO_STATUS: Record<string, { rotulo: string; tom: "done" | "pending" | "progress" }> = {
@@ -32,6 +32,11 @@ export function PecaCard({
           flexShrink: 0,
         }}
       >
+        {!imagens[0] && typeof (peca.corpo as Record<string, unknown>).video === "string" && (
+          <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Film size={20} color="var(--primary)" />
+          </div>
+        )}
         {imagens[0] && (
           // eslint-disable-next-line @next/next/no-img-element
           <img

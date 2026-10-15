@@ -2,17 +2,8 @@
 
 import { Check, MessageSquareText } from "lucide-react";
 import { useState } from "react";
-import { atualizarPeca } from "../_lib/editorial-api";
+import { aprovarPeca, pedirAlteracaoPeca, quandoSai, type PedidoAlteracao, type Programacao } from "@/lib/pecas";
 import type { ContentPieceEditorial } from "../_lib/types";
-
-type Programacao = { data?: string; hora?: string };
-type PedidoAlteracao = { texto?: string; em?: string };
-
-function quandoSai(prog: Programacao | undefined): string {
-  if (!prog?.data) return "na próxima vaga do calendário";
-  const [, mes, dia] = prog.data.split("-");
-  return `em ${dia}/${mes}${prog.hora ? ` às ${prog.hora}` : ""}`;
-}
 
 // Aprovar agenda a peça (na data combinada em corpo.programacao, se houver);
 // pedir alteração guarda o pedido na peça e tira do calendário até ser aprovada de novo.
@@ -33,11 +24,11 @@ export function AprovacaoAcoes({
 
   if (peca.status === "publicado") return null;
 
-  async function enviar(payload: { status: string; corpo?: Record<string, unknown> }, falha: string) {
+  async function enviar(acao: () => Promise<ContentPieceEditorial>, falha: string) {
     setPendente(true);
     setErro(null);
     try {
-      onAtualizar(await atualizarPeca(peca.id, payload));
+      onAtualizar(await acao());
       setEscrevendo(false);
       setTexto("");
     } catch {
@@ -47,12 +38,9 @@ export function AprovacaoAcoes({
     }
   }
 
-  const aprovar = () => enviar({ status: "aprovado" }, "Não foi possível aprovar. Tente de novo.");
+  const aprovar = () => enviar(() => aprovarPeca(peca.id), "Não foi possível aprovar. Tente de novo.");
   const pedirAlteracao = () =>
-    enviar(
-      { status: "ajuste", corpo: { ...corpo, pedido_alteracao: { texto: texto.trim(), em: new Date().toISOString() } } },
-      "Não foi possível enviar o pedido. Tente de novo.",
-    );
+    enviar(() => pedirAlteracaoPeca(peca.id, corpo, texto), "Não foi possível enviar o pedido. Tente de novo.");
 
   return (
     <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>

@@ -2,7 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight, Download, ImageIcon, Loader2 } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Download, Film, ImageIcon, Loader2, MessageSquareText } from "lucide-react";
+import { STATUS_PECA, aprovarPeca, midiaDaPeca, pedirAlteracaoPeca, quandoSai } from "@/lib/pecas";
 import { apiFetch } from "@/lib/api";
 import { AppShell } from "@/components/app-shell";
 import { Badge } from "@/components/ui/badge";
@@ -11,8 +12,9 @@ import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 // O Estúdio mostra as artes prontas que o Orbit guarda em cada peça
-// (`corpo.imagens` no carrossel, `corpo.imagem` nas peças de imagem única),
-// em qualquer status: rascunho para aprovar, aprovado/agendado e publicado.
+// (`corpo.imagens` no carrossel, `corpo.imagem` nas peças de imagem única, `corpo.video` no Reels),
+// em qualquer status. Ao abrir uma peça, a Letícia aprova ou pede ajuste (lib/pecas.ts, as mesmas
+// regras do Editorial do celular).
 type ContentPiece = {
   id: string;
   tipo: string;
@@ -21,7 +23,9 @@ type ContentPiece = {
   corpo: {
     imagens?: string[];
     imagem?: string;
+    video?: string;
     legenda?: string;
+    pedido_alteracao?: { texto?: string; em?: string };
     programacao?: { data?: string; hora?: string };
   };
 };
@@ -32,20 +36,21 @@ const TIPOS: Record<string, string> = {
   frase: "Frase",
   estatico: "Estático",
   stories: "Stories",
+  reels: "Reels",
 };
 
-const STATUS: Record<string, string> = {
-  rascunho: "Para aprovar",
-  aprovado: "Aprovado",
-  publicado: "Publicado",
-};
+const STATUS = STATUS_PECA;
 
-const FILTROS_STATUS = ["todos", "rascunho", "aprovado", "publicado"] as const;
+const FILTROS_STATUS = ["todos", "rascunho", "ajuste", "aprovado", "publicado"] as const;
 
 function imagensDe(p: ContentPiece): string[] {
-  if (Array.isArray(p.corpo.imagens)) return p.corpo.imagens;
-  if (typeof p.corpo.imagem === "string") return [p.corpo.imagem];
-  return [];
+  const m = midiaDaPeca(p.corpo as Record<string, unknown>);
+  return m.tipo === "imagens" ? m.urls : [];
+}
+
+function videoDe(p: ContentPiece): string | null {
+  const m = midiaDaPeca(p.corpo as Record<string, unknown>);
+  return m.tipo === "video" ? m.url : null;
 }
 
 function dataDe(p: ContentPiece): string {
@@ -82,7 +87,35 @@ export default function CriativosPage() {
   const [selecionado, setSelecionado] = useState<ContentPiece | null>(null);
   const [atual, setAtual] = useState(0);
   const [baixando, setBaixando] = useState(false);
+  const [escrevendo, setEscrevendo] = useState(false);
+  const [pedido, setPedido] = useState("");
+  const [salvando, setSalvando] = useState(false);
+  const [erro, setErro] = useState<string | null>(null);
   const router = useRouter();
+
+  function abrir(p: ContentPiece | null) {
+    setSelecionado(p);
+    setAtual(0);
+    setEscrevendo(false);
+    setPedido("");
+    setErro(null);
+  }
+
+  async function decidir(acao: () => Promise<ContentPiece>, falha: string) {
+    setSalvando(true);
+    setErro(null);
+    try {
+      const atualizado = await acao();
+      setSelecionado(atualizado);
+      setPieces((lista) => (lista ?? []).map((x) => (x.id === atualizado.id ? atualizado : x)));
+      setEscrevendo(false);
+      setPedido("");
+    } catch {
+      setErro(falha);
+    } finally {
+      setSalvando(false);
+    }
+  }
 
   useEffect(() => {
     apiFetch("/content").then(async (resp) => {
@@ -93,7 +126,7 @@ export default function CriativosPage() {
       const data: ContentPiece[] = await resp.json();
       setPieces(
         data
-          .filter((p) => p.tipo in TIPOS && imagensDe(p).length > 0)
+          .filter((p) => p.tipo in TIPOS && (imagensDe(p).length > 0 || videoDe(p) !== null))
           .sort((a, b) => ordem(a).localeCompare(ordem(b))),
       );
     });
@@ -108,11 +141,16 @@ export default function CriativosPage() {
   );
 
   const imagens = selecionado ? imagensDe(selecionado) : [];
+  const video = selecionado ? videoDe(selecionado) : null;
 
   async function baixarTodas() {
     if (!selecionado) return;
     setBaixando(true);
     try {
+      if (video) {
+        await baixar(video, `reels-${selecionado.id.slice(0, 8)}.mp4`);
+        return;
+      }
       for (let i = 0; i < imagens.length; i++) {
         await baixar(imagens[i], `${selecionado.tipo}-${i + 1}.jpg`);
         await new Promise((r) => setTimeout(r, 300));
@@ -163,21 +201,26 @@ export default function CriativosPage() {
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {visiveis.map((piece) => {
             const capa = imagensDe(piece)[0];
+            const filme = videoDe(piece);
             return (
               <Card
                 key={piece.id}
                 className="cursor-pointer overflow-hidden p-0 transition-colors hover:border-primary/50"
-                onClick={() => {
-                  setSelecionado(piece);
-                  setAtual(0);
-                }}
+                onClick={() => abrir(piece)}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={capa} alt={TIPOS[piece.tipo]} loading="lazy" className="aspect-[4/5] w-full bg-muted object-contain" />
+                {filme ? (
+                  <div className="relative">
+                    <video src={`${filme}#t=1`} muted playsInline preload="metadata" className="aspect-[4/5] w-full bg-black object-cover" />
+                    <Film className="absolute right-2 top-2 h-5 w-5 text-white drop-shadow" />
+                  </div>
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={capa} alt={TIPOS[piece.tipo]} loading="lazy" className="aspect-[4/5] w-full bg-muted object-contain" />
+                )}
                 <div className="flex flex-col gap-1.5 p-3">
                   <div className="flex flex-wrap items-center gap-1.5">
                     <Badge variant="secondary">{TIPOS[piece.tipo]}</Badge>
-                    <Badge variant={piece.status === "rascunho" ? "outline" : "default"}>
+                    <Badge variant={piece.status === "rascunho" || piece.status === "ajuste" ? "outline" : "default"}>
                       {STATUS[piece.status] ?? piece.status}
                     </Badge>
                   </div>
@@ -195,7 +238,7 @@ export default function CriativosPage() {
       {selecionado && (
         <div className="flex flex-col items-center gap-5">
           <div className="flex w-full max-w-xl items-center justify-between gap-2">
-            <Button variant="outline" size="sm" onClick={() => setSelecionado(null)}>
+            <Button variant="outline" size="sm" onClick={() => abrir(null)}>
               <ChevronLeft className="h-4 w-4" />
               Voltar
             </Button>
@@ -205,17 +248,28 @@ export default function CriativosPage() {
             </div>
             <Button size="sm" onClick={baixarTodas} disabled={baixando}>
               {baixando ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
-              {imagens.length > 1 ? "Baixar todas" : "Baixar"}
+              {video ? "Baixar vídeo" : imagens.length > 1 ? "Baixar todas" : "Baixar"}
             </Button>
           </div>
 
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          {video ? (
+            <video
+              src={video}
+              controls
+              playsInline
+              preload="metadata"
+              className="w-full max-w-sm rounded-xl border border-border bg-black"
+              style={{ aspectRatio: "9 / 16" }}
+            />
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
             src={imagens[atual]}
             alt={`${TIPOS[selecionado.tipo]} ${atual + 1}`}
             className="w-full max-w-xl rounded-xl border border-border bg-muted object-contain"
             style={{ aspectRatio: "4 / 5" }}
           />
+          )}
 
           {imagens.length > 1 && (
             <div className="flex items-center gap-3">
@@ -244,6 +298,68 @@ export default function CriativosPage() {
           )}
 
           <p className="text-sm text-muted-foreground">{dataDe(selecionado)}</p>
+
+          {selecionado.status !== "publicado" && (
+            <Card className="flex w-full max-w-xl flex-col gap-3 p-4">
+              {selecionado.status === "aprovado" && (
+                <p className="text-sm text-primary">
+                  <Check className="mr-1 inline h-4 w-4" />
+                  Aprovado. Sai {quandoSai(selecionado.corpo.programacao)}.
+                </p>
+              )}
+              {selecionado.status === "ajuste" && selecionado.corpo.pedido_alteracao?.texto && (
+                <p className="text-sm">Ajuste pedido: {selecionado.corpo.pedido_alteracao.texto}</p>
+              )}
+              {escrevendo ? (
+                <>
+                  <textarea
+                    autoFocus
+                    rows={4}
+                    value={pedido}
+                    onChange={(e) => setPedido(e.target.value)}
+                    placeholder="O que você quer ajustar? Ex.: trocar a foto, mudar o título, cortar um trecho do vídeo."
+                    className="w-full rounded-md border border-border bg-background p-3 text-sm outline-none focus:border-primary"
+                  />
+                  <div className="flex gap-2">
+                    <Button variant="outline" className="flex-1" disabled={salvando} onClick={() => setEscrevendo(false)}>
+                      Cancelar
+                    </Button>
+                    <Button
+                      className="flex-1"
+                      disabled={salvando || !pedido.trim()}
+                      onClick={() =>
+                        decidir(
+                          () => pedirAlteracaoPeca<ContentPiece>(selecionado.id, selecionado.corpo as Record<string, unknown>, pedido),
+                          "Não foi possível enviar o pedido. Tente de novo.",
+                        )
+                      }
+                    >
+                      {salvando ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                      Enviar pedido de ajuste
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <div className="flex gap-2">
+                  <Button variant="outline" className="flex-1" disabled={salvando} onClick={() => setEscrevendo(true)}>
+                    <MessageSquareText className="h-4 w-4" />
+                    Pedir ajuste
+                  </Button>
+                  {selecionado.status !== "aprovado" && (
+                    <Button
+                      className="flex-1"
+                      disabled={salvando}
+                      onClick={() => decidir(() => aprovarPeca<ContentPiece>(selecionado.id), "Não foi possível aprovar. Tente de novo.")}
+                    >
+                      {salvando ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
+                      Aprovar
+                    </Button>
+                  )}
+                </div>
+              )}
+              {erro && <p className="text-sm text-destructive">{erro}</p>}
+            </Card>
+          )}
           {selecionado.corpo.legenda && (
             <Card className="w-full max-w-xl whitespace-pre-line p-4 text-sm">{selecionado.corpo.legenda}</Card>
           )}
