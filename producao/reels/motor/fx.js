@@ -143,7 +143,8 @@ function checar(t) {
     const prox = C.cenas[ic + 1];
     if (t < c.a + (c.tdur ?? T) + .05 || (prox && t >= prox.a)) return;
     c._els.forEach(([n, d]) => {
-      if (d.livre || t < (d.at ?? 0) + (d.dur ?? .55) + .5 || (d.ate != null && t > d.ate)) return;
+      const batida = d.anim === 'carimbo' || d.anim === 'pop'; // estes crescem na entrada: conferir também durante a animação
+      if (d.livre || t < (d.at ?? 0) + (batida ? 0 : (d.dur ?? .55) + .5) || (d.ate != null && t > d.ate)) return;
       if (d.tipo === 'po') { if (!d._pts) return;
         const L = d.x - d._w / 2, R = d.x + d._w / 2, Tp = d.y - d._h / 2, B = d.y + d._h / 2;
         if (Tp < SEG.topo || B > SEG.base || L < SEG.esq || R > SEG.dir) prob.push({ t, cena: ic, el: d.texto || 'imagem', box: [L, Tp, R, B].map(Math.round) });

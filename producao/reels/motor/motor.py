@@ -377,7 +377,7 @@ async def renderizar(n, cfg, so_amostras=None, checar=False):
         await page.evaluate("document.fonts.ready")
         await page.evaluate("cfg => init(cfg)", cfg)
         if checar:
-            tempos = [i * .2 for i in range(int(cfg["total"] / .2))]
+            tempos = [i * .1 for i in range(int(cfg["total"] / .1))]
         else:
             tempos = so_amostras or [i / FPS for i in range(int(round(cfg["total"] * FPS)))]
         desde = int(os.environ.get("DESDE_QUADRO", "0"))

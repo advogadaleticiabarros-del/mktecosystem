@@ -122,6 +122,12 @@ async function init(cfg) {
   for (const c of cfg.cenas) {
     c._div.style.visibility = 'visible';
     for (const [n, d] of c._els) {
+      if ((d.cls || '').includes('carimbo')) { // carimbo que passaria da margem direita encolhe até caber
+        let fc = parseFloat(n.style.fontSize) || 76;
+        const cabe = () => 540 + (n.offsetLeft + n.offsetWidth - 540) * ZONA * 1.04 + 14 <= 928;
+        while (!cabe() && fc > 40) { fc *= 0.95; n.style.fontSize = fc + 'px'; }
+        continue;
+      }
       if (d.tipo !== 'texto') continue;
       let fs = parseFloat(n.style.fontSize) || 96;
       const quebra = () => [...n.querySelectorAll('.lin > span')].some(sp => sp.offsetHeight > fs * 1.35);
@@ -143,10 +149,14 @@ function animarEl(n, d, t) {
       });
       op = t < a ? 0 : 1; break;
     }
-    case 'pop': { const kk = eBack(k); op = clamp(k * 4); tf = `scale(${lerp(.4, 1, kk)})`; break; }
+    case 'pop': { const kk = eBack(k); if (n.classList.contains('pill')) n.style.transformOrigin = '0 50%'; // cresce da borda esquerda: o repique não invade a margem
+ op = clamp(k * 4); tf = `scale(${lerp(.4, 1, kk)})`; break; }
     case 'carimbo': {
       const kk = clamp(k / .45); op = clamp(k * 6);
-      const s = lerp(2.4, 1, eOut(kk)); const tremor = kk >= 1 ? Math.sin((t - a) * 60) * Math.exp(-(t - a - .2) * 12) * 6 : 0;
+      // batida do carimbo: começa maior (até 2,4x), mas nunca a ponto de sair da área segura (150..930)
+      const cxC = 540 + (n.offsetLeft + n.offsetWidth / 2 - 540) * ZONA, hwC = n.offsetWidth / 2 * ZONA;
+      const s0 = Math.max(1, Math.min(2.4, (Math.min(cxC - 150, 930 - cxC) - 12) / hwC));
+      const s = lerp(s0, 1, eOut(kk)); const tremor = kk >= 1 ? Math.sin((t - a) * 60) * Math.exp(-(t - a - .2) * 12) * 6 : 0;
       tf = `rotate(${d.rot ?? -8}deg) scale(${s}) translate(${tremor}px, ${tremor * .5}px)`; break;
     }
     case 'sobe': { const kk = eOut(k); op = clamp(k * 2); tf = `translateY(${(1 - kk) * 70}px)`; break; }
