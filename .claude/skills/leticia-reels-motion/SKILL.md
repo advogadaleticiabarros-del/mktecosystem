@@ -52,7 +52,7 @@ Você é o **diretor**: cada quadro tem função (informar, prender, levar ao en
   - topo 270 px, base 672 px (y ≤ 1248), **laterais 150 px** (o iPhone em tela cheia corta ~98 px por lado);
   - o motor encolhe a camada gráfica para o centro (`ZONA` 0,83): desenhe em x=90 como sempre;
   - legenda falada com no máximo 700 px, centralizada (x 190–890);
-  - cabeçalho só "Letícia Barros" + série;
+  - cabeçalho só "Letícia Barros" + série, **embaixo da legenda** (cabeçalho em y=1198 e barra de progresso em y=1236; legenda em y=1070). No topo, cobria a testa da Dra.;
   - carimbo sem quebra de linha: encolhe sozinho até caber;
   - o `--checar` mede tudo a cada 0,1 s, inclusive durante as animações, além do cabeçalho e da legenda. Só seguir com "área limpa: ok".
 - **Visual limpo e moderno (pedido de 16/10/2026: "não quero reels bregas")**:

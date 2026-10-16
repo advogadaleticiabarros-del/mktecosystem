@@ -168,7 +168,7 @@ function checar(t) {
   if (leg.style.opacity !== '0' && leg.children.length) {
     const ws = [...leg.children].map(w => w.getBoundingClientRect());
     const L = Math.min(...ws.map(r => r.left)), R = Math.max(...ws.map(r => r.right)), B = Math.max(...ws.map(r => r.bottom));
-    if (L < SEG.esq + 30 || R > SEG.dir - 30 || B > SEG.base) prob.push({ t, cena: -1, el: 'legenda: ' + leg.textContent.slice(0, 40), box: [L, 0, R, B].map(Math.round) });
+    if (L < SEG.esq + 30 || R > SEG.dir - 30 || B > SEG.base || B > document.getElementById('cab').getBoundingClientRect().top - 6) prob.push({ t, cena: -1, el: 'legenda: ' + leg.textContent.slice(0, 40), box: [L, 0, R, B].map(Math.round) });
   }
   palco.style.transform = tfPalco;
   return prob;
