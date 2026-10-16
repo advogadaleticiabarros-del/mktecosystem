@@ -678,6 +678,12 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
+- **REGRA (16/10/2026): material pronto nunca some.** Versão nova é peça nova e arquivo novo (nome com versão); não
+  reaproveitar peça de material pronto, não trocar vídeo sem guardar o anterior, não esconder material por
+  ordenação. O Reels 04 do acervo (guarda, original da Dra.) tinha sido reaproveitado como Parte 1 da série Guarda e
+  foi restaurado como peça própria (`restaurar_acervo04_1610.py`). Antes e depois de qualquer script que mexe em
+  peças, contar por tipo e conferir que nada sumiu.
+
 - **Reels: área segura nova (15/10/2026)**. A gestante 1/3 saiu com texto cortado nas bordas no iPhone (tela
   cheia corta ~98 px por lado) e foi excluída. Regra nova: laterais **150 px**, topo 270, base 672 (y ≤ 1248),
   legenda falada com no máximo 700 px de largura, centralizada (x 190–890) e longe da coluna de ícones da
