@@ -27,6 +27,7 @@ type ContentPiece = {
     legenda?: string;
     pedido_alteracao?: { texto?: string; em?: string };
     programacao?: { data?: string; hora?: string };
+    reserva?: { desde?: string; motivo?: string };
   };
 };
 
@@ -41,7 +42,21 @@ const TIPOS: Record<string, string> = {
 
 const STATUS = STATUS_PECA;
 
-const FILTROS_STATUS = ["todos", "rascunho", "ajuste", "aprovado", "publicado"] as const;
+const FILTROS_STATUS = ["todos", "rascunho", "ajuste", "agenda", "reserva", "publicado"] as const;
+const ROTULO_FILTRO: Record<string, string> = { ...STATUS_PECA, agenda: "Na agenda", reserva: "Reserva" };
+
+function rotuloStatus(p: ContentPiece): string {
+  if (p.status === "aprovado" && p.corpo.reserva) return "Reserva";
+  return STATUS[p.status] ?? p.status;
+}
+
+// "Na agenda" = aprovada e com data; "Reserva" = aprovada mas fora da agenda de 1 post por dia.
+function passaNoFiltro(p: ContentPiece, filtro: string): boolean {
+  if (filtro === "todos") return true;
+  if (filtro === "agenda") return p.status === "aprovado" && !!p.corpo.programacao?.data && !p.corpo.reserva;
+  if (filtro === "reserva") return p.status === "aprovado" && !!p.corpo.reserva;
+  return p.status === filtro;
+}
 
 function imagensDe(p: ContentPiece): string[] {
   const m = midiaDaPeca(p.corpo as Record<string, unknown>);
@@ -53,17 +68,24 @@ function videoDe(p: ContentPiece): string | null {
   return m.tipo === "video" ? m.url : null;
 }
 
+// O card mostra quando a peça sai, nunca a data em que foi produzida (isso confundia: tudo aparecia "08/10").
 function dataDe(p: ContentPiece): string {
   const d = p.corpo.programacao?.data;
   if (d) {
     const [ano, mes, dia] = d.split("-");
-    return `${dia}/${mes}/${ano}${p.corpo.programacao?.hora ? ` · ${p.corpo.programacao.hora}` : ""}`;
+    const quando = `${dia}/${mes}/${ano}${p.corpo.programacao?.hora ? ` · ${p.corpo.programacao.hora}` : ""}`;
+    return p.status === "publicado" ? `Publicado · ${quando}` : `Sai ${quando}`;
   }
-  return new Date(p.criado_em).toLocaleDateString("pt-BR");
+  if (p.corpo.reserva) return p.corpo.reserva.motivo?.startsWith("pedido") ? "Fora do ar (a seu pedido)" : "Reserva · sem data";
+  if (p.status === "publicado") return "Publicado";
+  return "Sem data";
 }
 
+// Agendadas primeiro, por data; depois as publicadas; a reserva e o resto no fim.
 function ordem(p: ContentPiece): string {
-  return p.corpo.programacao?.data ? `${p.corpo.programacao.data} ${p.corpo.programacao.hora ?? ""}` : p.criado_em;
+  if (p.corpo.programacao?.data) return `1 ${p.corpo.programacao.data} ${p.corpo.programacao.hora ?? ""}`;
+  if (p.status === "publicado") return `2 ${p.criado_em}`;
+  return `3 ${p.criado_em}`;
 }
 
 async function baixar(url: string, nome: string) {
@@ -135,7 +157,7 @@ export default function CriativosPage() {
   const visiveis = useMemo(
     () =>
       (pieces ?? []).filter(
-        (p) => (filtroStatus === "todos" || p.status === filtroStatus) && (filtroTipo === "todos" || p.tipo === filtroTipo),
+        (p) => passaNoFiltro(p, filtroStatus) && (filtroTipo === "todos" || p.tipo === filtroTipo),
       ),
     [pieces, filtroStatus, filtroTipo],
   );
@@ -169,7 +191,7 @@ export default function CriativosPage() {
         <div className="mb-5 flex flex-wrap gap-2">
           {FILTROS_STATUS.map((s) => (
             <Button key={s} size="sm" variant={filtroStatus === s ? "default" : "outline"} onClick={() => setFiltroStatus(s)}>
-              {s === "todos" ? "Todos" : STATUS[s]}
+              {s === "todos" ? "Todos" : ROTULO_FILTRO[s]}
             </Button>
           ))}
           <span className="mx-1 w-px self-stretch bg-border" />
@@ -221,7 +243,7 @@ export default function CriativosPage() {
                   <div className="flex flex-wrap items-center gap-1.5">
                     <Badge variant="secondary">{TIPOS[piece.tipo]}</Badge>
                     <Badge variant={piece.status === "rascunho" || piece.status === "ajuste" ? "outline" : "default"}>
-                      {STATUS[piece.status] ?? piece.status}
+                      {rotuloStatus(piece)}
                     </Badge>
                   </div>
                   <p className="text-xs text-muted-foreground">
@@ -244,7 +266,7 @@ export default function CriativosPage() {
             </Button>
             <div className="flex items-center gap-1.5">
               <Badge variant="secondary">{TIPOS[selecionado.tipo]}</Badge>
-              <Badge>{STATUS[selecionado.status] ?? selecionado.status}</Badge>
+              <Badge>{rotuloStatus(selecionado)}</Badge>
             </div>
             <Button size="sm" onClick={baixarTodas} disabled={baixando}>
               {baixando ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
