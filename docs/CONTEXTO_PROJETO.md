@@ -2,7 +2,7 @@
 
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
-> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-15**
+> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-16**
 > (6 artigos de atualidade + Stories + LP para empresas + plano até dezembro).
 
 ## O que é o Orbit
@@ -365,11 +365,11 @@ o carrossel, 0 salvamentos/30 dias, +15 seguidores/30 dias, 73% mulheres,
 - **Gerador**: 8 peças por pauta (+`frase`, +`pergunta`); carrossel agora pede
   `legenda` no JSON. Card novo `templates/pergunta_card.html` +
   `render_criativo.renderizar_pergunta`.
-- **Agenda** (`agenda.py`): Instagram segue o ciclo — dias de tema alternam a
-  partir de `CICLO_ANCORA = 2026-10-09`; pergunta 12h, frase 15h, carrossel 20h
-  da mesma pauta no mesmo dia (uma pauta por dia de tema); estático 19h no dia
-  de respiro seguinte ao tema da sua pauta. Artigo/jornal/legenda/stories/reels
-  seguem o playbook antigo (11h/17h).
+- **Agenda** (`agenda.py`, regra de 16/10/2026, substitui o ciclo de 2 dias): **1 publicação por dia no
+  Instagram**. Peça aprovada vai para o primeiro dia sem post do Instagram (Stories não contam); em dia de Reels,
+  só o Reels. Horários pelo alcance real do perfil em 12 meses: Reels 21h (melhor hora, 196 contas), feed 14h
+  (seg a sex) e 11h (sáb e dom); 12h e manhãs eram fracos. `corpo.programacao` continua mandando.
+  Artigo/jornal/stories seguem o playbook (11h/17h).
 - **Próximas fases** (no doc): 2 = arte com foto + calendário montado sozinho
   pelo Radar/rodízio de áreas; 3 = métricas por post + ranking + relatório
   semanal; 4 = ajuste automático de horários/formatos, Reels, Facebook.
@@ -683,7 +683,22 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   re-renderizados em 16/10, passaram no verificador e a folha de prova foi enviada a ela.
   Depois: mostrar amostras, subir com `?v=` novo e reagendar (todos os reels estão "pausado"; a gestante 1/3
   precisa de data nova).
-- **Revisão das frases do feed (pedido de 15/10/2026)**. Ela achou "não" demais e leitura pouco fluida, inclusive
+- **Calendário de 1 post por dia (16/10/2026)**. Ela pediu: "uma publicação por dia" e "reels quando for dia de reels
+  a noite". Aplicado por `_saida_producao_1510/aplicar_calendario_1610.py` (backup
+  `/root/orbit-backups/pre-calendario-1por-dia-202610160841.sql.gz`). 16/10 a 31/12: 74 dias com 1 post, mais 3 Reels
+  da Guarda (rascunho, `programacao` 23, 25 e 27/10, entram quando ela aprovar no Estúdio). Prioridade: Reels a cada
+  2 dias nas séries, conteúdo de data marcada (eleição, 13º, 20/11, Natal) no prazo, carrossel, Mito ou Lei, e
+  **frase aos domingos 11h**. **81 peças aprovadas ficaram na reserva**: sem agendamento, com
+  `corpo.reserva {desde, motivo, programacao_antiga}`, prontas para usar em 2027 ou para tapar buraco. Os 15 Reels
+  apontam para os vídeos da área segura nova (`?v=sz1`); a Gestante 1/3 voltou para 17/10 às 21h.
+- **Revisão das frases do feed (pedido de 15/10/2026)**. Rodada 1 (16/10): 17 aprovadas. Destas, 12 mudaram de
+  texto, receberam imagem nova (`frases_revisao_1610.py`, `?v=rev1610`) e guardam `corpo.frase_antiga`. 3 ela
+  mandou manter a antiga. A de medida protetiva foi retirada ("não coloque nada sobre esse assunto"); só a frase
+  saiu, o carrossel ficou. Rodada 2: 14 reescritas estão "Para avaliar" na página, com o pedido dela ao lado.
+  Pedidos para não esquecer: evitar "também" e "combinado", ser direta e popular, dar nome às coisas
+  (temporário, mãe/pai/filho), nunca soar como cobrança ao trabalhador. Ao aprovar, aplicar em `corpo.frase` e
+  refazer a imagem.
+- Histórico da revisão das frases. Ela achou "não" demais e leitura pouco fluida, inclusive
   nas aprovadas. Página de aprovação: https://claude.ai/artifact/VJaiy4ECR8aWKaVt3xqMP2 (db `frases/<id da
   peça>`: antiga, nova, status pendente/aprovada/refazer, pedido). Tem as 35 frases aprovadas de 17/10 a 31/12.
   **Nada muda no Orbit antes de ela aprovar.** Depois: aplicar as aprovadas em `corpo.frase`, refazer as imagens
