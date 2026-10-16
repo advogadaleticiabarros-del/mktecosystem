@@ -130,6 +130,7 @@ function caixa(n, d) {
     n.querySelectorAll('.lin > span').forEach(sp => { const r = sp.getBoundingClientRect(); L = Math.min(L, r.left); T = Math.min(T, r.top); R = Math.max(R, r.right); B = Math.max(B, r.bottom); });
     return { left: L, top: T, right: R, bottom: B, width: R - L };
   }
+  if (n.classList.contains('carimbo') || n.classList.contains('pill')) return n.getBoundingClientRect(); // a moldura conta
   const f = n.firstElementChild;
   if (f && (f.classList.contains('cartao') || f.classList.contains('papel') || ['IMG', 'svg', 'DIV'].includes(f.tagName))) return f.getBoundingClientRect();
   const r = document.createRange(); r.selectNodeContents(n); return r.getBoundingClientRect();
