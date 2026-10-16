@@ -676,7 +676,11 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   O `.kick` ficou com 27 px, para continuar ≥22 px depois da escala. `checar()` (fx.js) agora usa 150/930
   e mede também o cabeçalho e a legenda. Motor v1 (série gestante, pasta 12): mesma ideia com `ZONA` 0,78,
   porque lá os elementos nascem em x=70 e a câmera chega a 1,06. Também ganhou `--checar`. O motor 3D
-  (`pagina.html`) usa os mesmos limites. Os 15 reels passaram no verificador e estão sendo re-renderizados.
+  (`pagina.html`) usa os mesmos limites. O verificador confere também durante as animações, a cada 0,1 s:
+  carimbos que ficam ~1 s na tela escapavam da regra antiga de "só depois de assentar". Ele mede a moldura
+  de carimbos e pílulas. O carimbo não quebra linha, encolhe a fonte sozinho até caber, e a batida inicial
+  (até 2,4x) é limitada à área segura. Pílula "pop" cresce a partir da borda esquerda. Os 15 reels foram
+  re-renderizados em 16/10, passaram no verificador e a folha de prova foi enviada a ela.
   Depois: mostrar amostras, subir com `?v=` novo e reagendar (todos os reels estão "pausado"; a gestante 1/3
   precisa de data nova).
 - **Revisão das frases do feed (pedido de 15/10/2026)**. Ela achou "não" demais e leitura pouco fluida, inclusive
