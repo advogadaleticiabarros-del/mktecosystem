@@ -1,6 +1,7 @@
 """Artigos de atualidade de 15/10/2026 (fim da 6x1 aprovado no Senado em 14/10 e outros marcos de 2026).
 Voz da Letícia; modelo de HTML igual aos publicados; fatos conferidos em 15/10/2026 em fonte primária:
-- 6x1: Senado Notícias e Agência Brasil (14/10/2026), Agência Câmara (27/05/2026). Ainda não promulgada.
+- 6x1: Senado Notícias e Agência Brasil (14/10/2026), Agência Câmara (27/05/2026). Promulgada em 16/10/2026
+  (Agência Câmara e O Tempo, 16/10): 42 h e 5x2 em 60 dias da publicação, 40 h após mais 12 meses.
 - Licença-paternidade: Lei 15.371/2026 (texto da Câmara, legin).
 - Saúde: Lei 15.377/2026 (DOU de 06/04/2026); NR-1 (Portarias MTE 1.419/2024 e 765/2025); ADPF 1.316 (liminar
   de 25/06/2026, prorrogada em setembro por mais 90 dias).
@@ -25,24 +26,24 @@ ARTIGOS = [
         "kicker": "Fim da escala 6x1", "categoria": "Direito Trabalhista",
         "titulo": "Fim da escala 6x1: o que muda, quando começa e o que fazer agora",
         "slug": "fim-da-escala-6x1-o-que-muda-e-quando-comeca",
-        "meta": "O Senado aprovou o fim da escala 6x1: jornada de 40 horas, dois dias de descanso e nenhum corte de salário. Veja quando começa e o que muda.",
-        "resumo": "Jornada de 40 horas, dois dias de descanso e salário mantido: o que a PEC aprovada em 14/10 muda e quando começa.",
-        "post_google": "O Senado aprovou o fim da escala 6x1. Jornada máxima de 40 horas, dois dias de descanso por semana e nenhum corte de salário. Explicamos no blog quando começa e o que muda para quem trabalha e para as empresas.",
+        "meta": "O Congresso promulgou o fim da escala 6x1 em 16/10/2026: dois dias de descanso, 42 e depois 40 horas, sem corte de salário. Veja os prazos.",
+        "resumo": "Promulgada em 16/10: dois dias de descanso, jornada de 42 e depois 40 horas, salário mantido. Os prazos e o que fazer agora.",
+        "post_google": "O fim da escala 6x1 foi promulgado em 16/10/2026. Dois dias de descanso por semana, jornada de 42 horas em 60 dias e de 40 horas depois, sem corte de salário. Explicamos no blog os prazos e o que muda para quem trabalha e para as empresas.",
         "story": "Jornada de 40 horas, dois dias de folga e salário mantido. Veja quando começa.",
         "html": ATUALIZADO + """<p>Seis dias de trabalho. Um dia de folga, que vira dia de lavar roupa, fazer mercado e resolver o que ficou para trás. E na segunda-feira, tudo de novo.</p>
 
-<p>Essa é a rotina de milhões de brasileiras. E ela começou a mudar no dia 14 de outubro de 2026.</p>
+<p>Essa é a rotina de milhões de brasileiras. E ela começou a mudar: o Senado aprovou o fim da escala 6x1 em 14 de outubro, e o Congresso promulgou a emenda no dia 16 de outubro de 2026.</p>
 
-<p>Neste artigo eu explico, sem juridiquês, o que o Senado aprovou, quando passa a valer e o que você (ou a sua empresa) precisa fazer agora. Vamos juntas.</p>
+<p>Neste artigo eu explico, sem juridiquês, o que foi aprovado, quando passa a valer e o que você (ou a sua empresa) precisa fazer agora. Vamos juntas.</p>
 
 <div class="callout-box">
 <h4>Resposta rápida</h4>
-<p>O Senado aprovou a PEC 221/2019, que acaba com a escala 6x1. A jornada máxima cai de 44 para 40 horas por semana, com dois dias de descanso remunerado e sem redução de salário. A mudança vem em etapas: 42 horas dois meses depois da emenda publicada, e 40 horas um ano depois disso.</p>
+<p>O fim da escala 6x1 foi promulgado pelo Congresso em 16 de outubro de 2026. A jornada máxima cai de 44 para 40 horas por semana, com dois dias de descanso remunerado e sem redução de salário. A mudança vem em etapas: 42 horas e escala 5x2 em 60 dias contados da publicação da emenda, e 40 horas 12 meses depois disso.</p>
 </div>
 
-<h2>O que o Senado aprovou</h2>
+<h2>O que foi aprovado</h2>
 
-<p>A Proposta de Emenda à Constituição 221/2019 foi aprovada em dois turnos, na mesma noite, por <strong>75 votos a 1</strong>. A Câmara já tinha aprovado o texto em maio. Como o Senado não mudou nada, a proposta não volta para a Câmara: segue direto para a promulgação, que é o ato que transforma a PEC em emenda constitucional.</p>
+<p>A Proposta de Emenda à Constituição 221/2019 foi aprovada em dois turnos, na mesma noite, por <strong>75 votos a 1</strong>. A Câmara já tinha aprovado o texto em maio. Como o Senado não mudou nada, a proposta não voltou para a Câmara e foi promulgada pelo Congresso em sessão solene no dia 16 de outubro de 2026. A promulgação é o ato que transforma a PEC em emenda constitucional.</p>
 
 <p>O que o texto garante para quem tem carteira assinada:</p>
 
@@ -54,14 +55,14 @@ ARTIGOS = [
 
 <h2>Quando começa a valer</h2>
 
-<p>Aqui está a dúvida que mais vai chegar nas próximas semanas. A resposta honesta: <strong>ainda não começou</strong>. Enquanto a emenda não for promulgada e publicada, continua valendo a regra atual de 44 horas.</p>
+<p>Aqui está a dúvida que mais vai chegar nas próximas semanas. A emenda já foi promulgada, mas a mudança tem prazo de transição: <strong>até o fim dos primeiros 60 dias</strong> contados da publicação, continua valendo a regra atual de 44 horas.</p>
 
 <p>Depois da publicação, a mudança vem em duas etapas:</p>
 
 <table class="prova-table">
 <tr><th>Quando</th><th>O que muda</th></tr>
-<tr><td>2 meses depois da publicação</td><td>Dois dias de descanso por semana e jornada máxima de 42 horas.</td></tr>
-<tr><td>1 ano depois disso (cerca de 14 meses no total)</td><td>Jornada máxima de 40 horas por semana.</td></tr>
+<tr><td>60 dias depois da publicação</td><td>Escala 5x2, dois dias de descanso por semana e jornada máxima de 42 horas.</td></tr>
+<tr><td>12 meses depois disso (cerca de 14 meses no total)</td><td>Jornada máxima de 40 horas por semana.</td></tr>
 </table>
 
 <div class="callout-box">
@@ -103,7 +104,7 @@ ARTIGOS = [
 
 <h2>Se você é empresa</h2>
 
-<p>O prazo de dois meses depois da publicação é curto. Vale começar agora:</p>
+<p>A emenda já foi promulgada e o prazo de 60 dias é curto. Vale começar agora:</p>
 
 <ul>
 <li>levantar quantos empregados estão em 6x1 e acima de 42 horas;</li>
@@ -115,13 +116,13 @@ ARTIGOS = [
 <h2>Perguntas frequentes</h2>
 
 <h3>A escala 6x1 já acabou?</h3>
-<p>Ainda não. A PEC foi aprovada, mas só começa a valer depois de promulgada e publicada, e com prazo de transição.</p>
+<p>A emenda foi promulgada em 16 de outubro de 2026, mas tem transição: a escala 5x2 e o limite de 42 horas passam a valer 60 dias depois da publicação. Até lá, valem as regras atuais.</p>
 
 <h3>Meu salário pode diminuir com a jornada menor?</h3>
 <p>Não. O texto proíbe redução de salário, inclusive proporcional.</p>
 
 <h3>Quando a jornada chega a 40 horas?</h3>
-<p>Cerca de 14 meses depois da publicação: primeiro cai para 42 horas, e um ano depois para 40.</p>
+<p>Cerca de 14 meses depois da publicação: primeiro cai para 42 horas (em 60 dias), e 12 meses depois para 40.</p>
 
 <h3>Vou ter folga no domingo?</h3>
 <p>Um dos dois dias de descanso deve ser preferencialmente no domingo.</p>
