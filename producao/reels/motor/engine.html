@@ -95,7 +95,7 @@ async function init(cfg) {
     // partículas (camada de profundidade)
     const part = el('div', 'camada'); c._part = part; div.appendChild(part);
     c._ps = [];
-    for (let i = 0; i < (c.particulas ?? 0); i++) { // bolinhas desfocadas: desligadas por padrão (imagem limpa)
+    for (let i = 0; i < (C.bolinhas ? (c.particulas ?? 0) : 0); i++) { // bolinhas desfocadas: desligadas, mesmo em cena antiga que pedia (imagem limpa, 16/10/2026)
       const p = el('div', 'part'); const r = 6 + (i * 37 % 26); p.style.width = p.style.height = r + 'px';
       const ps = { x: (i * 211) % 1080, y: 300 + (i * 389) % 1300, z: .3 + (i % 5) * .25, r }; c._ps.push([p, ps]);
       p.style.filter = `blur(${(1.4 - ps.z) * 4}px)`; p.style.opacity = .25 + ps.z * .3; part.appendChild(p);
