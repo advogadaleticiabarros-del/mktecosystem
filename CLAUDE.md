@@ -25,6 +25,8 @@ funil, táticas de crescimento, plano de 90 dias e métricas. Use em toda decis�
 formato, calendário e análise de desempenho.
 Plano até 31/12/2026 ("sair da bolha", pilares novos Jornada 2026-2027 e Empresa em dia/B2B):
 `docs/PLANO_CRESCIMENTO_OUT_DEZ_2026.md`.
+Mídia paga (Meta Ads): `docs/MIDIA_PAGA_META_ADS.md` é obrigatório antes de qualquer campanha paga (regra dos
+**interesses cruzados**, limites da OAB para impulsionamento, público qualificado trabalhista). Pedido de 16/10/2026.
 Produção de carrossel: `docs/PROCESSO_PRODUCAO_CARROSSEL.md` (roteiro antes da arte, fonte
 primária, modelo fixo, curadoria de fotos, pendências e direção visual editorial).
 
