@@ -48,11 +48,21 @@ Você é o **diretor**: cada quadro tem função (informar, prender, levar ao en
   - Gancho na tela já no quadro 0, com a pergunta que a pessoa faria.
   - Virada ou recompensa perto de 70%: carimbo, número em pó de ouro.
   - A última fala puxa a próxima parte.
-- **Área limpa (Meta)**:
-  - topo de 270 px, base de 672 px (35%) e laterais de 65 px livres;
-  - margem de texto de **90 px**, porque a câmera dá zoom de até 3%;
-  - gráficos entre y=350 e ~1085; legenda entre 1110 e 1240;
-  - **rodar `py serie.py --checar`** antes de renderizar e só seguir com "área limpa: ok" nos 3 Reels.
+- **Área segura (regra de 16/10/2026, após Reels cortado no iPhone)**:
+  - topo 270 px, base 672 px (y ≤ 1248), **laterais 150 px** (o iPhone em tela cheia corta ~98 px por lado);
+  - o motor encolhe a camada gráfica para o centro (`ZONA` 0,83): desenhe em x=90 como sempre;
+  - legenda falada com no máximo 700 px, centralizada (x 190–890);
+  - cabeçalho só "Letícia Barros" + série;
+  - carimbo sem quebra de linha: encolhe sozinho até caber;
+  - o `--checar` mede tudo a cada 0,1 s, inclusive durante as animações, além do cabeçalho e da legenda. Só seguir com "área limpa: ok".
+- **Visual limpo e moderno (pedido de 16/10/2026: "não quero reels bregas")**:
+  - nada de poeira dourada nem bolinhas de fundo; explosões e onda de choque ficam desligadas (só religar se ela pedir);
+  - o pó de ouro forma o número e vira texto sólido;
+  - selo reto, borda fina, sem tremor nem batida exagerada;
+  - **onde a Dra. não aparece, vídeo do banco de imagens ligado ao assunto** (Pexels, maioria de pessoas negras, sem clichê de balança ou martelo), nunca fundo vazio ou o rosto dela desfocado;
+  - ganchos iniciais: ela aprovou o padrão atual, manter;
+  - efeitos 3D, transições e som: ela aprovou, manter.
+- **Fonte mínima**: 27 px no código, para dar ≥22 px depois da escala da área segura.
 - **Leitura**:
   - título com no máximo ~15 caracteres por segundo na tela (o `--checar` avisa "LEITURA");
   - no máximo 3 textos disputando o olhar ao mesmo tempo (kicker + título + pílula/carimbo);
@@ -78,7 +88,7 @@ Você é o **diretor**: cada quadro tem função (informar, prender, levar ao en
   - OAB/ES 39.948 · @adv.leticiabarros2.
   - Se a narração termina com o CTA, o fechamento começa na frase "Cada caso…" (`outro(seg[k], ...)`).
 - **Som**:
-  - voz tratada (highpass, EQ, compressor, loudnorm −15 LUFS);
+  - voz tratada: highpass, **RNNoise** (`modelos/voz-sh.rnnn`, tira ~11 dB de ruído), afftdn leve, de-esser, EQ (−2,5 dB em 250 Hz, +2,5 em 3,2 kHz, +1,5 em 10 kHz), compressor, loudnorm −15 LUFS;
   - efeitos sintetizados: whoosh, pop, carimbo, boom no gancho, brilho no fim, "po" na formação do pó;
   - base própria com pulso e ducking;
   - entregar com e sem música.
@@ -123,6 +133,6 @@ Você é o **diretor**: cada quadro tem função (informar, prender, levar ao en
 11. Orbit:
     - subir o mp4 para a mídia (`docker compose cp` para `api:/app/media`);
     - criar a peça `tipo="reels"` com `corpo.video`, `legenda`, `primeiro_comentario`, `programacao`;
-    - aprovar e criar o ScheduledPost `formato="reels"`, às 20h30, em dias sem outro post noturno;
+    - aprovar e criar o ScheduledPost `formato="reels"`, às **21h** (melhor horário do perfil), em dia sem nenhum outro post (regra de 1 publicação por dia, 16/10/2026);
     - backup do banco antes.
     - O Orbit publica sozinho.

@@ -133,8 +133,12 @@ def audio(reel, pasta: Path, eventos, total: float, efeitos: dict):
     lista = pasta / "voz.txt"
     lista.write_text("".join(f"file '{p.as_posix()}'\n" for p in partes), encoding="utf-8")
     voz = pasta / "voz.wav"
+    # voz limpa (16/10/2026): RNNoise (modelo aberto em modelos/) tira o ruído de fundo (~11 dB a menos no teste da
+    # série Guarda), afftdn leve no que sobra, de-esser, corte de 250 Hz (som abafado), presença em 3,2 kHz e brilho em 10 kHz
+    modelo = (AQUI / "modelos" / "voz-sh.rnnn").as_posix().replace(":", r"\:")
     ff("-f", "concat", "-safe", "0", "-i", lista, "-af",
-       "highpass=f=80,equalizer=f=250:t=q:w=1:g=-2,equalizer=f=3200:t=q:w=1.2:g=2.5,"
+       f"highpass=f=80,arnndn=m='{modelo}':mix=0.9,afftdn=nr=8:nf=-35,deesser=i=0.4,"
+       "equalizer=f=250:t=q:w=1:g=-2.5,equalizer=f=3200:t=q:w=1.2:g=2.5,equalizer=f=10000:t=h:w=0.7:g=1.5,"
        f"acompressor=threshold=-20dB:ratio=3:attack=8:release=120,loudnorm=I=-15:TP=-1.5:LRA=9,apad=whole_dur={total}",
        "-ar", "48000", "-ac", "2", voz)
     entradas, filtros = ["-i", voz], []
@@ -272,7 +276,7 @@ LINHA_HTML = ('<div style="position:relative;height:8px;background:rgba(232,222,
 def no(rotulo, at, x, top=700, sub=""):
     return {"html": f'<div style="width:34px;height:34px;border-radius:50%;background:#F4E6BC;box-shadow:0 0 0 8px rgba(201,169,98,.25),0 0 30px #C9A962;margin:0 auto"></div>'
                     f'<div style="margin-top:22px;font-size:30px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#FAF6F0;text-align:center;white-space:nowrap">{rotulo}</div>'
-                    + (f'<div style="font-size:24px;color:#E8DED1cc;text-align:center;white-space:nowrap">{sub}</div>' if sub else ""),
+                    + (f'<div style="font-size:27px;color:#E8DED1cc;text-align:center;white-space:nowrap">{sub}</div>' if sub else ""),
             "at": at, "anim": "pop", "style": {"top": f"{top - 13}px", "left": f"{x - 120}px", "width": "240px"}}
 
 
@@ -292,7 +296,7 @@ def outro(a, proxima, publico="quem precisa saber", gestante=False, area="Direit
         els.append(texto(f"Dra. Letícia Barros|<em>{area}</em>", a + 1.15, 1015, size=44, align="center", anim="sobe"))
     els.append({"html": "OAB/ES 39.948 · @adv.leticiabarros2", "cls": "kick", "at": a + 1.3, "anim": "sobe",
                 "style": {"top": "1140px", "left": "0", "right": "0", "textAlign": "center"}})
-    return {"a": a, "trans": "tinta", "particulas": 18, "outro": True, "els": els}
+    return {"a": a, "trans": "tinta", "outro": True, "els": els}
 
 
 # --------------------------------------------------------------------------- montagem
@@ -344,7 +348,7 @@ def montar_cfg(n: int, REELS: dict):
     rotulo = reel.get("serie") or f"{CFG['serie']} · {n}/{len(REELS)}"
     cfg = {"serie": rotulo, "total": total, "cenas": cenas, "leg": blocos(ws, seg[1:]),
            "flashes": flashes, "semLegenda": [[sem_leg, total + 1], *reel.get("sem_legenda", [])], "energia": energia(reel["trechos"], total, reel.get("src")),
-           "bursts": bursts, "punches": socos, "poeira": reel.get("poeira", 200)}
+           "bursts": bursts, "punches": socos, "poeira": reel.get("poeira", 0)}
     (AQUI / f"cfg_r{n}.json").write_text(json.dumps(cfg, ensure_ascii=False, indent=1), encoding="utf-8")
     return cfg, sorted(eventos)
 

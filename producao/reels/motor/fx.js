@@ -17,7 +17,7 @@ function energia(t) { const e = C.energia || []; if (!e.length) return 0; return
 const OURO = '233,211,152';
 
 function poeira(t, E) { // pó dourado em deriva, reage à voz
-  const N = C.poeira ?? 220;
+  const N = C.poeira ?? 0; // sem poeira dourada de fundo desde 16/10/2026 (imagem limpa)
   for (let i = 0; i < N; i++) {
     const z = .25 + rnd(i, 1) * .75, ph = rnd(i, 2) * 6.283;
     const y = (((rnd(i, 3) * 1920 - t * (14 + 46 * z)) % 1920) + 1920) % 1920;
@@ -30,6 +30,7 @@ function poeira(t, E) { // pó dourado em deriva, reage à voz
 }
 
 function explosoes(t) { // estouro de partículas + onda de choque nos impactos (carimbo, selo, pó formado)
+  if (!C.explosoes) return; // desligado por padrão desde 16/10/2026: Reels limpos e modernos
   (C.bursts || []).forEach((b, ib) => {
     const dt = t - b.t; if (dt < 0 || dt > 1.5) return;
     const n = b.n ?? 70, sh = clamp(dt / .55);
@@ -63,9 +64,12 @@ function pontosDe(d) {
   d._pts = pts; d._w = w; d._h = h;
 }
 function desenharPo(d, t, opCena) {
-  const a0 = d.at, dur = d.durPo ?? 1.15, n = d._pts.length;
+  const a0 = d.at, dur = d.durPo ?? 1.15; let n = d._pts.length;
   if (t < a0) return;
   const sai = d.ate != null ? clamp((t - d.ate) / .5) : 0;
+  // imagem limpa (pedido de 16/10/2026): depois que o desenho assenta, os pontos somem e fica só o texto sólido
+  const limpa = clamp((t - a0 - dur - .25) / .5);
+  if (limpa >= 1) n = 0;
   for (let i = 0; i < n; i++) {
     const [tx, ty] = d._pts[i], atraso = rnd(i, 41) * .38;
     const k = eInOut((t - a0 - atraso) / dur);
@@ -75,7 +79,7 @@ function desenharPo(d, t, opCena) {
     let x = lerp(sx, d.x + tx, k) + gira, y = lerp(sy, d.y + ty, k) - gira * .6;
     if (sai > 0) { y -= eOut(sai) * (120 + 260 * rnd(i, 45)); x += (rnd(i, 46) - .5) * 160 * sai; }
     const brilho = .55 + .45 * Math.sin(t * 6 + i * .7);
-    const a = clamp(k * 1.6) * (1 - sai) * opCena * (k >= 1 ? .3 + .35 * brilho : .9);
+    const a = clamp(k * 1.6) * (1 - sai) * opCena * (k >= 1 ? (.3 + .35 * brilho) * (1 - limpa) : .9 * (1 - limpa));
     g.fillStyle = `rgba(${OURO},${a})`; g.fillRect(x - 1.6, y - 1.6, 3.2, 3.2);
   }
   // desenho nítido por cima quando o pó assenta (legibilidade)
