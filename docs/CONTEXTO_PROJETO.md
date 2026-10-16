@@ -46,6 +46,17 @@ com edições anteriores.
   - Redeploy: `cd /home/orbit-src && git pull && cd deploy/vps && docker
     compose up -d --build`. Rebuild do web: `cd apps/web && npm run build &&
     cp -r out/* /var/www/orbit-web/`.
+  - **Disco da VPS (16/10/2026):** cada `--build` deixa cache de build do Docker.
+    Em 16/10 eram 55 GB, e o disco da VPS (que também roda o CRM jurídico)
+    chegou a 81%. Foi limpo com `docker builder prune -f` (ficou em 27%).
+    - **Prevenção:** o crontab do root roda `docker builder prune -f --filter
+      until=168h` todo domingo às 4h (log em `/var/log/docker-builder-prune.log`),
+      e o CRM avisa quando o disco passa de 85%.
+    - **Depois da limpeza:** o primeiro `--build` refaz o cache e demora uns
+      minutos a mais.
+    - **Cuidado:** os `.tar` em `/tmp` (capas, reels, `pxv*`, `subir*`) são
+      conteúdo copiado para o servidor, não pacotes de atualização. Foram
+      mantidos (1,8 GB); só apagar com o ok da Jessica.
   - **Banco começou zerado, não migrado do Railway** — o Postgres do Railway
     (`Postgres-AXnQ`) estava fora do ar na hora da migração (conexão TCP
     abria mas o servidor fechava sem responder ao handshake do Postgres,
