@@ -81,11 +81,15 @@ function dataDe(p: ContentPiece): string {
   return "Sem data";
 }
 
-// Agendadas primeiro, por data; depois as publicadas; a reserva e o resto no fim.
+// O que espera decisão dela vem primeiro (alteração pedida, depois "Para aprovar"); em seguida o que está na
+// agenda, por data; depois o publicado; a reserva fica no fim.
 function ordem(p: ContentPiece): string {
-  if (p.corpo.programacao?.data) return `1 ${p.corpo.programacao.data} ${p.corpo.programacao.hora ?? ""}`;
-  if (p.status === "publicado") return `2 ${p.criado_em}`;
-  return `3 ${p.criado_em}`;
+  const data = p.corpo.programacao?.data ? `${p.corpo.programacao.data} ${p.corpo.programacao.hora ?? ""}` : p.criado_em;
+  if (p.status === "ajuste") return `0 ${data}`;
+  if (p.status === "rascunho") return `1 ${data}`;
+  if (p.corpo.reserva) return `4 ${p.criado_em}`;
+  if (p.status === "publicado") return `3 ${data}`;
+  return `2 ${data}`;
 }
 
 async function baixar(url: string, nome: string) {
