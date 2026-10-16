@@ -19,7 +19,7 @@ em, .ouro { font-style:italic; color:#E2C77F; background:linear-gradient(100deg,
 .lin { display:block; overflow:hidden; padding:0.04em 0.06em 0.12em; margin:-0.04em -0.06em -0.12em; }
 .lin > span { display:inline-block; will-change:transform; }
 .w { display:inline-block; will-change:transform, opacity; }
-.kick { font-size:26px; font-weight:800; letter-spacing:5px; text-transform:uppercase; color:#C9A962; }
+.kick { font-size:27px; font-weight:800; letter-spacing:5px; text-transform:uppercase; color:#C9A962; }
 .pill { display:inline-block; font-size:28px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:#231E1A;
   background:linear-gradient(180deg,#F4E6BC,#C9A962); padding:12px 24px; border-radius:12px; box-shadow:0 16px 36px rgba(0,0,0,.45); }
 .carimbo { font-family:'Inter',sans-serif; font-weight:900; font-size:76px; letter-spacing:4px; text-transform:uppercase; color:#C9A962;
@@ -30,12 +30,12 @@ em, .ouro { font-style:italic; color:#E2C77F; background:linear-gradient(100deg,
 .grao { position:absolute; inset:0; z-index:50; pointer-events:none; opacity:.10; mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='1.3' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>"); }
 .faixa { position:absolute; left:0; right:0; height:12px; z-index:60; background:linear-gradient(90deg,#8E6E2E,#E9D398 30%,#C9A962 55%,#F4E6BC 75%,#9C7B3A); }
-#cab { position:absolute; z-index:40; top:284px; left:64px; right:64px; display:flex; justify-content:space-between; font-size:22px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:#E8DED1; text-shadow:0 2px 10px rgba(0,0,0,.6); }
+#cab { position:absolute; z-index:40; top:284px; left:150px; right:150px; display:flex; justify-content:space-between; font-size:22px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#E8DED1; text-shadow:0 2px 10px rgba(0,0,0,.6); }
 #cab .d { color:#C9A962; }
 #cab span { white-space:nowrap; }
-#barra { position:absolute; z-index:40; top:326px; left:64px; right:64px; height:5px; border-radius:3px; background:rgba(232,222,209,.18); overflow:hidden; }
+#barra { position:absolute; z-index:40; top:326px; left:150px; right:150px; height:5px; border-radius:3px; background:rgba(232,222,209,.18); overflow:hidden; }
 #barra i { display:block; height:100%; width:0; background:linear-gradient(90deg,#B8943F,#E9D398); }
-#leg { position:absolute; z-index:40; left:90px; right:130px; top:1110px; text-align:center; font-size:52px; font-weight:800; line-height:1.2; color:#FFF;
+#leg { position:absolute; z-index:40; left:190px; right:190px; top:1100px; text-align:center; font-size:48px; font-weight:800; line-height:1.2; color:#FFF;
   text-shadow:0 3px 0 rgba(26,21,17,.9), 0 0 22px rgba(0,0,0,.6); }
 #leg .w { margin:0 6px; opacity:.55; }
 #leg .w.dita { opacity:1; }
@@ -47,7 +47,7 @@ em, .ouro { font-style:italic; color:#E2C77F; background:linear-gradient(100deg,
 <div id="palco"></div>
 <div id="flash"></div>
 <canvas id="fx" width="1080" height="1920"></canvas>
-<div id="cab"><span id="cabE">Letícia Barros · Advocacia</span><span class="d" id="cabD"></span></div>
+<div id="cab"><span id="cabE">Letícia Barros</span><span class="d" id="cabD"></span></div>
 <div id="barra"><i></i></div>
 <div id="leg"></div>
 <div class="grao"></div><div class="faixa" style="top:0"></div><div class="faixa" style="bottom:0"></div>
@@ -58,6 +58,11 @@ const eInOut = x => { x = clamp(x); return x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x 
 const eBack = x => { x = clamp(x); const c = 1.6; return 1 + (c+1)*Math.pow(x-1,3) + c*Math.pow(x-1,2); };
 const lerp = (a, b, k) => a + (b - a) * k;
 let C, cenas = [], blocoAtual = -1;
+// área segura do Reels (corte do iPhone em tela cheia ~98 px por lado + ícones à direita): a camada gráfica de cada
+// cena é desenhada no quadro inteiro e encolhida para dentro a partir do centro (x 540, y 864), então o que nasce em
+// x=90 cai em x~155 (já contando o push-in de 1,03 da câmera). Vale também para o pó de ouro e as explosões (canvas), pela mesma conta.
+let ZONA = .83;
+const naZona = (x, y) => [540 + (x - 540) * ZONA, 864 + (y - 864) * ZONA];
 
 function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
 
@@ -71,7 +76,9 @@ function montarTexto(e, d) {
 }
 
 async function init(cfg) {
-  C = cfg;
+  C = cfg; ZONA = cfg.zona ?? .83;
+  (cfg.bursts || []).forEach(b => { [b.x, b.y] = naZona(b.x, b.y); b.raio = (b.raio ?? 420) * ZONA; });
+  cfg.cenas.forEach(c => (c.els || []).forEach(d => { if (d.tipo === 'po') { [d.x, d.y] = naZona(d.x, d.y); d.size *= ZONA; } }));
   document.getElementById('cabD').textContent = cfg.serie;
   const palco = document.getElementById('palco');
   cfg.cenas.forEach((c, ic) => {
@@ -232,7 +239,7 @@ async function render(t) {
     // câmera da camada gráfica (push-in suave + deriva) e parallax das partículas
     const cam = c.cam || [1, 1.03, 0, 0];
     const ck = eInOut(p);
-    c._cam.style.transform = `translate(${lerp(cam[2], cam[3], ck)}px, 0) scale(${lerp(cam[0], cam[1], ck)})`;
+    c._cam.style.transform = `translate(${lerp(cam[2], cam[3], ck)}px, 0) scale(${lerp(cam[0], cam[1], ck) * ZONA})`;
     c._ps.forEach(([pe, ps]) => {
       const y = ps.y - lt * 26 * ps.z, x = ps.x + Math.sin(lt * .7 + ps.x) * 18 * ps.z + lerp(cam[2], cam[3], ck) * ps.z * 1.8;
       pe.style.transform = `translate(${x}px, ${((y % 1500) + 1500) % 1500 + 200}px)`;

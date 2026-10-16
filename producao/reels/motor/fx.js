@@ -120,7 +120,9 @@ function luz(k) { // clarão dourado que varre a tela na diagonal
   g.fillStyle = gr; g.fillRect(0, 0, 1080, 1920);
 }
 
-// verificador da área limpa do Reels: lista o que invade topo (270), base (672), laterais (65)
+// verificador da área segura do Reels: lista o que invade topo (270), base (672) ou laterais (150 px: corte do iPhone
+// em tela cheia ~98 px + folga; à direita ficam os ícones de curtir/comentar). A legenda falada também é conferida.
+const SEG = { topo: 270, base: 1248, esq: 150, dir: 930 };
 // Mede as letras/cartões (não a caixa do contêiner) e só depois que a cena e o elemento assentaram.
 function caixa(n, d) {
   if (d.tipo === 'texto') {
@@ -143,16 +145,25 @@ function checar(t) {
       if (d.livre || t < (d.at ?? 0) + (d.dur ?? .55) + .5 || (d.ate != null && t > d.ate)) return;
       if (d.tipo === 'po') { if (!d._pts) return;
         const L = d.x - d._w / 2, R = d.x + d._w / 2, Tp = d.y - d._h / 2, B = d.y + d._h / 2;
-        if (Tp < 268 || B > 1250 || L < 63 || R > 1017) prob.push({ t, cena: ic, el: d.texto || 'imagem', box: [L, Tp, R, B].map(Math.round) });
+        if (Tp < SEG.topo || B > SEG.base || L < SEG.esq || R > SEG.dir) prob.push({ t, cena: ic, el: d.texto || 'imagem', box: [L, Tp, R, B].map(Math.round) });
         return; }
       if (parseFloat(n.style.opacity || 1) < .5) return;
       const r = caixa(n, d); if (!r.width) return;
       const fora = [];
-      if (r.top < 268) fora.push('topo'); if (r.bottom > 1250) fora.push('base');
-      if (r.left < 63) fora.push('esquerda'); if (r.right > 1017) fora.push('direita');
+      if (r.top < SEG.topo) fora.push('topo'); if (r.bottom > SEG.base) fora.push('base');
+      if (r.left < SEG.esq) fora.push('esquerda'); if (r.right > SEG.dir) fora.push('direita');
       if (fora.length) prob.push({ t, cena: ic, el: (n.textContent || d.tipo || '').trim().slice(0, 40), fora, box: [r.left, r.top, r.right, r.bottom].map(Math.round) });
     });
   });
+  const cab = [...document.querySelectorAll('#cab span')].map(sp => sp.getBoundingClientRect());
+  if (cab.length === 2 && (cab[0].left < SEG.esq || cab[1].right > SEG.dir || cab[0].right + 24 > cab[1].left))
+    prob.push({ t, cena: -1, el: 'cabeçalho: ' + document.getElementById('cab').textContent, box: [cab[0].left, cab[0].right, cab[1].left, cab[1].right].map(Math.round) });
+  const leg = document.getElementById('leg');
+  if (leg.style.opacity !== '0' && leg.children.length) {
+    const ws = [...leg.children].map(w => w.getBoundingClientRect());
+    const L = Math.min(...ws.map(r => r.left)), R = Math.max(...ws.map(r => r.right)), B = Math.max(...ws.map(r => r.bottom));
+    if (L < SEG.esq + 30 || R > SEG.dir - 30 || B > SEG.base) prob.push({ t, cena: -1, el: 'legenda: ' + leg.textContent.slice(0, 40), box: [L, 0, R, B].map(Math.round) });
+  }
   palco.style.transform = tfPalco;
   return prob;
 }

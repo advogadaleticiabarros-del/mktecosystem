@@ -667,6 +667,24 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
+- **Reels: área segura nova (15/10/2026)**. A gestante 1/3 saiu com texto cortado nas bordas no iPhone (tela
+  cheia corta ~98 px por lado) e foi excluída. Regra nova: laterais **150 px**, topo 270, base 672 (y ≤ 1248),
+  legenda falada com no máximo 700 px de largura, centralizada (x 190–890) e longe da coluna de ícones da
+  direita. No motor v2 (`producao/reels/motor`), a camada gráfica de cada cena é encolhida para o centro
+  (`ZONA` = 0,83 em engine.html). Assim, o que é desenhado em x=90 cai em x≈155, já contando o push-in de
+  1,03. O pó de ouro e as explosões passam pela mesma conta. O cabeçalho virou só "Letícia Barros" + série.
+  O `.kick` ficou com 27 px, para continuar ≥22 px depois da escala. `checar()` (fx.js) agora usa 150/930
+  e mede também o cabeçalho e a legenda. Motor v1 (série gestante, pasta 12): mesma ideia com `ZONA` 0,78,
+  porque lá os elementos nascem em x=70 e a câmera chega a 1,06. Também ganhou `--checar`. O motor 3D
+  (`pagina.html`) usa os mesmos limites. Os 15 reels passaram no verificador e estão sendo re-renderizados.
+  Depois: mostrar amostras, subir com `?v=` novo e reagendar (todos os reels estão "pausado"; a gestante 1/3
+  precisa de data nova).
+- **Revisão das frases do feed (pedido de 15/10/2026)**. Ela achou "não" demais e leitura pouco fluida, inclusive
+  nas aprovadas. Página de aprovação: https://claude.ai/artifact/VJaiy4ECR8aWKaVt3xqMP2 (db `frases/<id da
+  peça>`: antiga, nova, status pendente/aprovada/refazer, pedido). Tem as 35 frases aprovadas de 17/10 a 31/12.
+  **Nada muda no Orbit antes de ela aprovar.** Depois: aplicar as aprovadas em `corpo.frase`, refazer as imagens
+  e reescrever as que ela pedir de novo. A regra vale daqui pra frente: menos negação, frase afirmativa e curta.
+
 0. **Chave da OpenAI para o Jornalista** (opcional — terceira fonte):
    `OPENAI_API_KEY` no `.env` da API na VPS + `docker compose up -d api`.
    DNS/HTTPS da VPS: resolvidos (verificado 29/09/2026, cert até 28/11/2026).
