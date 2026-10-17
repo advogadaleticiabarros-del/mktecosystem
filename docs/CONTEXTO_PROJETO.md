@@ -678,6 +678,13 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
+- **Reels até 15/11 (16/10/2026)**: 16 Reels em dia útil às 21h (`reels_ate_1511.py`), séries em dias alternados, 13º
+  entre 4 e 12/11 (pico de busca 6-12/11). Base: dados do perfil (terça melhor; sábado/domingo fracos; 21h) e pesquisa.
+  Reels novo "5 coisas que a empresa não pode fazer com a gestante" (gravação da Dra., série 16) em 19/10.
+- **Acervo de Reels (01-11) NÃO está no padrão**: texto fora da margem em 7, selo de verificado falso no 05 e 08,
+  visual antigo e legenda provisória. Precisa ser refeito no motor atual antes de agendar. O 03 tinha sido aprovado
+  e auto-agendado para 02/01/2027: agendamento pausado (nada apagado).
+
 - **REGRA (16/10/2026): material pronto nunca some.** Versão nova é peça nova e arquivo novo (nome com versão); não
   reaproveitar peça de material pronto, não trocar vídeo sem guardar o anterior, não esconder material por
   ordenação. O Reels 04 do acervo (guarda, original da Dra.) tinha sido reaproveitado como Parte 1 da série Guarda e
