@@ -678,6 +678,10 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
+- **PENDENTE (pedido de 18/10/2026, esperar ela liberar)**: limpeza do disco C (temporários do Windows com mais de 2
+  dias, cerca de 13 GB, e cache do npm, 3,5 GB; Downloads é dela e não se toca) e instalação do **VoiceStudio**
+  (debpalash/VoiceStudio, AGPL, app local de clonagem de voz; CPU-only precisa de cerca de 5 GB). Ela vai avisar.
+
 - **Reels até 15/11 (16/10/2026)**: 16 Reels em dia útil às 21h (`reels_ate_1511.py`), séries em dias alternados, 13º
   entre 4 e 12/11 (pico de busca 6-12/11). Base: dados do perfil (terça melhor; sábado/domingo fracos; 21h) e pesquisa.
   Reels novo "5 coisas que a empresa não pode fazer com a gestante" (gravação da Dra., série 16) em 19/10.
