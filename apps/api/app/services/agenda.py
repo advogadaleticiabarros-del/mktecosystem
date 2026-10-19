@@ -80,7 +80,7 @@ async def dia_livre_no_instagram(db: AsyncSession, tenant_id: uuid.UUID) -> date
                 select(ScheduledPost.data_agendada).where(
                     ScheduledPost.tenant_id == tenant_id,
                     ScheduledPost.canal == "instagram",
-                    ScheduledPost.formato != "story",
+                    ScheduledPost.formato.not_in(("story", "trial")),  # Stories e Trial Reels não ocupam o dia
                     ScheduledPost.data_agendada >= amanha,
                 )
             )

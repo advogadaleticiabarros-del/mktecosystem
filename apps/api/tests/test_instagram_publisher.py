@@ -249,3 +249,21 @@ async def test_publica_reels_agendado_com_legenda_e_primeiro_comentario(db_sessi
     api.comentar.assert_awaited_once_with("reel_1", "📚 Base legal")
     await db_session.refresh(agendamento)
     assert agendamento.status == "publicado"
+
+
+@pytest.mark.anyio
+async def test_trial_reels_agendado_sai_no_modo_trial_com_capa(db_session, tmp_path):
+    corpo = {"video": "https://api.exemplo/media/reel-b.mp4", "legenda": "Gancho B", "trial_reels": True}
+    tenant, agendamento = await _setup(db_session, tipo="reels", corpo=corpo, formato="trial")
+
+    with patch("app.services.instagram_publisher.InstagramAPI") as MockAPI, patch(
+        "app.services.instagram_publisher.MEDIA_DIR", tmp_path
+    ):
+        api = _api_falsa(MockAPI, post_id="trial_1")
+        api.publicar_reels = AsyncMock(return_value="trial_1")
+        api.comentar = AsyncMock()
+        publicados = await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
+
+    assert publicados == 1
+    assert api.publicar_reels.await_args.kwargs["trial"] is True
+    assert api.publicar_reels.await_args.kwargs["capa_ms"] == 1200

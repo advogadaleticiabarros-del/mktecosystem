@@ -88,3 +88,14 @@ async def test_artigo_continua_no_blog(db_session):
     tenant = await _tenant(db_session)
     artigo = await _aprovar(db_session, tenant, "artigo")
     assert artigo.canal == "blog" and artigo.horario in ("11:00", "17:00")
+
+
+@pytest.mark.anyio
+async def test_trial_reels_nao_ocupa_o_dia_dos_seguidores(db_session):
+    """Trial Reels só aparece para quem não segue: não conta na regra de 1 publicação por dia."""
+    tenant = await _tenant(db_session)
+    db_session.add(ScheduledPost(tenant_id=tenant.id, titulo="x", canal="instagram", formato="trial",
+                                 data_agendada=AMANHA, horario="12:00", status="pronto"))
+    await db_session.flush()
+    carrossel = await _aprovar(db_session, tenant, "carrossel")
+    assert carrossel.data_agendada == AMANHA

@@ -42,7 +42,7 @@ async def _agendamentos_prontos(db: AsyncSession) -> list[tuple[ScheduledPost, C
         .join(ContentPiece, ContentPiece.id == ScheduledPost.content_piece_id)
         .where(
             ScheduledPost.canal == "instagram",
-            ScheduledPost.formato.in_(["carrossel", "post", "reels"]),
+            ScheduledPost.formato.in_(["carrossel", "post", "reels", "trial"]),
             ScheduledPost.status == "pronto",
             ScheduledPost.data_agendada <= agora.date(),
             ContentPiece.status == "aprovado",
