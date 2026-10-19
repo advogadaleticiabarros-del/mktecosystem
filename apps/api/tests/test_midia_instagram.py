@@ -153,3 +153,13 @@ async def test_reels_com_video_pronto_vira_midia_de_video(tmp_path):
 async def test_reels_sem_video_nao_publica(tmp_path):
     with pytest.raises(PecaSemConteudo):
         await _montar(_piece("reels", {"roteiro": []}), tmp_path)
+
+
+@pytest.mark.anyio
+async def test_reels_usa_capa_no_gancho_por_padrao_e_aceita_trial(tmp_path):
+    piece = _piece("reels", {"video": "https://api.exemplo/media/reel.mp4", "legenda": "L"})
+    midia = await montar_midia(piece, identidade_visual={}, pasta=tmp_path, base_url="https://api.exemplo/media", prefixo="x")
+    assert midia.capa_ms == 1200 and midia.trial is False
+    piece2 = _piece("reels", {"video": "https://api.exemplo/media/reel.mp4", "legenda": "L", "capa_ms": 3000, "trial_reels": True})
+    midia2 = await montar_midia(piece2, identidade_visual={}, pasta=tmp_path, base_url="https://api.exemplo/media", prefixo="x")
+    assert midia2.capa_ms == 3000 and midia2.trial is True

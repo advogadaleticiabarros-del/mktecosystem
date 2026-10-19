@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     EMAIL_FROM: str = "Orbit <onboarding@resend.dev>"
     RESEND_WEBHOOK_SECRET: str = ""
     PUBLIC_API_URL: str = "http://localhost:8000"
+    INSTAGRAM_LOCATION_ID: str = ""  # id da página do Facebook com endereço, usada como local dos posts
     ENABLE_SCHEDULER: bool = False
     ENCRYPTION_KEY: str = "SV3ckJiDIf0XnoXjm-CJt6qXS3Ia-6S69PKds0L8sX4="
     META_APP_ID: str = ""

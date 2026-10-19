@@ -1,4 +1,5 @@
 import asyncio
+import json
 from datetime import datetime, timezone
 
 import httpx
@@ -42,24 +43,38 @@ class InstagramAPI:
             response.raise_for_status()
             return response.json()
 
-    async def publicar_imagem_unica(self, ig_user_id: str, image_url: str, legenda: str = "") -> str:
-        container = await self._post(f"/{ig_user_id}/media", {"image_url": image_url, "caption": legenda})
+    async def publicar_imagem_unica(self, ig_user_id: str, image_url: str, legenda: str = "",
+                                    location_id: str | None = None) -> str:
+        dados = {"image_url": image_url, "caption": legenda}
+        if location_id:
+            dados["location_id"] = location_id
+        container = await self._post(f"/{ig_user_id}/media", dados)
         await self._aguardar(container["id"])
         publicado = await self._post(f"/{ig_user_id}/media_publish", {"creation_id": container["id"]})
         return publicado["id"]
 
-    async def publicar_reels(self, ig_user_id: str, video_url: str, legenda: str = "") -> str:
+    async def publicar_reels(self, ig_user_id: str, video_url: str, legenda: str = "", capa_ms: int | None = None,
+                             location_id: str | None = None, trial: bool = False) -> str:
         """Reels com vídeo já pronto (URL pública, MP4 H.264/AAC). O vídeo leva minutos para a
-        Meta processar, por isso a espera é bem maior que a de imagem (até ~10 min)."""
-        container = await self._post(
-            f"/{ig_user_id}/media",
-            {"media_type": "REELS", "video_url": video_url, "caption": legenda, "share_to_feed": "true"},
-        )
+        Meta processar, por isso a espera é bem maior que a de imagem (até ~10 min).
+        capa_ms: quadro da capa (o do gancho, que aparece na grade e na busca). location_id: local do post.
+        trial: Trial Reels, mostrado primeiro só a quem não segue; se for bem, a Meta leva para o perfil."""
+        dados = {"media_type": "REELS", "video_url": video_url, "caption": legenda}
+        if trial:
+            dados["trial_params"] = json.dumps({"graduation_strategy": "SS_PERFORMANCE"})
+        else:
+            dados["share_to_feed"] = "true"
+        if capa_ms is not None:
+            dados["thumb_offset"] = str(int(capa_ms))
+        if location_id:
+            dados["location_id"] = location_id
+        container = await self._post(f"/{ig_user_id}/media", dados)
         await self._aguardar(container["id"], tentativas=self._tentativas_status * 5)
         publicado = await self._post(f"/{ig_user_id}/media_publish", {"creation_id": container["id"]})
         return publicado["id"]
 
-    async def publicar_carrossel(self, ig_user_id: str, urls_imagens: list[str], legenda: str = "") -> str:
+    async def publicar_carrossel(self, ig_user_id: str, urls_imagens: list[str], legenda: str = "",
+                                 location_id: str | None = None) -> str:
         containers_ids = []
         for url in urls_imagens:
             container = await self._post(
@@ -68,10 +83,10 @@ class InstagramAPI:
             await self._aguardar(container["id"])
             containers_ids.append(container["id"])
 
-        container_pai = await self._post(
-            f"/{ig_user_id}/media",
-            {"media_type": "CAROUSEL", "children": ",".join(containers_ids), "caption": legenda},
-        )
+        dados = {"media_type": "CAROUSEL", "children": ",".join(containers_ids), "caption": legenda}
+        if location_id:
+            dados["location_id"] = location_id
+        container_pai = await self._post(f"/{ig_user_id}/media", dados)
         await self._aguardar(container_pai["id"])
         publicado = await self._post(f"/{ig_user_id}/media_publish", {"creation_id": container_pai["id"]})
         return publicado["id"]

@@ -1,3 +1,4 @@
+import json
 import httpx
 import pytest
 
@@ -172,3 +173,47 @@ async def test_reels_cria_container_de_video_espera_processar_e_publica(monkeypa
     assert dados["share_to_feed"] == "true"
     assert enviados[-1] == ("/v21.0/999/media_publish", {"creation_id": "r1", "access_token": "tok"})
     assert post_id == "r2"
+
+
+def _api_que_registra(monkeypatch):
+    enviados = []
+
+    def responder(request: httpx.Request) -> httpx.Response:
+        if request.method == "GET":
+            return httpx.Response(200, json={"status_code": "FINISHED"})
+        enviados.append((request.url.path, dict(httpx.QueryParams(request.content.decode()))))
+        return httpx.Response(200, json={"id": f"r{len(enviados)}"})
+
+    api = InstagramAPI("tok", transport=httpx.MockTransport(responder))
+    monkeypatch.setattr(api, "_espera_segundos", 0)
+    return api, enviados
+
+
+@pytest.mark.anyio
+async def test_reels_com_capa_no_gancho_e_localizacao(monkeypatch):
+    """Capa = quadro do gancho (thumb_offset em ms) e local do post (location_id da página com endereço)."""
+    api, enviados = _api_que_registra(monkeypatch)
+    await api.publicar_reels("999", "https://x/reel.mp4", legenda="L", capa_ms=1200, location_id="688466407676130")
+    dados = enviados[0][1]
+    assert dados["thumb_offset"] == "1200" and dados["location_id"] == "688466407676130"
+    assert dados["share_to_feed"] == "true" and "trial_params" not in dados
+
+
+@pytest.mark.anyio
+async def test_trial_reels_vai_primeiro_para_quem_nao_segue(monkeypatch):
+    """Trial Reels: mostrado primeiro a não seguidores; se for bem, a própria Meta leva para o perfil."""
+    api, enviados = _api_que_registra(monkeypatch)
+    await api.publicar_reels("999", "https://x/reel.mp4", legenda="L", trial=True)
+    dados = enviados[0][1]
+    assert json.loads(dados["trial_params"]) == {"graduation_strategy": "SS_PERFORMANCE"}
+    assert "share_to_feed" not in dados
+
+
+@pytest.mark.anyio
+async def test_imagem_e_carrossel_tambem_levam_localizacao(monkeypatch):
+    api, enviados = _api_que_registra(monkeypatch)
+    await api.publicar_imagem_unica("999", "https://x/a.jpg", legenda="L", location_id="loc1")
+    assert enviados[0][1]["location_id"] == "loc1"
+    enviados.clear()
+    await api.publicar_carrossel("999", ["https://x/a.jpg", "https://x/b.jpg"], legenda="L", location_id="loc1")
+    assert enviados[-2][1]["location_id"] == "loc1" and "location_id" not in enviados[0][1]
