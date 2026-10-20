@@ -32,6 +32,11 @@ Ela perguntou se dava para usar "prompt injection invisível" a nosso favor. A r
 - **Bing Webmaster Tools** (com a Jessica). Se o Bing pedir `BingSiteAuth.xml` ou a meta `msvalidate.01`, subir na raiz.
 - **Opcional:** schema `Person` também em `escritorio.html` e nas LPs.
 
+## Atualização (mesmo dia)
+- Com autorização da Jessica, o push foi feito pela conta `advogadaleticiabarros-del` (a conta ativa continua `alcancelegalmkt-collab`). Deploy feito na VPS: o container `api` foi refeito e o import do publicador foi conferido.
+- O pedido para dar acesso de escrita à `alcancelegalmkt-collab` foi bloqueado pelo modo automático, então não foi feito. Ela pode convidar em github.com/advogadaleticiabarros-del/mktecosystem/settings/access.
+- `www.bing.com/indexnow` continua respondendo 403 depois do deploy. Provável causa: o Bing só aceita o envio direto depois que o site estiver no Bing Webmaster Tools.
+
 ## Próxima sessão
 1. `git push origin main` com uma conta que tenha acesso.
 2. Na VPS: `cd /home/orbit-src && git pull --ff-only && cd deploy/vps && docker compose up -d --build api`.
