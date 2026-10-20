@@ -65,8 +65,12 @@ se der `PermissionDenied`):
 - **Caminho relativo** (a sessão SFTP já abre dentro de `/home/u528898188`,
   NUNCA repetir esse prefixo):
   `domains/advogadaleticiabarros.com.br/public_html/blog/`
-- Sobe: `{slug}.html`, `capas/{slug}.png`, `index.html` atualizado (card
-  novo) e `../sitemap.xml` atualizado.
+- Sobe: `{slug}.html`, `capas/{slug}.jpg`, `index.html` atualizado (card
+  novo), `../sitemap.xml` atualizado e `../llms.txt` regerado do índice
+  (`gerar_llms_txt` em `app/services/site_descoberta.py`). Depois avisa o
+  Bing pelo IndexNow (`avisar_indexnow`). Publicação manual tem que fazer
+  as mesmas duas coisas, senão o `llms.txt` desatualiza de novo (aconteceu
+  até 20/10/2026: faltavam 14 artigos e havia links repetidos).
 - `blog_publisher.py` faz isso automaticamente se o `ScheduledPost` (canal
   `blog`, formato `artigo`) estiver com `content_piece_id` de uma peça
   `aprovada` e o horário já tiver chegado — roda a cada hora, minuto :15,
@@ -101,3 +105,5 @@ futura). Depois de publicar:
 - Sitemap (`sitemap.xml`) já está enviado uma vez; não precisa reenviar a
   cada artigo novo, o Google rastreia sozinho, mas pedir indexação manual
   do artigo específico continua valendo a pena pra notícia quente/atual.
+- Bing (fonte das buscas do ChatGPT): o publicador já avisa pelo IndexNow;
+  não precisa fazer nada à mão.

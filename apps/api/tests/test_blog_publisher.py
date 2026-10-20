@@ -101,6 +101,8 @@ async def test_publica_agendamento_pronto(db_session):
         "app.services.blog_publisher.renderizar_capa_artigo",
         new=AsyncMock(side_effect=_fake_renderizar_capa_artigo),
     ), patch(
+        "app.services.blog_publisher.avisar_indexnow", new=AsyncMock(return_value=202)
+    ) as indexnow, patch(
         "app.services.blog_publisher.SFTPClient"
     ) as MockSFTP:
         instancia = MockSFTP.return_value
@@ -111,14 +113,18 @@ async def test_publica_agendamento_pronto(db_session):
 
         publicados = await publicar_agendamentos_prontos(db_session)
 
+    url = "https://advogadaleticiabarros.com.br/blog/carga-horaria-maxima-clt.html"
     assert publicados == 1
     await db_session.refresh(agendamento)
     assert agendamento.status == "publicado"
-    assert agendamento.platform_post_id == "https://advogadaleticiabarros.com.br/blog/carga-horaria-maxima-clt.html"
+    assert agendamento.platform_post_id == url
     piece = await db_session.get(ContentPiece, agendamento.content_piece_id)
     assert piece.status == "publicado"  # conta como postada no Editorial
-    # 4 uploads: HTML do artigo, capa, index.html, sitemap.xml
-    assert instancia.upload.await_count == 4
+    # 5 uploads: HTML do artigo, capa, index.html, sitemap.xml e llms.txt (com o artigo novo)
+    assert instancia.upload.await_count == 5
+    llms = {c.args[0]: c.args[1] for c in instancia.upload.await_args_list}["../llms.txt"].decode()
+    assert f"[Carga horária máxima CLT]({url})" in llms
+    indexnow.assert_awaited_once_with([url, "https://advogadaleticiabarros.com.br/blog/"])
     instancia.garantir_diretorio.assert_awaited_once_with("capas")
     instancia.close.assert_awaited_once()
 

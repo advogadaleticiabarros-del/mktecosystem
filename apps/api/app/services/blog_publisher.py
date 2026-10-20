@@ -21,6 +21,7 @@ from app.services.agendamento_horario import horario_ja_chegou, hoje_brasilia
 from app.services.blog_index_editor import inserir_card, inserir_sitemap_entry
 from app.services.blog_seo import aplicar_seo, capa_para_jpg, cards_do_indice, escolher_relacionados
 from app.services.blog_slug import gerar_slug
+from app.services.site_descoberta import avisar_indexnow, gerar_llms_txt
 from app.services.render_artigo_blog import (
     estimar_tempo_leitura,
     renderizar_artigo_html,
@@ -180,6 +181,9 @@ async def _publicar_artigo(
     await sftp.upload(f"{settings.BLOG_SFTP_PATH}capas/{slug}.jpg", capa_bytes)
     await sftp.upload(f"{settings.BLOG_SFTP_PATH}index.html", index_novo.encode("utf-8"))
     await sftp.upload(f"{settings.BLOG_SFTP_PATH}../sitemap.xml", sitemap_novo.encode("utf-8"))
+    # Buscadores e IAs: llms.txt com o artigo novo e aviso ao Bing (IndexNow), de onde o ChatGPT busca.
+    await sftp.upload(f"{settings.BLOG_SFTP_PATH}../llms.txt", gerar_llms_txt(index_novo).encode("utf-8"))
+    await avisar_indexnow([url_artigo, BLOG_BASE_URL])
     return url_artigo
 
 

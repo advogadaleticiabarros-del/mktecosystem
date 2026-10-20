@@ -676,7 +676,38 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 - **Dia dos Professores**: v3 (sala vista do fundo, quadro com inglês desfocado) após pedido de ajuste.
 - Verificação de pedidos de ajuste: só quando a usuária avisar (ela pediu para parar a verificação periódica).
 
+## Site da Letícia: descoberta por buscadores e IAs (20/10/2026)
+
+- Pedido dela depois de perguntar sobre "prompt injection invisível" (resposta: não; texto oculto é spam no Google
+  e risco na OAB). O caminho legítimo foi feito:
+  - Home: removido `aggregateRating` 5,0/30 do JSON-LD (nota declarada sem avaliações visíveis na página; viola
+    diretriz do Google). A entidade do escritório ganhou `@id` `https://advogadaleticiabarros.com.br/#escritorio`.
+  - `sobre.html`: `ProfilePage` + `Person` (Letícia Elias Barros, OAB/ES 39.948, sócia da Santiago Prado & Barros).
+  - `areas/*.html` (7): `Service` (provider = `#escritorio`) + `FAQPage` das `<details>` visíveis + `BreadcrumbList`;
+    `direito-familia` e `direito-previdenciario` ganharam canonical.
+  - `llms.txt` refeito: 66 links sem repetição (páginas, 7 áreas, 6 guias/LPs, 47 artigos por área com resumo).
+  - **IndexNow** (Bing e outros; o ChatGPT busca pelo índice do Bing): chave em `/6bc7d2f33225bd1d3c4af27b891f2ac6.txt`
+    (pública por definição, constante em `app/services/site_descoberta.py`). Em 20/10 as 68 URLs do sitemap + llms.txt
+    foram enviadas (`api.indexnow.org` respondeu 202).
+- **Daqui pra frente é automático:** `blog_publisher._publicar_artigo` sobe o `llms.txt` regerado do índice do blog
+  (`gerar_llms_txt`) e chama `avisar_indexnow([url_artigo, blog/])`; falha de rede só vira log.
+- Backup da raiz do site antes da mudança: `/root/orbit-backups/site-leticia-raiz-2026-10-20.tgz` na VPS.
+- **Pendente com ela:** criar a conta no Bing Webmaster Tools e adicionar o site (o jeito mais rápido é "Importar do
+  Google Search Console", que já está verificado). Se o Bing pedir arquivo `BingSiteAuth.xml` ou meta `msvalidate.01`,
+  ela manda o código e a gente sobe na raiz.
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
+
+- **Crescimento orgânico (19/10/2026, pedido "faça tudo")**:
+  - Feito no Orbit: capa do Reels no quadro do gancho (`thumb_offset`, padrão 1200 ms, `corpo.capa_ms`); Trial
+    Reels ligado (`corpo.trial_reels` + agendamento `formato="trial"`, que não ocupa o dia dos seguidores; a Meta
+    aceitou `trial_params` na v21). Rotina: 1 Trial por semana com o gancho B de um Reels da semana. Primeiro
+    teste: "5 coisas" (gancho B) em 20/10 12h.
+  - Localização pronta no código (`INSTAGRAM_LOCATION_ID`), mas a Meta recusa a página da Dra. porque ela não tem
+    endereço. Ligar quando ela cadastrar o endereço de Vitória/ES na página (id 688466407676130).
+  - Pendente com ela: campo Nome do perfil com palavra-chave; endereço na página do Facebook; republicar no
+    Facebook exige reconectar com `pages_manage_posts`; YouTube Shorts exige conexão Google nova (uploads de app não
+    verificado ficam privados). Hora extra 3/3: versão de até 45 s em produção (`fala-r6`).
 
 - **PENDENTE (pedido de 18/10/2026, esperar ela liberar)**: limpeza do disco C (temporários do Windows com mais de 2
   dias, cerca de 13 GB, e cache do npm, 3,5 GB; Downloads é dela e não se toca) e instalação do **VoiceStudio**
