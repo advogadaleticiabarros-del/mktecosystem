@@ -676,6 +676,19 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 - **Dia dos Professores**: v3 (sala vista do fundo, quadro com inglês desfocado) após pedido de ajuste.
 - Verificação de pedidos de ajuste: só quando a usuária avisar (ela pediu para parar a verificação periódica).
 
+## Série 18: Limbo previdenciário (20/10/2026)
+
+- 2 Reels de cerca de 55 s a partir da gravação `Downloads\IMG_0330.MOV` (tomada única de 3 min 07 s): 1 "O que é
+  limbo previdenciário", 2 "Quem paga o salário" (a empresa, pela jurisprudência majoritária). Motor v2 no padrão
+  da série 17 (rosto + vídeos do Pexels), sem correção de cor (luz boa), `DY -200` e zoom 1.12 (com 1.22 a testa
+  saía cortada).
+- Cortados da fala, com aprovação da Jessica: "auxílio-acidente" (nome errado do benefício), "o contrato fica
+  suspenso" (tecnicamente errado) e o caso de 10 meses do escritório (OAB). Detalhes em
+  `producao/reels/series/18-limbo-previdenciario/montar_falas.py`.
+- No Orbit: peças novas em **rascunho, sem data** (`limbo-previdenciario-{1,2}-v1.mp4`). Backup do banco antes:
+  `/root/orbit-backups/antes-serie18-2026-10-20.sql.gz`. Mídia pesada em `C:\tmp\videos-reels\18-limbo-previdenciario\`.
+- Pendente: ela aprovar e escolher os dias (21h, dia sem outro post; a parte 2 logo depois da 1).
+
 ## Site da Letícia: descoberta por buscadores e IAs (20/10/2026)
 
 - Pedido dela depois de perguntar sobre "prompt injection invisível" (resposta: não; texto oculto é spam no Google
