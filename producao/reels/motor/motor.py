@@ -1,16 +1,23 @@
 """Motor v2 dos Reels da Letícia (motion design + camada procedural).
 
-Genérico: áudio (voz tratada, efeitos sintetizados, trilha própria com ducking), energia da voz,
+Genérico: áudio (voz tratada, efeitos sintetizados, ambiência; sem música desde 21/10/2026), energia da voz,
 legenda por frase, blocos de cena, pó de ouro, explosões, soco na palavra-chave, transições
-(tinta, luz, whip, zoom, íris...), verificador da área limpa e da velocidade de leitura,
-render quadro a quadro (Playwright) e codificação H.264 pronta para a API da Meta.
+(tinta, luz, whip, zoom, íris...), punch-in alternado nas emendas do rosto, verificador da área limpa e da
+velocidade de leitura, render quadro a quadro (Playwright) e codificação H.264 pronta para a API da Meta.
 
-O roteiro de cada série fica em serie.py, que importa daqui e define REELS.
+Padrão premium (21/10/2026, skill leticia-reels-premium): uma entrega por vídeo, sem trilha; mix final a -14 LUFS
+e pico -1 dBTP; H.264 a 11 Mbps (10 a 12); efeitos com 3 a 4 variações por tipo, sorteadas com semente fixa,
+8 a 12 dB abaixo da voz e abaixados enquanto ela fala; ambiência a -32 LUFS.
+
+O roteiro de cada série fica em serie.py, que importa daqui e define REELS. Cenas de rosto marcam "rosto": True
+no bg; as emendas vêm de fala.py (fala-rN.emendas.json ao lado do src).
 """
 import asyncio
 import base64
 import json
 import os
+import random
+import re
 import shutil
 import subprocess
 import wave
@@ -88,41 +95,88 @@ def energia(trechos, total, src=None):
 
 
 # --------------------------------------------------------------------------- som
-def sfx(pasta: Path) -> dict:
-    """Efeitos sonoros sintetizados (sem direitos de terceiros)."""
-    pasta.mkdir(exist_ok=True)
-    defs = {
-        "whoosh": ["-f", "lavfi", "-i", "anoisesrc=color=pink:d=0.55:a=0.6", "-af",
-                   "highpass=f=350,lowpass=f=4200,afade=t=in:d=0.28:curve=exp,afade=t=out:st=0.3:d=0.25,volume=0.9"],
-        "boom": ["-f", "lavfi", "-i", "aevalsrc='0.95*sin(2*PI*(45+60*exp(-9*t))*t)*exp(-3.5*t)':d=1.4:s=48000", "-af", "lowpass=f=900"],
-        "pop": ["-f", "lavfi", "-i", "aevalsrc='0.55*sin(2*PI*(520+900*exp(-28*t))*t)*exp(-22*t)':d=0.25:s=48000"],
-        "carimbo": ["-f", "lavfi", "-i", "aevalsrc='(0.9*sin(2*PI*85*t)+0.5*sin(2*PI*170*t))*exp(-16*t)':d=0.4:s=48000", "-af", "lowpass=f=1200"],
-        "brilho": ["-f", "lavfi", "-i", "aevalsrc='0.16*(sin(2*PI*1760*t)+sin(2*PI*2637*t)+0.7*sin(2*PI*3520*t))*exp(-3*t)':d=1.6:s=48000",
-                   "-af", "aecho=0.8:0.6:60:0.35"],
+def _variacoes() -> dict[str, list[list[str]]]:
+    """3 a 4 versões de cada efeito (mesma família, timbre e duração diferentes), todas sintetizadas aqui."""
+    def whoosh(cor, d, hp, lp):
+        return ["-f", "lavfi", "-i", f"anoisesrc=color={cor}:d={d}:a=0.6:seed=7", "-af",
+                f"highpass=f={hp},lowpass=f={lp},afade=t=in:d={d / 2}:curve=exp,afade=t=out:st={d / 2}:d={d / 2}"]
+
+    def ev(expr, d, af=None):
+        return ["-f", "lavfi", "-i", f"aevalsrc='{expr}':d={d}:s=48000", *(["-af", af] if af else [])]
+    return {
+        "whoosh": [whoosh("pink", 0.55, 350, 4200), whoosh("brown", 0.5, 200, 3000), whoosh("white", 0.45, 700, 6500),
+                   whoosh("pink", 0.65, 250, 3400)],
+        "boom": [ev(f"0.95*sin(2*PI*({f0}+60*exp(-9*t))*t)*exp(-{k}*t)", 1.4, "lowpass=f=900") for f0, k in ((45, 3.5), (38, 3.0), (52, 4.2), (42, 3.8))],
+        "pop": [ev(f"0.55*sin(2*PI*({f0}+900*exp(-28*t))*t)*exp(-{k}*t)", 0.25) for f0, k in ((520, 22), (640, 26), (430, 20))],
+        "carimbo": [ev(f"(0.9*sin(2*PI*{f0}*t)+0.5*sin(2*PI*{2 * f0}*t))*exp(-{k}*t)", 0.4, "lowpass=f=1200") for f0, k in ((85, 16), (72, 14), (98, 18))],
+        "brilho": [ev(f"0.16*(sin(2*PI*{a}*t)+sin(2*PI*{b}*t)+0.7*sin(2*PI*{c}*t))*exp(-3*t)", 1.6, "aecho=0.8:0.6:60:0.35")
+                   for a, b, c in ((1760, 2637, 3520), (1568, 2349, 3136), (1976, 2960, 3951))],
         # pó de ouro se formando: cintilação que sobe
-        "po": ["-f", "lavfi", "-i", "aevalsrc='0.10*sin(2*PI*(900+1800*t)*t)*(0.5+0.5*sin(2*PI*31*t))*exp(-1.6*t)':d=1.3:s=48000",
-               "-af", "highpass=f=600,aecho=0.8:0.5:45:0.3"],
+        "po": [ev(f"0.10*sin(2*PI*({f0}+{sobe}*t)*t)*(0.5+0.5*sin(2*PI*{tr}*t))*exp(-1.6*t)", 1.3, "highpass=f=600,aecho=0.8:0.5:45:0.3")
+               for f0, sobe, tr in ((900, 1800, 31), (750, 2200, 27), (1100, 1500, 37))],
     }
-    for nome, args in defs.items():
-        ff(*args, "-ac", "2", "-ar", "48000", pasta / f"{nome}.wav")
-    return {n: pasta / f"{n}.wav" for n in defs}
 
 
-def trilha(dur: float, destino: Path) -> None:
-    """Base instrumental própria: pad Lá menor–Fá–Dó–Sol com pulso leve (a cada 4 s), sem cliques."""
-    def nota(fs):
-        return "+".join(f"{f}*between(mod(t,16),{i*4},{i*4+4}-0.0001)" for i, f in enumerate(fs))
-    vozes = [nota([110, 87.31, 130.81, 98.0]), nota([220, 174.61, 261.63, 196.0]),
-             nota([261.63, 220.0, 329.63, 246.94]), nota([329.63, 261.63, 392.0, 293.66])]
-    env = "pow(sin(PI*mod(t,4)/4),2)"
-    soma = "+".join(f"{amp}*sin(2*PI*({v})*t)" for amp, v in zip([0.30, 0.22, 0.16, 0.12], vozes))
-    pulso = "0.18*sin(2*PI*55*t)*exp(-9*mod(t,0.5))"
-    ff("-f", "lavfi", "-i", f"aevalsrc='(({soma})*{env}*0.5)+{pulso}':d={dur + 1}:s=48000",
-       "-af", "lowpass=f=1400,aecho=0.8:0.7:120|240:0.35|0.25,afade=t=in:d=1.0,afade=t=out:st=" + f"{dur - 1.5}:d=1.5",
-       "-ac", "2", destino)
+# pico de cada efeito em dBFS; a voz chega a -1,5 dBTP, então o efeito fica 8 a 12 dB abaixo dela
+NIVEL_DB = {"whoosh": -13, "boom": -10, "pop": -12, "carimbo": -10, "brilho": -13, "po": -13}
 
 
-def audio(reel, pasta: Path, eventos, total: float, efeitos: dict):
+def sfx(pasta: Path) -> dict[str, list[Path]]:
+    """Biblioteca de efeitos sintetizados (sem direitos de terceiros), cada versão com pico em 0 dBFS."""
+    pasta.mkdir(exist_ok=True)
+    saida = {}
+    for tipo, versoes in _variacoes().items():
+        saida[tipo] = []
+        for k, args in enumerate(versoes):
+            destino = pasta / f"{tipo}_{k}.wav"
+            if not destino.exists():
+                bruto = pasta / f"_{tipo}_{k}.wav"
+                ff(*args, "-ac", "2", "-ar", "48000", bruto)
+                log = subprocess.run([str(FF), "-hide_banner", "-nostats", "-i", str(bruto), "-af", "volumedetect", "-f", "null", "-"],
+                                     capture_output=True, text=True, encoding="utf-8", errors="replace").stderr
+                pico = float(re.search(r"max_volume: (-?[\d.]+) dB", log).group(1))
+                ff("-i", bruto, "-af", f"volume={-pico}dB", destino)
+                bruto.unlink()
+            saida[tipo].append(destino)
+    return saida
+
+
+def sortear_efeitos(eventos, versoes: dict[str, int], semente: int) -> list[tuple[float, str, int]]:
+    """Escolhe a versão de cada efeito com semente fixa (o mesmo Reel sai sempre igual), sem repetir a mesma versão
+    duas vezes seguidas no mesmo tipo."""
+    rnd, ultima, saida = random.Random(semente), {}, []
+    for t, tipo in eventos:
+        opcoes = [k for k in range(versoes[tipo]) if k != ultima.get(tipo)] or [0]
+        k = rnd.choice(opcoes)
+        ultima[tipo] = k
+        saida.append((t, tipo, k))
+    return saida
+
+
+def _lufs(arq) -> float:
+    log = subprocess.run([str(FF), "-hide_banner", "-nostats", "-i", str(arq), "-af", "ebur128", "-f", "null", "-"],
+                         capture_output=True, text=True, encoding="utf-8", errors="replace").stderr
+    return float(re.search(r"I:\s+(-?[\d.]+) LUFS", log[log.rfind("Summary:"):]).group(1))
+
+
+def _loudnorm(entrada: Path, destino: Path, alvo=-14.0, pico=-1.5, total=None) -> None:
+    """Crava o volume integrado: ganho + limitador de pico, reajustado em até 4 rodadas até ficar a 0,2 LU do alvo.
+    (O loudnorm linear não sobe o ganho quando há pico alto, e a voz tratada tem picos de consoante: a validação de
+    21/10/2026 saiu em -15 LUFS.) O limitador corta a amostra em pico - 0,5 dB; a entrega fica abaixo de -1 dBTP
+    mesmo depois do AAC."""
+    limite = 10 ** ((pico - 0.5) / 20)
+    ganho = alvo - _lufs(entrada)
+    for _ in range(4):
+        ff("-i", entrada, "-af", f"volume={ganho:.2f}dB,alimiter=limit={limite:.4f}:attack=3:release=60:level=disabled,aresample=48000",
+           *(["-t", total] if total else []), "-ar", "48000", "-ac", "2", destino)
+        erro = alvo - _lufs(destino)
+        if abs(erro) <= 0.2:
+            break
+        ganho += erro
+
+
+def audio(reel, pasta: Path, eventos, total: float, efeitos: dict, semente: int = 21) -> Path:
+    """Voz tratada + efeitos (abaixados sob a voz) + ambiência, normalizado a -14 LUFS / -1 dBTP."""
     partes = []
     for i, (a, b) in enumerate(reel["trechos"]):
         d = round(b - a, 3)
@@ -139,25 +193,30 @@ def audio(reel, pasta: Path, eventos, total: float, efeitos: dict):
     ff("-f", "concat", "-safe", "0", "-i", lista, "-af",
        f"highpass=f=80,arnndn=m='{modelo}':mix=0.9,afftdn=nr=8:nf=-35,deesser=i=0.4,"
        "equalizer=f=250:t=q:w=1:g=-2.5,equalizer=f=3200:t=q:w=1.2:g=2.5,equalizer=f=10000:t=h:w=0.7:g=1.5,"
-       f"acompressor=threshold=-20dB:ratio=3:attack=8:release=120,loudnorm=I=-15:TP=-1.5:LRA=9,apad=whole_dur={total}",
+       f"acompressor=threshold=-20dB:ratio=3:attack=8:release=120,loudnorm=I=-14:TP=-1.5:LRA=9,apad=whole_dur={total}",
        "-ar", "48000", "-ac", "2", voz)
-    entradas, filtros = ["-i", voz], []
-    vols = {"whoosh": 0.22, "boom": 0.55, "pop": 0.26, "carimbo": 0.45, "brilho": 0.30, "po": 0.5}
-    for i, (t, nome) in enumerate(eventos):
-        entradas += ["-i", efeitos[nome]]
+    # ambiência: ar de sala (ruído marrom filtrado), bem abaixo da voz, para o silêncio entre as falas não soar "morto"
+    amb = pasta / "ambiencia.wav"
+    ff("-f", "lavfi", "-i", f"anoisesrc=color=brown:d={total}:a=0.5:seed=3", "-af",
+       f"highpass=f=70,lowpass=f=900,loudnorm=I=-32:TP=-9,afade=t=in:d=0.5,afade=t=out:st={max(0, total - 0.8)}:d=0.8",
+       "-ar", "48000", "-ac", "2", amb)
+    entradas, filtros = ["-i", voz, "-i", amb], []
+    sorteio = sortear_efeitos(eventos, {k: len(v) for k, v in efeitos.items()}, semente)
+    for i, (t, tipo, k) in enumerate(sorteio):
+        entradas += ["-i", efeitos[tipo][k]]
         ms = int(max(0, t) * 1000)
-        filtros.append(f"[{i + 1}:a]adelay={ms}|{ms},volume={vols[nome]}[e{i}]")
-    mix = "".join(f"[e{i}]" for i in range(len(eventos)))
-    filtros.append(f"[0:a]{mix}amix=inputs={len(eventos) + 1}:normalize=0:duration=first[vs]")
-    sem = pasta / "sem_musica.wav"
-    ff(*entradas, "-filter_complex", ";".join(filtros) + ";[vs]alimiter=limit=0.95[o]", "-map", "[o]", "-t", total, sem)
-    mus = pasta / "trilha.wav"
-    trilha(total, mus)
-    com = pasta / "com_musica.wav"
-    ff("-i", sem, "-i", mus, "-i", voz, "-filter_complex",
-       "[1:a]volume=0.30[m];[m][2:a]sidechaincompress=threshold=0.03:ratio=10:attack=15:release=450[md];"
-       "[0:a][md]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.95[o]", "-map", "[o]", "-t", total, com)
-    return com, sem
+        filtros.append(f"[{i + 2}:a]adelay={ms}|{ms},volume={NIVEL_DB[tipo]}dB[e{i}]")
+    fx = "".join(f"[e{i}]" for i in range(len(sorteio)))
+    # o efeito nunca cobre palavra: o barramento de efeitos abaixa ~8 dB enquanto a voz soa
+    filtros += ["[0:a]asplit=2[v1][v2]",
+                f"{fx}amix=inputs={len(sorteio)}:normalize=0:duration=longest,apad=whole_dur={total}[fx]",
+                "[fx][v2]sidechaincompress=threshold=0.03:ratio=6:attack=5:release=250:makeup=1[fxd]",
+                "[v1][fxd][1:a]amix=inputs=3:normalize=0:duration=first[o]"]
+    bruto = pasta / "mix_bruto.wav"
+    ff(*entradas, "-filter_complex", ";".join(filtros), "-map", "[o]", "-t", total, "-ar", "48000", bruto)
+    mix = pasta / "mix.wav"
+    _loudnorm(bruto, mix, total=total)
+    return mix
 
 
 # --------------------------------------------------------------------------- mídia
@@ -299,6 +358,46 @@ def outro(a, proxima, publico="quem precisa saber", gestante=False, area="Direit
     return {"a": a, "trans": "tinta", "outro": True, "els": els}
 
 
+def fim_da_fala(transcricao, src) -> float:
+    """Onde a fala termina no Reel: fim da última palavra + 0,25 s, sem passar do último quadro do vídeo da fala
+    (passando, a última cena de rosto congelava antes do fechamento: série 18 v2)."""
+    d = json.loads(Path(transcricao).read_text(encoding="utf-8"))
+    ultima = max(w["end"] for s in d["segments"] for w in s["words"])
+    dur = float(subprocess.run([str(FF).replace("ffmpeg.exe", "ffprobe.exe"), "-v", "error", "-show_entries", "format=duration",
+                                "-of", "csv=p=0", str(src)], capture_output=True, text=True, check=True).stdout)
+    return round(min(ultima + 0.25, dur - 1 / FPS), 3)
+
+
+# --------------------------------------------------------------------------- punch-in
+def emendas_no_reel(emendas_src, linha) -> list[float]:
+    """Emendas da fala (tempo do src) no tempo do Reel; as que caem fora dos trechos usados somem."""
+    saida = []
+    for e in emendas_src:
+        for tr in linha:
+            if tr["ini_src"] < e < tr["fim_src"]:
+                saida.append(round(tr["ini"] + e - tr["ini_src"], 3))
+    return saida
+
+
+def punch_in(cenas, emendas, fator=1.12, colada=0.15) -> None:
+    """Toda emenda no rosto ganha punch-in alternado (normal / fator): grava bg["zooms"] = [[t na cena, zoom], ...]
+    nas cenas com bg["rosto"]. A alternância continua de uma cena de rosto para a próxima; emenda colada no início
+    ou no fim da cena é ignorada (o corte de cena já cobre)."""
+    estado = fator
+    for i, c in enumerate(cenas):
+        bg = c.get("bg") or {}
+        if not bg.get("rosto"):
+            continue
+        fim = cenas[i + 1]["a"] if i + 1 < len(cenas) else float("inf")
+        estado = 1.0 if estado != 1.0 else fator
+        zooms = [[0.0, estado]]
+        for e in emendas:
+            if c["a"] + colada < e < fim - colada:
+                estado = 1.0 if estado != 1.0 else fator
+                zooms.append([round(e - c["a"], 3), estado])
+        bg["zooms"] = zooms
+
+
 # --------------------------------------------------------------------------- montagem
 def montar_cfg(n: int, REELS: dict):
     reel = REELS[n]
@@ -315,6 +414,11 @@ def montar_cfg(n: int, REELS: dict):
         raise KeyError(f"reel {n}: palavra '{txt}' depois de {depois}")
 
     cenas = reel["roteiro"](W, seg, round(fala, 3))
+    emendas = reel.get("emendas")
+    arq_emendas = Path(reel.get("src", CFG["src"])).with_suffix(".emendas.json")
+    if emendas is None and arq_emendas.exists():
+        emendas = json.loads(arq_emendas.read_text())
+    punch_in(cenas, emendas_no_reel(emendas or [], linha), reel.get("punch", 1.12))
     oc = next((c for c in cenas if c.get("outro")), None)
     # o fechamento pode começar durante a fala final (CTA narrado); senão, vem depois da fala
     total = round(max(fala + 0.8, oc["a"] + OUTRO) if oc else fala + OUTRO, 3)
@@ -405,15 +509,18 @@ async def renderizar(n, cfg, so_amostras=None, checar=False):
     return pasta
 
 
-def codificar(n, pasta, total, com, sem, prefixo="reel", nome=None):
-    saidas, base = [], nome or f"{prefixo}{n}"
-    for audio_, nome in [(com, f"{base}.mp4"), (sem, f"{base}_sem_musica.mp4")]:
-        destino = AQUI.parent / nome
-        ff("-framerate", FPS, "-i", pasta / "%05d.jpg", "-i", audio_, "-map", "0:v", "-map", "1:a", "-t", total,
-           "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p", "-profile:v", "high", "-r", FPS,
-           "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-movflags", "+faststart", destino)
-        saidas.append(destino)
-    return saidas
+def codificar(n, pasta, total, audio_, prefixo="reel", nome=None) -> Path:
+    """Uma entrega por vídeo: H.264 a 11 Mbps (10 a 12, exportação do manual), AAC 128 kbps a 48 kHz."""
+    destino = AQUI.parent / f"{nome or f'{prefixo}{n}'}.mp4"
+    if destino.exists():
+        raise FileExistsError(f"{destino} já existe: versão nova é arquivo novo (-v2)")
+    # taxa constante (CBR): com taxa média, o x264 entrega 4 a 9 Mbps quando a imagem é simples (motion graphics),
+    # nem com duas passadas chega a 10; o CBR completa com enchimento e crava os 11 Mbps
+    ff("-framerate", FPS, "-i", pasta / "%05d.jpg", "-i", audio_, "-map", "0:v", "-map", "1:a", "-t", total,
+       "-c:v", "libx264", "-preset", "slow", "-b:v", "11M", "-minrate", "11M", "-maxrate", "11M", "-bufsize", "11M",
+       "-x264-params", "nal-hrd=cbr:force-cfr=1", "-pix_fmt", "yuv420p", "-profile:v", "high", "-r", FPS,
+       "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-movflags", "+faststart", destino)
+    return destino
 
 
 async def principal(REELS: dict, numeros, modo: str):
@@ -439,9 +546,9 @@ async def principal(REELS: dict, numeros, modo: str):
             continue
         pasta_audio = AQUI / f"audio_r{n}"
         pasta_audio.mkdir(exist_ok=True)
-        com, sem = audio(REELS[n], pasta_audio, eventos, cfg["total"], efeitos)
+        mix = audio(REELS[n], pasta_audio, eventos, cfg["total"], efeitos, REELS[n].get("semente", 20 + n))
         pasta = await renderizar(n, cfg)
-        print("ok", codificar(n, pasta, cfg["total"], com, sem, REELS[n].get("prefixo", "reel"), REELS[n].get("nome")), flush=True)
+        print("ok", codificar(n, pasta, cfg["total"], mix, REELS[n].get("prefixo", "reel"), REELS[n].get("nome")), flush=True)
 
 
 def rodar(REELS: dict, argv):

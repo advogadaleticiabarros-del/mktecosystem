@@ -699,6 +699,31 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
     Backup: `/root/orbit-backups/antes-serie18-v2-2026-10-20.sql.gz`.
 - Pendente: ela aprovar (a v2) e escolher os dias (21h, dia sem outro post; a parte 2 logo depois da 1).
 
+## Reels premium: ferramentas e motor (21/10/2026)
+
+- Passo 1 da skill `leticia-reels-premium` feito em `producao/reels/motor/` (39 testes: `py -m pytest`):
+  - `fala.py` (`transcrever` / `montar <falas.py>`): pontas na pausa real, pausas internas a 0,18 s, fusão de 20 ms,
+    pontas alinhadas aos quadros, retranscrição de cada trecho. Decisões não óbvias:
+    - pausa partida por estalo (dois silêncios curtos e um estalo no meio) só é cortada se, medida a -40 dB, for ≥ 60%
+      silêncio a -44 dB. Juntar silêncios "próximos" comia a consoante dentro da palavra ("atestado" virou "ato está");
+    - aviso de texto só vale se aparecer no trecho isolado **e** na fala inteira (o Whisper chuta em trecho < 1 s);
+      troca ou palavra comida onde o corte só tirou silêncio (pico < -38 dB) vira "nota", não reprova;
+    - Whisper medium precisa de ~3 GB livres; sem memória, cai para o small com AVISO.
+  - `conferir.py <mp4> [cfg]`: congelamento (fora do fechamento), volume, formato, cena maior que o clipe, folha de 10 quadros.
+  - Motor: sem trilha (1 entrega), mix cravado em -14 LUFS por ganho + limitador (o loudnorm linear parava em -15
+    por causa dos picos de consoante da voz), CBR 11 Mbps (taxa média dava 4 a 9 Mbps em motion graphics, nem 2
+    passadas resolvem), 3-4 variações por efeito sorteadas com semente fixa, efeitos abaixados sob a voz
+    (sidechain), ambiência a -32 LUFS, punch-in alternado (1,0/1,12, centrado no rosto) nas emendas das cenas com
+    `"rosto": True`, `fim_da_fala()` (a última cena de rosto congelava antes do fechamento na v2), e `codificar`
+    recusa sobrescrever.
+- Validação com a série 18 (`IMG_0330.MOV`, mesmos trechos da v2): "fala ok" nos dois; `conferir.py` sem avisos
+  (45,0 s e 37,9 s; 11,0 Mbps; -14,1 e -14,2 LUFS; pico -1,9 dBTP). A ferramenta achou defeitos que a v2 tinha:
+  4 pausas de 0,27 a 0,49 s por Reel e a cena final congelada. Arquivos: `series/18-limbo-previdenciario/
+  falas_premium.py` e `serie_premium.py`; vídeos em `C:\tmp\videos-reels\18-limbo-previdenciario\validacao-premium\`
+  (`limbo-previdenciario-premium-c-{1,2}.mp4` são os bons; `-` e `-b-` ficaram como registro). **Nada foi ao Orbit.**
+- Pixabay (efeitos sonoros): a página abre pela leitura web, mas download por linha de comando dá 403 e a API não
+  tem áudio. Para usar, ela baixa à mão e conferimos a licença antes.
+
 ## Site da Letícia: descoberta por buscadores e IAs (20/10/2026)
 
 - Pedido dela depois de perguntar sobre "prompt injection invisível" (resposta: não; texto oculto é spam no Google

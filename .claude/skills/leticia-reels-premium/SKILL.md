@@ -38,6 +38,12 @@ Teoria e regras completas: manual aprovado pela Jessica, "Manual de edição pre
 
 ## Ferramentas
 
+**Prontas desde 21/10/2026** (passo 1 feito; validação em `series/18-limbo-previdenciario/falas_premium.py` e `serie_premium.py`). Ao usar:
+- `falas.py` de cada vídeo: `SRC`, `FALAS = {n: [(início, fim, "texto esperado"[, "fixo"])]}`, `VOCABULARIO` (termos do tema; sem ele o Whisper ouve "língua" por "limbo"). O texto esperado é o que ela fala no trecho, não o que se quer na legenda.
+- Linha "nota:" não reprova: o corte ali só tirou silêncio, então a divergência é do Whisper. Corrija a legenda em `CORRIGE` do `serie.py`.
+- Roteiro: marque `"rosto": True` no bg das cenas de rosto (punch-in automático) e use `m.fim_da_fala(...)` para o fim da fala.
+- Rodar `fala.py montar` leva uns 10 min por Reel no processador (Whisper medium, precisa de ~3 GB livres).
+
 Base: `producao/reels/series/18-limbo-previdenciario/montar_falas_v2.py` (pausas reais e `encostar`) e a v2 da série 18.
 
 - **`fala.py`**

@@ -9,5 +9,13 @@ Base da série "13º sem susto" (pasta 13). Para cada vídeo novo, copiar esta p
 - `transcrever.py`: Whisper com marcação de palavras (para áudio enviado).
 - `narrar.py`: roteiro → voz clonada da Letícia no ElevenLabs + transcricao.json exata (padrão desde 14/10/2026). Testes: `py -m pytest test_narrar.py`.
 
+Padrão premium (21/10/2026, skill `leticia-reels-premium`): sem trilha, uma entrega por vídeo, -14 LUFS / -1 dBTP,
+H.264 a 11 Mbps, efeitos com 3 a 4 variações sorteadas com semente fixa (`REELS[n]["semente"]`, padrão 20+n), ambiência
+a -32 LUFS e punch-in alternado nas emendas do rosto (cenas com `"rosto": True` no bg).
+- `fala.py`: `py fala.py transcrever <bruto>` e `py fala.py montar <falas.py> [n]` (pausas reais, fusão de 20 ms,
+  retranscrição de cada trecho; grava fala-rN.mp4/.wav/.emendas.json/.transcricao.json). Rodar até "fala ok".
+- `conferir.py`: `py conferir.py <mp4> [cfg_rN.json]` (congelamento, volume, formato, cenas longas, folha de 10 quadros).
+- Testes: `py -m pytest` (test_fala, test_conferir, test_motor, test_narrar).
+
 Comandos: `py serie.py --checar` → `py serie.py 1 --amostras` → `py serie.py 1 2 3`.
 A versão anterior (v1, série "Direitos da gestante") está congelada em `../_padrao-motion-v1/`.

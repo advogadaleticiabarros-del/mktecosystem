@@ -240,7 +240,9 @@ async function render(t) {
     if (c.bg) {
       const kb = c.bg.kb || [1.06, 1.16, 0, 0, 0, 0];
       const pk = eInOut(p) * .85 + p * .15;
-      c._img.style.transform = `translate(${lerp(kb[2], kb[3], pk)}px, ${lerp(kb[4], kb[5], pk)}px) scale(${lerp(kb[0], kb[1], pk)})`;
+      // punch-in nas emendas do rosto (bg.zooms): zoom seco em torno do rosto (bg.foco, px acima do centro)
+      const zm = (c.bg.zooms || []).reduce((m, [tz, z]) => (lt >= tz ? z : m), 1), fy = c.bg.foco ?? -360;
+      c._img.style.transform = `translate(${lerp(kb[2], kb[3], pk) * zm}px, ${lerp(kb[4], kb[5], pk) * zm + (1 - zm) * fy}px) scale(${lerp(kb[0], kb[1], pk) * zm})`;
       if (c.bg.seq) {
         const n = Math.min(c.bg.n - 1, Math.floor((lt * (c.bg.vel ?? 1) + (c.bg.ini ?? 0)) * 30));
         const src = `${c.bg.seq}/${String(n + 1).padStart(4, '0')}.jpg`;
