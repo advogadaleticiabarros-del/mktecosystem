@@ -1,13 +1,13 @@
 """Motor v2 dos Reels da Letícia (motion design + camada procedural).
 
-Genérico: áudio (voz tratada, efeitos sintetizados, ambiência; sem música desde 21/10/2026), energia da voz,
+Genérico: áudio (voz tratada e efeitos sintetizados; sem música nem ambiência desde 21/10/2026), energia da voz,
 legenda por frase, blocos de cena, pó de ouro, explosões, soco na palavra-chave, transições
 (tinta, luz, whip, zoom, íris...), punch-in alternado nas emendas do rosto, verificador da área limpa e da
 velocidade de leitura, render quadro a quadro (Playwright) e codificação H.264 pronta para a API da Meta.
 
 Padrão premium (21/10/2026, skill leticia-reels-premium): uma entrega por vídeo, sem trilha; mix final a -14 LUFS
 e pico -1 dBTP; H.264 a 11 Mbps (10 a 12); efeitos com 3 a 4 variações por tipo, sorteadas com semente fixa,
-8 a 12 dB abaixo da voz e abaixados enquanto ela fala; ambiência a -32 LUFS.
+8 a 12 dB abaixo da voz e abaixados enquanto ela fala; sem ambiência (o ruído de fundo virou chiado).
 
 O roteiro de cada série fica em serie.py, que importa daqui e define REELS. Cenas de rosto marcam "rosto": True
 no bg; as emendas vêm de fala.py (fala-rN.emendas.json ao lado do src).
@@ -176,7 +176,7 @@ def _loudnorm(entrada: Path, destino: Path, alvo=-14.0, pico=-1.5, total=None) -
 
 
 def audio(reel, pasta: Path, eventos, total: float, efeitos: dict, semente: int = 21) -> Path:
-    """Voz tratada + efeitos (abaixados sob a voz) + ambiência, normalizado a -14 LUFS / -1 dBTP."""
+    """Voz tratada + efeitos (abaixados sob a voz), normalizado a -14 LUFS / -1 dBTP."""
     partes = []
     for i, (a, b) in enumerate(reel["trechos"]):
         d = round(b - a, 3)
@@ -195,23 +195,23 @@ def audio(reel, pasta: Path, eventos, total: float, efeitos: dict, semente: int 
        "equalizer=f=250:t=q:w=1:g=-2.5,equalizer=f=3200:t=q:w=1.2:g=2.5,equalizer=f=10000:t=h:w=0.7:g=1.5,"
        f"acompressor=threshold=-20dB:ratio=3:attack=8:release=120,loudnorm=I=-14:TP=-1.5:LRA=9,apad=whole_dur={total}",
        "-ar", "48000", "-ac", "2", voz)
-    # ambiência: ar de sala (ruído marrom filtrado), bem abaixo da voz, para o silêncio entre as falas não soar "morto"
-    amb = pasta / "ambiencia.wav"
-    ff("-f", "lavfi", "-i", f"anoisesrc=color=brown:d={total}:a=0.5:seed=3", "-af",
-       f"highpass=f=70,lowpass=f=900,loudnorm=I=-32:TP=-9,afade=t=in:d=0.5,afade=t=out:st={max(0, total - 0.8)}:d=0.8",
-       "-ar", "48000", "-ac", "2", amb)
-    entradas, filtros = ["-i", voz, "-i", amb], []
+    # sem ambiência: o "ar de sala" (ruído marrom a -32 LUFS) virou chiado que abafava a voz (Jessica, 21/10/2026);
+    # as pausas ficam no silêncio da voz tratada
+    entradas, filtros = ["-i", voz], []
     sorteio = sortear_efeitos(eventos, {k: len(v) for k, v in efeitos.items()}, semente)
     for i, (t, tipo, k) in enumerate(sorteio):
         entradas += ["-i", efeitos[tipo][k]]
         ms = int(max(0, t) * 1000)
-        filtros.append(f"[{i + 2}:a]adelay={ms}|{ms},volume={NIVEL_DB[tipo]}dB[e{i}]")
-    fx = "".join(f"[e{i}]" for i in range(len(sorteio)))
-    # o efeito nunca cobre palavra: o barramento de efeitos abaixa ~8 dB enquanto a voz soa
-    filtros += ["[0:a]asplit=2[v1][v2]",
-                f"{fx}amix=inputs={len(sorteio)}:normalize=0:duration=longest,apad=whole_dur={total}[fx]",
-                "[fx][v2]sidechaincompress=threshold=0.03:ratio=6:attack=5:release=250:makeup=1[fxd]",
-                "[v1][fxd][1:a]amix=inputs=3:normalize=0:duration=first[o]"]
+        filtros.append(f"[{i + 1}:a]adelay={ms}|{ms},volume={NIVEL_DB[tipo]}dB[e{i}]")
+    if sorteio:
+        fx = "".join(f"[e{i}]" for i in range(len(sorteio)))
+        # o efeito nunca cobre palavra: o barramento de efeitos abaixa ~8 dB enquanto a voz soa
+        filtros += ["[0:a]asplit=2[v1][v2]",
+                    f"{fx}amix=inputs={len(sorteio)}:normalize=0:duration=longest,apad=whole_dur={total}[fx]",
+                    "[fx][v2]sidechaincompress=threshold=0.03:ratio=6:attack=5:release=250:makeup=1[fxd]",
+                    "[v1][fxd]amix=inputs=2:normalize=0:duration=first[o]"]
+    else:
+        filtros.append("[0:a]anull[o]")
     bruto = pasta / "mix_bruto.wav"
     ff(*entradas, "-filter_complex", ";".join(filtros), "-map", "[o]", "-t", total, "-ar", "48000", bruto)
     mix = pasta / "mix.wav"

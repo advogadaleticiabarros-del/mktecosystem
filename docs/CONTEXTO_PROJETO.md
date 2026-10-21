@@ -713,7 +713,7 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   - Motor: sem trilha (1 entrega), mix cravado em -14 LUFS por ganho + limitador (o loudnorm linear parava em -15
     por causa dos picos de consoante da voz), CBR 11 Mbps (taxa média dava 4 a 9 Mbps em motion graphics, nem 2
     passadas resolvem), 3-4 variações por efeito sorteadas com semente fixa, efeitos abaixados sob a voz
-    (sidechain), ambiência a -32 LUFS, punch-in alternado (1,0/1,12, centrado no rosto) nas emendas das cenas com
+    (sidechain), punch-in alternado (1,0/1,12, centrado no rosto) nas emendas das cenas com
     `"rosto": True`, `fim_da_fala()` (a última cena de rosto congelava antes do fechamento na v2), e `codificar`
     recusa sobrescrever.
 - Validação com a série 18 (`IMG_0330.MOV`, mesmos trechos da v2): "fala ok" nos dois; `conferir.py` sem avisos
@@ -721,6 +721,10 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   4 pausas de 0,27 a 0,49 s por Reel e a cena final congelada. Arquivos: `series/18-limbo-previdenciario/
   falas_premium.py` e `serie_premium.py`; vídeos em `C:\tmp\videos-reels\18-limbo-previdenciario\validacao-premium\`
   (`limbo-previdenciario-premium-c-{1,2}.mp4` são os bons; `-` e `-b-` ficaram como registro). **Nada foi ao Orbit.**
+- Retorno dela sobre a validação (21/10): chiado de fundo abafando a voz (era a ambiência: -34 dB constante, no
+  nível da fala baixa; **tirada do motor**, teste garante pausa < -55 dB); faltou 3D e ficou menos dinâmico (a
+  validação usou o roteiro de cenas da v2, sem 3D; nos próximos, 3D obrigatório em 1 ou 2 momentos via `motor3d`);
+  e **uma versão só por vídeo** (sem versões de teste).
 - Pixabay (efeitos sonoros): a página abre pela leitura web, mas download por linha de comando dá 403 e a API não
   tem áudio. Para usar, ela baixa à mão e conferimos a licença antes.
 

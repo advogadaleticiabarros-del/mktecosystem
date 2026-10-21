@@ -92,3 +92,28 @@ def test_normalizacao_chega_a_14_lufs_mesmo_com_pico_isolado(tmp_path):
     m._loudnorm(bruto, saida)
     lufs, pico = conferir.ler_volume(conferir._stderr("-i", saida, "-af", "ebur128=peak=true", "-f", "null", "-"))
     assert abs(lufs + 14) <= 0.5 and pico <= -1.4
+
+
+def test_pausas_ficam_silenciosas_sem_chiado_de_fundo(tmp_path):
+    # 21/10/2026: a ambiência (ruído marrom a -32 LUFS) virou chiado que abafava a voz da Dra.; nas pausas, o mix
+    # tem de ficar tão quieto quanto a voz tratada
+    import wave
+    from pathlib import Path
+
+    import numpy as np
+
+    import fala
+    m.AQUI = Path(__file__).resolve().parent
+    voz = tmp_path / "fala-r1.mp4"
+    fala.ff("-f", "lavfi", "-i", "color=c=black:s=320x568:r=30:d=8", "-f", "lavfi", "-i",
+            "aevalsrc='0.3*sin(2*PI*220*t)*sin(2*PI*3*t)*lt(mod(t,2),1)':d=8:s=48000", "-c:v", "libx264", "-c:a", "aac", voz)
+    pasta = tmp_path / "audio"
+    pasta.mkdir()
+    mix = m.audio({"trechos": [(0.0, 8.0)], "src": voz}, pasta, [], 8.0, m.sfx(tmp_path / "sfx"))
+    mono = tmp_path / "mono.wav"
+    fala.ff("-i", mix, "-ac", "1", mono)
+    with wave.open(str(mono)) as w:
+        x = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(float) / 32768
+        sr = w.getframerate()
+    pausa = x[int(1.3 * sr):int(1.8 * sr)]   # meio da primeira pausa (a fala volta aos 2 s)
+    assert 20 * np.log10(np.sqrt((pausa ** 2).mean()) + 1e-9) < -55
