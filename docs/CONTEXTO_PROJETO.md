@@ -725,6 +725,13 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   nível da fala baixa; **tirada do motor**, teste garante pausa < -55 dB); faltou 3D e ficou menos dinâmico (a
   validação usou o roteiro de cenas da v2, sem 3D; nos próximos, 3D obrigatório em 1 ou 2 momentos via `motor3d`);
   e **uma versão só por vídeo** (sem versões de teste).
+- Segundo retorno (21/10): "vídeo amador, baixo, voz abafada". Medido: o IMG_0330 vem sem agudos (AAC mono 84 kbps:
+  4-8 kHz a -46 dB; voz limpa fica perto de -20) e o vídeo de 15/08/2025 tem fundo constante a -40 dB. Voz refeita
+  em `cadeia_voz` (analisa a gravação; `aexciter` só quando abafada; RNNoise inteiro + afftdn; corte 250/500 Hz;
+  presença 3 kHz; de-esser; compressor; portão): fala 59 dB (IMG_0330) e 62 dB (vídeo novo) acima do fundo. Voz
+  nivelada a -14 LUFS antes da mistura (sem isso os efeitos passaram por cima da voz). Volume final **-11 LUFS**
+  (compressão suave + limitador a 192 kHz; sai -11,5 a -11,7). Amostras antes/depois para ela ouvir em
+  `C:	mpideos-reelsmostras-som\`.
 - Pixabay (efeitos sonoros): a página abre pela leitura web, mas download por linha de comando dá 403 e a API não
   tem áudio. Para usar, ela baixa à mão e conferimos a licença antes.
 

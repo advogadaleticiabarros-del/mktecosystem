@@ -9,7 +9,7 @@ Base da série "13º sem susto" (pasta 13). Para cada vídeo novo, copiar esta p
 - `transcrever.py`: Whisper com marcação de palavras (para áudio enviado).
 - `narrar.py`: roteiro → voz clonada da Letícia no ElevenLabs + transcricao.json exata (padrão desde 14/10/2026). Testes: `py -m pytest test_narrar.py`.
 
-Padrão premium (21/10/2026, skill `leticia-reels-premium`): sem trilha nem ambiência (virou chiado), uma entrega por vídeo, -14 LUFS / -1 dBTP,
+Padrão premium (21/10/2026, skill `leticia-reels-premium`): sem trilha nem ambiência (virou chiado), uma entrega por vídeo, voz por `cadeia_voz` (adaptada à gravação), -11 LUFS / -1 dBTP,
 H.264 a 11 Mbps, efeitos com 3 a 4 variações sorteadas com semente fixa (`REELS[n]["semente"]`, padrão 20+n)
 e punch-in alternado nas emendas do rosto (cenas com `"rosto": True` no bg).
 - `fala.py`: `py fala.py transcrever <bruto>` e `py fala.py montar <falas.py> [n]` (pausas reais, fusão de 20 ms,

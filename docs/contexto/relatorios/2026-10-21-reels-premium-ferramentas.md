@@ -57,3 +57,17 @@ No meio do trabalho ela também pediu: verificar se dá para acessar os efeitos 
 - **Faltou 3D e ficou menos dinâmico:** a validação reproduziu o roteiro de cenas da v2, que não tinha 3D. A skill agora exige 3D em 1 ou 2 momentos, usando o `producao/reels/motor3d/` como clipe de fundo.
 - **Uma versão só por vídeo**, para economizar token e trabalho. Registrado na skill, no CLAUDE.md (padrão fixo) e na memória.
 - **Não feito:** os vídeos de validação não foram refeitos (uma versão só). O próximo vídeo já sai sem ambiência e com 3D.
+
+## Segundo retorno: "vídeo amador, baixo, voz abafada" (mesmo dia)
+- **Medido:**
+  - o IMG_0330 vem quase sem agudos (AAC mono 84 kbps; 4-8 kHz a −46 dB, quando voz limpa fica perto de −20);
+  - o vídeo de 15/08/2025 tem chiado de sala constante a −40 dB;
+  - o mix antigo tinha ronco grave da ambiência (60-150 Hz a −18 dB).
+- **Feito no motor** (42 testes):
+  - `analisar_voz` + `cadeia_voz`: realce de agudos (`aexciter`) só em gravação abafada, RNNoise inteiro + afftdn, corte 250/500 Hz, presença 3 kHz, de-esser, compressor e portão;
+  - voz nivelada a −14 LUFS antes da mistura (`VOZ_LUFS`). Sem isso, a cadeia nova deixava a voz a −36 e os efeitos passavam por cima;
+  - volume final −11 LUFS (`ALVO_LUFS`), com compressão suave + limitador a 192 kHz (pico verdadeiro); o `conferir.py` passou a cobrar −11.
+- **Verificado em gravação real:** a fala fica 59 dB (IMG_0330) e 62 dB (vídeo novo) acima do fundo. O mix do Reel 1 sai a −11,5/−11,7 LUFS com pico −1,7.
+- **Amostras para ela ouvir** (antes → depois): `C:\tmp\videos-reels\amostras-som\1-limbo-ANTES-depois-DEPOIS.m4a` e `2-video-novo-BRUTO-depois-TRATADO.m4a`.
+- **Erros meus no caminho:** a primeira amostra foi montada com a duração no lugar errado, e o mix novo deixava os efeitos mais altos que a voz. Os dois foram achados na conferência e corrigidos antes de ela receber.
+- **Pendente:** ela ouvir as amostras e aprovar o som. Os vídeos de validação não foram refeitos (uma versão só).

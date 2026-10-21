@@ -5,7 +5,8 @@ legenda por frase, blocos de cena, pó de ouro, explosões, soco na palavra-chav
 (tinta, luz, whip, zoom, íris...), punch-in alternado nas emendas do rosto, verificador da área limpa e da
 velocidade de leitura, render quadro a quadro (Playwright) e codificação H.264 pronta para a API da Meta.
 
-Padrão premium (21/10/2026, skill leticia-reels-premium): uma entrega por vídeo, sem trilha; mix final a -14 LUFS
+Padrão premium (21/10/2026, skill leticia-reels-premium): uma entrega por vídeo, sem trilha; voz tratada por
+cadeia_voz (adaptada à gravação: realce de agudos quando abafada, portão nas pausas); mix final a -11 LUFS
 e pico -1 dBTP; H.264 a 11 Mbps (10 a 12); efeitos com 3 a 4 variações por tipo, sorteadas com semente fixa,
 8 a 12 dB abaixo da voz e abaixados enquanto ela fala; sem ambiência (o ruído de fundo virou chiado).
 
@@ -153,21 +154,67 @@ def sortear_efeitos(eventos, versoes: dict[str, int], semente: int) -> list[tupl
     return saida
 
 
+ALVO_LUFS = -11.0   # -14 (manual) soou baixo para ela em 21/10/2026; Reels costumam ficar entre -9 e -11
+VOZ_LUFS = -14.0    # nível da voz tratada antes da mistura: os efeitos (NIVEL_DB) ficam 8 a 12 dB abaixo dela
+ABAFADA = -30.0     # dB: fala com menos que isso de 4 a 8 kHz soa abafada e ganha realce de agudos
+
+
+def analisar_voz(arq) -> dict:
+    """Mede a fala gravada: "agudos" = energia de 4 a 8 kHz relativa ao total (dB) nos trechos de fala.
+    Voz limpa de celular fica perto de -20; o IMG_0330 (AAC mono 84 kbps) dava -46."""
+    tmp = Path(arq).with_name(Path(arq).stem + "_analise.wav")
+    ff("-i", arq, "-vn", "-ac", "1", "-ar", "48000", tmp)
+    with wave.open(str(tmp)) as w:
+        x = np.frombuffer(w.readframes(w.getnframes()), dtype=np.int16).astype(np.float32) / 32768
+    tmp.unlink()
+    j = 4096
+    k = len(x) // j
+    quadros = x[:k * j].reshape(k, j)
+    rms = np.sqrt((quadros ** 2).mean(axis=1))
+    fala = quadros[rms > np.percentile(rms, 60)]
+    pot = (np.abs(np.fft.rfft(fala * np.hanning(j), axis=1)) ** 2).mean(axis=0)
+    f = np.fft.rfftfreq(j, 1 / 48000)
+    total = pot[(f > 60) & (f < 14000)].sum()
+    return {"agudos": float(10 * np.log10(pot[(f >= 4000) & (f < 8000)].sum() / total + 1e-12))}
+
+
+def cadeia_voz(analise: dict) -> str:
+    """Tratamento da voz (v3, 21/10/2026, depois de ela achar a voz "abafada" e o vídeo "amador"):
+    - RNNoise inteiro + afftdn que acompanha o ruído: tira o chiado de sala (vídeo de 15/08/2025: fundo a -40 dB);
+    - corte do embolado (250 e 500 Hz) e presença em 3 kHz;
+    - gravação abafada (sem agudos): aexciter recria os harmônicos acima de 3 kHz, com passa-baixa em 7,5 kHz para
+      não chiar;
+    - de-esser, compressor e um portão suave que leva as pausas para perto do silêncio (sem cortar fim de palavra:
+      solta em 220 ms e só abaixa 28 dB)."""
+    modelo = (AQUI / "modelos" / "voz-sh.rnnn").as_posix().replace(":", r"\:")
+    realce = (["aexciter=amount=2:drive=6:freq=3000:blend=0:ceil=10000", "lowpass=f=7500:p=2"]
+              if analise["agudos"] < ABAFADA else ["equalizer=f=9000:t=h:w=0.7:g=2"])
+    return ",".join(["highpass=f=90:p=2", f"arnndn=m='{modelo}':mix=1.0", "afftdn=nr=15:nf=-45:tn=1",
+                     "equalizer=f=250:t=q:w=1.2:g=-3.5", "equalizer=f=500:t=q:w=1.5:g=-1.5", *realce,
+                     "equalizer=f=3000:t=q:w=1.0:g=3", "deesser=i=0.5:m=0.5:f=0.5",
+                     "acompressor=threshold=-24dB:ratio=3.5:attack=5:release=90:makeup=4",
+                     "agate=threshold=0.02:ratio=5:range=0.04:attack=3:release=220"])
+
+
 def _lufs(arq) -> float:
     log = subprocess.run([str(FF), "-hide_banner", "-nostats", "-i", str(arq), "-af", "ebur128", "-f", "null", "-"],
                          capture_output=True, text=True, encoding="utf-8", errors="replace").stderr
     return float(re.search(r"I:\s+(-?[\d.]+) LUFS", log[log.rfind("Summary:"):]).group(1))
 
 
-def _loudnorm(entrada: Path, destino: Path, alvo=-14.0, pico=-1.5, total=None) -> None:
-    """Crava o volume integrado: ganho + limitador de pico, reajustado em até 4 rodadas até ficar a 0,2 LU do alvo.
+def _loudnorm(entrada: Path, destino: Path, alvo=ALVO_LUFS, pico=-1.5, total=None) -> None:
+    """Crava o volume integrado: compressão suave + ganho + limitador de pico, reajustado em até 6 rodadas até ficar
+    a 0,2 LU do alvo.
     (O loudnorm linear não sobe o ganho quando há pico alto, e a voz tratada tem picos de consoante: a validação de
     21/10/2026 saiu em -15 LUFS.) O limitador corta a amostra em pico - 0,5 dB; a entrega fica abaixo de -1 dBTP
     mesmo depois do AAC."""
     limite = 10 ** ((pico - 0.5) / 20)
     ganho = alvo - _lufs(entrada)
-    for _ in range(4):
-        ff("-i", entrada, "-af", f"volume={ganho:.2f}dB,alimiter=limit={limite:.4f}:attack=3:release=60:level=disabled,aresample=48000",
+    for _ in range(6):
+        # compressão suave (a voz tem picos de consoante) e limitador a 192 kHz: pega o pico entre amostras, que o
+        # limitador a 48 kHz deixava passar (-0,9 dBTP na 1ª tentativa a -11 LUFS)
+        ff("-i", entrada, "-af", f"acompressor=threshold=-20dB:ratio=2.5:attack=10:release=150,volume={ganho:.2f}dB,aresample=192000,"
+           f"alimiter=limit={limite:.4f}:attack=2:release=50:level=disabled,aresample=48000",
            *(["-t", total] if total else []), "-ar", "48000", "-ac", "2", destino)
         erro = alvo - _lufs(destino)
         if abs(erro) <= 0.2:
@@ -176,7 +223,7 @@ def _loudnorm(entrada: Path, destino: Path, alvo=-14.0, pico=-1.5, total=None) -
 
 
 def audio(reel, pasta: Path, eventos, total: float, efeitos: dict, semente: int = 21) -> Path:
-    """Voz tratada + efeitos (abaixados sob a voz), normalizado a -14 LUFS / -1 dBTP."""
+    """Voz tratada (cadeia_voz, adaptada à gravação) + efeitos abaixados sob a voz, normalizado a ALVO_LUFS / -1 dBTP."""
     partes = []
     for i, (a, b) in enumerate(reel["trechos"]):
         d = round(b - a, 3)
@@ -186,15 +233,13 @@ def audio(reel, pasta: Path, eventos, total: float, efeitos: dict, semente: int 
         partes.append(p)
     lista = pasta / "voz.txt"
     lista.write_text("".join(f"file '{p.as_posix()}'\n" for p in partes), encoding="utf-8")
+    juntos = pasta / "voz_bruta.wav"
+    ff("-f", "concat", "-safe", "0", "-i", lista, "-ar", "48000", "-ac", "2", juntos)
+    tratada, nivelada = pasta / "voz_tratada.wav", pasta / "voz_nivelada.wav"
+    ff("-i", juntos, "-af", cadeia_voz(analisar_voz(juntos)), "-ar", "48000", "-ac", "2", tratada)
+    _loudnorm(tratada, nivelada, alvo=VOZ_LUFS)
     voz = pasta / "voz.wav"
-    # voz limpa (16/10/2026): RNNoise (modelo aberto em modelos/) tira o ruído de fundo (~11 dB a menos no teste da
-    # série Guarda), afftdn leve no que sobra, de-esser, corte de 250 Hz (som abafado), presença em 3,2 kHz e brilho em 10 kHz
-    modelo = (AQUI / "modelos" / "voz-sh.rnnn").as_posix().replace(":", r"\:")
-    ff("-f", "concat", "-safe", "0", "-i", lista, "-af",
-       f"highpass=f=80,arnndn=m='{modelo}':mix=0.9,afftdn=nr=8:nf=-35,deesser=i=0.4,"
-       "equalizer=f=250:t=q:w=1:g=-2.5,equalizer=f=3200:t=q:w=1.2:g=2.5,equalizer=f=10000:t=h:w=0.7:g=1.5,"
-       f"acompressor=threshold=-20dB:ratio=3:attack=8:release=120,loudnorm=I=-14:TP=-1.5:LRA=9,apad=whole_dur={total}",
-       "-ar", "48000", "-ac", "2", voz)
+    ff("-i", nivelada, "-af", f"apad=whole_dur={total}", "-ar", "48000", "-ac", "2", voz)
     # sem ambiência: o "ar de sala" (ruído marrom a -32 LUFS) virou chiado que abafava a voz (Jessica, 21/10/2026);
     # as pausas ficam no silêncio da voz tratada
     entradas, filtros = ["-i", voz], []
