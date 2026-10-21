@@ -731,7 +731,7 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   presença 3 kHz; de-esser; compressor; portão): fala 59 dB (IMG_0330) e 62 dB (vídeo novo) acima do fundo. Voz
   nivelada a -14 LUFS antes da mistura (sem isso os efeitos passaram por cima da voz). Volume final **-11 LUFS**
   (compressão suave + limitador a 192 kHz; sai -11,5 a -11,7). Amostras antes/depois para ela ouvir em
-  `C:	mpideos-reelsmostras-som\`.
+  `C:\tmp\videos-reels\amostras-som\`.
 - Pixabay (efeitos sonoros): a página abre pela leitura web, mas download por linha de comando dá 403 e a API não
   tem áudio. Para usar, ela baixa à mão e conferimos a licença antes.
 
