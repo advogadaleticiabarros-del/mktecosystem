@@ -51,3 +51,9 @@ No meio do trabalho ela também pediu: verificar se dá para acessar os efeitos 
 - Para fazer os Reels do vídeo novo, use a skill `leticia-reels-premium` a partir do passo 2.
 - Copie `producao/reels/motor` para `C:\tmp\videos-reels\19-<tema>\work\`.
 - Rode `py fala.py transcrever "<bruto>"`. Feche programas antes: o Whisper medium precisa de ~3 GB livres.
+
+## Retorno da Jessica sobre a validação (mesmo dia)
+- **Chiado de fundo abafando a voz:** era a ambiência que o motor acrescentava. Ela ficava em −34 dB constante, no nível da fala baixa da Dra., e as pausas do mix subiam para −29 dB. Foi **tirada do motor**, e o teste `test_pausas_ficam_silenciosas_sem_chiado_de_fundo` garante pausa abaixo de −55 dB. Com isso, 40 testes.
+- **Faltou 3D e ficou menos dinâmico:** a validação reproduziu o roteiro de cenas da v2, que não tinha 3D. A skill agora exige 3D em 1 ou 2 momentos, usando o `producao/reels/motor3d/` como clipe de fundo.
+- **Uma versão só por vídeo**, para economizar token e trabalho. Registrado na skill, no CLAUDE.md (padrão fixo) e na memória.
+- **Não feito:** os vídeos de validação não foram refeitos (uma versão só). O próximo vídeo já sai sem ambiência e com 3D.
