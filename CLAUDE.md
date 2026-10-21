@@ -27,6 +27,10 @@ Plano até 31/12/2026 ("sair da bolha", pilares novos Jornada 2026-2027 e Empres
 `docs/PLANO_CRESCIMENTO_OUT_DEZ_2026.md`.
 Mídia paga (Meta Ads): `docs/MIDIA_PAGA_META_ADS.md` é obrigatório antes de qualquer campanha paga (regra dos
 **interesses cruzados**, limites da OAB para impulsionamento, público qualificado trabalhista). Pedido de 16/10/2026.
+Edição de Reels a partir de gravação da Dra. (obrigatório, padrão fixo desde 21/10/2026: "faremos tudo igual"):
+skill `leticia-reels-premium` passo a passo, com `producao/reels/motor/fala.py` (até "fala ok") e `conferir.py` (até
+"sem avisos"). Sem música, -14 LUFS, H.264 CBR 11 Mbps, punch-in nas emendas do rosto. Mudar números ou estilo só
+com pedido explícito dela.
 Produção de carrossel: `docs/PROCESSO_PRODUCAO_CARROSSEL.md` (roteiro antes da arte, fonte
 primária, modelo fixo, curadoria de fotos, pendências e direção visual editorial).
 
