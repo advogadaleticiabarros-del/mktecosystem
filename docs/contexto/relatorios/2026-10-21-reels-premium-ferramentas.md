@@ -42,7 +42,7 @@ No meio do trabalho ela também pediu: verificar se dá para acessar os efeitos 
 - **Arquivos:** os vídeos `-` e `-b-` da validação ficaram como registro, e os bons são os `-c-`. Nada foi sobrescrito, conforme a regra.
 
 ## Pendente
-- **Push:** os commits estão só no computador. A conta ativa `alcancelegalmkt-collab` recebe 403 neste repositório. Falta a Jessica autorizar o push pela `advogadaleticiabarros-del` (como em 20/10) ou dar acesso à colaboradora.
+- ~~Push~~ feito pela conta `advogadaleticiabarros-del`, com autorização da Jessica em 21/10 (a conta ativa do gh continua `alcancelegalmkt-collab`). A colaboradora segue sem acesso a este repositório.
 - O vídeo novo `20250815_164956.mp4` (passos 2 a 8 da skill) depende de ela pedir de novo.
 - Pixabay: a página abre pela leitura web, mas o download por linha de comando dá 403 e a API não tem áudio. Se ela quiser usar, baixa à mão e conferimos a licença (uso comercial). Quem decide: Jessica.
 - Ouvir um Reel `-c-` com som para aprovar o padrão de áudio novo. Quem decide: Jessica.
