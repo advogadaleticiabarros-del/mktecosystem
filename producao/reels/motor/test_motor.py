@@ -28,12 +28,12 @@ def test_emendas_da_fala_viram_tempo_do_reel():
     assert m.emendas_no_reel([2.0, 15.0, 21.5], linha) == [2.0, 11.5]
 
 
-def test_audio_sai_em_11_lufs_sem_trilha(tmp_path):
+def test_audio_sai_no_alvo_sem_trilha(tmp_path):
     from pathlib import Path
 
     import conferir
     import fala
-    m.AQUI = Path(__file__).resolve().parent  # modelos/voz-sh.rnnn
+    m.AQUI = Path(__file__).resolve().parent
     voz = tmp_path / "fala-r1.mp4"
     fala.ff("-f", "lavfi", "-i", "color=c=black:s=320x568:r=30:d=5", "-f", "lavfi", "-i",
             "aevalsrc='0.3*sin(2*PI*220*t)*sin(2*PI*3*t)*lt(mod(t,1.2),0.9)':d=5:s=48000", "-c:v", "libx264", "-c:a", "aac", voz)
@@ -43,10 +43,10 @@ def test_audio_sai_em_11_lufs_sem_trilha(tmp_path):
     pasta.mkdir()
     mix = m.audio({"trechos": [(0.0, 5.0)], "src": voz}, pasta, [(0.0, "boom"), (1.0, "whoosh"), (2.5, "pop")], 5.5, efeitos)
     lufs, pico = conferir.ler_volume(conferir._stderr("-i", mix, "-af", "ebur128=peak=true", "-f", "null", "-"))
-    assert abs(lufs + 11) <= 0.5 and pico <= -1.0   # -11 LUFS desde 21/10/2026 (em -14 ela achou baixo)
-    # a voz entra na mistura sempre no mesmo nível, para os efeitos ficarem 8 a 12 dB abaixo dela (em 21/10 a cadeia
-    # nova deixou a voz a -36 LUFS e os efeitos passaram por cima)
-    assert abs(m._lufs(pasta / "voz.wav") - m.VOZ_LUFS) <= 0.5
+    assert abs(lufs - m.ALVO_LUFS) <= 0.5 and pico <= -1.0
+    # a voz entra na mistura com o pico sempre no mesmo ponto (só ganho), e os efeitos ficam 8 a 12 dB abaixo dela
+    _, pico_voz = conferir.ler_volume(conferir._stderr("-i", pasta / "voz.wav", "-af", "ebur128=peak=true", "-f", "null", "-"))
+    assert abs(pico_voz - m.VOZ_PICO) <= 0.5
     assert not (pasta / "trilha.wav").exists()
 
 
@@ -85,21 +85,24 @@ def test_fim_da_fala_nao_passa_do_fim_do_video(tmp_path):
     assert m.fim_da_fala(trans, src) == 1.45
 
 
-def test_normalizacao_chega_ao_alvo_mesmo_com_pico_isolado(tmp_path):
-    # caso do Reel 2 da validação: mix a -17,7 LUFS com um pico a -0,97 dBTP (o boom); o ajuste linear não podia subir
+def test_normalizacao_nao_corta_mais_de_2_db_dos_picos(tmp_path):
+    # escolha dela (21/10/2026): som intacto vale mais que volume. Gravação com pico forte (aqui, um boom) fica mais
+    # baixa em vez de ter os picos esmagados; o limitador corta no máximo CORTE_MAX dB
     import conferir
     import fala
     bruto = tmp_path / "bruto.wav"
     fala.ff("-f", "lavfi", "-i", "aevalsrc='0.07*sin(2*PI*220*t)*sin(2*PI*3*t)+0.95*sin(2*PI*50*t)*exp(-6*t)':d=12:s=48000", "-ac", "2", bruto)
+    teto = m._lufs(bruto) + (-1.5 - 0.5 - m._pico(bruto)) + m.CORTE_MAX
+    assert teto < m.ALVO_LUFS                       # este sinal só chegaria a -14 esmagando o pico
     saida = tmp_path / "mix.wav"
     m._loudnorm(bruto, saida)
     lufs, pico = conferir.ler_volume(conferir._stderr("-i", saida, "-af", "ebur128=peak=true", "-f", "null", "-"))
-    assert abs(lufs - m.ALVO_LUFS) <= 0.5 and pico <= -1.4
+    assert abs(lufs - teto) <= 0.4 and pico <= -1.4
 
 
-def test_pausas_ficam_silenciosas_sem_chiado_de_fundo(tmp_path):
-    # 21/10/2026: a ambiência (ruído marrom a -32 LUFS) virou chiado que abafava a voz da Dra.; nas pausas, o mix
-    # tem de ficar tão quieto quanto a voz tratada
+def test_voz_da_dra_sai_como_foi_gravada(tmp_path):
+    # 21/10/2026: a cadeia de tratamento (redução de ruído, equalização, realce, compressão, portão) "estragou o áudio";
+    # pedido dela: não mexer na voz, manter o original. Só muda o volume: mesmo timbre e mesmo fundo nas pausas.
     import wave
     from pathlib import Path
 
@@ -109,34 +112,27 @@ def test_pausas_ficam_silenciosas_sem_chiado_de_fundo(tmp_path):
     m.AQUI = Path(__file__).resolve().parent
     voz = tmp_path / "fala-r1.mp4"
     fala.ff("-f", "lavfi", "-i", "color=c=black:s=320x568:r=30:d=8", "-f", "lavfi", "-i",
-            # fala com chiado de sala constante a ~-40 dB, como no vídeo de 15/08/2025
-            "aevalsrc='0.3*sin(2*PI*220*t)*sin(2*PI*3*t)*lt(mod(t,2),1)+0.02*(random(0)-0.5)':d=8:s=48000", "-c:v", "libx264", "-c:a", "aac", voz)
+            "aevalsrc='0.2*(sin(2*PI*220*t)+0.5*sin(2*PI*2500*t)+0.3*sin(2*PI*6000*t))*sin(2*PI*3*t)*lt(mod(t,2),1)"
+            "+0.02*(random(0)-0.5)':d=8:s=48000", "-c:v", "libx264", "-c:a", "aac", "-b:a", "256k", voz)
     pasta = tmp_path / "audio"
     pasta.mkdir()
     mix = m.audio({"trechos": [(0.0, 8.0)], "src": voz}, pasta, [], 8.0, m.sfx(tmp_path / "sfx"))
-    mono = tmp_path / "mono.wav"
-    fala.ff("-i", mix, "-ac", "1", mono)
-    with wave.open(str(mono)) as w:
-        x = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(float) / 32768
-        sr = w.getframerate()
-    def db(trecho):
-        return 20 * np.log10(np.sqrt((trecho ** 2).mean()) + 1e-9)
-    pausa, fala_ = x[int(1.3 * sr):int(1.8 * sr)], x[int(2.2 * sr):int(2.8 * sr)]   # a fala volta aos 2 s
-    # sintético: bruto ~23 dB, com a ambiência antiga ~18, tratado ~34. Nas gravações reais a cadeia dá 59 dB
-    # (IMG_0330) e 62 dB (vídeo de 15/08/2025, fundo a -74 dB), mas tom puro e ruído branco enganam o RNNoise
-    assert db(fala_) - db(pausa) >= 30, (db(fala_), db(pausa))
 
+    def ler(arq):
+        mono = tmp_path / f"{Path(arq).stem}_mono.wav"
+        fala.ff("-i", arq, "-vn", "-ac", "1", "-ar", "48000", mono)
+        with wave.open(str(mono)) as w:
+            return np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(float) / 32768
 
-def test_realce_de_agudos_so_quando_a_gravacao_e_abafada():
-    abafada = m.cadeia_voz({"agudos": -45.0})   # IMG_0330: quase nada acima de 4 kHz
-    boa = m.cadeia_voz({"agudos": -21.0})       # vídeo de 15/08/2025
-    assert "aexciter" in abafada and "aexciter" not in boa
-    assert all(f in boa for f in ("arnndn", "afftdn", "deesser", "acompressor", "agate"))
+    def perfil(x):
+        sr = 48000
+        db = lambda t: 20 * np.log10(np.sqrt((t ** 2).mean()) + 1e-9)
+        pausa, falando = x[int(1.3 * sr):int(1.8 * sr)], x[int(2.2 * sr):int(2.8 * sr)]
+        P = np.abs(np.fft.rfft(falando)) ** 2
+        f = np.fft.rfftfreq(len(falando), 1 / sr)
+        return db(falando) - db(pausa), 10 * np.log10(P[f > 4000].sum() / P.sum())
 
-
-def test_analise_mede_os_agudos_da_fala(tmp_path):
-    import fala
-    clara, abafada = tmp_path / "clara.wav", tmp_path / "abafada.wav"
-    fala.ff("-f", "lavfi", "-i", "anoisesrc=d=3:c=pink:a=0.3:seed=1", clara)
-    fala.ff("-i", clara, "-af", "lowpass=f=3000:p=2,lowpass=f=3000:p=2,lowpass=f=3000:p=2", abafada)
-    assert m.analisar_voz(clara)["agudos"] > -25 and m.analisar_voz(abafada)["agudos"] < m.ABAFADA
+    dist_src, agudos_src = perfil(ler(voz))
+    dist_mix, agudos_mix = perfil(ler(mix))
+    assert abs(dist_mix - dist_src) <= 2, (dist_src, dist_mix)       # sem portão nem redução de ruído
+    assert abs(agudos_mix - agudos_src) <= 1, (agudos_src, agudos_mix)  # sem equalização nem realce

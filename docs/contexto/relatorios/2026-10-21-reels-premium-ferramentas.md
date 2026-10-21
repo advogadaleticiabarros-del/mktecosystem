@@ -71,3 +71,16 @@ No meio do trabalho ela também pediu: verificar se dá para acessar os efeitos 
 - **Amostras para ela ouvir** (antes → depois): `C:\tmp\videos-reels\amostras-som\1-limbo-ANTES-depois-DEPOIS.m4a` e `2-video-novo-BRUTO-depois-TRATADO.m4a`.
 - **Erros meus no caminho:** a primeira amostra foi montada com a duração no lugar errado, e o mix novo deixava os efeitos mais altos que a voz. Os dois foram achados na conferência e corrigidos antes de ela receber.
 - **Pendente:** ela ouvir as amostras e aprovar o som. Os vídeos de validação não foram refeitos (uma versão só).
+
+## Terceiro retorno: "péssimo, estragou o áudio; é melhor não mexer e manter o original" (mesmo dia)
+- **Feito:**
+  - cadeia de tratamento removida do motor (`analisar_voz`, `cadeia_voz`, compressão final);
+  - a voz entra como foi gravada, só com ganho (pico a −3 dBTP);
+  - o final só leva ganho + limitador de picos a 192 kHz, que corta no máximo 2 dB (`CORTE_MAX`);
+  - escolha dela: **som intacto vale mais que volume**, então gravação com picos fortes sai mais baixa;
+  - o `conferir.py` avisa só acima de −13 ou abaixo de −20 LUFS.
+- **Verificado:**
+  - 40 testes passando, entre eles `test_voz_da_dra_sai_como_foi_gravada` (timbre e fundo iguais ao original);
+  - no Reel 1 real, o perfil de frequências da voz é igual ao da gravação (diferença de 0,1 dB);
+  - o mix sai a −18,2 LUFS, com pico −2,0 dBTP, sem avisos.
+- As amostras reprovadas foram apagadas (`C:\tmp\videos-reels\amostras-som`).

@@ -10,7 +10,7 @@ Teoria e regras completas: manual aprovado pela Jessica, "Manual de edição pre
 ## Regras fixas
 
 - **Uma versão só por vídeo** (Jessica, 21/10/2026: economizar token e trabalho). Tudo é conferido antes do render final (`fala ok`, `--checar`, amostras); nada de versões de teste guardadas. Se o `conferir.py` acusar algo, corrija e gere de novo no mesmo nome, apagando antes o arquivo ainda não entregue (nunca o que já foi ao Orbit).
-- **Voz limpa e otimizada** (`cadeia_voz` do motor, 21/10/2026, depois de ela achar a voz "abafada" e o vídeo "amador"): o motor mede a gravação e, se faltam agudos, recria o brilho; redução de ruído forte, corte do embolado, presença, de-esser, compressão e portão nas pausas (fala 59 a 62 dB acima do fundo). Antes de mudar a cadeia, gerar amostra antes/depois e ela aprovar ouvindo.
+- **Voz da Dra. como foi gravada: não mexer no áudio.** Sem redução de ruído, equalização, realce, compressão nem portão: só ganho de volume. Em 21/10/2026 a cadeia de tratamento foi reprovada ("estragou o áudio, é melhor não mexer e manter o original"). Som intacto vale mais que volume (escolha dela).
 - **Sem música e sem ambiência**: voz tratada + efeitos sonoros. A ambiência (ruído de sala a −32 LUFS) virou chiado que abafava a voz da Dra. e foi tirada do motor em 21/10/2026.
 - Fala **limpa**: sem pausa maior que 0,25 s, sem repetição, gaguejo ou muleta ("né", "então"), sem palavra cortada.
 - Toda emenda no rosto tem **punch-in** alternado (8% a 15%) ou cobertura.
@@ -18,7 +18,7 @@ Teoria e regras completas: manual aprovado pela Jessica, "Manual de edição pre
 - Cada evento visual tem seu efeito sonoro, de 8 a 12 dB abaixo da voz; o efeito nunca cobre palavra.
 - Motion graphics (catálogo do manual) para explicar; **3D obrigatório em 1 ou 2 momentos de destaque**; vídeo de banco só como fundo. O 3D sai do `producao/reels/motor3d/` (three.js) como clipe curto em `work/videos/` e entra no `serie.py` como cena de fundo. A validação de 21/10 ficou sem 3D e ela sentiu falta ("ficou menos dinâmico").
 - Fechamento: pedido de envio **com o motivo** ("Manda para quem está afastado pelo INSS").
-- Exportação: 1080×1920, 30 fps, H.264 de 10 a 12 Mbps, AAC 128 kbps a 48 kHz, **−11 LUFS** (em −14 ela achou baixo, 21/10/2026), pico abaixo de −1 dBTP.
+- Exportação: 1080×1920, 30 fps, H.264 de 10 a 12 Mbps, AAC 128 kbps a 48 kHz, −14 LUFS (ou menos, até −20, se a gravação tiver picos fortes: o limitador nunca corta mais de 2 dB), pico abaixo de −1 dBTP.
 - Versão nova é peça e arquivo novos (`-v2`); nada pronto é sobrescrito.
 
 ## Economia de contexto

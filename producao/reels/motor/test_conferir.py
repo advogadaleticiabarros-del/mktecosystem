@@ -38,9 +38,11 @@ def test_volume_do_resumo_do_ebur128():
 
 
 def test_avisos_de_volume():
-    assert c.avisos_volume(-11.2, -1.3) == []
-    assert c.avisos_volume(-14.2, -1.3) == ["volume: -14.2 LUFS (alvo -11 ±1)"]   # -14 soou baixo (21/10/2026)
-    assert c.avisos_volume(-11.0, -0.4) == ["pico: -0.4 dBTP (máximo -1)"]
+    assert c.avisos_volume(-14.2, -1.3) == []
+    assert c.avisos_volume(-17.8, -1.3) == []          # gravação com picos fortes: som intacto, um pouco mais baixo
+    assert c.avisos_volume(-21.5, -1.3) == ["volume: -21.5 LUFS (baixo demais: abaixo de -20)"]
+    assert c.avisos_volume(-12.4, -1.3) == ["volume: -12.4 LUFS (acima de -13: limitador esmagando a voz)"]
+    assert c.avisos_volume(-14.0, -0.4) == ["pico: -0.4 dBTP (máximo -1)"]
 
 
 def test_avisos_de_formato():

@@ -725,7 +725,11 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   nível da fala baixa; **tirada do motor**, teste garante pausa < -55 dB); faltou 3D e ficou menos dinâmico (a
   validação usou o roteiro de cenas da v2, sem 3D; nos próximos, 3D obrigatório em 1 ou 2 momentos via `motor3d`);
   e **uma versão só por vídeo** (sem versões de teste).
-- Segundo retorno (21/10): "vídeo amador, baixo, voz abafada". Medido: o IMG_0330 vem sem agudos (AAC mono 84 kbps:
+- Terceiro retorno (21/10): a amostra da voz tratada ficou "péssima, estragou o áudio; é melhor não mexer e manter o
+  original". **Cadeia de tratamento removida**: a voz entra como foi gravada, só com ganho (pico a -3 dBTP); final
+  a -14 LUFS só com ganho + limitador que corta no máximo 2 dB (escolha dela: som intacto > volume). O IMG_0330, com
+  picos fortes, sai a -18,2 LUFS. `conferir.py` avisa só acima de -13 ou abaixo de -20. Amostras apagadas.
+- Segundo retorno (21/10, substituído pelo terceiro): "vídeo amador, baixo, voz abafada". Medido: o IMG_0330 vem sem agudos (AAC mono 84 kbps:
   4-8 kHz a -46 dB; voz limpa fica perto de -20) e o vídeo de 15/08/2025 tem fundo constante a -40 dB. Voz refeita
   em `cadeia_voz` (analisa a gravação; `aexciter` só quando abafada; RNNoise inteiro + afftdn; corte 250/500 Hz;
   presença 3 kHz; de-esser; compressor; portão): fala 59 dB (IMG_0330) e 62 dB (vídeo novo) acima do fundo. Voz

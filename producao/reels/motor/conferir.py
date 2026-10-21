@@ -2,7 +2,7 @@
 
 Uso: py conferir.py <mp4> [cfg_rN.json]
 Imprime em poucas linhas: duração, resolução, taxa e volume; avisos de imagem congelada (fora do fechamento),
-volume fora de -11 LUFS / pico acima de -1 dBTP, formato fora da exportação do manual e cenas de vídeo mais longas
+volume acima de -13 ou abaixo de -20 LUFS / pico acima de -1 dBTP, formato fora da exportação do manual e cenas de vídeo mais longas
 que o clipe (com o cfg). Gera <mp4>_folha.jpg: 10 quadros de 240 px para a revisão final.
 Sai com código 1 se houver aviso.
 """
@@ -16,7 +16,8 @@ from fala import FF, FFPROBE, duracao
 
 FPS = 30
 OUTRO = 3.8          # duração do fechamento (motor.OUTRO): parado de propósito
-ALVO_LUFS, TOL_LUFS, PICO_MAX = -11.0, 1.0, -1.0   # -11 desde 21/10/2026 (em -14 ela achou baixo)
+ALVO_LUFS, PICO_MAX = -14.0, -1.0   # voz original só com ganho (motor.ALVO_LUFS)
+MINIMO_LUFS = -20.0   # gravação com picos fortes sai mais baixa de propósito (som intacto); abaixo disso, avisa
 TAXA = (10_000_000, 12_000_000)
 
 
@@ -51,8 +52,10 @@ def ler_volume(log: str) -> tuple[float, float]:
 # --------------------------------------------------------------------------- avisos
 def avisos_volume(lufs: float, pico: float) -> list[str]:
     avisos = []
-    if abs(lufs - ALVO_LUFS) > TOL_LUFS:
-        avisos.append(f"volume: {lufs:.1f} LUFS (alvo {ALVO_LUFS:.0f} ±1)")
+    if lufs > ALVO_LUFS + 1:
+        avisos.append(f"volume: {lufs:.1f} LUFS (acima de {ALVO_LUFS + 1:.0f}: limitador esmagando a voz)")
+    elif lufs < MINIMO_LUFS:
+        avisos.append(f"volume: {lufs:.1f} LUFS (baixo demais: abaixo de {MINIMO_LUFS:.0f})")
     if pico > PICO_MAX:
         avisos.append(f"pico: {pico:.1f} dBTP (máximo -1)")
     return avisos
