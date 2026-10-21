@@ -6,3 +6,4 @@ contas: Nicola Barts https://www.pexels.com/video/man-sitting-on-sofa-holding-hi
 doente: KATRIN  BOLOVTSOVA https://www.pexels.com/video/man-feeling-sleepy-7131825/
 empresa: RDNE Stock project https://www.pexels.com/video/woman-presenting-at-a-meeting-8124286/
 recusa: Mizuno K https://www.pexels.com/video/sad-woman-with-head-on-her-hands-12909002/
+chefe: Yan Krukau https://www.pexels.com/video/female-boss-scolding-employees-7640120/

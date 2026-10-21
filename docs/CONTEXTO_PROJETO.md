@@ -687,7 +687,17 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   `producao/reels/series/18-limbo-previdenciario/montar_falas.py`.
 - No Orbit: peças novas em **rascunho, sem data** (`limbo-previdenciario-{1,2}-v1.mp4`). Backup do banco antes:
   `/root/orbit-backups/antes-serie18-2026-10-20.sql.gz`. Mídia pesada em `C:\tmp\videos-reels\18-limbo-previdenciario\`.
-- Pendente: ela aprovar e escolher os dias (21h, dia sem outro post; a parte 2 logo depois da 1).
+- **v2 (mesmo dia, pedido "falas mais limpas, sem pausas e repetições, mais dinâmico; o segundo está travando")**:
+  - travamento da v1: a cena "Mas ele não trabalhou" (11,9 s) usava um vídeo do banco de 10 s, e a imagem congelava
+    aos 33,6 s. Na v2, `corte()` em `serie_v2.py` recusa cena maior que o clipe.
+  - falas: pausas reais medidas com `silencedetect` (-44 dB, ≥ 0,25 s; com -36 dB comia sílabas) e encurtadas para
+    0,18 s; repetições cortadas ("fica nesse", "vindo do INSS", "segundo a jurisprudência", "nem, nem", "né?"); 5% mais
+    rápida. A ponta de cada trecho encosta na pausa real mais próxima (`encostar`), porque o Whisper erra alguns décimos.
+  - Ficaram com 46,5 s e 39,6 s (eram 55 s e 54 s). O vídeo do banco "empresa" (o mesmo da série 17) foi trocado
+    por "chefe" (Yan Krukau).
+  - No Orbit: peças novas `versao=2` nas mesmas pautas (`limbo-previdenciario-{1,2}-v2.mp4`); a v1 continua lá.
+    Backup: `/root/orbit-backups/antes-serie18-v2-2026-10-20.sql.gz`.
+- Pendente: ela aprovar (a v2) e escolher os dias (21h, dia sem outro post; a parte 2 logo depois da 1).
 
 ## Site da Letícia: descoberta por buscadores e IAs (20/10/2026)
 

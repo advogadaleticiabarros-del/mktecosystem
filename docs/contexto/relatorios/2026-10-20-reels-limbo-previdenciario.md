@@ -30,6 +30,18 @@
 - **Assinatura:** o Whisper ouviu "aqui nesse vídeo eu" no Reels 2; a legenda na tela foi corrigida para "nesse perfil", como no Reels 1 (é o mesmo áudio).
 - **Vídeo do Pexels "empresa":** é o mesmo vídeo usado no "treinamento" da série 17 (8124286). Pode ser trocado se ela achar repetitivo.
 
+## Atualização: v2
+- **Pedido:** "Preciso de um vídeo com falas mais limpas, tirar as pausas e repetições da Dra, deixe um pouco mais dinâmico, o segundo vídeo está travando."
+- **Causa do travamento:** cena de 11,9 s sobre um vídeo do banco de 10 s, com a imagem congelada a partir de 33,6 s (`freezedetect` confirmou).
+  - Agora `corte()` recusa essa combinação.
+  - Na v2, o `freezedetect` só acusa o fechamento, que é estático de propósito, e 0,4 s em que a pessoa do vídeo de banco fica quase imóvel. O conteúdo é parado naturalmente, não é falha.
+- **Falas:** `montar_falas_v2.py`. Pausas reais encurtadas, repetições fora, fala 5% mais rápida.
+  - Cada trecho foi conferido retranscrevendo isolado.
+  - A primeira tentativa (limite de -36 dB) comia sílabas; foi descartada.
+- **Resultado:** 46,5 s e 39,6 s.
+- **No Orbit:** peças novas `versao=2` (de 38 para 40 Reels); a v1 continua lá. Mídia responde 200.
+- **Não verificado:** a reprodução completa com som (conferi só quadros e transcrição).
+
 ## Pendente
 - A Jessica (ou a Dra.) aprovar no Orbit e escolher os dias: às 21h, em dia sem outro post, com a parte 2 logo depois da 1.
 
