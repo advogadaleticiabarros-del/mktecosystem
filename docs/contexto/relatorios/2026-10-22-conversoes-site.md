@@ -43,3 +43,4 @@
 - O OAuth passou a pedir também `analytics.edit`. **Falta ela reconectar o Google uma vez.**
 - Os 3 eventos já chegaram ao Analytics, confirmado pelo relatório de tempo real: 10 / 3 / 3, todos de teste; o
   formulário foi simulado e não gerou lead no CRM. Também saiu um evento `teste_flush`, que pode ser ignorado.
+- 22/10 (noite): ela reconectou o Google (escopos: analytics.edit, analytics.readonly, business.manage, webmasters). O Orbit criou os 3 eventos principais (ONCE_PER_EVENT); o painel atualizou sem erros. A propriedade já tinha antes os eventos principais 'purchase' e 'ads_conversion_Enviar_formul_rio_de_le_1' (conversão criada pelo Google Ads).
