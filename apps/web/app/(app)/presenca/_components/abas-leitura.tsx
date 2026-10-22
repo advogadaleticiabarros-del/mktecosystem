@@ -81,6 +81,17 @@ export function AbaResumo({ painel, irPara }: { painel: Painel; irPara: (a: Aba)
       </div>
 
       {ga && (
+        <Secao titulo="Contatos pelo site" descricao="Cliques no WhatsApp, cliques para ligar e formulários aceitos pelo CRM, 30 dias. Medição ligada em 22/10/2026.">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+            <Kpi rotulo="Total de contatos" valor={ga.contatos?.total_30d ?? 0} />
+            <Kpi rotulo="WhatsApp" valor={ga.contatos?.por_tipo.whatsapp ?? 0} />
+            <Kpi rotulo="Ligações" valor={ga.contatos?.por_tipo.ligacao ?? 0} />
+            <Kpi rotulo="Formulários" valor={ga.contatos?.por_tipo.formulario ?? 0} />
+          </div>
+        </Secao>
+      )}
+
+      {ga && (
         <Card className="flex flex-wrap items-center justify-between gap-4 p-6 hover:translate-y-0">
           <div>
             <p className="text-xs font-semibold text-primary">Visitas vindas de IAs (90 dias)</p>
@@ -235,6 +246,17 @@ export function AbaSite({ painel }: { painel: Painel }) {
             <BarrasHorizontais itens={ga.origens.slice(0, 10).map((o) => ({ rotulo: `${o.origem} / ${o.meio}`, valor: o.sessoes }))} />
           </Secao>
         </div>
+      )}
+      {ga && (
+        <Secao titulo="Que páginas geram contato" descricao="30 dias. Cliques no WhatsApp, para ligar e formulários aceitos, por página.">
+          <Tabela
+            vazio="Nenhum contato registrado ainda. A medição começou em 22/10/2026."
+            colunas={[{ rotulo: "Página" }, { rotulo: "WhatsApp", alinhar: "direita" }, { rotulo: "Ligações", alinhar: "direita" }, { rotulo: "Formulários", alinhar: "direita" }]}
+            linhas={(ga.contatos?.por_pagina ?? []).slice(0, 30).map((p) => [
+              <span key="c" className="break-all">{p.caminho}</span>, numero(p.whatsapp), numero(p.ligacao), numero(p.formulario),
+            ])}
+          />
+        </Secao>
       )}
       {ga && (
         <Secao titulo="Páginas mais vistas" descricao="30 dias, site, blog e landing pages.">

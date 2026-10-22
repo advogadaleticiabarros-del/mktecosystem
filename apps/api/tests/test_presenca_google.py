@@ -119,6 +119,15 @@ def _google_falso(desativadas: set[str] = frozenset()):
                     {"dimensionValues": [{"value": "advogadaleticiabarros.com.br"}, {"value": "/"}],
                      "metricValues": [{"value": "12"}, {"value": "9"}]},
                 ]
+            elif dims == ["eventName", "pagePath"]:
+                corpo = json.loads(request.content)
+                assert set(corpo["dimensionFilter"]["filter"]["inListFilter"]["values"]) == {
+                    "contato_whatsapp", "contato_ligacao", "generate_lead"}
+                rows = [
+                    {"dimensionValues": [{"value": "contato_whatsapp"}, {"value": "/blog/x.html"}], "metricValues": [{"value": "3"}]},
+                    {"dimensionValues": [{"value": "generate_lead"}, {"value": "/blog/x.html"}], "metricValues": [{"value": "1"}]},
+                    {"dimensionValues": [{"value": "contato_ligacao"}, {"value": "/"}], "metricValues": [{"value": "2"}]},
+                ]
             elif dims == ["sessionSource", "sessionMedium"]:
                 rows = [{"dimensionValues": [{"value": "google"}, {"value": "organic"}], "metricValues": [{"value": "50"}]}]
             else:
@@ -190,6 +199,10 @@ async def test_coletar_painel_completo():
     assert analytics["por_secao"] == {"blog": 30, "site": 12}
     assert analytics["ia"] == {"total_90d": 5, "por_fonte": [
         {"fonte": "chatgpt.com", "sessoes": 4}, {"fonte": "perplexity.ai", "sessoes": 1}]}
+
+    assert analytics["contatos"]["total_30d"] == 6
+    assert analytics["contatos"]["por_tipo"] == {"whatsapp": 3, "ligacao": 2, "formulario": 1}
+    assert analytics["contatos"]["por_pagina"][0] == {"caminho": "/blog/x.html", "whatsapp": 3, "ligacao": 0, "formulario": 1}
 
     gsc = painel["search_console"]
     assert gsc["site"] == "sc-domain:advogadaleticiabarros.com.br"

@@ -88,6 +88,11 @@ export type Painel = {
     por_secao: Record<string, number>;
     origens: { origem: string; meio: string; sessoes: number }[];
     ia: { total_90d: number; por_fonte: { fonte: string; sessoes: number }[] };
+    contatos?: {
+      total_30d: number;
+      por_tipo: { whatsapp: number; ligacao: number; formulario: number };
+      por_pagina: { caminho: string; whatsapp: number; ligacao: number; formulario: number }[];
+    };
   } | null;
   search_console: {
     site: string;

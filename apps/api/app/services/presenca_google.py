@@ -53,6 +53,9 @@ FONTES_IA = re.compile(
     re.IGNORECASE,
 )
 
+# Eventos de contato registrados pelo /js/conversoes.js do site.
+EVENTOS_CONTATO = {"contato_whatsapp": "whatsapp", "contato_ligacao": "ligacao", "generate_lead": "formulario"}
+
 SECOES = [
     "perfil", "atributos", "desempenho", "palavras_chave", "avaliacoes", "posts", "midia",
     "verificacao", "botoes", "analytics", "search_console",
@@ -408,6 +411,27 @@ async def _analytics(api: GoogleApi, dominio: str | None, hoje: date) -> dict:
         "dateRanges": [ultimos_90], "dimensions": [{"name": "sessionSource"}],
         "metrics": [{"name": "sessions"}], "limit": 500,
     })
+    contatos_brutos = await relatorio({
+        "dateRanges": [ultimos_30], "dimensions": [{"name": "eventName"}, {"name": "pagePath"}],
+        "metrics": [{"name": "eventCount"}],
+        "dimensionFilter": {"filter": {"fieldName": "eventName",
+                                       "inListFilter": {"values": list(EVENTOS_CONTATO)}}},
+        "limit": 300,
+    })
+    por_tipo = dict.fromkeys(EVENTOS_CONTATO.values(), 0)
+    por_pagina: dict[str, dict] = {}
+    for d, m in contatos_brutos:
+        tipo = EVENTOS_CONTATO.get(d[0])
+        if tipo is None:
+            continue
+        por_tipo[tipo] += int(m[0])
+        linha = por_pagina.setdefault(d[1], {"caminho": d[1], **dict.fromkeys(EVENTOS_CONTATO.values(), 0)})
+        linha[tipo] += int(m[0])
+    contatos = {
+        "total_30d": sum(por_tipo.values()),
+        "por_tipo": por_tipo,
+        "por_pagina": sorted(por_pagina.values(), key=lambda l: -(l["whatsapp"] + l["ligacao"] + l["formulario"])),
+    }
     ia = sorted(
         ({"fonte": d[0], "sessoes": int(m[0])} for d, m in fontes_90 if FONTES_IA.search(d[0])),
         key=lambda f: -f["sessoes"],
@@ -433,6 +457,7 @@ async def _analytics(api: GoogleApi, dominio: str | None, hoje: date) -> dict:
         "por_secao": por_secao,
         "origens": [{"origem": d[0], "meio": d[1], "sessoes": int(m[0])} for d, m in origens],
         "ia": {"total_90d": sum(f["sessoes"] for f in ia), "por_fonte": ia},
+        "contatos": contatos,
     }
 
 
