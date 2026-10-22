@@ -45,3 +45,12 @@ avaliações, editar o perfil).
    "Acesso a dados" da tela de consentimento.
 3. Colocar o código do Analytics (G-5B513VWB4D) nas 23 páginas de `lp/`, `lp-v3/` e `areas/`. Precisa de
    autorização para publicar no site.
+
+## Atualização (fim do dia)
+- Painel web publicado (`/presenca` no ar). A usuária reconectou o Google com os 3 escopos. A coleta voltou sem
+  erros: GA4 `properties/472543377`, Search Console `sc-domain:advogadaleticiabarros.com.br`, sitemap reenviado.
+- **Primeiros números (30 dias):** 215 visitas (eram 118), 4 visitas vindas de IAs em 90 dias (ChatGPT e Gemini).
+  No Search Console (28 dias): 71 cliques, 5.468 aparições e posição média 7,2.
+- A regra "buscas quase no topo" passou a valer a partir de 10 aparições (commit 9311d67, no ar).
+- **Ainda pendente:** Analytics nas 23 páginas e pixel real na LP do guia. A gravação por SFTP no site foi barrada
+  pela permissão da sessão e espera a regra `Bash(ssh -o BatchMode=yes -i ~/.ssh/orbit_vps root@179.199.128.68:*)`.
