@@ -33,3 +33,13 @@
 - A LP `lp/empresas-adequacao-trabalhista-2026.html` (não publicada) recebeu o script no repositório, mas não tem o
   código do Analytics.
 - `lp/guia-direitos-gestante-trabalhadora.html` no repositório foi alinhada com a versão do site.
+
+## Atualização: eventos principais pelo Orbit (commit 8707497)
+- No GA4 atual o evento principal só se marca pela estrela, depois que o evento aparece em "Eventos recentes" (até
+  24 h). A Jessica pediu que dependesse o mínimo dela.
+- `gestao_google.garantir_eventos_principais` cria pela Admin API (`properties/{id}/keyEvents`, `ONCE_PER_EVENT`)
+  os eventos que faltam. Funciona antes de o evento aparecer na lista e é chamada em toda atualização do painel
+  (todo dia e pelo "Atualizar agora"). Sem permissão, vira o erro `eventos_principais` e a melhoria "Reconectar".
+- O OAuth passou a pedir também `analytics.edit`. **Falta ela reconectar o Google uma vez.**
+- Os 3 eventos já chegaram ao Analytics, confirmado pelo relatório de tempo real: 10 / 3 / 3, todos de teste; o
+  formulário foi simulado e não gerou lead no CRM. Também saiu um evento `teste_flush`, que pode ser ignorado.
