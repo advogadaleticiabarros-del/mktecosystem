@@ -9,14 +9,19 @@ Interface: `verificar_texto_oab(texto, contexto)` devolve a lista de problemas
 import re
 
 REGRAS: list[tuple[str, str, str]] = [
-    (r"\bgarant\w*", "Promessa de resultado é proibida.", "bloqueia"),
+    # "garantimos/garanto" é promessa; "a lei garante" é informação e passa.
+    (r"\bgarant(o|imos|ido|ida|idos|idas)\b|\bgarantia de (resultado|vit[óo]ria|ganho|sucesso|êxito)",
+     "Promessa de resultado é proibida.", "bloqueia"),
     (r"\b100\s?%", "Promessa de resultado é proibida.", "bloqueia"),
     (r"\b(sucesso|vit[óo]ria|resultado)s? (certo|certa|garantid[oa])", "Promessa de resultado é proibida.", "bloqueia"),
     (r"\bganh(e|a|ar|amos) (a |sua |seu )?(causa|a[çc][ãa]o|processo)", "Promessa de resultado é proibida.", "bloqueia"),
     (r"\bmelhor(es)? (advogad|escrit[óo]rio|op[çc][ãa]o)", "Autoelogio e comparação com colegas são proibidos.", "bloqueia"),
     (r"\b(n[ºo°]\.?\s?1|n[úu]mero 1|l[íi]der)\b", "Autoelogio e comparação com colegas são proibidos.", "bloqueia"),
     (r"\bgr[áa]tis\b|\bgratuit\w*|\bsem custo\b|\bfree\b", "Oferta de serviço gratuito como chamariz é captação de clientela.", "bloqueia"),
-    (r"\bdesconto|\bpromo[çc]|\bR\$\s?\d|\bparcel(a|e|amos)\w*", "Preço, desconto e promoção não podem ser anunciados.", "bloqueia"),
+    # Oferta comercial; "os descontos do 13º" ou "a 2ª parcela" são informação e passam.
+    (r"\d+\s?% de desconto|\bdesconto (de|na|no) (consulta|honor[áa]rio|atendimento|\d)|\bpromo[çc][ãa]o\b|\bR\$\s?\d"
+     r"|\bparcelamos\b|\bparcele\b|\bem at[ée] \d+\s?x\b",
+     "Preço, desconto e promoção não podem ser anunciados.", "bloqueia"),
     (r"\bligue j[áa]|\bn[ãa]o perca|\b[úu]ltimas vagas|\bvagas limitadas|\bcorra\b", "Apelo de urgência é mercantilização (captação).", "bloqueia"),
     (r"\bespecialista\b", "Só use \"especialista\" se a Dra. tiver o título de especialização na área; senão, troque por \"atuação em\".", "atencao"),
 ]

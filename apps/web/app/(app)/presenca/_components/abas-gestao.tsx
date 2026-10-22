@@ -339,6 +339,16 @@ export function AbaPosts({ painel, recarregar }: { painel: Painel; recarregar: (
               {p.erro && <p className="mt-1 text-xs text-destructive">{p.erro}</p>}
               <div className="mt-2 flex flex-wrap gap-2">
                 {p.link_publicado && <a href={p.link_publicado} target="_blank" rel="noreferrer"><Button size="xs" variant="outline"><ExternalLink /> Ver no Google</Button></a>}
+                {(p.status === "rascunho" || p.status === "erro") && (
+                  <Button size="xs" variant="outline" disabled={!!acao.ocupado || bloqueia(p.problemas)} onClick={() => acao.rodar(`apr-${p.id}`,
+                    () => apiFetch(`/presenca/posts/${p.id}`, { method: "PUT", body: JSON.stringify({
+                      texto: p.texto, botao: p.botao, link: p.link, imagem_url: p.imagem_url,
+                      publicar_em: new Date(p.publicar_em) < new Date() ? new Date(Date.now() + 10 * 60 * 1000).toISOString() : p.publicar_em,
+                      status: "aprovado",
+                    }) }), "Post aprovado. O Orbit publica no horário marcado.", carregar)}>
+                    <CalendarClock /> Aprovar e agendar
+                  </Button>
+                )}
                 {p.status !== "publicado" && (
                   <Button size="xs" disabled={!!acao.ocupado || bloqueia(p.problemas)} onClick={() => acao.rodar(`pub-${p.id}`,
                     () => apiFetch(`/presenca/posts/${p.id}/publicar-agora`, { method: "POST" }), "Publicado no Google.", async () => { await carregar(); await recarregar(); })}>
