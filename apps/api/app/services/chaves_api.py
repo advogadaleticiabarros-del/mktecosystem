@@ -66,6 +66,17 @@ async def validar_tiktok(chave: str, transport: httpx.AsyncBaseTransport | None 
     resposta.raise_for_status()
 
 
+async def validar_bing(chave: str, transport: httpx.AsyncBaseTransport | None = None) -> None:
+    from app.services.site_descoberta import BING_API, SITE
+
+    async with httpx.AsyncClient(transport=transport, timeout=20) as client:
+        resposta = await client.get(f"{BING_API}/GetUrlSubmissionQuota", params={"siteUrl": SITE, "apikey": chave})
+    if 400 <= resposta.status_code < 500:
+        raise ChaveRecusada("O Bing recusou essa chave. Confira se o site já está no Bing Webmaster Tools e se copiou "
+                            "a chave inteira (Configurações → Acesso à API).")
+    resposta.raise_for_status()
+
+
 PROVEDORES = {
     "openai": {
         "nome": "OpenAI",
@@ -84,6 +95,12 @@ PROVEDORES = {
         "uso": "Publicação automática dos Reels no TikTok. Cole a Client Key e o Client Secret do app, separados por espaço.",
         "variavel": "TIKTOK_CLIENT",
         "validar": validar_tiktok,
+    },
+    "bing": {
+        "nome": "Bing Webmaster",
+        "uso": "Avisa o Bing (que alimenta o Copilot e o ChatGPT) a cada artigo publicado ou alterado no blog.",
+        "variavel": "BING_WEBMASTER_API_KEY",
+        "validar": validar_bing,
     },
 }
 

@@ -112,3 +112,20 @@ async def test_validar_tiktok_pede_token_com_o_par_client_key_e_secret():
         await validar_tiktok("chaveboa segredoruim", transport=t)
     with pytest.raises(ChaveRecusada):
         await validar_tiktok("sosemsegredo", transport=t)
+
+
+@pytest.mark.anyio
+async def test_validar_bing_recusa_chave_invalida():
+    import httpx
+    from app.services.chaves_api import validar_bing
+
+    def recusa(request):
+        return httpx.Response(400, json={"ErrorCode": 3, "Message": "ERROR!!! InvalidApiKey"})
+
+    def aceita(request):
+        assert request.url.params["siteUrl"] == "https://advogadaleticiabarros.com.br"
+        return httpx.Response(200, json={"d": {"DailyQuota": 100, "MonthlyQuota": 2800}})
+
+    with pytest.raises(ChaveRecusada):
+        await validar_bing("errada", transport=httpx.MockTransport(recusa))
+    await validar_bing("certa", transport=httpx.MockTransport(aceita))

@@ -21,7 +21,8 @@ from app.services.agendamento_horario import horario_ja_chegou, hoje_brasilia
 from app.services.blog_index_editor import inserir_card, inserir_sitemap_entry
 from app.services.blog_seo import aplicar_seo, capa_para_jpg, cards_do_indice, escolher_relacionados
 from app.services.blog_slug import gerar_slug
-from app.services.site_descoberta import avisar_indexnow, gerar_llms_txt
+from app.services.chaves_api import obter_chave
+from app.services.site_descoberta import avisar_bing, avisar_indexnow, gerar_llms_txt
 from app.services.render_artigo_blog import (
     estimar_tempo_leitura,
     renderizar_artigo_html,
@@ -114,6 +115,9 @@ async def publicar_agendamentos_prontos(db: AsyncSession) -> int:
         piece.status = "publicado"  # conta como postada no Editorial
         await db.commit()
         publicados += 1
+        chave_bing = await obter_chave(db, agendamento.tenant_id, "bing")
+        if chave_bing:
+            await avisar_bing(chave_bing, [url_publicada, BLOG_BASE_URL])
 
     return publicados
 

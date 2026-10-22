@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 SITE = "https://advogadaleticiabarros.com.br"
 INDEXNOW_CHAVE = "6bc7d2f33225bd1d3c4af27b891f2ac6"
 INDEXNOW_API = "https://api.indexnow.org/indexnow"
+BING_API = "https://ssl.bing.com/webmaster/api.svc/json"
 
 DESCRICAO = (
     "Dra. Letícia Barros, advogada em Vitória-ES (OAB/ES 39.948). Atuação em Direito Trabalhista "
@@ -120,4 +121,19 @@ async def avisar_indexnow(urls: list[str], *, transport: httpx.AsyncBaseTranspor
         return None
     if resposta.status_code >= 300:
         logger.warning("IndexNow respondeu %s: %s", resposta.status_code, resposta.text[:200])
+    return resposta.status_code
+
+
+async def avisar_bing(chave: str, urls: list[str], *, transport: httpx.AsyncBaseTransport | None = None) -> int | None:
+    """Envia as URLs pela API do Bing Webmaster (autentica pela chave da conta; não depende de o Bing conseguir
+    ler um arquivo no site, como o IndexNow). Falha vira log, nunca derruba a publicação."""
+    try:
+        async with httpx.AsyncClient(transport=transport, timeout=20) as client:
+            resposta = await client.post(f"{BING_API}/SubmitUrlbatch", params={"apikey": chave},
+                                         json={"siteUrl": SITE, "urlList": urls})
+    except httpx.HTTPError:
+        logger.warning("API do Bing indisponível; %d URL(s) não avisadas", len(urls), exc_info=True)
+        return None
+    if resposta.status_code >= 300:
+        logger.warning("API do Bing respondeu %s: %s", resposta.status_code, resposta.text[:200])
     return resposta.status_code

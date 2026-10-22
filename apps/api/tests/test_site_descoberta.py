@@ -3,7 +3,7 @@ import json
 import httpx
 import pytest
 
-from app.services.site_descoberta import INDEXNOW_CHAVE, avisar_indexnow, gerar_llms_txt
+from app.services.site_descoberta import INDEXNOW_CHAVE, avisar_bing, avisar_indexnow, gerar_llms_txt
 
 
 def _card(slug, cat, titulo, resumo):
@@ -80,3 +80,18 @@ async def test_indexnow_fora_do_ar_nao_derruba_a_publicacao():
         raise httpx.ConnectError("sem rede")
 
     assert await avisar_indexnow([f"{BLOG}novo.html"], transport=httpx.MockTransport(falhar)) is None
+
+
+@pytest.mark.anyio
+async def test_bing_recebe_as_urls_pela_api_com_a_chave():
+    pedidos = []
+
+    def responder(request):
+        pedidos.append(request)
+        return httpx.Response(200, json={"d": None})
+
+    status = await avisar_bing("chave-bing", [f"{BLOG}novo.html"], transport=httpx.MockTransport(responder))
+    assert status == 200
+    assert pedidos[0].url.params["apikey"] == "chave-bing"
+    assert str(pedidos[0].url).startswith("https://ssl.bing.com/webmaster/api.svc/json/SubmitUrlbatch")
+    assert json.loads(pedidos[0].content) == {"siteUrl": "https://advogadaleticiabarros.com.br", "urlList": [f"{BLOG}novo.html"]}
