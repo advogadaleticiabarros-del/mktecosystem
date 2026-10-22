@@ -6,13 +6,13 @@ import {
   Bell,
   CalendarDays,
   ClipboardList,
+  Globe,
   Home,
   ImageIcon,
   Mail,
   Settings,
   ShieldCheck,
   Sparkles,
-  Star,
   TrendingUp,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -24,6 +24,7 @@ const NAV_ITEMS = [
   { href: "/visao-geral", label: "Visão geral", icon: Home },
   { href: "/editorial", label: "Editorial", icon: Sparkles, destaque: true },
   { href: "/crescimento", label: "Crescimento", icon: TrendingUp },
+  { href: "/presenca", label: "Google e site", icon: Globe },
   { href: "/planejamento", label: "Planejamento", icon: ClipboardList },
   // Aprovação requires a ?pautaId= query param to be meaningful — it isn't
   // a directly-navigable destination, but its nav icon still highlights
@@ -34,7 +35,6 @@ const NAV_ITEMS = [
   { href: "/criativos", label: "Estúdio de criativos", icon: ImageIcon },
   { href: "/emails", label: "E-mails", icon: Mail },
   { href: "/configuracoes", label: "Configurações", icon: Settings },
-  { href: "/avaliacoes", label: "Avaliações", icon: Star },
 ] as const;
 
 export function AppShell({

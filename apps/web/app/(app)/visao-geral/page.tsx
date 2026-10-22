@@ -127,10 +127,6 @@ function BarrasSemanais({ dados }: { dados: Resumo["producao_semanal"] }) {
   );
 }
 
-const FONTES_FUTURAS = [
-  { nome: "Google Analytics", icone: BarChart3, detalhe: "Tráfego e conversões do site" },
-];
-
 type Dica = { titulo: string; diagnostico: string; acao: string };
 type Conexao = { id: string; plataforma: string; nome_conta: string; status: string };
 
@@ -444,7 +440,7 @@ export default function VisaoGeralPage() {
               resumo.google_business ? (
                 <>
                   <CountUp valor={resumo.google_business.chamadas} /> ligações ·{" "}
-                  <CountUp valor={resumo.google_business.pedidos_rota} /> rotas (7d)
+                  <CountUp valor={resumo.google_business.pedidos_rota} /> rotas (30 dias)
                 </>
               ) : (
                 googleBusinessConectado.nome_conta
@@ -453,24 +449,42 @@ export default function VisaoGeralPage() {
               "Buscas locais, ligações, rotas"
             )}
           </p>
+          <div className="mt-3 flex flex-wrap gap-3">
+            {googleBusinessConectado && (
+              <button type="button" onClick={() => router.push("/presenca")} className="text-xs font-medium text-primary hover:underline">
+                Abrir painel
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={conectarGoogleBusiness}
+              className="text-xs font-medium text-primary hover:underline"
+              title="Pede de novo as permissões do Google (Perfil, Analytics e Search Console)"
+            >
+              {googleBusinessConectado ? "Reconectar" : "Conectar"}
+            </button>
+            {googleBusinessConectado && (
+              <button type="button" onClick={desconectarGoogleBusiness} className="text-xs text-muted-foreground hover:underline">
+                Desconectar
+              </button>
+            )}
+          </div>
+        </Card>
+        <Card className="p-5">
+          <div className="flex items-center justify-between">
+            <BarChart3 className="h-5 w-5 text-primary" />
+            <Badge className="font-mono bg-primary/15 text-primary">Novo</Badge>
+          </div>
+          <p className="mt-3 text-sm font-medium">Google Analytics e Search Console</p>
+          <p className="mt-1 text-xs text-muted-foreground">Acessos do site, blog e LPs, posição no Google e visitas vindas de IAs</p>
           <button
             type="button"
-            onClick={googleBusinessConectado ? desconectarGoogleBusiness : conectarGoogleBusiness}
+            onClick={() => router.push("/presenca#site")}
             className="mt-3 text-xs font-medium text-primary hover:underline"
           >
-            {googleBusinessConectado ? "Desconectar" : "Conectar"}
+            Abrir Google e site
           </button>
         </Card>
-        {FONTES_FUTURAS.map((fonte) => (
-          <Card key={fonte.nome} className="p-5 opacity-70">
-            <div className="flex items-center justify-between">
-              <fonte.icone className="h-5 w-5 text-primary" />
-              <Badge variant="secondary" className="font-mono">Em breve</Badge>
-            </div>
-            <p className="mt-3 text-sm font-medium">{fonte.nome}</p>
-            <p className="mt-1 text-xs text-muted-foreground">{fonte.detalhe}</p>
-          </Card>
-        ))}
       </div>
     </AppShell>
   );

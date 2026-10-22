@@ -16,6 +16,7 @@ from app.routers import (
     integracoes,
     media,
     pautas,
+    presenca,
     public,
 )
 
@@ -60,6 +61,7 @@ app.include_router(media.router)
 app.include_router(avaliacoes.router)
 app.include_router(analise.router)
 app.include_router(chaves.router)
+app.include_router(presenca.router)
 
 
 @app.get("/health")

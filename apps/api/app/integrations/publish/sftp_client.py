@@ -35,6 +35,25 @@ class SFTPClient:
         async with self._sftp.open(caminho_remoto, "rb") as arquivo:
             return await arquivo.read()
 
+    async def listar_recursivo(self, caminho_remoto: str, sufixo: str, profundidade: int = 3) -> list[str]:
+        """Caminhos (relativos a `caminho_remoto`) dos arquivos terminados em `sufixo`."""
+        await self._ensure_conn()
+        achados: list[str] = []
+
+        async def andar(pasta: str, relativo: str, nivel: int) -> None:
+            for entrada in await self._sftp.readdir(pasta):
+                nome = entrada.filename
+                if nome in (".", "..") or nome.startswith("."):
+                    continue
+                if entrada.attrs.type == 2:  # diretório
+                    if nivel < profundidade:
+                        await andar(f"{pasta.rstrip('/')}/{nome}", f"{relativo}{nome}/", nivel + 1)
+                elif nome.endswith(sufixo):
+                    achados.append(f"{relativo}{nome}")
+
+        await andar(caminho_remoto, "", 0)
+        return sorted(achados)
+
     async def close(self) -> None:
         if self._conn is not None:
             self._conn.close()

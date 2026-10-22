@@ -170,7 +170,12 @@ async def desconectar_instagram(
         await db.commit()
 
 
-GOOGLE_SCOPES = "https://www.googleapis.com/auth/business.manage"
+# Perfil da Empresa (ler e gerir), Analytics (ler) e Search Console (ler e enviar sitemap).
+GOOGLE_SCOPES = " ".join([
+    "https://www.googleapis.com/auth/business.manage",
+    "https://www.googleapis.com/auth/analytics.readonly",
+    "https://www.googleapis.com/auth/webmasters",
+])
 
 
 def get_google_client() -> GoogleBusinessClient:
@@ -201,6 +206,7 @@ async def iniciar_conexao_google_business(
         "response_type": "code",
         "access_type": "offline",
         "prompt": "consent",
+        "include_granted_scopes": "true",
     }
     return RedirectResponse(f"https://accounts.google.com/o/oauth2/v2/auth?{urlencode(params)}")
 

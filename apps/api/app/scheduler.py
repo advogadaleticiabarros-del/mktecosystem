@@ -22,6 +22,8 @@ from app.models.tenant import Tenant
 from app.services.blog_publisher import publicar_agendamentos_prontos as publicar_blog_prontos
 from app.services.email_campaigns import gerar_rascunho_newsletter
 from app.services.email_sender import processar_boas_vindas, processar_fila_newsletter
+from app.services.central_google import atualizar_todos as atualizar_paineis_google
+from app.services.central_google import publicar_posts_prontos as publicar_posts_google
 from app.services.google_business_metrics import coletar_metricas_google_business
 from app.services.coleta_instagram import coletar_instagram
 from app.services.instagram_metrics import coletar_metricas_diarias
@@ -46,9 +48,11 @@ async def job_envios() -> None:
         nl = await processar_fila_newsletter(db, resend)
         ig = await publicar_agendamentos_prontos(db)
         blog = await publicar_blog_prontos(db)
-        if bv or nl or ig or blog:
+        gpost = await publicar_posts_google(db)
+        if bv or nl or ig or blog or gpost:
             logger.info(
-                "Envios: %d boas-vindas, %d newsletter, %d Instagram, %d blog.", bv, nl, ig, blog
+                "Envios: %d boas-vindas, %d newsletter, %d Instagram, %d blog, %d Google.",
+                bv, nl, ig, blog, gpost,
             )
 
 
@@ -57,8 +61,11 @@ async def job_metricas_fontes_externas() -> None:
         ig = await coletar_metricas_diarias(db)
         await coletar_instagram(db)
         gmb = await coletar_metricas_google_business(db)
-        if ig or gmb:
-            logger.info("Métricas coletadas: %d Instagram, %d Google Meu Negócio.", ig, gmb)
+        paineis = await atualizar_paineis_google(db)
+        if ig or gmb or paineis:
+            logger.info(
+                "Métricas coletadas: %d Instagram, %d Google Meu Negócio, %d painéis do Google.", ig, gmb, paineis
+            )
 
 
 async def job_rascunho_newsletter() -> None:

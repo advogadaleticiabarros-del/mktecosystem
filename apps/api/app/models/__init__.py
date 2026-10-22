@@ -6,6 +6,7 @@ from app.models.email_send import EmailSend  # noqa: F401
 from app.models.instagram_post import InstagramPost  # noqa: F401
 from app.models.marketing_memory import MarketingMemory  # noqa: F401
 from app.models.pauta import Pauta  # noqa: F401
+from app.models.presenca_google import GooglePost, RecomendacaoStatus  # noqa: F401
 from app.models.scheduled_post import ScheduledPost  # noqa: F401
 from app.models.social_connection import SocialConnection  # noqa: F401
 from app.models.social_metric import SocialMetric  # noqa: F401
