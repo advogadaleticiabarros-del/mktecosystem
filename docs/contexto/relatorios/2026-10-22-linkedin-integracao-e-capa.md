@@ -51,3 +51,8 @@ Guia do perfil ajustado ao perfil existente: https://claude.ai/artifact/Qp1tMEFg
 - **Ponto de atenção:** o caderno posiciona a marca como "exclusivamente gestantes CLT", enquanto o guia do
   LinkedIn mira também empresas e RH (pilar "Empresa em dia" do plano até 31/12). A capa usa "Gestantes CLT", como
   no caderno.
+
+## Capa refeita (foco em empresas)
+- A Jessica não gostou do slogan e achou a primeira capa brega. No LinkedIn o foco é captar empresas.
+- Duas versões sóbrias com a paleta do caderno, sem selo 3D e sem slogan: "Advocacia trabalhista empresarial · Letícia Barros · Adequação trabalhista · Prevenção de passivo · Rotinas de RH · OAB/ES 39.948 · Vitória/ES · site", com monograma LB tipográfico em círculo fino.
+- Arquivos: producao/linkedin/capa-linkedin-empresas-clara.png e -escura.png (cópias em Downloads). Gerador: producao/linkedin/gerar_capas.py. A primeira versão (capa-linkedin-leticia-barros.png) fica guardada.
