@@ -45,3 +45,4 @@
 - O publicador do blog, depois de publicar, envia `[url do artigo, /blog/]` pela API `SubmitUrlbatch`
   (`site_descoberta.avisar_bing`) quando a chave existe. O IndexNow continua sendo chamado.
 - Falta: ela criar a conta no Bing Webmaster (importar do Search Console), gerar a chave e colar no Orbit.
+- 22/10, 18h57: chave do Bing salva por ela (validada). As 7 páginas alteradas foram enviadas pela API do Bing (resposta 200; cota diária de 100 para 93). O IndexNow continua com 403, mas com a API do Bing ele deixou de ser necessário.
