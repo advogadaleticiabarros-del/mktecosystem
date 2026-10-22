@@ -1,16 +1,32 @@
+from datetime import date, timedelta
+
 import httpx
 
 TOKEN_URL = "https://oauth2.googleapis.com/token"
 ACCOUNT_MGMT_URL = "https://mybusinessaccountmanagement.googleapis.com/v1"
 BUSINESS_INFO_URL = "https://mybusinessbusinessinformation.googleapis.com/v1"
 PERFORMANCE_URL = "https://businessprofileperformance.googleapis.com/v1"
+# Avaliações não migraram para as APIs v1: continuam só na API v4 (accounts/{a}/locations/{l}/reviews).
+REVIEWS_URL = "https://mybusiness.googleapis.com/v4"
+
+DIAS_DE_METRICAS = 30
 
 METRICAS_DESEJADAS = {
     "BUSINESS_IMPRESSIONS_DESKTOP_SEARCH": "buscas",
     "BUSINESS_IMPRESSIONS_MOBILE_SEARCH": "buscas",
+    "BUSINESS_IMPRESSIONS_DESKTOP_MAPS": "visualizacoes",
+    "BUSINESS_IMPRESSIONS_MOBILE_MAPS": "visualizacoes",
     "CALL_CLICKS": "chamadas",
     "BUSINESS_DIRECTION_REQUESTS": "pedidos_rota",
 }
+
+
+def _periodo(prefixo: str, dia: date) -> dict[str, str]:
+    return {
+        f"dailyRange.{prefixo}.year": str(dia.year),
+        f"dailyRange.{prefixo}.month": str(dia.month),
+        f"dailyRange.{prefixo}.day": str(dia.day),
+    }
 
 
 class GoogleBusinessClient:
@@ -61,13 +77,19 @@ class GoogleBusinessClient:
         )
         return resultado.get("locations", [])
 
-    async def buscar_metricas(self, access_token: str, location_id: str) -> dict:
+    async def buscar_metricas(
+        self, access_token: str, location_id: str, hoje: date | None = None
+    ) -> dict:
+        """Totais dos últimos 30 dias, até ontem (o Google exige início e fim completos)."""
+        fim = (hoje or date.today()) - timedelta(days=1)
+        inicio = fim - timedelta(days=DIAS_DE_METRICAS - 1)
         resultado = await self._get(
             f"{PERFORMANCE_URL}/{location_id}:fetchMultiDailyMetricsTimeSeries",
             access_token,
             params={
                 "dailyMetrics": list(METRICAS_DESEJADAS.keys()),
-                "dailyRange.start_date.year": "2026",
+                **_periodo("start_date", inicio),
+                **_periodo("end_date", fim),
             },
         )
         totais = {"buscas": 0, "chamadas": 0, "pedidos_rota": 0, "visualizacoes": 0}
@@ -81,14 +103,19 @@ class GoogleBusinessClient:
                 totais[chave] += sum(int(v.get("value", 0)) for v in valores)
         return totais
 
-    async def listar_avaliacoes(self, access_token: str, location_id: str) -> list[dict]:
-        resultado = await self._get(f"{BUSINESS_INFO_URL}/{location_id}/reviews", access_token)
+    async def listar_avaliacoes(
+        self, access_token: str, account_id: str, location_id: str
+    ) -> list[dict]:
+        resultado = await self._get(
+            f"{REVIEWS_URL}/{account_id}/{location_id}/reviews", access_token
+        )
         return resultado.get("reviews", [])
 
     async def responder_avaliacao(self, access_token: str, review_name: str, texto: str) -> None:
+        """`review_name` vem da listagem v4: accounts/{a}/locations/{l}/reviews/{r}."""
         async with httpx.AsyncClient(transport=self._transport, timeout=30) as client:
             response = await client.put(
-                f"{BUSINESS_INFO_URL}/{review_name}/reply",
+                f"{REVIEWS_URL}/{review_name}/reply",
                 json={"comment": texto},
                 headers={"Authorization": f"Bearer {access_token}"},
             )

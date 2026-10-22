@@ -131,6 +131,13 @@ com edições anteriores.
 - **Instagram**: métricas diárias (seguidores, alcance), conexão OAuth + manual.
 - **Google Meu Negócio**: métricas diárias (buscas, chamadas, rotas, visualizações),
   avaliações (listar + responder), triagem de urgência via Groq.
+  **API aprovada pelo Google em 22/10/2026** (projeto Cloud 462973861302, cota 300/min).
+  Na mesma data: avaliações passaram para a API v4 (`mybusiness.googleapis.com/v4/accounts/{a}/locations/{l}/reviews`;
+  a v1 Business Information não tem avaliações), métricas passaram a enviar período completo (últimos 30 dias até
+  ontem; antes só mandava o ano e o Google recusava) e "visualizações" = impressões no Maps (antes ficava sempre 0).
+  `.env` da VPS já tem `GOOGLE_CLIENT_ID/SECRET` e `GOOGLE_REDIRECT_URI` de produção. Falta a usuária: ativar as 3 APIs
+  no Cloud Console, publicar a tela de consentimento ("Em produção", senão o refresh token expira em 7 dias) e
+  clicar em Conectar na Visão Geral.
 - **E-mail marketing**: campanhas com geração IA, captura pública de contatos,
   descadastro com token HMAC, worker de envio com cadência/teto diário/idempotência,
   webhook Resend (bounce/reclamação via Svix).

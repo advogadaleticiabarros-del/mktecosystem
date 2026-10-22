@@ -54,7 +54,8 @@ async def listar_avaliacoes(
     conexao = await _conexao_ativa(db, current_user.tenant_id)
     client = get_google_client()
     access_token = await client.renovar_access_token(decrypt_token(conexao.access_token_encrypted))
-    avaliacoes = await client.listar_avaliacoes(access_token, conexao.ig_user_id)
+    # page_id guarda a conta (accounts/..) e ig_user_id o local (locations/..), ver callback.
+    avaliacoes = await client.listar_avaliacoes(access_token, conexao.page_id, conexao.ig_user_id)
     return await classificar_avaliacoes(avaliacoes, get_groq_client())
 
 

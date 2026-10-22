@@ -1,3 +1,5 @@
+from datetime import date
+
 import httpx
 import pytest
 
@@ -97,14 +99,68 @@ async def test_buscar_metricas():
 
 
 @pytest.mark.anyio
-async def test_listar_avaliacoes():
+async def test_buscar_metricas_envia_periodo_completo_dos_ultimos_30_dias():
+    pedidos = []
+
     def handler(request: httpx.Request) -> httpx.Response:
+        pedidos.append(request)
+        return httpx.Response(200, json={})
+
+    transport = httpx.MockTransport(handler)
+    client = GoogleBusinessClient(client_id="id", client_secret="segredo", transport=transport)
+    await client.buscar_metricas("access_token", "locations/456", hoje=date(2026, 10, 22))
+
+    params = pedidos[0].url.params
+    assert params["dailyRange.start_date.year"] == "2026"
+    assert params["dailyRange.start_date.month"] == "9"
+    assert params["dailyRange.start_date.day"] == "22"
+    assert params["dailyRange.end_date.year"] == "2026"
+    assert params["dailyRange.end_date.month"] == "10"
+    assert params["dailyRange.end_date.day"] == "21"
+    assert "BUSINESS_IMPRESSIONS_MOBILE_MAPS" in params.get_list("dailyMetrics")
+
+
+@pytest.mark.anyio
+async def test_buscar_metricas_soma_visualizacoes_no_maps():
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            json={
+                "multiDailyMetricTimeSeries": [
+                    {
+                        "dailyMetricTimeSeries": [
+                            {
+                                "dailyMetric": "BUSINESS_IMPRESSIONS_MOBILE_MAPS",
+                                "timeSeries": {"datedValues": [{"value": "10"}, {}]},
+                            },
+                            {
+                                "dailyMetric": "BUSINESS_IMPRESSIONS_DESKTOP_MAPS",
+                                "timeSeries": {"datedValues": [{"value": "4"}]},
+                            },
+                        ]
+                    }
+                ]
+            },
+        )
+
+    transport = httpx.MockTransport(handler)
+    client = GoogleBusinessClient(client_id="id", client_secret="segredo", transport=transport)
+    metricas = await client.buscar_metricas("access_token", "locations/456")
+    assert metricas["visualizacoes"] == 14
+
+
+@pytest.mark.anyio
+async def test_listar_avaliacoes():
+    pedidos = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        pedidos.append(request)
         return httpx.Response(
             200,
             json={
                 "reviews": [
                     {
-                        "name": "locations/456/reviews/789",
+                        "name": "accounts/123/locations/456/reviews/789",
                         "reviewer": {"displayName": "Maria S."},
                         "starRating": "FIVE",
                         "comment": "Excelente atendimento",
@@ -115,8 +171,12 @@ async def test_listar_avaliacoes():
 
     transport = httpx.MockTransport(handler)
     client = GoogleBusinessClient(client_id="id", client_secret="segredo", transport=transport)
-    avaliacoes = await client.listar_avaliacoes("access_token", "locations/456")
+    avaliacoes = await client.listar_avaliacoes("access_token", "accounts/123", "locations/456")
     assert avaliacoes[0]["reviewer"]["displayName"] == "Maria S."
+    # Avaliações só existem na API v4 (mybusiness.googleapis.com), com conta + local no caminho.
+    assert str(pedidos[0].url).startswith(
+        "https://mybusiness.googleapis.com/v4/accounts/123/locations/456/reviews"
+    )
 
 
 @pytest.mark.anyio
@@ -130,7 +190,10 @@ async def test_responder_avaliacao():
     transport = httpx.MockTransport(handler)
     client = GoogleBusinessClient(client_id="id", client_secret="segredo", transport=transport)
     await client.responder_avaliacao(
-        "access_token", "locations/456/reviews/789", "Obrigada pela confiança!"
+        "access_token", "accounts/123/locations/456/reviews/789", "Obrigada pela confiança!"
     )
     assert len(chamadas) == 1
     assert chamadas[0].method == "PUT"
+    assert str(chamadas[0].url) == (
+        "https://mybusiness.googleapis.com/v4/accounts/123/locations/456/reviews/789/reply"
+    )
