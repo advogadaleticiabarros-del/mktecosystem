@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
   <!-- Meta Pixel Code -->
-  <!-- SUBSTITUA "SEU_PIXEL_ID_AQUI" pelo ID real assim que criar o Pixel no Gerenciador de Negócios (Configurações do Negócio > Origens de Dados > Pixels) -->
+  <!-- SUBSTITUA "858690737244687" pelo ID real assim que criar o Pixel no Gerenciador de Negócios (Configurações do Negócio > Origens de Dados > Pixels) -->
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -26,11 +26,11 @@
   t.src=v;s=b.getElementsByTagName(e)[0];
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', 'SEU_PIXEL_ID_AQUI');
+  fbq('init', '858690737244687');
   fbq('track', 'PageView');
   </script>
   <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=SEU_PIXEL_ID_AQUI&ev=PageView&noscript=1"
+  src="https://www.facebook.com/tr?id=858690737244687&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code -->
 
@@ -140,6 +140,29 @@
     footer{text-align:center;padding:24px 16px 40px;font-size:11.5px;opacity:.5;font-weight:300;letter-spacing:.5px}
     footer a{color:var(--areia)}
   </style>
+
+    <!-- Google Analytics 4 (G-5B513VWB4D): a fila do gtag existe desde já, para eventos de conversão
+         não se perderem; o script do Google carrega na primeira interação ou em 2 s, como na home. -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function () { dataLayer.push(arguments); };
+      gtag('js', new Date());
+      gtag('config', 'G-5B513VWB4D');
+      (function () {
+        function carregarGA() {
+          if (window._gaCarregado) return;
+          window._gaCarregado = true;
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-5B513VWB4D';
+          document.head.appendChild(s);
+        }
+        ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach(function (ev) {
+          window.addEventListener(ev, carregarGA, { once: true, passive: true });
+        });
+        setTimeout(carregarGA, 2000);
+      })();
+    </script>
 </head>
 <body>
   <div class="topo">
@@ -157,7 +180,7 @@
       <h1>Guia completo: <em>seus direitos como gestante trabalhadora</em>, explicados sem juridiquês</h1>
       <p class="sub">Estabilidade, licença-maternidade, ambiente insalubre, contrato de experiência e um modelo pronto de comunicado de gravidez para a empresa. Tudo reunido em um só lugar, para você ler com calma.</p>
       <a class="cta-hero" href="#form">Quero receber o guia gratuito</a>
-      <div class="selo"><span>OAB/ES 39.948</span><span>Conteúdo 100% gratuito</span><span>Sem compromisso</span></div>
+      <div class="selo"><span>OAB/ES 39.948</span><span>Conteúdo 100% gratuito</span></div>
     </div>
   </div>
 
@@ -312,11 +335,12 @@
         .filter(Boolean);
       var origem = utmTags.length ? ' [Origem: ' + utmTags.join(', ') + ']' : ' [Origem: direta/sem UTM]';
       try {
-        var resp = await fetch('https://api.orbit.advogadaleticiabarros.com.br/public/contacts', {
+        var resp = await fetch('https://crm.advogadaleticiabarros.com.br/api/public/lead', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            tenant_slug: 'leticia-barros', nome: nomeEl.value.trim(), email: emailEl.value.trim(),
-            origem: 'lp-guia-gestante',
+            name: nomeEl.value.trim(), phone: telEl.value, email: emailEl.value.trim(),
+            area: 'trabalhista',
+            message: '[ISCA guia-gestante-clt]' + origem + (momento ? ' [Momento: ' + momento + ']' : '') + ' [Lead frio - baixou o guia gratuito]',
             website: this.querySelector('[name=website]').value
           })
         });
@@ -330,5 +354,6 @@
       }
     });
   </script>
+<script src="/js/conversoes.js?v=20261022b" defer></script>
 </body>
 </html>
