@@ -53,7 +53,8 @@ def _google_falso(desativadas: set[str] = frozenset()):
                                "additionalCategories": [{"displayName": "Advogado"}]},
                 "storefrontAddress": {"addressLines": ["R. X, 160"], "locality": "Vitória", "administrativeArea": "ES"},
                 "profile": {"description": "Advocacia trabalhista"},
-                "serviceItems": [{"freeFormServiceItem": {"label": {"displayName": "Rescisão indireta", "description": "x"}}}],
+                "serviceItems": [{"freeFormServiceItem": {"label": {"displayName": "Rescisão indireta", "description": "x"}}},
+                                 {"structuredServiceItem": {"serviceTypeId": "job_type_id:will_writing"}}],
                 "regularHours": {"periods": [{"openDay": "MONDAY", "openTime": {"hours": 8},
                                               "closeDay": "MONDAY", "closeTime": {"hours": 18, "minutes": 30}}]},
                 "metadata": {"mapsUri": "https://maps/1", "newReviewUri": "https://review/1"},
@@ -163,6 +164,7 @@ async def test_coletar_painel_completo():
     assert perfil["titulo"] == "Letícia Barros | Advocacia"
     assert perfil["categorias_adicionais"] == ["Advogado"]
     assert perfil["servicos"] == [{"nome": "Rescisão indireta", "descricao": "x"}]
+    assert perfil["servicos_padrao"] == ["will writing"]
     assert perfil["horarios"] == [{"dia": "Segunda", "abre": "08:00", "fecha": "18:30"}]
     assert painel["atributos"] == {"is_owned_by_women": True, "url_whatsapp": ["https://wa.me/1"]}
 

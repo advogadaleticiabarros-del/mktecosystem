@@ -116,14 +116,17 @@ def _normalizar_perfil(bruto: dict) -> dict:
         }
         for p in bruto.get("regularHours", {}).get("periods", [])
     ]
-    servicos = []
+    # Serviços de texto livre (editáveis no Orbit) e os "padrão" do Google, que são só um código
+    # (`job_type_id:...`) e ficam intactos quando a lista de texto livre é salva.
+    servicos, servicos_padrao = [], []
     for item in bruto.get("serviceItems", []):
         livre = item.get("freeFormServiceItem")
         if livre:
             rotulo = livre.get("label", {})
             servicos.append({"nome": rotulo.get("displayName", ""), "descricao": rotulo.get("description", "")})
         elif item.get("structuredServiceItem"):
-            servicos.append({"nome": item["structuredServiceItem"].get("serviceTypeId", ""), "descricao": ""})
+            codigo = item["structuredServiceItem"].get("serviceTypeId", "")
+            servicos_padrao.append(codigo.split(":")[-1].replace("_", " "))
     metadata = bruto.get("metadata", {})
     aberto = bruto.get("openInfo", {}).get("openingDate")
     return {
@@ -144,6 +147,7 @@ def _normalizar_perfil(bruto: dict) -> dict:
         ],
         "horarios": horarios,
         "servicos": servicos,
+        "servicos_padrao": servicos_padrao,
         "maps_uri": metadata.get("mapsUri"),
         "link_avaliar": metadata.get("newReviewUri"),
         "place_id": metadata.get("placeId"),

@@ -15,6 +15,7 @@ export type Perfil = {
   area_atendimento: string[];
   horarios: { dia: string; abre: string; fecha: string }[];
   servicos: Servico[];
+  servicos_padrao?: string[];
   maps_uri: string | null;
   link_avaliar: string | null;
   status: string | null;

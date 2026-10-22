@@ -4,7 +4,7 @@ from app.services.checagem_site import checar_site, robos_bloqueados
 
 HOME = """<html><head><title>Letícia Barros</title>
 <meta name="description" content="Advocacia trabalhista">
-<script type="application/ld+json">{"@type": "LegalService", "author": {"@type": "Person"}}</script>
+<script type="application/ld+json">{"@type": ["Attorney", "LegalService"], "author": {"@type": "Person"}}</script>
 <script src="https://www.googletagmanager.com/gtag/js?id=G-5B513VWB4D"></script></head></html>"""
 
 
@@ -40,7 +40,7 @@ async def test_checar_site_acha_paginas_a_corrigir():
 
     assert resultado["home"]["titulo"] == "Letícia Barros"
     assert resultado["home"]["descricao"] == "Advocacia trabalhista"
-    assert resultado["home"]["schemas"] == ["LegalService", "Person"]
+    assert resultado["home"]["schemas"] == ["Attorney", "LegalService", "Person"]
     assert resultado["home"]["tem_analytics"] is True
     assert resultado["llms_txt"] is False
     assert resultado["robos_ia_bloqueados"] == ["CCBot"]

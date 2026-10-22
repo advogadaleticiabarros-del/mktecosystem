@@ -135,9 +135,23 @@ com edições anteriores.
   Na mesma data: avaliações passaram para a API v4 (`mybusiness.googleapis.com/v4/accounts/{a}/locations/{l}/reviews`;
   a v1 Business Information não tem avaliações), métricas passaram a enviar período completo (últimos 30 dias até
   ontem; antes só mandava o ano e o Google recusava) e "visualizações" = impressões no Maps (antes ficava sempre 0).
-  `.env` da VPS já tem `GOOGLE_CLIENT_ID/SECRET` e `GOOGLE_REDIRECT_URI` de produção. Falta a usuária: ativar as 3 APIs
-  no Cloud Console, publicar a tela de consentimento ("Em produção", senão o refresh token expira em 7 dias) e
-  clicar em Conectar na Visão Geral.
+  `.env` da VPS já tem `GOOGLE_CLIENT_ID/SECRET` e `GOOGLE_REDIRECT_URI` de produção. Conectado em 22/10/2026
+  (perfil `locations/12522032530123494694`, conta `accounts/107896560314349568974`).
+- **Tela "Google e site" (`/presenca`, 22/10/2026)**: substitui a antiga tela Avaliações (que redireciona). Abas
+  Resumo, Melhorias, Perfil, Avaliações, Posts, Buscas, Site e IAs. Backend em módulos fundos:
+  `integrations/social/google_api.py` (HTTP + erros classificados: api_desativada/reconectar/sem_acesso),
+  `services/presenca_google.py` (`coletar_painel`: cada seção falha sozinha), `services/checagem_site.py`
+  (lê o site por **SFTP**: a hospedagem tem anti-robô que barra Python/httpx, mas deixa GPTBot/ClaudeBot/Googlebot
+  passarem), `services/diagnostico_presenca.py` (regras puras → melhorias com `chave` estável; status em
+  `recomendacoes_status`), `services/gestao_google.py` (escritas: post, resposta, perfil, foto, botão, sitemap;
+  tudo passa por `services/conformidade_oab.py`), `services/central_google.py` (token + coleta + jobs).
+  Painel salvo em `social_metrics` tipo `google_painel` (diário às 06h UTC junto das métricas, e pelo botão
+  "Atualizar agora"). Posts do Google em `google_posts` (rascunho → aprovado → publicado pelo job de 5 em 5 min).
+  OAuth pede `business.manage`, `analytics.readonly` e `webmasters` (sitemap reenviado a cada coleta).
+  **APIs ativas no Cloud** (projeto 462973861302, "orbit-mkt"): Account Management, Business Information,
+  Performance, My Business v4 (avaliações/posts/fotos), Verifications, Place Actions, Notifications, Analytics Data,
+  Analytics Admin, Search Console, PageSpeed. Q&A foi descontinuada pelo Google (03/11/2025).
+  Respostas a avaliações: IA escreve, ela aprova (sigilo profissional; decisão de 22/10/2026).
 - **E-mail marketing**: campanhas com geração IA, captura pública de contatos,
   descadastro com token HMAC, worker de envio com cadência/teto diário/idempotência,
   webhook Resend (bounce/reclamação via Svix).

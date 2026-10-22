@@ -20,7 +20,7 @@ from typing import Protocol
 ROBOS_IA = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-SearchBot", "PerplexityBot",
             "Google-Extended", "Applebot-Extended", "CCBot", "Bingbot"]
 TAG_ANALYTICS = re.compile(r"G-[A-Z0-9]{6,12}|GTM-[A-Z0-9]{4,8}")
-TIPO_SCHEMA = re.compile(r'"@type"\s*:\s*"([A-Za-z]+)"')
+TIPO_SCHEMA = re.compile(r'"@type"\s*:\s*(\[[^\]]*\]|"[A-Za-z]+")')
 IGNORAR = re.compile(r"(^|/)(_|404|google[0-9a-f]+\.html|BingSiteAuth)")
 
 
@@ -114,7 +114,7 @@ async def checar_site(site: Site, dominio: str) -> dict:
         "home": {
             "titulo": titulo.group(1).strip() if titulo else None,
             "descricao": _meta(home, "description"),
-            "schemas": sorted(set(TIPO_SCHEMA.findall(home))),
+            "schemas": sorted({t for bloco in TIPO_SCHEMA.findall(home) for t in re.findall(r"[A-Za-z]+", bloco)}),
             "tem_analytics": bool(TAG_ANALYTICS.search(home)),
         },
         "robots_txt": robots is not None,

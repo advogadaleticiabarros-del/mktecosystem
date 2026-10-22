@@ -126,6 +126,11 @@ export function AbaPerfil({ painel, recarregar }: { painel: Painel; recarregar: 
             <Send /> Salvar serviços no Google
           </Button>
         </div>
+        {!!perfil.servicos_padrao?.length && (
+          <p className="mt-3 text-xs text-muted-foreground">
+            Serviços padrão do Google (mantidos, editáveis só no painel do Google): {perfil.servicos_padrao.join(" · ")}
+          </p>
+        )}
       </Secao>
 
       <div className="grid gap-6 lg:grid-cols-2">
