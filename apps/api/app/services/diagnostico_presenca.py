@@ -222,7 +222,7 @@ def _desempenho(painel: dict) -> list[dict]:
             ))
     gsc = painel.get("search_console")
     if gsc:
-        quase = [c for c in gsc["consultas"] if 4 <= c["posicao"] <= 20 and c["impressoes"] >= 20]
+        quase = [c for c in gsc["consultas"] if 4 <= c["posicao"] <= 20 and c["impressoes"] >= 10]
         quase.sort(key=lambda c: -c["impressoes"])
         if quase:
             recs.append(_rec(
