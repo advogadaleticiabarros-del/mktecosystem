@@ -276,3 +276,83 @@ async def desconectar_google_business(
     if conexao is not None:
         conexao.status = "desconectado"
         await db.commit()
+
+
+# ---------------------------------------------------------------- LinkedIn (perfil pessoal da Dra.)
+
+
+def linkedin_transport():
+    """Ponto de troca para testes (LinkedIn falso). Em produção, rede de verdade."""
+    return None
+
+
+def _redirect_linkedin() -> str:
+    return f"{settings.PUBLIC_API_URL}/integracoes/linkedin/callback"
+
+
+async def _credenciais_linkedin(db: AsyncSession, tenant_id: uuid.UUID) -> tuple[str, str]:
+    from app.services.chaves_api import obter_chave, separar_linkedin
+
+    chave = await obter_chave(db, tenant_id, "linkedin")
+    if not chave:
+        raise HTTPException(status_code=422, detail="Cadastre antes as chaves do LinkedIn em Configurações.")
+    return separar_linkedin(chave)
+
+
+@router.get("/linkedin/iniciar")
+async def iniciar_conexao_linkedin(token: Annotated[str, Query()], db: Annotated[AsyncSession, Depends(get_db)]) -> RedirectResponse:
+    from app.integrations.social import linkedin_api
+
+    user_id = decode_access_token(token)
+    user = (await db.execute(select(User).where(User.id == user_id))).scalar_one_or_none() if user_id else None
+    if user is None:
+        raise HTTPException(status_code=401, detail="Token inválido")
+    client_id, _ = await _credenciais_linkedin(db, user.tenant_id)
+    return RedirectResponse(linkedin_api.url_autorizacao(client_id, _redirect_linkedin(), create_access_token(user.id)))
+
+
+@router.get("/linkedin/callback")
+async def callback_linkedin(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    state: Annotated[str, Query()],
+    code: Annotated[str | None, Query()] = None,
+    error: Annotated[str | None, Query()] = None,
+) -> RedirectResponse:
+    from app.integrations.social import linkedin_api
+
+    if error or not code:
+        return RedirectResponse(f"{settings.FRONTEND_URL}/visao-geral?erro=linkedin")
+    user_id = decode_access_token(state)
+    user = (await db.execute(select(User).where(User.id == user_id))).scalar_one_or_none() if user_id else None
+    if user is None:
+        raise HTTPException(status_code=400, detail="state inválido")
+    client_id, client_secret = await _credenciais_linkedin(db, user.tenant_id)
+    transport = linkedin_transport()
+    tokens = await linkedin_api.trocar_code(client_id, client_secret, code, _redirect_linkedin(), transport)
+    perfil = await linkedin_api.perfil(tokens["access_token"], transport)
+
+    conexao = (await db.execute(select(SocialConnection).where(
+        SocialConnection.tenant_id == user.tenant_id, SocialConnection.plataforma == "linkedin"
+    ))).scalar_one_or_none()
+    if conexao is None:
+        conexao = SocialConnection(tenant_id=user.tenant_id, plataforma="linkedin")
+        db.add(conexao)
+    conexao.page_id = f"urn:li:person:{perfil['sub']}"
+    conexao.ig_user_id = ""
+    conexao.nome_conta = perfil.get("name") or "LinkedIn"
+    conexao.access_token_encrypted = encrypt_token(tokens["access_token"])
+    conexao.expira_em = datetime.now(timezone.utc) + timedelta(seconds=int(tokens.get("expires_in", 5184000)))
+    conexao.status = "ativo"
+    await db.commit()
+    return RedirectResponse(f"{settings.FRONTEND_URL}/visao-geral?conectado=linkedin")
+
+
+@router.delete("/linkedin", status_code=204)
+async def desconectar_linkedin(db: Annotated[AsyncSession, Depends(get_db)],
+                               current_user: Annotated[User, Depends(get_current_user)]) -> None:
+    conexao = (await db.execute(select(SocialConnection).where(
+        SocialConnection.tenant_id == current_user.tenant_id, SocialConnection.plataforma == "linkedin"
+    ))).scalar_one_or_none()
+    if conexao is not None:
+        conexao.status = "desconectado"
+        await db.commit()

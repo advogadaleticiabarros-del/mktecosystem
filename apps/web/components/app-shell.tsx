@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Bell,
+  Briefcase,
   CalendarDays,
   ClipboardList,
   Globe,
@@ -25,6 +26,7 @@ const NAV_ITEMS = [
   { href: "/editorial", label: "Editorial", icon: Sparkles, destaque: true },
   { href: "/crescimento", label: "Crescimento", icon: TrendingUp },
   { href: "/presenca", label: "Google e site", icon: Globe },
+  { href: "/linkedin", label: "LinkedIn", icon: Briefcase },
   { href: "/planejamento", label: "Planejamento", icon: ClipboardList },
   // Aprovação requires a ?pautaId= query param to be meaningful — it isn't
   // a directly-navigable destination, but its nav icon still highlights

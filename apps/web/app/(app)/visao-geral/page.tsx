@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   BarChart3,
+  Briefcase,
   CalendarClock,
   Camera,
   FileText,
@@ -179,6 +180,19 @@ export default function VisaoGeralPage() {
   async function desconectarGoogleBusiness() {
     await apiFetch("/integracoes/google-business", { method: "DELETE" });
     setConexoes((prev) => prev.filter((c) => c.plataforma !== "google_business"));
+  }
+
+  const linkedinConectado = conexoes.find((c) => c.plataforma === "linkedin" && c.status === "ativo");
+
+  function conectarLinkedin() {
+    const base = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+    const token = localStorage.getItem("token") ?? "";
+    window.location.href = `${base}/integracoes/linkedin/iniciar?token=${encodeURIComponent(token)}`;
+  }
+
+  async function desconectarLinkedin() {
+    await apiFetch("/integracoes/linkedin", { method: "DELETE" });
+    setConexoes((prev) => prev.filter((c) => c.plataforma !== "linkedin"));
   }
 
   async function conectarComTokenManual() {
@@ -465,6 +479,41 @@ export default function VisaoGeralPage() {
             </button>
             {googleBusinessConectado && (
               <button type="button" onClick={desconectarGoogleBusiness} className="text-xs text-muted-foreground hover:underline">
+                Desconectar
+              </button>
+            )}
+          </div>
+        </Card>
+        <Card className="p-5">
+          <div className="flex items-center justify-between">
+            <Briefcase className="h-5 w-5 text-primary" />
+            <Badge
+              className={linkedinConectado ? "font-mono bg-primary/15 text-primary" : "font-mono"}
+              variant={linkedinConectado ? undefined : "secondary"}
+            >
+              {linkedinConectado ? "Conectado" : "Não conectado"}
+            </Badge>
+          </div>
+          <p className="mt-3 text-sm font-medium">LinkedIn</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {linkedinConectado ? linkedinConectado.nome_conta : "Posts no perfil da Dra., com aprovação antes de sair"}
+          </p>
+          <div className="mt-3 flex flex-wrap gap-3">
+            {linkedinConectado && (
+              <button type="button" onClick={() => router.push("/linkedin")} className="text-xs font-medium text-primary hover:underline">
+                Abrir fila
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={conectarLinkedin}
+              className="text-xs font-medium text-primary hover:underline"
+              title="A conexão do LinkedIn vale 60 dias; reconectar renova o prazo"
+            >
+              {linkedinConectado ? "Reconectar" : "Conectar"}
+            </button>
+            {linkedinConectado && (
+              <button type="button" onClick={desconectarLinkedin} className="text-xs text-muted-foreground hover:underline">
                 Desconectar
               </button>
             )}

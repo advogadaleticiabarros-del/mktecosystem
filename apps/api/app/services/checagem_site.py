@@ -44,6 +44,12 @@ class SiteSftp:
     async def listar_html(self) -> list[str]:
         return await self._sftp.listar_recursivo(self._raiz, ".html")
 
+    async def ler_bytes(self, caminho: str) -> bytes | None:
+        try:
+            return await self._sftp.download(f"{self._raiz}/{caminho}")
+        except Exception:
+            return None
+
 
 def robos_bloqueados(robots: str) -> list[str]:
     """Robôs (da lista ROBOS_IA) com `Disallow: /` no grupo deles ou no grupo `*`."""

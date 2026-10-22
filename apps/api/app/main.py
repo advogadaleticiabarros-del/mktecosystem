@@ -14,6 +14,7 @@ from app.routers import (
     dashboard,
     email,
     integracoes,
+    linkedin,
     media,
     pautas,
     presenca,
@@ -62,6 +63,7 @@ app.include_router(avaliacoes.router)
 app.include_router(analise.router)
 app.include_router(chaves.router)
 app.include_router(presenca.router)
+app.include_router(linkedin.router)
 
 
 @app.get("/health")

@@ -42,3 +42,20 @@ class GooglePost(Base):
     link_publicado: Mapped[str | None] = mapped_column(String(500), nullable=True)
     erro: Mapped[str | None] = mapped_column(Text, nullable=True)
     criado_em: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_agora)
+
+
+class LinkedInPost(Base):
+    """Post do LinkedIn (perfil da Dra.) criado no Orbit. Vai ao ar quando `status="aprovado"` e `publicar_em`
+    chega (job de 5 em 5 min). Com `link` para uma página do site, publica com o card do artigo."""
+
+    __tablename__ = "linkedin_posts"
+
+    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
+    tenant_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("tenants.id"))
+    texto: Mapped[str] = mapped_column(Text)
+    link: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    publicar_em: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_agora)
+    status: Mapped[str] = mapped_column(String(20), default="rascunho")
+    post_urn: Mapped[str | None] = mapped_column(String(200), nullable=True)
+    erro: Mapped[str | None] = mapped_column(Text, nullable=True)
+    criado_em: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_agora)

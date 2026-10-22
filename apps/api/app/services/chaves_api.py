@@ -77,6 +77,23 @@ async def validar_bing(chave: str, transport: httpx.AsyncBaseTransport | None = 
     resposta.raise_for_status()
 
 
+def separar_linkedin(chave: str) -> tuple[str, str]:
+    partes = chave.replace(":", " ").split()
+    if len(partes) != 2:
+        raise ChaveRecusada("Cole o Client ID e o Client Secret do aplicativo do LinkedIn, um depois do outro, "
+                            "separados por espaço.")
+    return partes[0], partes[1]
+
+
+async def validar_linkedin(chave: str, transport: httpx.AsyncBaseTransport | None = None) -> None:
+    from app.integrations.social.linkedin_api import credenciais_validas
+
+    client_id, client_secret = separar_linkedin(chave)
+    if not await credenciais_validas(client_id, client_secret, transport=transport):
+        raise ChaveRecusada("O LinkedIn recusou essas chaves. Confira o Client ID e o Client Secret na aba "
+                            "\"Auth\" do aplicativo em linkedin.com/developers/apps.")
+
+
 PROVEDORES = {
     "openai": {
         "nome": "OpenAI",
@@ -95,6 +112,12 @@ PROVEDORES = {
         "uso": "Publicação automática dos Reels no TikTok. Cole a Client Key e o Client Secret do app, separados por espaço.",
         "variavel": "TIKTOK_CLIENT",
         "validar": validar_tiktok,
+    },
+    "linkedin": {
+        "nome": "LinkedIn",
+        "uso": "Publicação dos posts no perfil da Dra. Cole o Client ID e o Client Secret do aplicativo, separados por espaço.",
+        "variavel": "LINKEDIN_CLIENT",
+        "validar": validar_linkedin,
     },
     "bing": {
         "nome": "Bing Webmaster",

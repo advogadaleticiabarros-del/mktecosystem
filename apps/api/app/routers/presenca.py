@@ -1,6 +1,6 @@
 """Rotas da tela "Presença no Google": painel, melhorias e gestão do Perfil da Empresa."""
 import uuid
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from typing import Annotated, Literal
 
 import httpx
@@ -68,7 +68,10 @@ async def _resposta_painel(db: AsyncSession, tenant_id: uuid.UUID) -> dict:
         s.chave: s.status
         for s in (await db.execute(select(RecomendacaoStatus).where(RecomendacaoStatus.tenant_id == tenant_id))).scalars()
     }
-    recomendacoes = [{**r, "status": status.get(r["chave"], "pendente")} for r in diagnosticar(painel)]
+    from app.services import linkedin
+
+    extras = [a for a in [linkedin.aviso_conexao(await linkedin.conexao(db, tenant_id), date.today())] if a]
+    recomendacoes = [{**r, "status": status.get(r["chave"], "pendente")} for r in extras + diagnosticar(painel)]
     return {"painel": painel, "coletado_em": coletado_em, "recomendacoes": recomendacoes}
 
 

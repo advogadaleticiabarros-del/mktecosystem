@@ -25,6 +25,7 @@ from app.services.email_sender import processar_boas_vindas, processar_fila_news
 from app.services.central_google import atualizar_todos as atualizar_paineis_google
 from app.services.central_google import publicar_posts_prontos as publicar_posts_google
 from app.services.google_business_metrics import coletar_metricas_google_business
+from app.services.linkedin import publicar_prontos as publicar_linkedin_prontos
 from app.services.coleta_instagram import coletar_instagram
 from app.services.instagram_metrics import coletar_metricas_diarias
 from app.services.instagram_publisher import publicar_agendamentos_prontos
@@ -49,10 +50,11 @@ async def job_envios() -> None:
         ig = await publicar_agendamentos_prontos(db)
         blog = await publicar_blog_prontos(db)
         gpost = await publicar_posts_google(db)
-        if bv or nl or ig or blog or gpost:
+        lin = await publicar_linkedin_prontos(db)
+        if bv or nl or ig or blog or gpost or lin:
             logger.info(
-                "Envios: %d boas-vindas, %d newsletter, %d Instagram, %d blog, %d Google.",
-                bv, nl, ig, blog, gpost,
+                "Envios: %d boas-vindas, %d newsletter, %d Instagram, %d blog, %d Google, %d LinkedIn.",
+                bv, nl, ig, blog, gpost, lin,
             )
 
 
