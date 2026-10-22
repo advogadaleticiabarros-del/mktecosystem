@@ -242,8 +242,25 @@ def _desempenho(painel: dict) -> list[dict]:
     return recs
 
 
-def _site_e_ia(painel: dict) -> list[dict]:
+PERGUNTAS_TESTE_IA = [
+    "Advogada trabalhista em Vitória ES", "Advogada para gestante demitida em Vitória",
+    "Licença-maternidade mudou para 180 dias?", "Quem tem direito a 180 dias de licença-maternidade?",
+    "Atendente pode ser obrigada a lavar banheiro?", "Grávida pode pedir demissão?",
+    "O pai não paga pensão, o que fazer?", "Rescisão indireta: quando posso pedir?",
+]
+DIA_TESTE_IA = 24
+
+
+def _site_e_ia(painel: dict, hoje: date) -> list[dict]:
     recs = []
+    if hoje.day >= DIA_TESTE_IA:
+        # Uma chave por mês: marcar como feita resolve só o mês corrente; no dia 24 seguinte volta.
+        recs.append(_rec(
+            f"ia-teste-mensal-{hoje:%Y-%m}", "ia", "media", "Teste mensal nas IAs: a Dra. aparece?",
+            "Uma vez por mês, conferir se ChatGPT, Gemini, Perplexity e o resumo de IA do Google citam o site ou a Dra.",
+            "Fazer as perguntas abaixo em janela anônima em cada IA e anotar na tabela da Frente 4 do plano.",
+            itens=PERGUNTAS_TESTE_IA, link="https://claude.ai/artifact/HdTr66d4Hzd27VqrFjmQpd",
+        ))
     site = painel.get("site")
     if site:
         if site["paginas_sem_analytics"]:
@@ -294,6 +311,6 @@ def diagnosticar(painel: dict, hoje: date | None = None) -> list[dict]:
         + _avaliacoes(painel)
         + _conteudo(painel, hoje)
         + _desempenho(painel)
-        + _site_e_ia(painel)
+        + _site_e_ia(painel, hoje)
     )
     return sorted(recs, key=lambda r: ORDEM[r["prioridade"]])

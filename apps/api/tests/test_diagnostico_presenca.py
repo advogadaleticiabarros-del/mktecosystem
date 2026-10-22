@@ -104,3 +104,10 @@ def test_site_ia_e_configuracao():
 def test_palavra_suspeita():
     assert palavra_suspeita("RescÏsão") and palavra_suspeita("assedíio")
     assert not palavra_suspeita("rescisão") and not palavra_suspeita("previdenciária") and not palavra_suspeita("saúde")
+
+
+def test_teste_mensal_nas_ias_aparece_a_partir_do_dia_24_com_chave_do_mes():
+    assert not any(r["chave"].startswith("ia-teste-mensal") for r in diagnosticar(_painel(), date(2026, 11, 23)))
+    recs = {r["chave"]: r for r in diagnosticar(_painel(), date(2026, 11, 24))}
+    assert len(recs["ia-teste-mensal-2026-11"]["itens"]) == 8
+    assert "ia-teste-mensal-2026-12" in {r["chave"] for r in diagnosticar(_painel(), date(2026, 12, 30))}
