@@ -38,3 +38,10 @@
 - **IndexNow respondeu 403** ("UserForbiddedToAccessSite"): a chave abre no navegador e para o bingbot, então o mais
   provável é a proteção anti-robô da Hostinger barrando o verificador do IndexNow. Solução: liberar no hPanel ou criar
   a conta no Bing Webmaster (importar do Search Console) e enviar o sitemap por lá.
+
+## Atualização: chave do Bing (commit 3382c1e, no ar)
+- Configurações → chaves ganhou o provedor **"Bing Webmaster"** (`chaves_api.PROVEDORES["bing"]`). A chave é
+  validada com `GetUrlSubmissionQuota` para o site.
+- O publicador do blog, depois de publicar, envia `[url do artigo, /blog/]` pela API `SubmitUrlbatch`
+  (`site_descoberta.avisar_bing`) quando a chave existe. O IndexNow continua sendo chamado.
+- Falta: ela criar a conta no Bing Webmaster (importar do Search Console), gerar a chave e colar no Orbit.
