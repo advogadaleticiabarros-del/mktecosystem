@@ -27,7 +27,7 @@ from app.models.social_connection import SocialConnection
 from app.models.social_metric import SocialMetric
 from app.services import gestao_google
 from app.services.checagem_site import Site, SiteSftp, checar_site
-from app.services.presenca_google import coletar_painel
+from app.services.presenca_google import EVENTOS_CONTATO, coletar_painel
 
 logger = logging.getLogger(__name__)
 
@@ -91,6 +91,15 @@ async def atualizar_painel(
             fechar = getattr(getattr(site, "_sftp", None), "close", None)
             if fechar:
                 await fechar()
+
+    ga = painel.get("analytics")
+    if ga and ga.get("propriedade"):
+        try:
+            painel["eventos_principais"] = await gestao_google.garantir_eventos_principais(
+                api, ga["propriedade"], list(EVENTOS_CONTATO)
+            )
+        except GoogleApiErro as erro:
+            painel["erros"]["eventos_principais"] = erro.como_dict()
 
     gsc = painel.get("search_console")
     if gsc and painel.get("dominio"):

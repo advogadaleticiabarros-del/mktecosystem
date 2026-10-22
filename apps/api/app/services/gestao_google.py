@@ -17,7 +17,7 @@ from urllib.parse import quote
 from app.integrations.ai.base import AIClient
 from app.integrations.social.google_api import GoogleApi
 from app.services.conformidade_oab import bloqueia, verificar_texto_oab
-from app.services.presenca_google import GSC_URL, INFO_URL, PLACE_URL, V4_URL
+from app.services.presenca_google import GA_ADMIN_URL, GSC_URL, INFO_URL, PLACE_URL, V4_URL
 
 BOTOES_POST = {"LEARN_MORE", "BOOK", "CALL", "SIGN_UP"}
 CATEGORIAS_FOTO = {"COVER", "PROFILE", "LOGO", "EXTERIOR", "INTERIOR", "AT_WORK", "TEAMS", "ADDITIONAL"}
@@ -110,6 +110,19 @@ async def enviar_sitemap(api: GoogleApi, site_search_console: str, url_sitemap: 
     await api.chamar(
         "PUT", f"{GSC_URL}/sites/{quote(site_search_console, safe='')}/sitemaps/{quote(url_sitemap, safe='')}"
     )
+
+
+async def garantir_eventos_principais(api: GoogleApi, propriedade: str, nomes: list[str]) -> dict:
+    """Marca os eventos como "principais" (conversões) no Google Analytics 4. Idempotente: só cria os que
+    faltam e funciona mesmo antes de o evento aparecer na lista do Analytics. Precisa do escopo analytics.edit."""
+    url = f"{GA_ADMIN_URL}/{propriedade}/keyEvents"
+    existentes = {k.get("eventName") for k in (await api.get(url)).get("keyEvents", [])}
+    criados = []
+    for nome in nomes:
+        if nome not in existentes:
+            await api.chamar("POST", url, json={"eventName": nome, "countingMethod": "ONCE_PER_EVENT"})
+            criados.append(nome)
+    return {"ja_existiam": sorted(existentes & set(nomes)), "criados": criados}
 
 
 async def definir_botao(api: GoogleApi, local: str, tipo: str, url: str) -> dict:

@@ -19,6 +19,7 @@ NOMES_SECAO = {
     "palavras_chave": "palavras buscadas", "avaliacoes": "avaliações", "posts": "posts do Google",
     "midia": "fotos do Perfil", "verificacao": "verificação do Perfil", "botoes": "botões do Perfil",
     "analytics": "Google Analytics", "search_console": "Search Console", "site": "checagem do site",
+    "eventos_principais": "marcação dos contatos como conversão no Analytics",
 }
 LETRAS_PT = set("abcdefghijklmnopqrstuvwxyzáàâãéêíóôõúüç")
 

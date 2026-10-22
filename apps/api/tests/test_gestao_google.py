@@ -100,3 +100,24 @@ async def test_rascunho_da_ia_e_refeito_quando_fere_a_oab():
     texto = await g.sugerir_resposta(ia, {"autor": "Ana", "nota": 5, "comentario": "Ótima"})
     assert texto == "Obrigada pela confiança, Ana!"
     assert "recusada" in ia.prompts[1]
+
+
+@pytest.mark.anyio
+async def test_eventos_principais_cria_so_os_que_faltam():
+    pedidos = []
+
+    def handler(request):
+        pedidos.append(request)
+        if request.method == "GET":
+            return httpx.Response(200, json={"keyEvents": [{"eventName": "generate_lead"}, {"eventName": "purchase"}]})
+        return httpx.Response(200, json={"eventName": json.loads(request.content)["eventName"]})
+
+    r = await g.garantir_eventos_principais(_api(handler), "properties/7",
+                                            ["contato_whatsapp", "contato_ligacao", "generate_lead"])
+    assert r == {"ja_existiam": ["generate_lead"], "criados": ["contato_whatsapp", "contato_ligacao"]}
+    posts = [p for p in pedidos if p.method == "POST"]
+    assert [json.loads(p.content) for p in posts] == [
+        {"eventName": "contato_whatsapp", "countingMethod": "ONCE_PER_EVENT"},
+        {"eventName": "contato_ligacao", "countingMethod": "ONCE_PER_EVENT"},
+    ]
+    assert str(posts[0].url) == "https://analyticsadmin.googleapis.com/v1beta/properties/7/keyEvents"

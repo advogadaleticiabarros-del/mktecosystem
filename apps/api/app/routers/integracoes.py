@@ -170,10 +170,11 @@ async def desconectar_instagram(
         await db.commit()
 
 
-# Perfil da Empresa (ler e gerir), Analytics (ler) e Search Console (ler e enviar sitemap).
+# Perfil da Empresa (ler e gerir), Analytics (ler e marcar eventos principais) e Search Console (ler e sitemap).
 GOOGLE_SCOPES = " ".join([
     "https://www.googleapis.com/auth/business.manage",
     "https://www.googleapis.com/auth/analytics.readonly",
+    "https://www.googleapis.com/auth/analytics.edit",  # marcar eventos de contato como principais
     "https://www.googleapis.com/auth/webmasters",
 ])
 
