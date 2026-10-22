@@ -310,6 +310,16 @@ async def publicar_agora(post_id: uuid.UUID, db: Banco, user: Usuario) -> dict:
     post = await _meu_post(db, user, post_id)
     if post.status == "publicado":
         raise HTTPException(422, "Post já publicado.")
+    painel, _ = await central_google.ultimo_painel(db, user.tenant_id)
+    site = central_google._site_padrao()
+    try:
+        no_ar = await central_google.artigo_no_ar(site, post.link, (painel or {}).get("dominio"))
+    finally:
+        fechar = getattr(getattr(site, "_sftp", None), "close", None)
+        if fechar:
+            await fechar()
+    if not no_ar:
+        raise HTTPException(422, "O artigo deste post ainda não está no site. Publique o artigo antes.")
     try:
         await central_google.publicar_post(db, post, google_transport())
     except Exception as erro:

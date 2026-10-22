@@ -145,3 +145,37 @@ async def test_job_publica_so_aprovados_no_horario(db_session, google):
     transporte = _google_com_escrita([])
     assert await central_google.publicar_posts_prontos(db_session, agora, transporte) == 1
     assert (devido.status, futuro.status, rascunho.status) == ("publicado", "aprovado", "rascunho")
+
+
+class SiteComArtigos:
+    def __init__(self, caminhos):
+        self.caminhos = set(caminhos)
+
+    async def ler(self, caminho):
+        return "<html></html>" if caminho in self.caminhos else None
+
+    async def listar_html(self):
+        return sorted(self.caminhos)
+
+
+@pytest.mark.anyio
+async def test_post_espera_o_artigo_ir_ao_ar(db_session, google):
+    tenant, auth = await _setup(db_session)
+    agora = datetime.now(timezone.utc)
+    from app.models.social_metric import SocialMetric
+    db_session.add(SocialMetric(tenant_id=tenant.id, tipo="google_painel", metricas={"dominio": "a.com.br", "erros": {}}))
+    no_ar = GooglePost(tenant_id=tenant.id, texto="Artigo no ar", status="aprovado", botao="LEARN_MORE",
+                       link="https://a.com.br/blog/no-ar.html?utm_source=google", publicar_em=agora - timedelta(minutes=1))
+    futuro = GooglePost(tenant_id=tenant.id, texto="Artigo ainda não publicado", status="aprovado", botao="LEARN_MORE",
+                        link="https://a.com.br/blog/rascunho.html", publicar_em=agora - timedelta(minutes=1))
+    db_session.add_all([no_ar, futuro])
+    await db_session.commit()
+
+    site = SiteComArtigos(["blog/no-ar.html"])
+    assert await central_google.publicar_posts_prontos(db_session, agora, _google_com_escrita([]), site) == 1
+    assert no_ar.status == "publicado"
+    assert futuro.status == "aprovado" and futuro.erro == central_google.AGUARDANDO_ARTIGO
+
+    site.caminhos.add("blog/rascunho.html")
+    assert await central_google.publicar_posts_prontos(db_session, agora, _google_com_escrita([]), site) == 1
+    assert futuro.status == "publicado" and futuro.erro is None

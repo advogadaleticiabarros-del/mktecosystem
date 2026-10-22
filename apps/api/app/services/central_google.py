@@ -12,6 +12,7 @@ Interface:
 import logging
 import uuid
 from datetime import datetime, timezone
+from urllib.parse import urlparse
 
 import httpx
 from sqlalchemy import select
@@ -155,15 +156,49 @@ async def publicar_post(db: AsyncSession, post: GooglePost, transport: httpx.Asy
     await db.commit()
 
 
+AGUARDANDO_ARTIGO = "Aguardando o artigo ir ao ar no site; o post sai assim que ele estiver publicado."
+
+
+async def artigo_no_ar(site: Site | None, link: str | None, dominio: str | None) -> bool:
+    """O link do post aponta para uma página que existe no site? Links de fora do site (ou sem como
+    conferir) contam como no ar."""
+    if not link or site is None or not dominio:
+        return True
+    url = urlparse(link)
+    if (url.hostname or "").lower() not in (dominio, f"www.{dominio}"):
+        return True
+    caminho = url.path.lstrip("/")
+    if not caminho or caminho.endswith("/"):
+        caminho += "index.html"
+    return await site.ler(caminho) is not None
+
+
 async def publicar_posts_prontos(
-    db: AsyncSession, agora: datetime | None = None, transport: httpx.AsyncBaseTransport | None = None
+    db: AsyncSession, agora: datetime | None = None, transport: httpx.AsyncBaseTransport | None = None,
+    site: Site | None = None,
 ) -> int:
+    """Publica os posts aprovados cujo horário chegou. Post com link para artigo do site que ainda não
+    existe fica aprovado, com o aviso em `erro`, e é tentado de novo na próxima rodada."""
     agora = agora or datetime.now(timezone.utc)
     prontos = (await db.execute(select(GooglePost).where(
         GooglePost.status == "aprovado", GooglePost.publicar_em <= agora
     ))).scalars().all()
+    if not prontos:
+        return 0
+    site = site or _site_padrao()
     publicados = 0
     for post in prontos:
+        painel, _ = await ultimo_painel(db, post.tenant_id)
+        try:
+            no_ar = await artigo_no_ar(site, post.link, (painel or {}).get("dominio"))
+        except Exception:
+            logger.exception("Não deu para conferir o artigo do post %s; publica mesmo assim", post.id)
+            no_ar = True
+        if not no_ar:
+            if post.erro != AGUARDANDO_ARTIGO:
+                post.erro = AGUARDANDO_ARTIGO
+                await db.commit()
+            continue
         try:
             await publicar_post(db, post, transport)
             publicados += 1
@@ -172,5 +207,8 @@ async def publicar_posts_prontos(
             post.status = "erro"
             post.erro = getattr(erro, "mensagem", None) or str(erro)
             await db.commit()
+    fechar = getattr(getattr(site, "_sftp", None), "close", None)
+    if fechar:
+        await fechar()
     return publicados
 
