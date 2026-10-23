@@ -29,10 +29,14 @@ O LinkedIn serve para a Dra. **ser encontrada e lembrada** por quem emprega, nã
 
 ## 4. Cadência e fila (automático)
 
-- **Terça e quinta, 8h**, no perfil pessoal da Dra. (alcança muito mais que a página).
-- 26 posts escritos de 27/10/2026 a 28/01/2027, na fila do Orbit (`/linkedin`) como **rascunho**. Texto-fonte:
-  `producao/linkedin/posts-empresa-em-dia-out26-jan27.json`. A Jessica lê, edita na própria fila e clica em
-  "Aprovar todos os rascunhos"; o Orbit publica cada um na data (job de 5 em 5 minutos).
+- **Terça, quarta e quinta, 8h**, no perfil pessoal da Dra. (alcança muito mais que a página). Terça e quinta:
+  série "Empresa em dia" (mudanças, decisões, obrigações com data). Quarta: série **"Dia a dia na empresa"**
+  (cotidiano: o que fazer quando o empregado..., atividades complementares, atestado, punições, home office,
+  feriados, calor, celular, limbo do INSS), pedida em 23/10/2026 para alcançar empresas também pelo dia a dia.
+- **39 posts aprovados em 23/10/2026** (pedido da Jessica: "aprove todos os posts e programe"), de 27/10/2026 a
+  28/01/2027: 26 de "Empresa em dia" (`producao/linkedin/posts-empresa-em-dia-out26-jan27.json`) e 13 de "Dia a
+  dia na empresa" (`producao/linkedin/posts-dia-a-dia-empresa-out26-jan27.json`). O Orbit publica cada um na data
+  (job de 5 em 5 minutos); dá para editar ou apagar na fila até a hora de sair.
 - Post com link de artigo ou da LP **espera o link estar no ar** (os de dezembro apontam para artigos agendados no
   blog, e os da LP esperam a LP ser publicada).
 - Links do próprio site saem com `utm_source=linkedin&utm_medium=social&utm_campaign=empresa-em-dia`.
@@ -65,6 +69,24 @@ O LinkedIn serve para a Dra. **ser encontrada e lembrada** por quem emprega, nã
 | 21/01 | Insalubridade na limpeza de banheiros | artigo insalubridade |
 | 26/01 | Desvio e acúmulo de função | artigo recepcionista |
 | 28/01 | Pedido de demissão de quem tem estabilidade | artigo art. 500 |
+
+Série de quarta ("Dia a dia na empresa"):
+
+| Data | Tema |
+| --- | --- |
+| 28/10 | Empregado faltou sem avisar |
+| 04/11 | Atividades complementares que não são acúmulo de função |
+| 11/11 | TST, Tema 27: sindicato pode ajuizar ação por um só empregado |
+| 18/11 | Atestado médico: o que a empresa pode e não pode |
+| 25/11 | Advertência e suspensão |
+| 02/12 | Home office monitorado e controle de jornada |
+| 09/12 | Festa da firma |
+| 16/12 | Comércio em feriados (Portaria MTE 1.316/2026) |
+| 23/12 | Faltas que a lei abona |
+| 06/01 | Salário mínimo de 2027 na folha (sem valor em reais: a checagem da OAB barra "R$") |
+| 13/01 | Calor e pausas térmicas |
+| 20/01 | Celular e redes sociais no trabalho |
+| 27/01 | Limbo previdenciário |
 
 **Gatilhos fora da fila** (resposta em até 24 h, com post escrito na hora): decisão do Tema 1.389, fim da
 suspensão das multas da NR-1, mudança nas datas da EC 141.

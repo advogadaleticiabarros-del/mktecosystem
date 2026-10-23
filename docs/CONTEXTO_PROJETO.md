@@ -786,7 +786,8 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   de 60 dias, vence 22/12/2026; o Orbit avisa 7 dias antes). Tela `/linkedin`: card **Resultados** (visitas e
   contatos vindos do LinkedIn, do GA4 em `painel.analytics.linkedin`, porque a API do LinkedIn não dá números),
   edição de post na fila, "Aprovar todos os rascunhos" e fila em ordem de data. Links do site saem com UTM
-  (`link_com_utm`). Texto aceita menção `@[Nome](urn:li:organization:ID)`. 26 rascunhos na fila (27/10 a 28/01).
+  (`link_com_utm`). Texto aceita menção `@[Nome](urn:li:organization:ID)`. **39 posts aprovados** (27/10 a
+  28/01; terça, quarta e quinta às 8h). Os 4 que levam à LP de empresas esperam a LP ir ao ar.
 - **Página da empresa** criada (0 seguidores). Capa em `producao/linkedin/capa-pagina-linkedin@2x.png`. Publicar na
   página e ler números depende da Community Management API (app separado, análise do LinkedIn).
 - **LP de empresas** regerada (EC 141 promulgada em 16/10, seção e formulário do Checklist 2027) e **Checklist 2027**
@@ -796,9 +797,13 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   data combinada fora desses dias vai para a próxima terça ou sexta). Calendário existente remarcado em 23/10
   (log em `/root/orbit-backups/remarcacao_reels_2026-10-23.json` na VPS). Em dezembro alguns dias de Reels também
   têm o carrossel das 14h já marcado (datas temáticas não foram mexidas).
-- **TikTok parado:** o código (`services/tiktok.py`, `integrations/social/tiktok_api.py` e testes) foi escrito em
-  15/10 por outra sessão e **nunca foi commitado**; chaves salvas, conta não conectada, nada no calendário. Sem
-  a auditoria da TikTok, a API só publica como privado (SELF_ONLY).
+- **TikTok (commit `0e93966`, no ar):** card na Visão Geral (Conectar), tela `/tiktok`, job `job_tiktok` a cada 10 min.
+  Cada Reels do Instagram vai uma vez ao TikTok depois do horário do Instagram, a partir do dia da conexão
+  (`conectado_em`), com envio do arquivo em partes (FILE_UPLOAD; não precisa verificar domínio). Com o app auditado
+  pela TikTok sai direto e público; sem auditoria a TikTok só aceitaria privado, então o Orbit manda para a **caixa
+  de rascunhos** do TikTok (`status="no_rascunho"`): a pessoa publica pelo app colando a legenda que a tela
+  `/tiktok` mostra e clica "Já publiquei". Escopos: `user.info.basic,video.upload,video.publish`. Redirect que
+  precisa estar no app da TikTok: `https://api.orbit.advogadaleticiabarros.com.br/integracoes/tiktok/callback`.
 - 6 Stories de 16/10 ficaram como "pronto" e não saíram (o Orbit não publica Stories).
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")

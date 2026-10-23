@@ -1,5 +1,27 @@
 # 23/10/2026: LinkedIn para PMEs, página para empresas, Reels 2 por semana e TikTok
 
+## Atualização (mesmo dia, segunda parte)
+
+- **Pedido:** "Pode seguir com o TikTok, a chave já está no Orbit" e "Aprove todos os posts do LinkedIn e programe
+  [...] pegue os assuntos mais recentes e que mais vão impactar nas empresas [...] coisas do cotidiano também".
+- **TikTok (commit `0e93966`, no ar):**
+  - o código da outra sessão foi revisado e reescrito: envio do arquivo em partes no lugar de "buscar pela URL", que exigiria verificar o domínio;
+  - com auditoria, publica direto e público; sem auditoria, manda para a caixa de rascunhos (decisão: post privado não serve à marca);
+  - Reels anteriores à conexão não vão;
+  - rotas de conexão, tela `/tiktok` (legenda para copiar e "Já publiquei"), card na Visão Geral e job a cada 10 min.
+  - Testes: 334 passando. Em produção, `/tiktok` e `/integracoes/tiktok/iniciar` respondem 401 sem login e a página abre (200).
+  - **Não verificado:** a conexão real com a TikTok e o envio de um vídeo de verdade (falta a Jessica conectar).
+- **LinkedIn:**
+  - os 26 posts foram aprovados;
+  - nova série de quarta, "Dia a dia na empresa", com 13 posts já aprovados (`producao/linkedin/posts-dia-a-dia-empresa-out26-jan27.json`), escrita com pesquisa de 23/10: TST Tema 27 (sindicatos), Portaria MTE 1.316/2026 (feriados no comércio), salário mínimo 2027 (PLOA) e pausas térmicas (TST);
+  - fila em produção: 39 aprovados.
+  - O post do salário mínimo saiu sem valor em reais (a checagem da OAB barra "R$"). O de 16/12 ficou sem link, porque o artigo do Natal só sai em 21/12.
+- **Pendente novo:**
+  - no app da TikTok (developers.tiktok.com), conferir os produtos Login Kit e Content Posting API e o redirect `https://api.orbit.advogadaleticiabarros.com.br/integracoes/tiktok/callback`;
+  - se o app estiver em Sandbox, adicionar a conta da Dra. como usuária de teste;
+  - conectar no card do TikTok;
+  - depois, pedir a auditoria.
+
 ## Pedido
 
 - "Conseguimos monitorar o que do LinkedIn com essa API? Existem dados? Podemos programar postagens? Vamos montar
