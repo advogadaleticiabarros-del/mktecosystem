@@ -6,6 +6,8 @@ Interface:
   clientes automáticos por HTTP, por isso a leitura é pelo adaptador `Site`, via SFTP).
 - `await publicar_post(db, post)` e `await publicar_prontos(db, agora)`: a fila; post com link para artigo que
   ainda não está no site espera, como os posts do Google.
+- `link_com_utm(link, quando)`: links do site saem com utm_source=linkedin (o painel do Google separa o que veio
+  do LinkedIn em `analytics.linkedin`).
 - `aviso_conexao(conexao, hoje)` -> melhoria "reconectar" quando faltam 7 dias ou menos (o token dura 60 dias).
 - `await sugerir_post(ia, tema)` -> texto no tom da Dra. para o LinkedIn, já conferido pela checagem da OAB.
 """
@@ -14,7 +16,7 @@ import re
 import uuid
 from datetime import date, datetime, timezone
 from html import unescape
-from urllib.parse import urlparse
+from urllib.parse import urlencode, urlparse, urlunparse
 
 import httpx
 from sqlalchemy import select
@@ -35,6 +37,7 @@ PLATAFORMA = "linkedin"
 DOMINIO = urlparse(SITE).hostname
 LIMITE_TEXTO = 3000
 DIAS_AVISO = 7
+CAMPANHA_UTM = "empresa-em-dia"
 
 
 class LinkedInNaoConectado(Exception):
@@ -117,6 +120,19 @@ async def dados_do_artigo(site: Site | None, link: str) -> dict:
     return card
 
 
+def link_com_utm(link: str, quando: datetime | None = None) -> str:
+    """Etiqueta os links do próprio site com a origem LinkedIn, para o Analytics separar visitas e contatos por post.
+    Links de fora e links que já têm UTM ficam como estão."""
+    url = urlparse(link)
+    if (url.hostname or "").lower() not in (DOMINIO, f"www.{DOMINIO}") or "utm_" in url.query:
+        return link
+    etiquetas = {"utm_source": "linkedin", "utm_medium": "social", "utm_campaign": CAMPANHA_UTM}
+    if quando:
+        etiquetas["utm_content"] = f"{quando:%Y-%m-%d}"
+    query = "&".join(filter(None, [url.query, urlencode(etiquetas)]))
+    return urlunparse(url._replace(query=query))
+
+
 async def publicar_post(db: AsyncSession, post: LinkedInPost, transport: httpx.AsyncBaseTransport | None = None,
                         site: Site | None = None) -> None:
     problemas = [p for p in verificar_texto_oab(post.texto) if p["nivel"] == "bloqueia"]
@@ -124,6 +140,8 @@ async def publicar_post(db: AsyncSession, post: LinkedInPost, transport: httpx.A
         raise ValueError("O texto fere as regras da OAB: " + "; ".join(p["trecho"] for p in problemas))
     api, c = await abrir(db, post.tenant_id, transport)
     artigo = await dados_do_artigo(site, post.link) if post.link else None
+    if artigo:
+        artigo["link"] = link_com_utm(post.link, post.publicar_em)
     post.post_urn = await api.publicar(c.page_id, post.texto, artigo)
     post.status = "publicado"
     post.erro = None

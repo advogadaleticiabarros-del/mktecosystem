@@ -115,9 +115,34 @@ async def test_fila_oab_e_publicar_agora_com_card_do_artigo(client, db_session):
     corpo = json.loads(next(p for p in pedidos if p.url.path == "/rest/posts").content)
     assert corpo["author"] == "urn:li:person:abc123"
     assert corpo["commentary"] == "A escala 6x1 acabou. Veja o que muda \\(prazos\\) {hashtag|\\#|RH}"
-    assert corpo["content"]["article"] == {"source": "https://advogadaleticiabarros.com.br/blog/x.html",
-                                           "title": "Artigo X", "description": "Descrição do artigo",
-                                           "thumbnail": "urn:li:image:9"}
+    card = corpo["content"]["article"]
+    assert card["source"].startswith("https://advogadaleticiabarros.com.br/blog/x.html?utm_source=linkedin"
+                                     "&utm_medium=social&utm_campaign=empresa-em-dia&utm_content=")
+    assert {k: card[k] for k in ("title", "description", "thumbnail")} == {
+        "title": "Artigo X", "description": "Descrição do artigo", "thumbnail": "urn:li:image:9"}
+
+
+def test_link_com_utm_so_no_proprio_site():
+    quando = datetime(2026, 10, 27, 11, tzinfo=timezone.utc)
+    assert linkedin.link_com_utm("https://advogadaleticiabarros.com.br/lp/x.html?a=1", quando) == (
+        "https://advogadaleticiabarros.com.br/lp/x.html?a=1&utm_source=linkedin&utm_medium=social"
+        "&utm_campaign=empresa-em-dia&utm_content=2026-10-27")
+    assert linkedin.link_com_utm("https://www.tst.jus.br/noticia", quando) == "https://www.tst.jus.br/noticia"
+    ja = "https://advogadaleticiabarros.com.br/?utm_source=x"
+    assert linkedin.link_com_utm(ja, quando) == ja
+
+
+@pytest.mark.anyio
+async def test_situacao_traz_visitas_e_contatos_do_linkedin(client, db_session):
+    from app.services.central_google import TIPO_PAINEL
+    from app.models.social_metric import SocialMetric
+
+    tenant, _, auth = await _setup(db_session)
+    db_session.add(SocialMetric(tenant_id=tenant.id, tipo=TIPO_PAINEL, metricas={
+        "analytics": {"linkedin": {"sessoes_90d": 9, "contatos_90d": 1, "por_pagina": []}}}))
+    await db_session.commit()
+    resultados = (await client.get("/linkedin", headers=auth)).json()["resultados"]
+    assert resultados["sessoes_90d"] == 9 and resultados["contatos_90d"] == 1 and resultados["coletado_em"]
 
 
 @pytest.mark.anyio

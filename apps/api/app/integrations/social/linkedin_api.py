@@ -20,7 +20,8 @@ TOKEN_URL = "https://www.linkedin.com/oauth/v2/accessToken"
 API_URL = "https://api.linkedin.com"
 ESCOPOS = "openid profile w_member_social"
 RESERVADOS = re.compile(r"([\\|{}@\[\]()<>*_~#])")
-HASHTAG = re.compile(r"(?<![\w#])#([A-Za-zÀ-ÿ0-9_]+)")
+ESPECIAIS = re.compile(r"(?<![\w#])#(?P<tag>[A-Za-zÀ-ÿ0-9_]+)"
+                       r"|@\[(?P<nome>[^\]]+)\]\((?P<urn>urn:li:(?:organization|person):[\w-]+)\)")
 
 
 class LinkedInErro(Exception):
@@ -32,11 +33,15 @@ class LinkedInErro(Exception):
 
 
 def escapar_texto(texto: str) -> str:
-    """Formato "little text": escapa os reservados e transforma #tag em {hashtag|\\#|tag}."""
+    """Formato "little text": escapa os reservados, transforma #tag em {hashtag|\\#|tag} e mantém as menções
+    @[Nome](urn:li:organization:123) (o nome tem que ser igual ao da página ou do perfil marcado)."""
     partes, ultimo = [], 0
-    for m in HASHTAG.finditer(texto):
+    for m in ESPECIAIS.finditer(texto):
         partes.append(RESERVADOS.sub(r"\\\1", texto[ultimo:m.start()]))
-        partes.append("{hashtag|\\#|" + m.group(1) + "}")
+        if m.group("tag"):
+            partes.append("{hashtag|\\#|" + m.group("tag") + "}")
+        else:
+            partes.append("@[" + RESERVADOS.sub(r"\\\1", m.group("nome")) + "](" + m.group("urn") + ")")
         ultimo = m.end()
     partes.append(RESERVADOS.sub(r"\\\1", texto[ultimo:]))
     return "".join(partes)

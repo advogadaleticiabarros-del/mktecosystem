@@ -16,7 +16,7 @@ from app.models.user import User
 from app.routers.integracoes import linkedin_transport
 from app.routers.presenca import get_ia
 from app.services import linkedin
-from app.services.central_google import _site_padrao, artigo_no_ar
+from app.services.central_google import _site_padrao, artigo_no_ar, ultimo_painel
 from app.services.conformidade_oab import verificar_texto_oab
 
 router = APIRouter(prefix="/linkedin", tags=["linkedin"])
@@ -25,16 +25,24 @@ Usuario = Annotated[User, Depends(get_current_user)]
 Banco = Annotated[AsyncSession, Depends(get_db)]
 
 
+async def _resultados(db: AsyncSession, user: User) -> dict | None:
+    """Visitas e contatos que vieram do LinkedIn, do último painel do Google (a API do LinkedIn não dá números)."""
+    painel, coletado_em = await ultimo_painel(db, user.tenant_id)
+    dados = ((painel or {}).get("analytics") or {}).get("linkedin")
+    return {**dados, "coletado_em": coletado_em} if dados else None
+
+
 @router.get("")
 async def situacao(db: Banco, user: Usuario) -> dict:
     c = await linkedin.conexao(db, user.tenant_id)
+    resultados = await _resultados(db, user)
     if c is None:
-        return {"conectado": False}
+        return {"conectado": False, "resultados": resultados}
     hoje = datetime.now(timezone.utc).date()  # expira_em é UTC: as duas datas na mesma referência
     expira = c.expira_em if c.expira_em is None or c.expira_em.tzinfo else c.expira_em.replace(tzinfo=timezone.utc)
     dias = (expira.astimezone(timezone.utc).date() - hoje).days if expira else None
     return {"conectado": True, "nome": c.nome_conta, "expira_em": c.expira_em, "dias_para_vencer": dias,
-            "aviso": linkedin.aviso_conexao(c, hoje)}
+            "aviso": linkedin.aviso_conexao(c, hoje), "resultados": resultados}
 
 
 class PostIn(BaseModel):
@@ -69,7 +77,7 @@ async def _meu(db: AsyncSession, user: User, post_id: uuid.UUID) -> LinkedInPost
 @router.get("/posts")
 async def listar(db: Banco, user: Usuario) -> list[dict]:
     posts = (await db.execute(select(LinkedInPost).where(LinkedInPost.tenant_id == user.tenant_id)
-                              .order_by(LinkedInPost.publicar_em.desc()))).scalars().all()
+                              .order_by(LinkedInPost.publicar_em))).scalars().all()
     return [_dict(p) for p in posts]
 
 

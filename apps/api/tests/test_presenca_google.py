@@ -130,6 +130,16 @@ def _google_falso(desativadas: set[str] = frozenset()):
                 ]
             elif dims == ["sessionSource", "sessionMedium"]:
                 rows = [{"dimensionValues": [{"value": "google"}, {"value": "organic"}], "metricValues": [{"value": "50"}]}]
+            elif dims == ["landingPage", "sessionCampaignName"]:
+                corpo = json.loads(request.content)
+                filtros = corpo["dimensionFilter"]["orGroup"]["expressions"]
+                assert {f["filter"]["stringFilter"]["value"] for f in filtros} == {"linkedin", "lnkd.in"}
+                rows = [
+                    {"dimensionValues": [{"value": "/blog/x.html"}, {"value": "empresa-em-dia"}],
+                     "metricValues": [{"value": "7"}, {"value": "1"}]},
+                    {"dimensionValues": [{"value": "/"}, {"value": "(referral)"}],
+                     "metricValues": [{"value": "2"}, {"value": "0"}]},
+                ]
             else:
                 rows = [
                     {"dimensionValues": [{"value": "chatgpt.com"}], "metricValues": [{"value": "4"}]},
@@ -203,6 +213,9 @@ async def test_coletar_painel_completo():
     assert analytics["contatos"]["total_30d"] == 6
     assert analytics["contatos"]["por_tipo"] == {"whatsapp": 3, "ligacao": 2, "formulario": 1}
     assert analytics["contatos"]["por_pagina"][0] == {"caminho": "/blog/x.html", "whatsapp": 3, "ligacao": 0, "formulario": 1}
+    assert analytics["linkedin"] == {"sessoes_90d": 9, "contatos_90d": 1, "por_pagina": [
+        {"pagina": "/blog/x.html", "campanha": "empresa-em-dia", "sessoes": 7, "contatos": 1},
+        {"pagina": "/", "campanha": None, "sessoes": 2, "contatos": 0}]}
 
     gsc = painel["search_console"]
     assert gsc["site"] == "sc-domain:advogadaleticiabarros.com.br"

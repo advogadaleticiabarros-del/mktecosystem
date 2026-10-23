@@ -15,6 +15,13 @@ def test_escapar_texto_mantem_hashtags_clicaveis():
     assert li.escapar_texto("e-mail@exemplo_x") == "e-mail\\@exemplo\\_x"
 
 
+def test_escapar_texto_mantem_mencao_da_pagina():
+    texto = "Siga @[Letícia Barros Advocacia e Consultoria Jurídica](urn:li:organization:123) (página) #RH"
+    assert li.escapar_texto(texto) == (
+        "Siga @[Letícia Barros Advocacia e Consultoria Jurídica](urn:li:organization:123) \\(página\\) "
+        "{hashtag|\\#|RH}")
+
+
 def test_url_autorizacao_pede_os_escopos_do_perfil():
     url = li.url_autorizacao("abc", "https://api/cb", "estado")
     assert url.startswith("https://www.linkedin.com/oauth/v2/authorization?")

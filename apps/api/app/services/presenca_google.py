@@ -432,6 +432,24 @@ async def _analytics(api: GoogleApi, dominio: str | None, hoje: date) -> dict:
         "por_tipo": por_tipo,
         "por_pagina": sorted(por_pagina.values(), key=lambda l: -(l["whatsapp"] + l["ligacao"] + l["formulario"])),
     }
+    # Quem chegou pelo LinkedIn (linkedin.com, app e encurtador lnkd.in) e quantos contatos (eventos principais) fez.
+    vindos_linkedin = await relatorio({
+        "dateRanges": [ultimos_90], "dimensions": [{"name": "landingPage"}, {"name": "sessionCampaignName"}],
+        "metrics": [{"name": "sessions"}, {"name": "keyEvents"}],
+        "dimensionFilter": {"orGroup": {"expressions": [
+            {"filter": {"fieldName": "sessionSource", "stringFilter": {"matchType": "CONTAINS", "value": valor,
+                                                                        "caseSensitive": False}}}
+            for valor in ("linkedin", "lnkd.in")]}},
+        "orderBys": [{"metric": {"metricName": "sessions"}, "desc": True}], "limit": 100,
+    })
+    linkedin = {
+        "sessoes_90d": sum(int(m[0]) for _, m in vindos_linkedin),
+        "contatos_90d": sum(int(m[1]) for _, m in vindos_linkedin),
+        "por_pagina": [
+            {"pagina": d[0], "campanha": None if d[1].startswith("(") else d[1], "sessoes": int(m[0]), "contatos": int(m[1])}
+            for d, m in vindos_linkedin
+        ],
+    }
     ia = sorted(
         ({"fonte": d[0], "sessoes": int(m[0])} for d, m in fontes_90 if FONTES_IA.search(d[0])),
         key=lambda f: -f["sessoes"],
@@ -458,6 +476,7 @@ async def _analytics(api: GoogleApi, dominio: str | None, hoje: date) -> dict:
         "origens": [{"origem": d[0], "meio": d[1], "sessoes": int(m[0])} for d, m in origens],
         "ia": {"total_90d": sum(f["sessoes"] for f in ia), "por_fonte": ia},
         "contatos": contatos,
+        "linkedin": linkedin,
     }
 
 
