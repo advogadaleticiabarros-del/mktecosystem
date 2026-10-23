@@ -6,6 +6,7 @@ import {
   Bell,
   Briefcase,
   Clapperboard,
+  Gauge,
   CalendarDays,
   ClipboardList,
   Globe,
@@ -24,6 +25,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 
 const NAV_ITEMS = [
   { href: "/visao-geral", label: "Visão geral", icon: Home },
+  { href: "/desempenho", label: "Desempenho", icon: Gauge },
   { href: "/editorial", label: "Editorial", icon: Sparkles, destaque: true },
   { href: "/crescimento", label: "Crescimento", icon: TrendingUp },
   { href: "/presenca", label: "Google e site", icon: Globe },
