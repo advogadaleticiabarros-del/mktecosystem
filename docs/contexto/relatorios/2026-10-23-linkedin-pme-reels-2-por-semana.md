@@ -1,5 +1,16 @@
 # 23/10/2026: LinkedIn para PMEs, página para empresas, Reels 2 por semana e TikTok
 
+## Atualização (mesmo dia, terceira parte)
+
+- **Pedido:** "Temos a tela de acompanhamento no Orbit? [...] quero entrar e avaliar os desempenhos e todos os demais
+  dados do LinkedIn assim como de todas as outras redes sociais e Google e sites".
+- **Feito:** tela **Desempenho** (commit `c5d951e`), primeira do menu depois da Visão geral. 338 testes passando;
+  conferida em produção com dados reais (site +89% de visitas, Search Console +180% de cliques, Instagram com 414
+  seguidores, LinkedIn com 39 agendados).
+- **TikTok:** a Jessica achou que estava conectado. Em produção não há conexão nem tentativa nos logs: o "Conectada"
+  em Configurações é só a chave do app. Falta clicar em Conectar no card TikTok da Visão Geral (e o app da TikTok
+  ter o redirect cadastrado).
+
 ## Atualização (mesmo dia, segunda parte)
 
 - **Pedido:** "Pode seguir com o TikTok, a chave já está no Orbit" e "Aprove todos os posts do LinkedIn e programe

@@ -782,6 +782,11 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 
 ## LinkedIn B2B, Reels 2 por semana e TikTok (23/10/2026)
 
+- **Tela Desempenho** (`/desempenho`, commit `c5d951e`): todos os canais numa tela (site/GA4, Search Console, Perfil
+  da Empresa, Instagram, LinkedIn, TikTok, blog), com comparação com o mês anterior, listas (páginas, buscas, posts)
+  e avisos. Módulo `services/desempenho.py`: `consolidar(fontes, hoje)` é pura; `montar_desempenho` só lê o banco
+  (as coletas diárias das 06h). "Atualizar agora" chama `/presenca/atualizar` e `/analise/instagram/atualizar`.
+
 - **LinkedIn** (estratégia em `docs/ESTRATEGIA_LINKEDIN_PME.md`, até 31/01/2027): perfil da Dra. conectado (token
   de 60 dias, vence 22/12/2026; o Orbit avisa 7 dias antes). Tela `/linkedin`: card **Resultados** (visitas e
   contatos vindos do LinkedIn, do GA4 em `painel.analytics.linkedin`, porque a API do LinkedIn não dá números),
