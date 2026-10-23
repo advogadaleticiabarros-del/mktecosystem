@@ -129,3 +129,13 @@ async def test_validar_bing_recusa_chave_invalida():
     with pytest.raises(ChaveRecusada):
         await validar_bing("errada", transport=httpx.MockTransport(recusa))
     await validar_bing("certa", transport=httpx.MockTransport(aceita))
+
+
+def test_chave_do_linkedin_recusa_link_e_formato_errado():
+    from app.services.chaves_api import separar_linkedin
+
+    for errado in ["https://api.orbit.advogadaleticiabarros.com.br/integracoes/linkedin/callback",
+                   "77ke7bdixbp3dw", "WPL_AP1.segredoLongo 77ke7bdixbp3dw", "77ke7bdixbp3dw curto"]:
+        with pytest.raises(ChaveRecusada):
+            separar_linkedin(errado)
+    assert separar_linkedin("77ke7bdixbp3dw WPL_AP1.AbCdEf123456==") == ("77ke7bdixbp3dw", "WPL_AP1.AbCdEf123456==")

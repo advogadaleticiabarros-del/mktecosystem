@@ -67,7 +67,7 @@ async def _setup(db, conectado=True, expira_em=None):
     async def aceita(_chave):
         return None
 
-    await salvar_chave(db, tenant.id, "linkedin", "cliente-id segredo-xyz", validar=aceita)
+    await salvar_chave(db, tenant.id, "linkedin", "77ke7bdixbp3dw segredoxyz12345", validar=aceita)
     return tenant, user, {"Authorization": f"Bearer {create_access_token(user.id)}"}
 
 
@@ -77,7 +77,7 @@ async def test_conectar_pelo_oauth_guarda_o_perfil(client, db_session):
     token = create_access_token(user.id)
     inicio = await client.get(f"/integracoes/linkedin/iniciar?token={token}", follow_redirects=False)
     assert inicio.status_code == 307
-    assert "client_id=cliente-id" in inicio.headers["location"]
+    assert "client_id=77ke7bdixbp3dw" in inicio.headers["location"]
     assert "integracoes%2Flinkedin%2Fcallback" in inicio.headers["location"]
 
     pedidos = []
@@ -85,7 +85,7 @@ async def test_conectar_pelo_oauth_guarda_o_perfil(client, db_session):
         cb = await client.get(f"/integracoes/linkedin/callback?code=c1&state={token}", follow_redirects=False)
     assert cb.status_code == 307 and cb.headers["location"].endswith("conectado=linkedin")
     troca = next(p for p in pedidos if p.url.path == "/oauth/v2/accessToken")
-    assert b"client_secret=segredo-xyz" in troca.content
+    assert b"client_secret=segredoxyz12345" in troca.content
 
     situacao = (await client.get("/linkedin", headers=auth)).json()
     assert situacao["conectado"] is True and situacao["nome"] == "Letícia Barros"

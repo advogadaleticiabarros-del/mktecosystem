@@ -1,6 +1,6 @@
 """Rotas da tela LinkedIn: situação da conexão e fila de posts (rascunho → aprovado → publicado)."""
 import uuid
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -30,9 +30,11 @@ async def situacao(db: Banco, user: Usuario) -> dict:
     c = await linkedin.conexao(db, user.tenant_id)
     if c is None:
         return {"conectado": False}
-    dias = (c.expira_em.date() - date.today()).days if c.expira_em else None
+    hoje = datetime.now(timezone.utc).date()  # expira_em é UTC: as duas datas na mesma referência
+    expira = c.expira_em if c.expira_em is None or c.expira_em.tzinfo else c.expira_em.replace(tzinfo=timezone.utc)
+    dias = (expira.astimezone(timezone.utc).date() - hoje).days if expira else None
     return {"conectado": True, "nome": c.nome_conta, "expira_em": c.expira_em, "dias_para_vencer": dias,
-            "aviso": linkedin.aviso_conexao(c, date.today())}
+            "aviso": linkedin.aviso_conexao(c, hoje)}
 
 
 class PostIn(BaseModel):

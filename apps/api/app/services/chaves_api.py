@@ -10,6 +10,7 @@ Interface:
   sem cadastro, cai na variável de ambiente (ex.: OPENAI_API_KEY).
 - `remover_chave(db, tenant_id, provedor)`.
 """
+import re
 import uuid
 from datetime import datetime, timezone
 
@@ -78,11 +79,24 @@ async def validar_bing(chave: str, transport: httpx.AsyncBaseTransport | None = 
 
 
 def separar_linkedin(chave: str) -> tuple[str, str]:
-    partes = chave.replace(":", " ").split()
+    """"<Client ID> <Client Secret>". O Client ID do LinkedIn é só letras minúsculas e números (ex.: 77ke7bdixbp3dw);
+    um link colado por engano (como o endereço de retorno) é recusado aqui, antes de chegar ao LinkedIn."""
+    if "http" in chave.lower() or "/" in chave:
+        raise ChaveRecusada("Isso parece um link. Aqui vão o Client ID e o Client Secret, que ficam na aba \"Auth\" "
+                            "do aplicativo, em \"Application credentials\". O endereço de retorno vai no LinkedIn, "
+                            "não no Orbit.")
+    partes = chave.split()
     if len(partes) != 2:
         raise ChaveRecusada("Cole o Client ID e o Client Secret do aplicativo do LinkedIn, um depois do outro, "
                             "separados por espaço.")
-    return partes[0], partes[1]
+    client_id, client_secret = partes
+    if not re.fullmatch(r"[a-z0-9]{8,30}", client_id):
+        raise ChaveRecusada("O primeiro valor não parece um Client ID do LinkedIn (só letras minúsculas e números, "
+                            "como 77ke7bdixbp3dw). Confira a ordem: primeiro o Client ID, depois o Client Secret.")
+    if len(client_secret) < 10:
+        raise ChaveRecusada("O Client Secret parece incompleto. Clique no olho ao lado dele na aba \"Auth\" e copie "
+                            "o valor inteiro.")
+    return client_id, client_secret
 
 
 async def validar_linkedin(chave: str, transport: httpx.AsyncBaseTransport | None = None) -> None:
