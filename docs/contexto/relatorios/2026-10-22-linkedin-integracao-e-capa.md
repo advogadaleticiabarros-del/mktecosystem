@@ -57,3 +57,12 @@ Guia do perfil ajustado ao perfil existente: https://claude.ai/artifact/Qp1tMEFg
 - Duas versões sóbrias com a paleta do caderno, sem selo 3D e sem slogan: "Advocacia trabalhista empresarial · Letícia Barros · Adequação trabalhista · Prevenção de passivo · Rotinas de RH · OAB/ES 39.948 · Vitória/ES · site", com monograma LB tipográfico em círculo fino.
 - Arquivos: producao/linkedin/capa-linkedin-empresas-clara.png e -escura.png (cópias em Downloads). Gerador: producao/linkedin/gerar_capas.py. A primeira versão (capa-linkedin-leticia-barros.png) fica guardada.
 - Versão final pedida pela Jessica (clara, com logo oficial e textos mais visíveis): producao/linkedin/capa-linkedin-empresas-logo-oficial.png (1584x396) e @2x (3168x792, a cópia que foi para Downloads). Selo oficial logo-sem-fundo.png, textos ampliados (nome 80px, serviços 27px, rodapé 22px em marrom), divisória dourada e faixa marrom com filete dourado.
+
+## Chaves do LinkedIn (noite de 22/10)
+- O card LinkedIn tinha recebido o endereço de retorno no lugar das chaves, e o OAuth abriu com client_id "https".
+- Correções (995a011, ee0a1ff):
+  - `separar_linkedin` recusa link e exige um Client ID em minúsculas e números;
+  - a validação só recusa `invalid_client` (`access_denied` com 401 é normal em apps sem token de aplicação);
+  - o card tem dois campos (Client ID e Client Secret);
+  - "dias para vencer" calculado em UTC.
+- A chave errada foi removida do banco.
