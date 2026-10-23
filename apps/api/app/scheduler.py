@@ -26,6 +26,7 @@ from app.services.central_google import atualizar_todos as atualizar_paineis_goo
 from app.services.central_google import publicar_posts_prontos as publicar_posts_google
 from app.services.google_business_metrics import coletar_metricas_google_business
 from app.services.linkedin import publicar_prontos as publicar_linkedin_prontos
+from app.services.tiktok import publicar_reels_no_tiktok
 from app.services.coleta_instagram import coletar_instagram
 from app.services.instagram_metrics import coletar_metricas_diarias
 from app.services.instagram_publisher import publicar_agendamentos_prontos
@@ -56,6 +57,14 @@ async def job_envios() -> None:
                 "Envios: %d boas-vindas, %d newsletter, %d Instagram, %d blog, %d Google, %d LinkedIn.",
                 bv, nl, ig, blog, gpost, lin,
             )
+
+
+async def job_tiktok() -> None:
+    """Reels do Instagram também no TikTok, depois do horário do Instagram (envio de vídeo é lento: job à parte)."""
+    async with SessionLocal() as db:
+        enviados = await publicar_reels_no_tiktok(db)
+        if enviados:
+            logger.info("TikTok: %d Reels enviados.", enviados)
 
 
 async def job_metricas_fontes_externas() -> None:
@@ -179,6 +188,7 @@ def criar_scheduler() -> AsyncIOScheduler:
     scheduler = AsyncIOScheduler(timezone="UTC")
     # a cada 5 min: post agendado para 19:00 sai até 19:05
     scheduler.add_job(job_envios, CronTrigger(minute="*/5"))
+    scheduler.add_job(job_tiktok, CronTrigger(minute="*/10"), max_instances=1, coalesce=True)
     # Segunda 11:00 UTC = 08:00 em Brasília
     scheduler.add_job(job_rascunho_newsletter, CronTrigger(day_of_week="mon", hour=11))
     scheduler.add_job(job_metricas_fontes_externas, CronTrigger(hour=6))

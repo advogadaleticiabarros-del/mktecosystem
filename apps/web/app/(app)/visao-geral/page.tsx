@@ -2,18 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  BarChart3,
-  Briefcase,
-  CalendarClock,
-  Camera,
-  FileText,
-  Lightbulb,
-  Loader2,
-  Mail,
-  MapPin,
-  Users,
-} from "lucide-react";
+import { BarChart3, Briefcase, CalendarClock, Camera, Clapperboard, FileText, Lightbulb, Loader2, Mail, MapPin, Users } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { apiFetch } from "@/lib/api";
 import { AppShell } from "@/components/app-shell";
@@ -193,6 +182,19 @@ export default function VisaoGeralPage() {
   async function desconectarLinkedin() {
     await apiFetch("/integracoes/linkedin", { method: "DELETE" });
     setConexoes((prev) => prev.filter((c) => c.plataforma !== "linkedin"));
+  }
+
+  const tiktokConectado = conexoes.find((c) => c.plataforma === "tiktok" && c.status === "ativo");
+
+  function conectarTiktok() {
+    const base = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+    const token = localStorage.getItem("token") ?? "";
+    window.location.href = `${base}/integracoes/tiktok/iniciar?token=${encodeURIComponent(token)}`;
+  }
+
+  async function desconectarTiktok() {
+    await apiFetch("/integracoes/tiktok", { method: "DELETE" });
+    setConexoes((prev) => prev.filter((c) => c.plataforma !== "tiktok"));
   }
 
   async function conectarComTokenManual() {
@@ -514,6 +516,36 @@ export default function VisaoGeralPage() {
             </button>
             {linkedinConectado && (
               <button type="button" onClick={desconectarLinkedin} className="text-xs text-muted-foreground hover:underline">
+                Desconectar
+              </button>
+            )}
+          </div>
+        </Card>
+        <Card className="p-5">
+          <div className="flex items-center justify-between">
+            <Clapperboard className="h-5 w-5 text-primary" />
+            <Badge
+              className={tiktokConectado ? "font-mono bg-primary/15 text-primary" : "font-mono"}
+              variant={tiktokConectado ? undefined : "secondary"}
+            >
+              {tiktokConectado ? "Conectado" : "Não conectado"}
+            </Badge>
+          </div>
+          <p className="mt-3 text-sm font-medium">TikTok</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {tiktokConectado ? tiktokConectado.nome_conta : "Os Reels do Instagram vão também para o TikTok, no mesmo dia"}
+          </p>
+          <div className="mt-3 flex flex-wrap gap-3">
+            {tiktokConectado && (
+              <button type="button" onClick={() => router.push("/tiktok")} className="text-xs font-medium text-primary hover:underline">
+                Abrir
+              </button>
+            )}
+            <button type="button" onClick={conectarTiktok} className="text-xs font-medium text-primary hover:underline">
+              {tiktokConectado ? "Reconectar" : "Conectar"}
+            </button>
+            {tiktokConectado && (
+              <button type="button" onClick={desconectarTiktok} className="text-xs text-muted-foreground hover:underline">
                 Desconectar
               </button>
             )}

@@ -1,3 +1,4 @@
+import logging
 import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
@@ -19,6 +20,8 @@ from app.integrations.social.meta_client import MetaClient
 from app.models.social_connection import SocialConnection
 from app.models.user import User
 from app.schemas.social_connection import SocialConnectionOut
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/integracoes", tags=["integracoes"])
 
@@ -352,6 +355,78 @@ async def desconectar_linkedin(db: Annotated[AsyncSession, Depends(get_db)],
                                current_user: Annotated[User, Depends(get_current_user)]) -> None:
     conexao = (await db.execute(select(SocialConnection).where(
         SocialConnection.tenant_id == current_user.tenant_id, SocialConnection.plataforma == "linkedin"
+    ))).scalar_one_or_none()
+    if conexao is not None:
+        conexao.status = "desconectado"
+        await db.commit()
+
+
+# ---------------------------------------------------------------- TikTok (conta da Dra.)
+
+
+def tiktok_transport():
+    """Ponto de troca para testes (TikTok falso). Em produção, rede de verdade."""
+    return None
+
+
+def _redirect_tiktok() -> str:
+    return f"{settings.PUBLIC_API_URL}/integracoes/tiktok/callback"
+
+
+async def _credenciais_tiktok(db: AsyncSession, tenant_id: uuid.UUID) -> tuple[str, str]:
+    from app.services.chaves_api import obter_chave, separar_tiktok
+
+    chave = await obter_chave(db, tenant_id, "tiktok")
+    if not chave:
+        raise HTTPException(status_code=422, detail="Cadastre antes as chaves do TikTok em Configurações.")
+    return separar_tiktok(chave)
+
+
+@router.get("/tiktok/iniciar")
+async def iniciar_conexao_tiktok(token: Annotated[str, Query()], db: Annotated[AsyncSession, Depends(get_db)]) -> RedirectResponse:
+    from app.integrations.social import tiktok_api
+
+    user_id = decode_access_token(token)
+    user = (await db.execute(select(User).where(User.id == user_id))).scalar_one_or_none() if user_id else None
+    if user is None:
+        raise HTTPException(status_code=401, detail="Token inválido")
+    client_key, _ = await _credenciais_tiktok(db, user.tenant_id)
+    return RedirectResponse(tiktok_api.url_autorizacao(client_key, _redirect_tiktok(), create_access_token(user.id)))
+
+
+@router.get("/tiktok/callback")
+async def callback_tiktok(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    state: Annotated[str, Query()],
+    code: Annotated[str | None, Query()] = None,
+    error: Annotated[str | None, Query()] = None,
+) -> RedirectResponse:
+    from app.integrations.social import tiktok_api
+    from app.services.tiktok import salvar_conexao
+
+    if error or not code:
+        return RedirectResponse(f"{settings.FRONTEND_URL}/visao-geral?erro=tiktok")
+    user_id = decode_access_token(state)
+    user = (await db.execute(select(User).where(User.id == user_id))).scalar_one_or_none() if user_id else None
+    if user is None:
+        raise HTTPException(status_code=400, detail="state inválido")
+    client_key, client_secret = await _credenciais_tiktok(db, user.tenant_id)
+    transport = tiktok_transport()
+    try:
+        tokens = await tiktok_api.trocar_code_por_tokens(client_key, client_secret, code, _redirect_tiktok(), transport)
+        perfil = await tiktok_api.TikTokAPI(tokens.access_token, transport=transport).perfil()
+    except tiktok_api.ErroTikTok:
+        logger.exception("TikTok: falha ao concluir a conexão")
+        return RedirectResponse(f"{settings.FRONTEND_URL}/visao-geral?erro=tiktok")
+    await salvar_conexao(db, user.tenant_id, tokens, perfil)
+    return RedirectResponse(f"{settings.FRONTEND_URL}/visao-geral?conectado=tiktok")
+
+
+@router.delete("/tiktok", status_code=204)
+async def desconectar_tiktok(db: Annotated[AsyncSession, Depends(get_db)],
+                             current_user: Annotated[User, Depends(get_current_user)]) -> None:
+    conexao = (await db.execute(select(SocialConnection).where(
+        SocialConnection.tenant_id == current_user.tenant_id, SocialConnection.plataforma == "tiktok"
     ))).scalar_one_or_none()
     if conexao is not None:
         conexao.status = "desconectado"
