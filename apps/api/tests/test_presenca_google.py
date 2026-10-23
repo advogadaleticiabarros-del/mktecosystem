@@ -32,8 +32,9 @@ def _desativada(servico: str) -> httpx.Response:
     )
 
 
-def _google_falso(desativadas: set[str] = frozenset()):
-    """Um Google de mentira que responde cada API pelo host da URL."""
+def _google_falso(desativadas: set[str] = frozenset(), datas_fixas: bool = True):
+    """Um Google de mentira que responde cada API pelo host da URL. `datas_fixas` confere as datas do Search
+    Console para hoje = 22/10/2026 (desligar quando o teste usa a data real)."""
 
     def handler(request: httpx.Request) -> httpx.Response:
         host, caminho = request.url.host, request.url.path
@@ -154,9 +155,10 @@ def _google_falso(desativadas: set[str] = frozenset()):
                     {"siteUrl": "sc-domain:advogadaleticiabarros.com.br", "permissionLevel": "siteOwner"}]})
             assert "sc-domain%3Aadvogadaleticiabarros.com.br" in str(request.url)
             corpo = json.loads(request.content)
-            assert corpo["endDate"] == "2026-10-19"  # 3 dias de atraso do Search Console
+            if datas_fixas:
+                assert corpo["endDate"] == "2026-10-19"  # 3 dias de atraso do Search Console
             dims = corpo["dimensions"]
-            if dims == ["date"]:
+            if dims == ["date"] and datas_fixas:
                 assert corpo["startDate"] == "2026-07-22"
             if dims == ["date"]:
                 rows = [{"keys": ["2026-10-15"], "clicks": 3, "impressions": 100, "ctr": 0.03, "position": 8.0}]

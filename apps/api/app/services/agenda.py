@@ -3,6 +3,9 @@
 Instagram: 1 publicação por dia (pedido da Letícia em 16/10/2026: com várias por dia, os posts não têm tempo de
 esquentar). Cada peça aprovada vai para o primeiro dia, a partir de amanhã, sem nenhum post do Instagram (Stories não
 contam: o Orbit não publica Stories). Em dia de Reels, só o Reels.
+Reels só 2 vezes por semana, na terça e na sexta (pedido de 23/10/2026: cada Reels precisa de tempo para se
+destacar); o resto do feed vai para os outros cinco dias. Reels com data combinada fora de terça ou sexta vai para a
+próxima terça ou sexta livre.
 Horários pelo alcance real do perfil nos últimos 12 meses (análise do Instagram no Orbit): Reels 21:00 (melhor
 horário), feed 14:00 de segunda a sexta e 11:00 no sábado e no domingo.
 Peça com `corpo.programacao` (data e hora combinadas na produção) vai para essa data e hora.
@@ -24,6 +27,7 @@ from app.services.agendamento_horario import hoje_brasilia
 HORARIOS_PLAYBOOK = ["11:00", "17:00"]
 TIPOS_DO_FEED = {"carrossel", "carousel", "estatico", "frase", "pergunta", "reels"}
 HORARIO_REELS, HORARIO_FEED_SEMANA, HORARIO_FEED_FIM_DE_SEMANA = "21:00", "14:00", "11:00"
+DIAS_REELS = {1, 4}  # terça e sexta: 2 Reels por semana (pedido de 23/10/2026)
 
 FORMATO_POR_TIPO = {
     "carrossel": "carrossel",
@@ -71,9 +75,12 @@ async def proxima_vaga(db: AsyncSession, tenant_id: uuid.UUID) -> tuple[date, st
         dia += timedelta(days=1)
 
 
-async def dia_livre_no_instagram(db: AsyncSession, tenant_id: uuid.UUID) -> date:
-    """Primeiro dia, a partir de amanhã, sem nenhuma publicação do Instagram (Stories não contam)."""
-    amanha = hoje_brasilia() + timedelta(days=1)
+async def dia_livre_no_instagram(db: AsyncSession, tenant_id: uuid.UUID, tipo: str = "carrossel",
+                                 a_partir: date | None = None) -> date:
+    """Primeiro dia livre do Instagram (Stories não contam) a partir de amanhã (ou de `a_partir`).
+    Reels só nos DIAS_REELS; o resto do feed só nos outros dias."""
+    amanha = max(hoje_brasilia() + timedelta(days=1), a_partir or date.min)
+    dias_permitidos = DIAS_REELS if tipo == "reels" else set(range(7)) - DIAS_REELS
     ocupados = set(
         (
             await db.execute(
@@ -87,7 +94,7 @@ async def dia_livre_no_instagram(db: AsyncSession, tenant_id: uuid.UUID) -> date
         ).scalars().all()
     )
     dia = amanha
-    while dia in ocupados:
+    while dia in ocupados or dia.weekday() not in dias_permitidos:
         dia += timedelta(days=1)
     return dia
 
@@ -127,10 +134,14 @@ async def agendar_conteudo_aprovado(
     titulo = pauta.titulo if pauta else f"Conteúdo {piece.tipo}"
 
     programacao = _programacao_combinada(piece)
-    if programacao:
+    if programacao and piece.tipo == "reels" and programacao[0].weekday() not in DIAS_REELS:
+        # A regra dos 2 Reels por semana vale também para a data combinada: vai para a próxima terça ou sexta livre.
+        dia = await dia_livre_no_instagram(db, piece.tenant_id, "reels", a_partir=programacao[0])
+        horario = HORARIO_REELS
+    elif programacao:
         dia, horario = programacao
     elif piece.tipo in TIPOS_DO_FEED:
-        dia = await dia_livre_no_instagram(db, piece.tenant_id)
+        dia = await dia_livre_no_instagram(db, piece.tenant_id, piece.tipo)
         horario = horario_instagram(piece.tipo, dia)
     else:
         dia, horario = await proxima_vaga(db, piece.tenant_id)

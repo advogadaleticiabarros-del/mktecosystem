@@ -24,7 +24,7 @@ class SiteVazio:
 
 
 def _google_com_escrita(pedidos: list):
-    leitura = _google_falso()
+    leitura = _google_falso(datas_fixas=False)
 
     async def handler(request: httpx.Request) -> httpx.Response:
         pedidos.append(request)

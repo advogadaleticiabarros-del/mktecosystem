@@ -116,7 +116,7 @@ publicado, um comentário do próprio @adv.leticiabarros2.
 - Sinais que importam: tempo assistido, envios por alcance (3-5x a curtida),
   curtidas por alcance; salvamentos como indicador de valor.
 - Primeira hora: primeiro comentário fixado; responder todos os comentários.
-- Mínimo 2 Reels/semana, um testado como Trial Reels.
+- **2 Reels por semana, terça e sexta às 21h** (pedido de 23/10/2026: cada Reels precisa de tempo para se destacar; o Orbit já agenda assim). Trial Reels à parte (não ocupam o dia).
 - Avaliar após 7 dias: envios e salvamentos por alcance, % até o último slide,
   retenção nos 3 primeiros segundos, visitas ao perfil.
 

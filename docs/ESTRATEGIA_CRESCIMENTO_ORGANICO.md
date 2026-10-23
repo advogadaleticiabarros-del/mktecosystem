@@ -50,7 +50,7 @@ Nenhuma etapa oferece serviço (publicidade passiva, Provimento 205).
 
 ## Táticas para seguidores novos
 
-Reels com rosto 3–4/semana; Trial Reels toda semana (2 ganchos do mesmo tema);
+Reels com rosto: **2 Reels por semana, terça e sexta às 21h** (pedido de 23/10/2026: cada Reels precisa de tempo para se destacar; o Orbit já agenda assim); Trial Reels toda semana (2 ganchos do mesmo tema);
 história real sem identificar cliente; collab com não advogadas (psicóloga
 perinatal, doula, contadora, RH), sem pagamento; notícia com prazo em até 24 h
 (Radar de referências do Orbit); Reels de apresentação fixado; imprensa local;
@@ -69,7 +69,7 @@ Letícia na primeira hora, 3–5 Stories por dia, primeiro comentário automáti
 1. Arrumar a casa (09/10–31/10): nome, bio, destaques, fixados, 2 Reels/semana,
    Trial Reels semanais, lote de outubro no ar.
    Portão 1: Reels em metade dos posts por 3 semanas.
-2. Acelerar descoberta (01/11–30/11): 3–4 Reels/semana, 1 collab/mês, notícia com
+2. Acelerar descoberta (01/11–30/11): 2 Reels/semana (terça e sexta; antes eram 3–4, mudado em 23/10/2026), 1 collab/mês, notícia com
    prazo em 24 h, 13º, feriados, Black Friday.
    Portão 2: posts com salvamentos toda semana.
 3. Converter e escalar (01/12–06/01): repetir formatos campeões, carrosséis ligados

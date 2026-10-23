@@ -27,6 +27,10 @@ Plano até 31/12/2026 ("sair da bolha", pilares novos Jornada 2026-2027 e Empres
 `docs/PLANO_CRESCIMENTO_OUT_DEZ_2026.md`.
 Mídia paga (Meta Ads): `docs/MIDIA_PAGA_META_ADS.md` é obrigatório antes de qualquer campanha paga (regra dos
 **interesses cruzados**, limites da OAB para impulsionamento, público qualificado trabalhista). Pedido de 16/10/2026.
+LinkedIn (B2B, PMEs): `docs/ESTRATEGIA_LINKEDIN_PME.md` vale até 31/01/2027 (pedido de 23/10/2026: "manter a mesma
+estratégia até janeiro"): fila terça e quinta 8h, funil LP de empresas + Checklist 2027, página da empresa, nada de
+abordagem direta.
+Instagram: **Reels só 2 vezes por semana, terça e sexta 21h** (pedido de 23/10/2026; `agenda.py` já aplica).
 Edição de Reels a partir de gravação da Dra. (obrigatório, padrão fixo desde 21/10/2026: "faremos tudo igual"):
 skill `leticia-reels-premium` passo a passo, com `producao/reels/motor/fala.py` (até "fala ok") e `conferir.py` (até
 "sem avisos"). Sem música nem ambiência, voz da Dra. original (não mexer no áudio: só ganho), -14 LUFS (menos se a gravação

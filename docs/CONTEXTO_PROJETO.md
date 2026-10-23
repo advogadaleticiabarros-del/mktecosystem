@@ -780,6 +780,27 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   Google Search Console", que já está verificado). Se o Bing pedir arquivo `BingSiteAuth.xml` ou meta `msvalidate.01`,
   ela manda o código e a gente sobe na raiz.
 
+## LinkedIn B2B, Reels 2 por semana e TikTok (23/10/2026)
+
+- **LinkedIn** (estratégia em `docs/ESTRATEGIA_LINKEDIN_PME.md`, até 31/01/2027): perfil da Dra. conectado (token
+  de 60 dias, vence 22/12/2026; o Orbit avisa 7 dias antes). Tela `/linkedin`: card **Resultados** (visitas e
+  contatos vindos do LinkedIn, do GA4 em `painel.analytics.linkedin`, porque a API do LinkedIn não dá números),
+  edição de post na fila, "Aprovar todos os rascunhos" e fila em ordem de data. Links do site saem com UTM
+  (`link_com_utm`). Texto aceita menção `@[Nome](urn:li:organization:ID)`. 26 rascunhos na fila (27/10 a 28/01).
+- **Página da empresa** criada (0 seguidores). Capa em `producao/linkedin/capa-pagina-linkedin@2x.png`. Publicar na
+  página e ler números depende da Community Management API (app separado, análise do LinkedIn).
+- **LP de empresas** regerada (EC 141 promulgada em 16/10, seção e formulário do Checklist 2027) e **Checklist 2027**
+  (`lp/checklist-2027-empresas.pdf`, gerador `lp/_gerar_pdf_checklist_empresas.py`): esperando a aprovação para
+  subir (LP em `lp/`, PDF em `assets/downloads/`).
+- **Reels: 2 por semana, terça e sexta 21h** (`DIAS_REELS` em `agenda.py`; feed nos outros cinco dias; Reels com
+  data combinada fora desses dias vai para a próxima terça ou sexta). Calendário existente remarcado em 23/10
+  (log em `/root/orbit-backups/remarcacao_reels_2026-10-23.json` na VPS). Em dezembro alguns dias de Reels também
+  têm o carrossel das 14h já marcado (datas temáticas não foram mexidas).
+- **TikTok parado:** o código (`services/tiktok.py`, `integrations/social/tiktok_api.py` e testes) foi escrito em
+  15/10 por outra sessão e **nunca foi commitado**; chaves salvas, conta não conectada, nada no calendário. Sem
+  a auditoria da TikTok, a API só publica como privado (SELF_ONLY).
+- 6 Stories de 16/10 ficaram como "pronto" e não saíram (o Orbit não publica Stories).
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 - **Crescimento orgânico (19/10/2026, pedido "faça tudo")**:

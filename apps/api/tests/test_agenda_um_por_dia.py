@@ -47,33 +47,61 @@ async def test_cada_peca_aprovada_vai_para_o_proximo_dia_sem_post(db_session):
     frase = await _aprovar(db_session, tenant, "frase")
     carrossel = await _aprovar(db_session, tenant, "carrossel")
 
-    assert [a.data_agendada for a in (pergunta, frase, carrossel)] == [AMANHA + timedelta(days=i) for i in range(3)]
+    esperado, dia = [], AMANHA
+    while len(esperado) < 3:
+        if dia.weekday() not in (1, 4):  # terça e sexta ficam para os Reels
+            esperado.append(dia)
+        dia += timedelta(days=1)
+    assert [a.data_agendada for a in (pergunta, frase, carrossel)] == esperado
     assert carrossel.formato == "carrossel" and pergunta.formato == frase.formato == "post"
     for a in (pergunta, frase, carrossel):
         assert a.horario == horario_instagram(a.formato, a.data_agendada)
 
 
+def _proximo(dia: date, dias_semana: set[int]) -> date:
+    while dia.weekday() not in dias_semana:
+        dia += timedelta(days=1)
+    return dia
+
+
 @pytest.mark.anyio
-async def test_dia_de_reels_fica_so_com_o_reels(db_session):
+async def test_reels_so_terca_e_sexta_e_o_feed_nos_outros_dias(db_session):
+    """Pedido de 23/10/2026: Reels só 2 vezes por semana, para cada um ter tempo de se destacar."""
     tenant = await _tenant(db_session)
-    reels = await _aprovar(db_session, tenant, "reels")
+    r1 = await _aprovar(db_session, tenant, "reels")
+    r2 = await _aprovar(db_session, tenant, "reels")
+    r3 = await _aprovar(db_session, tenant, "reels")
     estatico = await _aprovar(db_session, tenant, "estatico")
 
-    assert reels.data_agendada == AMANHA and reels.horario == "21:00" and reels.formato == "reels"
-    assert estatico.data_agendada == AMANHA + timedelta(days=1)
+    dias = [r.data_agendada for r in (r1, r2, r3)]
+    assert all(d.weekday() in (1, 4) for d in dias) and len(set(dias)) == 3
+    assert dias[0] == _proximo(AMANHA, {1, 4}) and dias == sorted(dias)
+    assert {r.horario for r in (r1, r2, r3)} == {"21:00"} and r1.formato == "reels"
+    assert estatico.data_agendada.weekday() not in (1, 4)
+    assert estatico.data_agendada == _proximo(AMANHA, {0, 2, 3, 5, 6})
+
+
+@pytest.mark.anyio
+async def test_reels_com_data_combinada_fora_de_terca_ou_sexta_vai_para_a_proxima(db_session):
+    tenant = await _tenant(db_session)
+    quarta = date(2026, 10, 28)
+    a = await _aprovar(db_session, tenant, "reels", corpo={"programacao": {"data": quarta.isoformat(), "hora": "21:00"}})
+    assert (a.data_agendada, a.horario) == (date(2026, 10, 30), "21:00")
 
 
 @pytest.mark.anyio
 async def test_pula_o_dia_que_ja_tem_post_e_ignora_blog_e_stories(db_session):
     tenant = await _tenant(db_session)
-    for dia, canal, formato in [(AMANHA, "instagram", "post"), (AMANHA + timedelta(days=1), "blog", "artigo"),
-                                (AMANHA + timedelta(days=1), "instagram", "story")]:
+    primeiro = _proximo(AMANHA, {0, 2, 3, 5, 6})
+    segundo = _proximo(primeiro + timedelta(days=1), {0, 2, 3, 5, 6})
+    for dia, canal, formato in [(primeiro, "instagram", "post"), (segundo, "blog", "artigo"),
+                                (segundo, "instagram", "story")]:
         db_session.add(ScheduledPost(tenant_id=tenant.id, titulo="x", canal=canal, formato=formato,
                                      data_agendada=dia, horario="10:00", status="pronto"))
     await db_session.flush()
 
     carrossel = await _aprovar(db_session, tenant, "carrossel")
-    assert carrossel.data_agendada == AMANHA + timedelta(days=1)
+    assert carrossel.data_agendada == segundo
 
 
 @pytest.mark.anyio
@@ -94,8 +122,9 @@ async def test_artigo_continua_no_blog(db_session):
 async def test_trial_reels_nao_ocupa_o_dia_dos_seguidores(db_session):
     """Trial Reels só aparece para quem não segue: não conta na regra de 1 publicação por dia."""
     tenant = await _tenant(db_session)
+    dia = _proximo(AMANHA, {0, 2, 3, 5, 6})
     db_session.add(ScheduledPost(tenant_id=tenant.id, titulo="x", canal="instagram", formato="trial",
-                                 data_agendada=AMANHA, horario="12:00", status="pronto"))
+                                 data_agendada=dia, horario="12:00", status="pronto"))
     await db_session.flush()
     carrossel = await _aprovar(db_session, tenant, "carrossel")
-    assert carrossel.data_agendada == AMANHA
+    assert carrossel.data_agendada == dia

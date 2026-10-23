@@ -1,7 +1,7 @@
 # Plano de conteúdo: 03/11 a 02/12/2026 (30 dias)
 
 Foco pedido pela Letícia (09/10/2026): **CLT / Direito Trabalhista (gestante é a especialidade)**,
-**Família** e **Previdenciário**. Fase da estratégia: "Acelerar descoberta" (3 Reels por semana,
+**Família** e **Previdenciário**. Fase da estratégia: "Acelerar descoberta" (2 Reels por semana, terça e sexta, desde 23/10/2026;
 notícia com prazo, 13º, feriados). Todos os formatos no padrão aprovado: carrossel com capa
 Ouro editorial, pergunta v6, frase, Mito ou Lei v3, Reels motion design (skill
 `leticia-reels-motion`), legendas SEO/IA, primeiro comentário e publicação automática.
