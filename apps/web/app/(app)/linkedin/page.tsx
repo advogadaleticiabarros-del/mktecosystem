@@ -99,7 +99,7 @@ function ItemFila({ p, conectado, ocupado, rodar, carregar, aprovar }: {
     <li className="rounded-md border p-3">
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
         <span className={`rounded-full px-2 py-0.5 font-medium ${p.status === "erro" ? "bg-destructive/15 text-destructive" : p.status === "aprovado" ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400" : "bg-muted"}`}>{NOME_STATUS[p.status]}</span>
-        <span className="text-muted-foreground">{new Date(p.publicar_em).toLocaleString("pt-BR", { weekday: "short", dateStyle: "short", timeStyle: "short" } as Intl.DateTimeFormatOptions)}</span>
+        <span className="text-muted-foreground">{new Date(p.publicar_em).toLocaleString("pt-BR", { weekday: "short", day: "2-digit", month: "2-digit", year: "2-digit", hour: "2-digit", minute: "2-digit" })}</span>
       </div>
       {editando ? (
         <div className="mt-2 space-y-2">
