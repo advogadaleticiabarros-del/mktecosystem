@@ -533,7 +533,7 @@ export default function VisaoGeralPage() {
           </div>
           <p className="mt-3 text-sm font-medium">TikTok</p>
           <p className="mt-1 text-xs text-muted-foreground">
-            {tiktokConectado ? tiktokConectado.nome_conta : "Os Reels do Instagram vão também para o TikTok, no mesmo dia"}
+            {tiktokConectado ? tiktokConectado.nome_conta : "Agenda própria do TikTok: 5 vídeos por semana"}
           </p>
           <div className="mt-3 flex flex-wrap gap-3">
             {tiktokConectado && (

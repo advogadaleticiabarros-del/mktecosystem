@@ -26,7 +26,7 @@ from app.services.central_google import atualizar_todos as atualizar_paineis_goo
 from app.services.central_google import publicar_posts_prontos as publicar_posts_google
 from app.services.google_business_metrics import coletar_metricas_google_business
 from app.services.linkedin import publicar_prontos as publicar_linkedin_prontos
-from app.services.tiktok import publicar_reels_no_tiktok
+from app.services.tiktok import publicar_fila_tiktok
 from app.services.coleta_instagram import coletar_instagram
 from app.services.instagram_metrics import coletar_metricas_diarias
 from app.services.instagram_publisher import publicar_agendamentos_prontos
@@ -60,9 +60,9 @@ async def job_envios() -> None:
 
 
 async def job_tiktok() -> None:
-    """Reels do Instagram também no TikTok, depois do horário do Instagram (envio de vídeo é lento: job à parte)."""
+    """Fila própria do TikTok, na grade de services/tiktok.py (envio de vídeo é lento: job à parte)."""
     async with SessionLocal() as db:
-        enviados = await publicar_reels_no_tiktok(db)
+        enviados = await publicar_fila_tiktok(db)
         if enviados:
             logger.info("TikTok: %d Reels enviados.", enviados)
 

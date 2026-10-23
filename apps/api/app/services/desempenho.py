@@ -197,6 +197,7 @@ def _tiktok(situacao: dict) -> dict:
             _kpi("Reels publicados", sum(1 for e in ultimos if e["status"] == "publicado")),
             _kpi("Esperando no app do TikTok", len(situacao.get("no_rascunho", []))),
             _kpi("Com erro", sum(1 for e in ultimos if e["status"] == "erro")),
+            _kpi("Na fila do TikTok", len(situacao.get("fila", []))),
         ],
         listas=[{"titulo": "Últimos envios", "colunas": ["Reels", "Situação"],
                  "linhas": [[e["titulo"], e["status"]] for e in ultimos[:8]]}],

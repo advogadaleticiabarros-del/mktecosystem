@@ -809,6 +809,17 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   de rascunhos** do TikTok (`status="no_rascunho"`): a pessoa publica pelo app colando a legenda que a tela
   `/tiktok` mostra e clica "Já publiquei". Escopos: `user.info.basic,video.upload,video.publish`. Redirect que
   precisa estar no app da TikTok: `https://api.orbit.advogadaleticiabarros.com.br/integracoes/tiktok/callback`.
+- **TikTok com agenda própria (23/10/2026, pedido "editorial próprio, horários de maior fluxo, viralização"):**
+  estratégia em `docs/ESTRATEGIA_TIKTOK.md` (algoritmo, grade, música, formatos, metas, revisão em 20/11).
+  `services/tiktok.py` agora tem **fila própria**: `publicar_fila_tiktok` (job a cada 10 min) põe cada Reels aprovado
+  com agendamento ativo do Instagram (e peças `tipo="tiktok"`, para cortes só do TikTok) na próxima vaga livre de
+  `GRADE_TIKTOK` (dom 10h, seg 18h, ter 12h, qua 20h, qui 18h), na ordem das datas do Instagram, e envia quando o
+  horário do TikTok chega. Vaga em `corpo["tiktok"]` (`data`, `horario`; `fora=True` tira do TikTok).
+  `PUT /tiktok/{id}/agenda` remarca/tira; a tela `/tiktok` mostra a fila. A regra antiga "só Reels depois da
+  conexão" caiu: Reels já publicados no Instagram também vão (para o TikTok são novos). Música: som **comercial**
+  "Em alta" posto no app ao publicar o rascunho, 10-15% sob a voz (a voz do arquivo não muda). A fila inicial
+  (23 vídeos, séries em dias seguidos) vai até 24/11; depois disso precisa de cortes curtos e respostas a
+  comentário para manter 5 por semana.
 - 6 Stories de 16/10 ficaram como "pronto" e não saíram (o Orbit não publica Stories).
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")

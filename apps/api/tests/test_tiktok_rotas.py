@@ -79,6 +79,20 @@ async def test_conectar_ver_rascunho_e_marcar_publicado(client, db_session):
     assert (await client.post(f"/tiktok/{piece.id}/publicado", headers=auth)).status_code == 204
     assert (await client.get("/tiktok", headers=auth)).json()["no_rascunho"] == []
     assert (await client.post(f"/tiktok/{piece.id}/publicado", headers=auth)).status_code == 404
+    # já enviado: não dá mais para remarcar
+    assert (await client.put(f"/tiktok/{piece.id}/agenda", headers=auth,
+                             json={"data": "2026-11-01", "horario": "10:00"})).status_code == 404
+
+    outro = ContentPiece(tenant_id=tenant.id, pauta_id=pauta.id, tipo="tiktok", status="aprovado", versao=1,
+                         corpo={"video": "https://x/c.mp4", "titulo": "Corte"})
+    db_session.add(outro)
+    await db_session.commit()
+    assert (await client.put(f"/tiktok/{outro.id}/agenda", headers=auth,
+                             json={"data": "2026-11-01", "horario": "10:00"})).status_code == 204
+    fila = (await client.get("/tiktok", headers=auth)).json()["fila"]
+    assert [(f["titulo"], f["data"], f["horario"]) for f in fila] == [("Corte", "2026-11-01", "10:00")]
+    assert (await client.put(f"/tiktok/{outro.id}/agenda", headers=auth, json={"data": None})).status_code == 204
+    assert (await client.get("/tiktok", headers=auth)).json()["fila"] == []
 
     assert (await client.delete("/integracoes/tiktok", headers=auth)).status_code == 204
     assert (await client.get("/tiktok", headers=auth)).json()["conectado"] is False

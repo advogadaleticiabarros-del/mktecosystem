@@ -31,6 +31,9 @@ LinkedIn (B2B, PMEs): `docs/ESTRATEGIA_LINKEDIN_PME.md` vale até 31/01/2027 (pe
 estratégia até janeiro"): fila terça e quinta 8h, funil LP de empresas + Checklist 2027, página da empresa, nada de
 abordagem direta.
 Instagram: **Reels só 2 vezes por semana, terça e sexta 21h** (pedido de 23/10/2026; `agenda.py` já aplica).
+TikTok: **agenda e editorial próprios** (pedido de 23/10/2026): `docs/ESTRATEGIA_TIKTOK.md` (5 vídeos por semana na
+`GRADE_TIKTOK`, som comercial "Em alta" a 10-15% sob a voz, séries em dias seguidos, resposta a comentário, revisão
+dos horários em 20/11/2026).
 Edição de Reels a partir de gravação da Dra. (obrigatório, padrão fixo desde 21/10/2026: "faremos tudo igual"):
 skill `leticia-reels-premium` passo a passo, com `producao/reels/motor/fala.py` (até "fala ok") e `conferir.py` (até
 "sem avisos"). Sem música nem ambiência, voz da Dra. original (não mexer no áudio: só ganho), -14 LUFS (menos se a gravação
