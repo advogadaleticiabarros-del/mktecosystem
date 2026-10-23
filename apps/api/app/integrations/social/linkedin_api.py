@@ -78,8 +78,13 @@ async def credenciais_validas(client_id: str, client_secret: str,
                                           "client_secret": client_secret})
     if r.status_code < 400:
         return True
-    corpo = r.json() if r.content and r.headers.get("content-type", "").startswith("application/json") else {}
-    return corpo.get("error") != "invalid_client" and r.status_code != 401
+    try:
+        corpo = r.json()
+    except ValueError:
+        corpo = {}
+    # Só "invalid_client" diz que o ID ou o Secret estão errados; "access_denied"/"unauthorized_client" (mesmo com
+    # status 401) só dizem que o app não tem token de aplicação, o que é normal.
+    return corpo.get("error") != "invalid_client"
 
 
 def _versao_inicial(hoje: date) -> str:

@@ -125,12 +125,14 @@ PROVEDORES = {
         "nome": "TikTok",
         "uso": "Publicação automática dos Reels no TikTok. Cole a Client Key e o Client Secret do app, separados por espaço.",
         "variavel": "TIKTOK_CLIENT",
+        "campos": ["Client Key", "Client Secret"],
         "validar": validar_tiktok,
     },
     "linkedin": {
         "nome": "LinkedIn",
-        "uso": "Publicação dos posts no perfil da Dra. Cole o Client ID e o Client Secret do aplicativo, separados por espaço.",
+        "uso": "Publicação dos posts no perfil da Dra. O Client ID e o Client Secret ficam na aba \"Auth\" do aplicativo.",
         "variavel": "LINKEDIN_CLIENT",
+        "campos": ["Client ID", "Client Secret"],
         "validar": validar_linkedin,
     },
     "bing": {
@@ -149,6 +151,7 @@ def _status(provedor: str, linha: ChaveApi | None) -> dict:
         "provedor": provedor,
         "nome": info["nome"],
         "uso": info["uso"],
+        "campos": info.get("campos"),
         "configurada": linha is not None or via_ambiente,
         "final": linha.final if linha else None,
         "validada_em": linha.validada_em.isoformat() if linha else None,

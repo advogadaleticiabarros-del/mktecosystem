@@ -15,11 +15,17 @@ type StatusChave = {
   final: string | null;
   validada_em: string | null;
   origem: "painel" | "servidor" | null;
+  campos?: string[] | null;
 };
 
 function ChaveServico({ status, onMudou }: { status: StatusChave; onMudou: () => void }) {
   const [editando, setEditando] = useState(!status.configurada);
   const [chave, setChave] = useState("");
+  const campos = status.campos && status.campos.length > 1 ? status.campos : null;
+  const [partes, setPartes] = useState<string[]>(campos ? campos.map(() => "") : []);
+  // Serviços com duas credenciais (ex.: LinkedIn) mostram um campo para cada; a API recebe as duas juntas.
+  const valor = campos ? partes.map((p) => p.trim()).join(" ") : chave;
+  const completo = campos ? partes.every((p) => p.trim().length >= 4) : chave.trim().length >= 8;
   const [mostrar, setMostrar] = useState(false);
   const [validando, setValidando] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
@@ -31,13 +37,14 @@ function ChaveServico({ status, onMudou }: { status: StatusChave; onMudou: () =>
     setOk(false);
     setValidando(true);
     try {
-      const r = await apiFetch(`/chaves/${status.provedor}`, { method: "PUT", body: JSON.stringify({ chave }) });
+      const r = await apiFetch(`/chaves/${status.provedor}`, { method: "PUT", body: JSON.stringify({ chave: valor }) });
       if (!r.ok) {
         const corpo = await r.json().catch(() => null);
         setErro(corpo?.detail ?? "Não foi possível validar a chave agora. Tente de novo em alguns minutos.");
         return;
       }
       setChave("");
+      setPartes(campos ? campos.map(() => "") : []);
       setEditando(false);
       setOk(true);
       onMudou();
@@ -94,30 +101,54 @@ function ChaveServico({ status, onMudou }: { status: StatusChave; onMudou: () =>
 
       {editando && (
         <form onSubmit={salvar} className="mt-3 space-y-2">
-          <div className="relative">
-            <Input
-              type={mostrar ? "text" : "password"}
-              autoComplete="off"
-              spellCheck={false}
-              placeholder="Cole aqui a chave (começa com sk-)"
-              value={chave}
-              onChange={(e) => setChave(e.target.value)}
-              className="pr-10 font-mono"
-              required
-            />
-            <button
-              type="button"
-              onClick={() => setMostrar((m) => !m)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground"
-              aria-label={mostrar ? "Esconder a chave" : "Mostrar a chave"}
-            >
-              {mostrar ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </button>
-          </div>
+          {campos ? (
+            campos.map((rotulo, i) => (
+              <label key={rotulo} className="block space-y-1">
+                <span className="text-xs font-medium text-muted-foreground">{rotulo}</span>
+                <Input
+                  id={`chave-${status.provedor}-${i}`}
+                  type={mostrar || i === 0 ? "text" : "password"}
+                  autoComplete="off"
+                  spellCheck={false}
+                  placeholder={`Cole aqui o ${rotulo}`}
+                  value={partes[i] ?? ""}
+                  onChange={(e) => setPartes((atual) => atual.map((v, j) => (j === i ? e.target.value : v)))}
+                  className="font-mono"
+                  required
+                />
+              </label>
+            )).concat(
+              <button key="mostrar" type="button" onClick={() => setMostrar((m) => !m)} className="text-xs text-muted-foreground hover:text-foreground">
+                {mostrar ? "Esconder o secret" : "Mostrar o secret"}
+              </button>,
+            )
+          ) : (
+            <div className="relative">
+              <Input
+                id={`chave-${status.provedor}`}
+                type={mostrar ? "text" : "password"}
+                autoComplete="off"
+                spellCheck={false}
+                placeholder="Cole aqui a chave"
+                value={chave}
+                onChange={(e) => setChave(e.target.value)}
+                className="pr-10 font-mono"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setMostrar((m) => !m)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground"
+                aria-label={mostrar ? "Esconder a chave" : "Mostrar a chave"}
+              >
+                {mostrar ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
+          )}
           <div className="flex flex-wrap items-center gap-2">
-            <Button type="submit" size="sm" disabled={validando || chave.trim().length < 8}>
+            <Button type="submit" size="sm" disabled={validando || !completo}>
               {validando && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-              {validando ? "Testando com a OpenAI…" : "Validar e salvar"}
+              {validando ? `Testando com ${status.nome}…` : "Validar e salvar"}
             </Button>
             {status.configurada && (
               <Button type="button" variant="ghost" size="sm" onClick={() => setEditando(false)}>

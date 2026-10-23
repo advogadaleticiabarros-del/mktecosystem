@@ -27,7 +27,8 @@ async def test_credenciais_validas_so_recusa_invalid_client():
         return httpx.Response(401, json={"error": "invalid_client", "error_description": "Client authentication failed"})
 
     def app_comum(request):
-        return httpx.Response(400, json={"error": "access_denied"})
+        return httpx.Response(401, json={"error": "access_denied",
+                                         "error_description": "This application is not allowed to create application tokens"})
 
     assert await li.credenciais_validas("x", "y", transport=httpx.MockTransport(recusa)) is False
     assert await li.credenciais_validas("x", "y", transport=httpx.MockTransport(app_comum)) is True
