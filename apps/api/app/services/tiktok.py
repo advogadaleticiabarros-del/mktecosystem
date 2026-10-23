@@ -16,7 +16,7 @@ Interface:
   O acesso (24 h) é renovado sozinho.
 - `remarcar(db, tenant_id, piece_id, data, horario)`: muda a vaga de um vídeo ainda não enviado; `data=None` tira
   o vídeo do TikTok (`fora=True`, não volta para a fila).
-- `situacao(db, tenant_id)`: conexão, fila (próximas vagas), rascunhos esperando publicação (com legenda) e últimos
+- `situacao(db, tenant_id)`: conexão, fila (próximas vagas), pauta em produção (`para_gravar`/`para_editar`), rascunhos esperando publicação (com legenda) e últimos
   envios.
 - `marcar_publicado(db, tenant_id, piece_id)`: quem publicou o rascunho pelo app avisa o Orbit.
 """
@@ -44,6 +44,10 @@ ENCERRADOS = ("publicado", "no_rascunho", "erro")
 # 5 vídeos por semana, em 3 faixas para testar (docs/ESTRATEGIA_TIKTOK.md; rever com os números em 20/11/2026)
 GRADE_TIKTOK = {6: "10:00", 0: "18:00", 1: "12:00", 2: "20:00", 3: "18:00"}  # dom, seg, ter, qua, qui
 AGENDAS_INATIVAS = ("pausado", "cancelado")
+# Pauta do TikTok ainda sem vídeo (docs/TIKTOK_PAUTA_NOV_DEZ_2026.md): roteiro para a Dra. gravar ou corte a editar.
+# Com o vídeo pronto, a peça vai para "rascunho" (aprovação) e, aprovada, entra sozinha na fila.
+EM_PRODUCAO = ("para_gravar", "para_editar")
+CAMPOS_DA_PAUTA = ("data_prevista", "gancho", "fala", "fecho", "palavra_chave", "fonte", "origem")
 
 
 async def credenciais_do_painel(db: AsyncSession, tenant_id: uuid.UUID) -> tuple[str, str]:
@@ -213,9 +217,13 @@ async def remarcar(db: AsyncSession, tenant_id: uuid.UUID, piece_id: uuid.UUID, 
 
 async def situacao(db: AsyncSession, tenant_id: uuid.UUID) -> dict:
     conexao = await _conexao(db, tenant_id)
-    fila, envios = [], []
+    fila, envios, producao = [], [], []
     for piece, agendamento, pauta in await _videos(db, tenant_id):
         estado, corpo = _estado(piece), piece.corpo or {}
+        if piece.status in EM_PRODUCAO:
+            producao.append({"id": str(piece.id), "titulo": _titulo(piece, agendamento, pauta), "status": piece.status,
+                             **{k: corpo.get(k) for k in CAMPOS_DA_PAUTA}})
+            continue
         item = {"id": str(piece.id), "titulo": _titulo(piece, agendamento, pauta), "status": estado.get("status"),
                 "modo": estado.get("modo"), "em": estado.get("em"), "motivo": estado.get("motivo"),
                 "legenda": _legenda(corpo), "video": corpo.get("video"), "data": estado.get("data"),
@@ -225,6 +233,7 @@ async def situacao(db: AsyncSession, tenant_id: uuid.UUID) -> dict:
         if estado.get("status"):
             envios.append(item)
     fila.sort(key=lambda e: (e["data"], e["horario"]))
+    producao.sort(key=lambda p: p["data_prevista"] or "")
     envios.sort(key=lambda e: e["em"] or "", reverse=True)
     return {
         "conectado": conexao is not None,
@@ -232,6 +241,7 @@ async def situacao(db: AsyncSession, tenant_id: uuid.UUID) -> dict:
         "desde": conexao.conectado_em if conexao else None,
         "grade": {str(dia): horario for dia, horario in GRADE_TIKTOK.items()},
         "fila": fila,
+        "producao": producao,
         "no_rascunho": [e for e in envios if e["status"] == "no_rascunho"],
         "ultimos": envios[:12],
     }

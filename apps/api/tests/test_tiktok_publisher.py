@@ -213,3 +213,20 @@ async def test_sem_auditoria_vai_para_o_rascunho_e_a_tela_mostra_a_legenda(db_se
     assert (await situacao(db_session, tenant.id))["no_rascunho"] == []
     await db_session.refresh(piece)
     assert piece.corpo["tiktok"]["status"] == "publicado" and piece.corpo["tiktok"]["publicado_pelo_app"]
+
+
+@pytest.mark.anyio
+async def test_pauta_em_producao_aparece_na_tela_e_nao_entra_na_fila(db_session):
+    tenant = await _tenant(db_session)
+    await _reels(db_session, tenant, "Corte", tipo="tiktok", agendar=False, status="para_editar",
+                 corpo={"titulo": "C1 Corte", "data_prevista": "2026-11-25", "gancho": "Pode demitir?",
+                        "origem": "gestante-reel-1.mp4 16,3–34,5 s"})
+    await _reels(db_session, tenant, "Roteiro", tipo="tiktok", agendar=False, status="para_gravar",
+                 corpo={"titulo": "G1 Pedi demissão", "data_prevista": "2026-11-26", "gancho": "Perdi tudo?",
+                        "fala": "Não.", "fecho": "Guarde o termo.", "fonte": "CLT, art. 477"})
+    await rodar(db_session, APIFalsa(), SEXTA)
+    s = await situacao(db_session, tenant.id)
+    assert s["fila"] == []
+    assert [(p["titulo"], p["status"], p["data_prevista"]) for p in s["producao"]] == [
+        ("C1 Corte", "para_editar", "2026-11-25"), ("G1 Pedi demissão", "para_gravar", "2026-11-26")]
+    assert s["producao"][1]["fala"] == "Não." and s["producao"][0]["origem"].startswith("gestante")

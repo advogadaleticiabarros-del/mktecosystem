@@ -20,11 +20,24 @@ type Envio = {
   video: string | null;
 };
 type NaFila = { id: string; titulo: string; data: string; horario: string; video: string | null };
+type EmProducao = {
+  id: string;
+  titulo: string;
+  status: "para_gravar" | "para_editar";
+  data_prevista: string | null;
+  gancho: string | null;
+  fala: string | null;
+  fecho: string | null;
+  palavra_chave: string | null;
+  fonte: string | null;
+  origem: string | null;
+};
 type Situacao = {
   conectado: boolean;
   nome: string | null;
   desde: string | null;
   fila: NaFila[];
+  producao: EmProducao[];
   no_rascunho: Envio[];
   ultimos: Envio[];
 };
@@ -35,6 +48,31 @@ function diaCurto(iso: string) {
   const [a, m, d] = iso.split("-").map(Number);
   const dia = new Date(a, m - 1, d);
   return `${DIA_SEMANA[dia.getDay()]} ${String(d).padStart(2, "0")}/${String(m).padStart(2, "0")}`;
+}
+
+function ItemProducao({ p }: { p: EmProducao }) {
+  const gravar = p.status === "para_gravar";
+  return (
+    <li className="py-2 text-sm">
+      <details>
+        <summary className="flex cursor-pointer flex-wrap items-center gap-2">
+          <span className="w-24 shrink-0 font-medium tabular-nums">{p.data_prevista ? diaCurto(p.data_prevista) : "sem data"}</span>
+          <span className="min-w-0 flex-1">{p.titulo}</span>
+          <span className={`rounded-full px-2 py-0.5 text-xs ${gravar ? "bg-primary/15 text-primary" : "bg-muted"}`}>
+            {gravar ? "Dra. grava" : "Corte (edição)"}
+          </span>
+        </summary>
+        <div className="mt-2 space-y-1.5 rounded bg-muted/50 p-3">
+          {p.gancho && <p><span className="font-medium">Gancho:</span> {p.gancho}</p>}
+          {p.fala && <p><span className="font-medium">Fala:</span> {p.fala}</p>}
+          {p.fecho && <p><span className="font-medium">Fecho:</span> {p.fecho}</p>}
+          {p.origem && <p><span className="font-medium">Trecho:</span> {p.origem}</p>}
+          {p.palavra_chave && <p className="text-xs text-muted-foreground">Palavra-chave: {p.palavra_chave}</p>}
+          {p.fonte && <p className="text-xs text-muted-foreground">Fonte: {p.fonte}</p>}
+        </div>
+      </details>
+    </li>
+  );
 }
 
 function ItemFila({ f, aoMudar }: { f: NaFila; aoMudar: (vaga: { data: string | null; horario?: string }) => Promise<void> }) {
@@ -172,6 +210,15 @@ export default function TiktokPage() {
                 await carregar();
               }} />
             ))}
+          </ul>
+        </Secao>
+        <Secao
+          titulo="Para gravar e editar (25/11 a 31/12)"
+          descricao="Pauta do TikTok depois que os Reels prontos acabam. Roteiros para a Dra. gravar até 20/11 (na vertical, uns 30 segundos, começando direto na pergunta) e cortes de Reels prontos com gancho novo. Toque num item para ver o roteiro. Com o vídeo pronto e aprovado, ele entra na fila sozinho."
+        >
+          {!s?.producao?.length && <p className="text-sm text-muted-foreground">Nada em produção.</p>}
+          <ul className="divide-y">
+            {s?.producao?.map((p) => <ItemProducao key={p.id} p={p} />)}
           </ul>
         </Secao>
         <Secao titulo="Últimos envios" descricao="Cada vídeo vai uma única vez ao TikTok.">
