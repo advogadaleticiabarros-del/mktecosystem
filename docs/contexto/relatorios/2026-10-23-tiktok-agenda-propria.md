@@ -72,3 +72,14 @@ vamos trabalhar no crescimento a curto prazo e viralização". Respondeu "sim" �
 ## Próxima sessão
 Ver na tela `/tiktok` se o vídeo de domingo 25/10 10h caiu no rascunho e foi publicado. Na semana de 09/11, começar
 os cortes com a skill `leticia-reels-premium` (peça e arquivo novos).
+
+## Continuação 2: pauta dentro do Orbit
+- Pergunta da Jessica: "está no Orbit?". Não estava (só no documento). Agora está, no commit `6712419`:
+  - os 11 roteiros e os 13 cortes viraram peças `tipo="tiktok"`, com status `para_gravar` ou `para_editar` e com
+    a pauta em `em_producao`;
+  - a tela `/tiktok` tem a seção "Para gravar e editar" (toque abre o roteiro);
+  - backup `/root/orbit-backups/antes_pauta_tiktok_2026-10-23.sql.gz`.
+- Conferido num navegador automático: a seção mostra os 24 itens e abre o roteiro; os itens não aparecem em
+  Aprovação nem em Planejamento.
+- Quando o vídeo de um item ficar pronto: grava `corpo.video` e muda o status para `rascunho` (vai para Aprovação).
+  Aprovado, entra sozinho na fila (`_espera_vaga`). Ajustar a vaga para a `data_prevista` com `remarcar`.
