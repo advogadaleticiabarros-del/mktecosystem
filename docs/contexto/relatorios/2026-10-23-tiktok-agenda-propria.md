@@ -55,6 +55,20 @@ vamos trabalhar no crescimento a curto prazo e viralização". Respondeu "sim" �
 - Teste do modo foto (carrosséis) a partir da semana 3, publicado à mão.
 - Revisão em 20/11/2026: horários, formatos e se sobe para 7 por semana.
 
+## Continuação (mesmo dia)
+- **Correção:** a fila de 23 vídeos usa os mesmos Reels do Instagram até 08/01. Por isso, depois de 24/11, a fila
+  do TikTok fica **vazia**, e não "com 2 por semana" como foi dito antes. A Jessica aprovou ("sim") produzir os
+  vídeos extras. Pauta em `docs/TIKTOK_PAUTA_NOV_DEZ_2026.md` (commit `cbad32c`), com 27 vagas de 25/11 a 31/12:
+  - 11 roteiros para a Dra. gravar até 20/11;
+  - 13 cortes de Reels prontos, com trechos escolhidos pela transcrição;
+  - 3 respostas a comentário.
+- **Tela do LinkedIn quebrada** ("Application error"): a data da fila misturava `weekday` com `dateStyle`, o que dá
+  `Invalid option` no Chrome. O bug vinha do commit `de50544`, não do deploy de hoje. Corrigido no commit `fe9d2e1`
+ , com deploy do web. Conferido num navegador automático: `/linkedin`, `/tiktok`, `/desempenho`,
+  `/visao-geral` e `/calendario` abrem sem erro.
+- **Blog:** não há artigo agendado entre 23/10 e 09/11. Os 13 aprovados já estão todos marcados de 09/11 a 31/12.
+  A pergunta foi respondida, com uma proposta de artigos para cobrir o intervalo, esperando a aprovação.
+
 ## Próxima sessão
 Ver na tela `/tiktok` se o vídeo de domingo 25/10 10h caiu no rascunho e foi publicado. Na semana de 09/11, começar
 os cortes com a skill `leticia-reels-premium` (peça e arquivo novos).
