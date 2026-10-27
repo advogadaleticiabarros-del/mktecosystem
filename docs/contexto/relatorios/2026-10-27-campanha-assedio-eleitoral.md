@@ -29,6 +29,12 @@ LinkedIn". A LP deve ser "extremamente explicativa, ensine como pegar provas, qu
 - LP: os botões flutuantes (WhatsApp e o "ligar" do `/js/conversoes.js`) somem enquanto um formulário está na tela;
   antes o "ligar" cobria o campo de WhatsApp no celular (backup `/tmp/bkp_lp_voto_flutuante/`).
 
+- Frase das 15h trocada (pedido: variações no ângulo pós-eleição, "represália" e "vingança"): 8 variações em
+  `urnas/frase_variacoes.py` (sem a foto com "PRESIDENTE" na tela); escolhida a 7, "Demitir por vingança eleitoral
+  não é gestão. É discriminação." Peça `c9c4e179` com arte `assedio-eleitoral-frase-v4-vinganca.jpg`, legenda e
+  primeiro comentário novos (`frase-estatico/frase_v4_vinganca.py`, checagem OAB sem aviso); v3 guardada em
+  `versoes_anteriores`; backup `/root/orbit-backups/pre-frase-v4-2026-10-27.sql.gz`.
+
 ## Verificado
 - LP e artigo: HTTP 200 no ar, FAQPage presente, nenhum termo vetado pela OAB ("consulta gratuita", "especialista",
   "garanta"). Formulários testados no ar: 201 e 200 (lead de teste no CRM).
