@@ -39,6 +39,19 @@ Entregues em `Desktop\NOVOS REELS`:
 - Jessica: assistir os 6 com som; decidir se sobem ao Orbit (R1 v3 nos dois estilos como Trial Reels).
 - Dra.: gravar o roteiro da série 21; depois perguntar o estilo da edição.
 
+## Continuação: Reels de teste e monitoramento pelo Orbit
+- Pedido: "poste esse [dividida-v3-1] no Reels de teste; performando bem, amanhã no melhor horário poste também no feed
+  comum (não vai converter teste para feed, vai postar novamente)"; "o Orbit deve monitorar esses Reels".
+- Feito: graduação manual do Trial Reels (`81f893e`); regra de liberação pelo desempenho do teste (`06060b7`,
+  `services/teste_reels.py`); deploy na VPS com backup antes de cada um (`/root/orbit-backups/antes-trial-manual-20261027`
+  e `antes-teste-reels-20261027`).
+- Verificado: teste publicado às 12h12 (id 18117094946119300); mídia responde 200; leitura dos números do teste ao vivo
+  funcionou (0 visualizações logo após publicar); post dos seguidores agendado para 28/10 21:00, ligado ao teste.
+- Decisão: régua 70% da mediana dos últimos 10 Reels (≈ 190 visualizações) ou 3 compartilhamentos+salvamentos.
+- Achado: havia mudanças de outra sessão no repositório (blog/jornal, 3 testes falhando nelas); não foram tocadas.
+- Pendente: em 28/10 21:00 ver no log/calendário se saiu ou ficou `segurado`; se segurado e ela quiser publicar mesmo
+  assim, voltar o status para `pronto` e tirar `depende_do_teste`.
+
 ## Próxima sessão
 Se aprovados: passo 7 da skill `leticia-reels-premium` (backup, mídia, rascunhos com legenda de `legendas.py`).
 Para a série 21: ler `producao/reels/series/21-assedio-eleitoral/roteiro-gravacao.md`.

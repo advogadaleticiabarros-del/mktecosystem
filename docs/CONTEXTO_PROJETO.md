@@ -868,6 +868,13 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
     o mesmo princípio do Motion Canvas) e já desenha traço SVG (`stroke-dasharray`, classe `desenha`); Manim e Motion
     Canvas trariam outra cadeia de ferramentas sem ganho visual; Lottie só vale para ícones pontuais, com licença conferida.
 
+- **Teste no ar (27/10/2026, 12h12):** `contrato-intermitente-dividida-v3-1.mp4` como Trial Reels com **graduação
+  MANUAL** (`corpo.trial_graduacao`; a Meta não leva o teste aos seguidores), id 18117094946119300. O mesmo vídeo sai
+  como **post novo** para os seguidores em **28/10 21:00** (quarta, fora do terça/sexta por pedido dela), com
+  `corpo.depende_do_teste`: na hora, o Orbit (`services/teste_reels.py`) lê os números do teste e só publica se ele
+  tiver ≥ 70% da mediana de visualizações dos últimos 10 Reels (≈ 190 em 27/10) ou ≥ 3 compartilhamentos+salvamentos;
+  senão o agendamento fica `segurado` (log com o motivo). Script: `series/19-contrato-intermitente/subir_teste_e_feed.py`.
+
 ## Série 20: Gestante, limbo e 11 horas (27/10/2026)
 
 - `Desktop\NOVOS REELS\VIDEO 2` (IMG_0387/0388/0390, um tema por arquivo, HLG). Trabalho em `C:\tmp\videos-reels\20-video2\`;
