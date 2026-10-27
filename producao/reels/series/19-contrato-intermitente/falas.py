@@ -12,7 +12,7 @@ Cortes:
 - "FGTS" dentro do valor do dia (68-72 s): FGTS é depositado, não pago junto (tela: "FGTS depositado todo mês");
 - trecho dos 150 reais (200-209 s): truncado ("terceiro teste");
 - "por tempo determinado" (191-200 s): ela mesma se corrige; "na lei da justiça" (157 s): ininteligível;
-- "a maioria das empresas" (179 s): generalização sem base; fica "grandes empresas".
+- "a maioria das empresas, grandes empresas" (178-191 s): generalização sem base e fala baixa demais; saiu.
 """
 from pathlib import Path
 
@@ -23,6 +23,9 @@ VOCABULARIO = ("contrato intermitente, contrato por hora, CLT, FGTS, 13º, féri
                "convocação, empregador, juristas trabalhistas, carteira de trabalho, Letícia Barros, perfil")
 FECHO = (245.40, 248.40, "Meu nome é Letícia Barros e aqui nesse perfil eu falo sobre seus direitos.")
 
+# Revisão de 27/10/2026 ("os erros e gagueiras ainda estão aparecendo"): pontas medidas na transcrição literal (com
+# hesitação) e nos silêncios a -34/-38 dB; cada trecho novo foi ouvido isolado antes de montar. "fixo" = a ponta não
+# escorrega para a pausa vizinha (era assim que o "vai ser, vai ser" e o "estará, estará" voltavam).
 FALAS = {
     1: [(0.70, 3.95, "Você sabia que o contrato por hora já existe?"),
         (5.65, 8.20, "Já existe, o nome dele é contrato intermitente."),
@@ -32,8 +35,9 @@ FALAS = {
         (20.05, 21.45, "podendo você recusar"),
         (24.05, 28.90, "Então você vai confirmar se você vai estar disponível para trabalhar naquele dia,"),
         (52.20, 55.00, "E aí como que você vai receber por essas horas?"),
-        (55.40, 59.80, "Vai ser acertado com você o valor da sua hora."),
-        (59.95, 69.90, "Então ao chegar no final do dia você recebe nesse valor que você está recebendo já vai vir 13º,"),
+        (56.18, 59.80, "Vai ser acertado com você o valor da sua hora.", "fixo"),        # sem o primeiro "vai ser,"
+        (59.95, 62.75, "Então ao chegar no final do dia você recebe,", "fixo"),
+        (65.50, 69.90, "nesse valor que você está recebendo já vai vir 13º,", "fixo"),   # sem "nesse valor que você estará, estará"
         (71.00, 72.30, "e férias.", "fixo"),
         (72.85, 77.80, "Então não vai ter lá no final do ano o valor do 13º para você receber."),
         (79.95, 81.95, "Esse é o contrato intermitente."),
@@ -41,21 +45,21 @@ FALAS = {
     2: [(117.05, 128.45, "Muitos juristas trabalhistas consideram esse tipo de contrato muito danoso para o trabalhador. Por quê? "
                          "Por falta da informação correta para o trabalhador."),
         (128.50, 133.60, "O trabalhador acredita que está trabalhando em um contrato normal, um contrato de CLT normal,"),
-        (133.70, 139.10, "onde quando você é mandado embora, você tem direito a aviso prévio, 13º, férias,"),
+        (134.30, 139.10, "quando você é mandado embora, você tem direito a aviso prévio, 13º, férias,", "fixo"),  # sem o "né"
         (143.30, 152.30, "E aí o trabalhador acredita que está nesse contrato, mas aí quando chega lá no final, vê que não está, "
                          "que o contrato dele é o contrato intermitente."),
-        (152.50, 153.90, "E aí que está o problema."),
+        (152.50, 153.62, "E aí que está o problema.", "fixo"),
         (165.30, 168.20, "Doutora, mas a pessoa não está recebendo diariamente?"),
-        (173.60, 178.10, "Se ela entender esse tipo de contrato, ok. E concordar, ok."),
-        (178.30, 178.98, "O problema é que", "fixo"),
-        (180.45, 190.90, "grandes empresas, elas se utilizam desse contrato para não ter essa garantia de emprego, essa garantia "
-                         "de continuidade do contrato de trabalho."),
-        (209.55, 217.98, "Agora quando a pessoa se disponibiliza para ir trabalhar todos os dias, não está sendo convocada. "
-                         "Trabalhei lá um mês, trabalhei dois meses, trabalhei três meses."),
-        (220.15, 223.60, "Entende-se que já é um contrato de carteira de trabalho comum."),
+        (173.62, 178.10, "Se ela entender esse tipo de contrato, ok. E concordar, ok.", "fixo"),
+        # "o problema é que a maioria das empresas, grandes empresas, né, elas..." (178-191 s) saiu inteiro: o miolo é dito
+        # 15 a 25 dB abaixo da voz normal, sem ponto limpo de corte, e o "essa" arrastado vinha junto
+        (209.55, 212.62, "Agora quando a pessoa se disponibiliza a trabalhar todos os dias,", "fixo"),
+        (212.80, 214.03, "não está sendo convocada.", "fixo"),
+        (214.42, 218.14, "Trabalhei lá um mês, trabalhei dois meses, trabalhei três meses.", "fixo"),  # sem o "ah"
+        (219.92, 223.60, "Entende-se que já é um contrato de carteira de trabalho comum.", "fixo"),
         (225.65, 228.20, "Porque aquela pessoa está indo trabalhar todos os dias."),
-        (228.95, 231.50, "Ah não, mas aí eu convoco, ela pode recusar."),
-        (231.85, 233.95, "Mas só que a pessoa funcionária sabe disso?"),
-        (237.90, 244.40, "A característica do contrato só funciona no papel e na prática você está tendo um funcionário sem ter."),
+        (228.95, 231.50, "Ah não, mas aí eu convoco, ela pode recusar.", "fixo"),           # sem o "pode," arrastado
+        (231.82, 233.95, "Mas só que a pessoa funcionária sabe disso?", "fixo"),
+        (237.96, 244.40, "A característica do contrato só funciona no papel e na prática você está tendo um funcionário sem ter.", "fixo"),
         FECHO],
 }

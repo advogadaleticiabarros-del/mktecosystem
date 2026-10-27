@@ -59,7 +59,7 @@ def imagem(transferencia: str) -> str:
 
 def transferencia(arq) -> str:
     return subprocess.run([str(FFPROBE), "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=color_transfer",
-                           "-of", "csv=p=0", str(arq)], capture_output=True, text=True, check=True).stdout.strip()
+                           "-of", "csv=p=0", str(arq)], capture_output=True, text=True, check=True).stdout.strip().strip(",").split(",")[0].strip()
 
 
 def ff(*args) -> None:
@@ -232,6 +232,38 @@ def comparar(esperado: str, ouvido: str) -> list[str]:
     return probs
 
 
+# o Whisper imita o estilo do prompt: com hesitação escrita no prompt, ele passa a transcrever a hesitação que normalmente
+# limpa (série 19, 27/10/2026: "fala ok" passava com gaguejo audível)
+LITERAL = ("Então, é... eu, eu acho que, hã, a pes- a pessoa, né, ela, ela vai, hum, receber. Ah, tá. "
+           "É, é, o, o empregador, ahn, ele, ele te convoca.")
+ARRASTADA = 0.9   # s: palavra curta mais longa que isso é hesitação ("queee")
+HESITACOES = {"ha", "ahn", "han", "hum", "hmm", "uhm", "eh", "ehh", "aa", "ee"}
+
+
+def gaguejos(palavras) -> list[str]:
+    """Gaguejo na transcrição literal: palavra partida ("pes-"), palavra repetida em seguida e hesitação ("hã").
+    Repetição depois de ponto final é de propósito ("Já existe. Existe, sim.") e passa."""
+    ws = [w for w in palavras if _norm(w["word"])]
+    probs, i = [], 0
+    while i < len(ws):
+        bruta, n = ws[i]["word"].strip(), _norm(ws[i]["word"])
+        if bruta.endswith("-"):
+            probs.append(f"palavra partida: '{bruta}' em {ws[i]['start']:.2f}s")
+        elif n in HESITACOES:
+            probs.append(f"hesitação: '{_limpa(bruta)}' em {ws[i]['start']:.2f}s")
+        elif n.isalpha() and len(n) <= 4 and ws[i]["end"] - ws[i]["start"] > ARRASTADA:
+            probs.append(f"palavra arrastada: '{_limpa(bruta)}' ({ws[i]['end'] - ws[i]['start']:.2f}s) em {ws[i]['start']:.2f}s")
+        for k in (3, 2, 1):  # grupo de k palavras dito duas vezes seguidas ("vai ser, vai ser")
+            a, b = ws[i:i + k], ws[i + k:i + 2 * k]
+            if len(b) == k and [_norm(w["word"]) for w in a] == [_norm(w["word"]) for w in b] \
+                    and not a[-1]["word"].strip().endswith((".", "?", "!")):
+                probs.append(f"repetição: '{' '.join(_limpa(w['word'].strip()) for w in a + b)}' em {a[0]['start']:.2f}s")
+                i += k
+                break
+        i += 1
+    return probs
+
+
 # --------------------------------------------------------------------------- ouvido (Whisper)
 class Whisper:
     """Adaptador do Whisper local; o modelo só carrega na primeira transcrição."""
@@ -312,6 +344,11 @@ def montar(src, trechos, destino, ouvido, vel: float = VEL, vocabulario: str = "
     completa = ouvido.transcrever(wav, palavras=True, prompt=vocabulario)
     destino.with_suffix(".transcricao.json").write_text(json.dumps(completa, ensure_ascii=False), encoding="utf-8")
     palavras = [w for s in completa["segments"] for w in s.get("words", [])]
+    literal = ouvido.transcrever(wav, palavras=True, prompt=f"{LITERAL} {vocabulario}".strip())
+    for p in gaguejos(w for s in literal["segments"] for w in s.get("words", [])):
+        t_p = float(re.search(r"em ([\d.]+)s$", p).group(1))
+        n = next((i + 1 for i, (ini, fim) in enumerate(faixas) if t_p < fim), len(faixas))
+        problemas.append(f"gaguejo na fala montada: {p}" + (f" (trecho {n}, {trechos[n - 1][0]:.2f} no bruto)" if len(faixas) > 1 else ""))
     with tempfile.TemporaryDirectory() as tmp:
         for i, ((trecho, ps), (ini, fim)) in enumerate(zip(planos, faixas)):
             pedaco = Path(tmp) / f"t{i}.wav"

@@ -91,15 +91,46 @@ def test_comparar_acusa_palavra_trocada():
     assert fala.comparar("é a empresa", "é o trabalhador") == ["trocada: 'a empresa' -> 'o trabalhador'"]
 
 
+def palavras(*pares):
+    return [{"word": " " + w, "start": t, "end": t + 0.3} for w, t in pares]
+
+
+def test_gaguejos_acusa_palavra_repetida_palavra_partida_e_hesitacao():
+    # série 19 (27/10/2026): "fala ok" passava com gaguejo, porque o Whisper normal limpa a hesitação
+    ws = palavras(("a", 1.0), ("pes-", 1.2), ("pessoa,", 1.5), ("ela", 2.0), ("ela", 2.3), ("vai", 2.6), ("hã,", 3.0), ("receber.", 3.4))
+    assert fala.gaguejos(ws) == ["palavra partida: 'pes-' em 1.20s", "repetição: 'ela ela' em 2.00s", "hesitação: 'hã' em 3.00s"]
+
+
+def test_gaguejos_acusa_grupo_de_palavras_repetido():
+    # R1 da série 19 saiu com "Vai ser, vai ser acertado" e passou no "fala ok"
+    ws = palavras(("Vai", 23.58), ("ser,", 23.66), ("vai", 24.08), ("ser", 24.56), ("acertado", 24.92))
+    assert fala.gaguejos(ws) == ["repetição: 'Vai ser vai ser' em 23.58s"]
+
+
+def test_gaguejos_acusa_palavra_curta_arrastada():
+    # "que..." de 2,3 s no R1 da série 19: hesitação que o Whisper escreve como palavra comum
+    ws = [{"word": " valor", "start": 30.9, "end": 31.2}, {"word": " que", "start": 31.24, "end": 33.56},
+          {"word": " 13º", "start": 35.54, "end": 36.64}]
+    assert fala.gaguejos(ws) == ["palavra arrastada: 'que' (2.32s) em 31.24s"]
+
+
+def test_gaguejos_aceita_fala_limpa_e_repeticao_separada_por_pontuacao_de_frase():
+    ws = palavras(("Já", 0.0), ("existe.", 0.3), ("Existe,", 0.8), ("sim.", 1.1), ("Trabalhei", 1.5), ("um", 2.0), ("mês.", 2.2))
+    assert fala.gaguejos(ws) == []
+
+
 # --------------------------------------------------------------------------- montagem de ponta a ponta (ffmpeg real, Whisper falso)
 class OuvidoFalso:
     """Devolve o texto esperado na ordem em que os trechos são ouvidos."""
 
-    def __init__(self, textos, completa=()):
+    def __init__(self, textos, completa=(), literal=None):
         self.textos, self.i = list(textos), 0
         self.completa = [{"word": " " + w, "start": t, "end": t + 0.3} for w, t in completa]
+        self.literal = palavras(*literal) if literal is not None else self.completa
 
     def transcrever(self, wav, palavras=False, prompt=""):
+        if palavras and fala.LITERAL in prompt:  # passada literal, só para achar gaguejo
+            return {"text": "", "segments": [{"start": 0, "end": 1, "text": "", "words": self.literal}]}
         if palavras:  # transcrição da fala montada inteira (com contexto), também usada pela legenda do motor
             return {"text": " ".join(self.textos), "segments": [{"start": 0, "end": 1, "text": "", "words": self.completa}]}
         self.i += 1
@@ -155,6 +186,13 @@ def test_montar_releva_trecho_curto_que_o_whisper_so_erra_sem_contexto(tmp_path)
     assert fala.montar(src, [(0.0, 2.0, "um dois"), (3.0, 6.0, "Errado.")], tmp_path / "f.mp4", ouvido, vel=1.0) == []
 
 
+def test_montar_acusa_gaguejo_que_so_a_transcricao_literal_ouve(tmp_path):
+    src = bruto_sintetico(tmp_path)
+    ouvido = OuvidoFalso(["um dois três"], literal=[("um", 0.1), ("um", 0.4), ("dois", 1.0), ("três", 2.2)])
+    problemas = fala.montar(src, [(0.0, 6.0, "um dois três")], tmp_path / "f.mp4", ouvido, vel=1.0)
+    assert problemas == ["gaguejo na fala montada: repetição: 'um um' em 0.10s"]
+
+
 def test_pausa_partida_por_estalo_entra_mas_consoante_dentro_da_palavra_nao():
     # a -40 dB a pausa aparece inteira; a -44 dB ela é quase toda silêncio (o estalo é curto e fraco)
     fracas = [(6.29, 6.64), (31.7, 32.1)]
@@ -172,3 +210,12 @@ def test_imagem_converte_hdr_do_iphone_para_a_cor_dos_reels():
 def test_imagem_de_fonte_comum_fica_como_estava():
     assert fala.imagem("bt709") == fala.IMAGEM
     assert fala.imagem("") == fala.IMAGEM
+
+
+def test_transferencia_le_a_saida_do_ffprobe_com_virgula_sobrando(monkeypatch):
+    # o ffprobe devolve "arib-std-b67," no .mov do iPhone; com a vírgula a conversão HDR não rodava (série 19/20, 27/10/2026)
+    class R:
+        stdout = "arib-std-b67,\n"
+    monkeypatch.setattr(fala.subprocess, "run", lambda *a, **k: R())
+    assert fala.transferencia("x.mov") == "arib-std-b67"
+    assert "tonemap" in fala.imagem(fala.transferencia("x.mov"))

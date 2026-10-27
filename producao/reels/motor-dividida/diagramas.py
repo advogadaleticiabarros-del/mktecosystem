@@ -156,3 +156,80 @@ def papel_pratica(at, at_pratica, top=300):
                   '<path class="desenha" d="M60 120 L20 230 L120 230 Z M540 60 L500 170 L600 170 Z"/>', at, top, 240, 620, 380, dur=1.0),
             _el(f'<div style="{_ROT};color:#E8DED1;text-align:center">No papel</div>', at + .4, top + 250, 150, 300),
             _el(f'<div style="{_ROT};color:{OURO};text-align:center">Na prática</div>', at_pratica, top + 190, 640, 300)]
+
+
+# --------------------------------------------------------------------------- série 20 (27/10/2026)
+def linha_tempo(marcos, top=430):
+    """Linha do tempo horizontal que se desenha ponto a ponto. `marcos` = [(rótulo, at), ...] (2 a 4); marco com at
+    None não aparece (a mesma linha volta depois completa)."""
+    n, x0, x1 = len(marcos), 250, 830
+    xs = [x0 + i * (x1 - x0) // (n - 1) for i in range(n)]
+    ats = [a for _, a in marcos if a is not None]
+    els = [{"tipo": "risco", "at": ats[0] - .2, "largura": x1 - x0, "html": "",
+            "style": {"top": f"{top}px", "left": f"{x0}px", "height": "6px", "width": "0px", "background": OURO,
+                      "borderRadius": "3px", "boxShadow": "0 0 14px rgba(201,169,98,.6)"}}]
+    for (rot, at), x in zip(marcos, xs):
+        if at is None:
+            continue
+        els.append(_el('<div style="width:44px;height:44px;border-radius:50%;background:#F4E6BC;border:6px solid #8E6E2E;'
+                       'box-shadow:0 0 22px rgba(244,230,188,.7)"></div>', at, top - 19, x - 22, 44, anim="pop"))
+        els.append(_el(f'<div style="{_ROT};color:#E8DED1;text-align:center;line-height:1.3">{rot}</div>', at + .1, top + 50, x - 130, 260))
+    return els
+
+
+def escudo(at, rotulo, top=300):
+    """Escudo dourado que se desenha (proteção: estabilidade) com o rótulo embaixo."""
+    return [traco('<path class="desenha" d="M150 20 L265 62 L265 150 C265 222 212 268 150 290 C88 268 35 222 35 150 L35 62 Z"/>'
+                  '<path class="desenha" d="M100 152 L138 190 L205 115" stroke-width="16"/>', at, top, 390, 300, 310, dur=.9),
+            pilula(rotulo, at + .5, top + 350, left=0, style=centro(640))]
+
+
+def etapas(itens, top=300, gap=150):
+    """Passos numerados em cartões, um abaixo do outro. `itens` = [(texto, at), ...]."""
+    return [_el(f'<div class="cartao" style="padding:24px 34px;display:flex;gap:26px;align-items:center">'
+                f'<div class="cg" style="flex:none;font-size:64px;font-weight:700;color:{OURO};width:50px">{i + 1}</div>'
+                f'<div style="font-size:40px;font-weight:700;color:{CREME};line-height:1.2">{txt}</div></div>',
+                at, top + i * gap, 120, 840, anim="desliza", dx=-80) for i, (txt, at) in enumerate(itens)]
+
+
+def ficha(titulo_, at, carimbo_txt, at_carimbo, top=330, nota=""):
+    """Cartão de quem decide (INSS, médico da empresa) com o carimbo da decisão."""
+    html = (f'<div class="papel" style="height:360px;padding:40px 46px"><div style="{_ROT};color:#8E6E2E">{titulo_}</div>'
+            f'<div style="height:2px;background:#E5DCCB;margin:18px 0 26px"></div>'
+            f'<div style="font-size:40px;font-weight:700;color:#2B231C;line-height:1.3">{nota}</div></div>')
+    return [_el(html, at, top, 170, 740, anim="pop"), carimbo(carimbo_txt, at_carimbo, top + 210, 300, rot=-7, size=84)]
+
+
+def vai_e_volta(at_ida, at_volta, top=360):
+    """Empresa e INSS, com a pessoa jogada de um para o outro (limbo previdenciário)."""
+    def caixa(txt, x, at):
+        return _el(f'<div class="cartao" style="height:200px;display:flex;align-items:center;justify-content:center">'
+                   f'<div class="cg" style="font-size:60px;font-weight:700;color:{CREME}">{txt}</div></div>', at, top, x, 330, anim="pop")
+    seta = ('<path class="desenha" d="M20 60 C120 0 260 0 360 60"/><path class="desenha" d="M330 30 L362 62 L322 78"/>')
+    volta = ('<path class="desenha" d="M360 20 C260 80 120 80 20 20"/><path class="desenha" d="M52 4 L18 20 L50 46"/>')
+    return [caixa("Empresa", 90, at_ida - .3), caixa("INSS", 660, at_ida - .15),
+            traco(seta, at_ida, top - 110, 350, 380, 90, dur=.6),
+            traco(volta, at_volta, top + 220, 350, 380, 90, dur=.6),
+            pilula("Inapta", at_ida + .3, top - 170, left=0, style=centro(260)),
+            pilula("Pode voltar", at_volta + .3, top + 330, left=0, style=centro(340))]
+
+
+def sem_salario(at_empresa, at_inss, top=330):
+    """Dois contracheques zerados: nem a empresa nem o INSS pagam."""
+    def card(quem, x, at):
+        return _el(f'<div class="papel" style="padding:34px 30px;text-align:center"><div style="{_ROT};color:#8E6E2E">{quem}</div>'
+                   f'<div class="cg" style="font-size:84px;font-weight:700;color:#2B231C;margin-top:14px">R$ 0</div></div>', at, top, x, 340, anim="pop")
+    return [card("Empresa", 170, at_empresa), card("INSS", 570, at_inss)]
+
+
+def descanso(at, at_minimo, horas=9, top=380):
+    """Barra do intervalo entre jornadas: as horas reais (creme apagado) contra o mínimo de 11 h (dourada), sem cor fora da identidade. CLT, art. 66."""
+    w = 820
+    def barra(rot, h, cor, at_, y):
+        return [_el(f'<div style="{_ROT};color:#E8DED1">{rot}</div>', at_, y - 50, 130, 820),
+                {"tipo": "risco", "at": at_ + .1, "largura": int(w * h / 11), "html": "",
+                 "style": {"top": f"{y}px", "left": "130px", "height": "56px", "width": "0px", "background": cor, "borderRadius": "12px"}},
+                _el(f'<div class="cg" style="font-size:52px;font-weight:700;color:{CREME}">{h} h</div>', at_ + .6, y - 2,
+                    130 + int(w * h / 11) - 150, 140)]
+    return barra("Seu descanso (22h às 7h)", horas, "rgba(232,222,209,.45)", at, top) + \
+        barra("Mínimo da lei", 11, OURO, at_minimo, top + 190)

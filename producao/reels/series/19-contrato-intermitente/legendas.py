@@ -30,4 +30,25 @@ No fim de cada período trabalhado você recebe o valor das horas e, junto, o 13
 #DireitoTrabalhista #ContratoIntermitente #CLT #DireitosDoTrabalhador #AdvogadaVitóriaES""",
         "pc": """📚 Base: CLT, art. 452-A, §§ 1º, 2º, 6º e 8º.
 💬 Você sabia que existia contrato por hora com carteira assinada?"""},
+    2: {"titulo": "Reels: contrato intermitente, quando vira problema (2/2)",
+        "legenda": f"""Contrato por hora no papel, funcionário de todo dia na prática. Aí o contrato intermitente vira problema.
+
+Muita gente entra achando que está num contrato comum de CLT, com aviso prévio, 13º e férias no fim. Só descobre que é intermitente quando o contrato acaba.
+
+Se a pessoa entendeu o contrato e concordou, tudo bem. O problema é quando a empresa usa o intermitente para não dar garantia de emprego: a pessoa não é convocada de verdade, vai trabalhar todos os dias, mês após mês.
+
+❓ As perguntas que mais chegam aqui:
+📌 Trabalho todo dia no intermitente. Isso pode? Trabalho contínuo, sem convocação real, pode levar a Justiça a reconhecer um contrato comum.
+📌 Posso recusar a convocação? Pode. A recusa é um direito e não quebra o contrato. Muita gente não sabe disso.
+📌 O que é o intermitente? Isso está na parte 1 da série.
+
+📚 Base: CLT, arts. 9º e 452-A.
+
+🔖 Salva e manda pra quem trabalha por hora.
+
+{ASSINATURA}
+
+#DireitoTrabalhista #ContratoIntermitente #CLT #DireitosDoTrabalhador #AdvogadaVitóriaES""",
+        "pc": """📚 Base: CLT, art. 452-A (convocação, recusa e pagamento) e art. 9º (fraude à lei trabalhista).
+💬 Você conhece alguém que trabalha todo dia num contrato por hora?"""},
 }

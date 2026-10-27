@@ -19,7 +19,7 @@ FACE_VEU = "linear-gradient(180deg, rgba(26,21,17,0) 0%, rgba(26,21,17,0) 52%, r
 STOCK_VEU = "linear-gradient(180deg, rgba(26,21,17,.82) 0%, rgba(26,21,17,.5) 30%, rgba(26,21,17,.45) 55%, rgba(26,21,17,.88) 100%)"
 DY = {1: -60}    # o rosto desta gravação já fica alto no quadro (folha do bruto): sobe pouco
 ZB = {1: 1.06}   # zoom-base leve: com mais, a testa e o cabelo saem cortados
-CORRIGE = {"na@20.58": "naquele", "agrididia.": "dia,", "pactuado": "acertado", "ver": "vir"}
+CORRIGE = {"na@20.58": "naquele", "agrididia.": "dia,", "Grívia.": "dia,", "pactuado": "acertado", "factuado": "acertado", "ver": "vir"}
 FFPROBE = str(m.FF).replace("ffmpeg.exe", "ffprobe.exe")
 
 
@@ -51,10 +51,10 @@ def reel1(W, seg, fim):
     """O que é o contrato intermitente e como funciona."""
     a1, a2, a3 = W("Já", 2.5), W("Como"), W("A", 6.0)
     a4, a5, a6 = W("pelo"), W("Então", 16.0), W("E", 21.0)
-    a7, a8, a9 = W("Então", 27.0), W("já", 34.5), W("Então", 37.0)
+    a7, a8, a9 = W("Então", 26.0), W("já", 31.0), W("Então", 33.5)
     a10, a11 = W("Esse"), W("Meu")
     return [
-        rosto(1, 0, 0, a1, els=[texto("Você sabia que o|<em>contrato por hora</em> já existe?", 0.05, 905, size=60, align="center")]),
+        rosto(1, 0, 0, a1, els=[texto("Você sabia que o|<em>contrato por hora</em> já existe?", -1, 905, size=60, align="center")]),
         corte(1, 1, a1, a2, "celular", trans="whip", els=[
             kick("Já existe", a1 + .05),
             texto("Contrato|<em>intermitente</em>", a1 + .1, 480, size=100, align="center", anim="sobe"),
@@ -92,7 +92,7 @@ def _reel(n, roteiro, serie, prefixo):
 
 
 REELS = {
-    1: _reel(1, reel1, "Contrato intermitente · 1/2", "contrato-intermitente-inteiro-v2-"),
+    1: _reel(1, reel1, "Contrato intermitente · 1/2", "contrato-intermitente-inteiro-v3-"),
 }
 
 if __name__ == "__main__":

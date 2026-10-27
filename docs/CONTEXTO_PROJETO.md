@@ -843,7 +843,29 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   SDR, e a pele ficava acinzentada. `fala.py` agora converte HDR com tonemap mobius (testes em `test_fala.py`); os engines de
   `motor/` e `motor-dividida/` não aplicam saturação, contraste nem grão em cena com `bg.rosto`; véu de rosto só no peito.
   Saíram as **v2** (`contrato-intermitente-{inteiro,dividida}-v2-1.mp4`, conferir sem avisos); as v1 ficam como registro.
-- R2 ("Quando vira problema"): fala montada mas ainda com 3 emendas a acertar (trechos 9, 10 e 15 de `falas.py`).
+- **27/10/2026 ("os erros e gagueiras ainda estão aparecendo"; "cuidado com as cores"):**
+  - Causa do gaguejo que passava: o Whisper normal limpa a hesitação, e o `_encostar` deixava a ponta escorregar até 0,5 s
+    para a pausa vizinha, onde estava o recomeço. Agora `fala.py montar` faz uma passada **literal** (prompt com
+    hesitação escrita, `LITERAL`) e `gaguejos()` acusa repetição de 1 a 3 palavras, palavra partida, hesitação ("hã") e
+    palavra curta arrastada (> 0,9 s), com acento ("e é" e "há" passam). Pontas medidas à mão vão com `"fixo"`.
+    Método que funcionou: transcrição literal do bruto, energia (RMS em janelas de 50 ms) nas emendas duvidosas e teste
+    da emenda colada antes de montar; no fim, ler a transcrição literal da fala montada inteira.
+  - **Cor:** a conversão HDR do `fala.py` nunca rodava (o ffprobe devolve `arib-std-b67,` com vírgula). Corrigido com
+    teste; as falas já montadas foram convertidas. Confira sempre `color_transfer` = `bt709` na fala montada.
+  - R1 **v3** nos dois estilos (sem "vai ser, vai ser" e "estará, estará"; gancho inteiro no quadro 1) e **R2** só na tela
+    dividida (`contrato-intermitente-dividida-2.mp4`, 65 s; saiu o trecho murmurado "a maioria das empresas, grandes
+    empresas, né"). Todos em `Desktop\NOVOS REELS\VIDEO 1\PRONTOS`, conferir sem avisos.
+  - Regra do Reel de referência (27/10, "teste do mudo"): primeiro quadro forte, texto inteiro já na tela (`at=-1`), sem
+    respiro antes de falar, resultado antes da explicação. Aplicada nas séries 19 (v3) e 20.
+
+## Série 20: Gestante, limbo e 11 horas (27/10/2026)
+
+- `Desktop\NOVOS REELS\VIDEO 2` (IMG_0387/0388/0390, um tema por arquivo, HLG). Trabalho em `C:\tmp\videos-reels\20-video2\`;
+  textos em `producao/reels/series/20-gestante-limbo-interjornada/` (falas com fatos e cortes, roteiro, legendas).
+- 3 Reels **tela dividida** (escolha dela): `gestante-experiencia-dividida-1.mp4`, `limbo-previdenciario-dividida-2.mp4`,
+  `intervalo-11-horas-dividida-3.mp4` em `VIDEO 2\PRONTOS`, conferir sem avisos (-19,7 LUFS com ganho só no áudio).
+- `diagramas.py` ganhou `linha_tempo`, `escudo`, `etapas`, `ficha` (com carimbo), `vai_e_volta`, `sem_salario`, `descanso`.
+- Série 21 (assédio eleitoral, demissão pelo voto): roteiro de gravação em `producao/reels/series/21-assedio-eleitoral/`.
 - Ferramentas novas na conta do Claude (fora do git): skills `watch` (vídeo por link, modo local), `impeccable` e
   `hallmark` (este só para site novo: proíbe itálico em título e caixa-alta espaçada, que são da identidade).
 
