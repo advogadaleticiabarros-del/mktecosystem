@@ -926,6 +926,17 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 - Reels animado: roteiro, cenas e Pexels prontos em `producao/reels/series/22-assedio-eleitoral-motion/` (mídia em
   `C:\tmp\videos-reels\22-assedio-eleitoral-motion\`), esperando o clone novo da voz: a chave do ElevenLabs não tem
   `voices_write`; amostra de 3 min 54 s em `Desktop\NOVOS REELS\voz-para-clonar-leticia.wav` para ela clonar no site.
+- Reels v2, ângulo "vingança" (27/10, tarde): `roteiro-vinganca.txt` + `serie_vinganca.py` (a v1 ficou intacta), dois
+  ganchos com o mesmo corpo: Reels 1 "Demitido por vingança?" (seguidores) e Reels 2 "Seu voto não pode custar o seu
+  emprego" na foto da urna (Trial Reels). Fotos reais de urna no gancho B e na cena do voto secreto, com crédito na
+  tela. "Recorde no ano" e "Cada caso tem detalhes" saíram da fala (ficam na tela) para caber em 45 s. Prévias com a
+  voz antiga (só para aprovar o visual, nunca publicar): `PREVIA-voz-provisoria-demissao-por-vinganca-1/2.mp4`.
+  Com o clone novo: `py clonar_voz.py` (se a chave ganhar Voices: Write) ou voice id do site na 2ª linha de
+  `~/.elevenlabs-leticia.json` → `py narrar.py ../fontes/roteiro-vinganca.txt ../fontes/vinganca` →
+  `NARRACAO=vinganca py serie_vinganca.py --checar` → `1 2`. Legenda: `legendas_vinganca.py`.
+- Skills do skills.sh avaliadas para o Reels: nenhuma clona voz. `hyperframes-animation` = receitas de animação em
+  HTML/GSAP (o motor já cobre o que este Reels usa); `instagram-marketing` = gancho e legenda; `Trail-Code/` é mapa de
+  código para agentes, sem relação com vídeo.
 - Impulsionar esse tema exige a autorização de "temas sociais, eleições ou política" da Meta.
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
