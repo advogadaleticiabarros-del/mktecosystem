@@ -53,6 +53,14 @@ class InstagramAPI:
         publicado = await self._post(f"/{ig_user_id}/media_publish", {"creation_id": container["id"]})
         return publicado["id"]
 
+    async def publicar_story(self, ig_user_id: str, image_url: str) -> str:
+        """Story de imagem (1080×1920). Story não tem legenda, e a API não põe adesivo (enquete, link): tela com
+        adesivo continua sendo postada pelo app."""
+        container = await self._post(f"/{ig_user_id}/media", {"media_type": "STORIES", "image_url": image_url})
+        await self._aguardar(container["id"])
+        publicado = await self._post(f"/{ig_user_id}/media_publish", {"creation_id": container["id"]})
+        return publicado["id"]
+
     async def publicar_reels(self, ig_user_id: str, video_url: str, legenda: str = "", capa_ms: int | None = None,
                              location_id: str | None = None, trial: bool = False,
                              graduacao: str = "SS_PERFORMANCE") -> str:

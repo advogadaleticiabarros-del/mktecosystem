@@ -218,6 +218,19 @@ async def test_trial_reels_com_graduacao_manual_nao_vai_sozinho_para_o_perfil(mo
 
 
 @pytest.mark.anyio
+async def test_story_de_imagem_sai_sem_legenda(monkeypatch):
+    """Stories pela Graph API: container media_type=STORIES com image_url (Story não tem legenda), espera e publica.
+    Adesivos (enquete, link) não existem na API: telas com adesivo continuam sendo postadas pelo app."""
+    api, enviados = _api_que_registra(monkeypatch)
+    post_id = await api.publicar_story("999", "https://x/story.jpg")
+    caminho, dados = enviados[0]
+    assert caminho.endswith("/999/media")
+    assert dados["media_type"] == "STORIES" and dados["image_url"] == "https://x/story.jpg"
+    assert "caption" not in dados
+    assert enviados[-1][0].endswith("/999/media_publish") and post_id
+
+
+@pytest.mark.anyio
 async def test_imagem_e_carrossel_tambem_levam_localizacao(monkeypatch):
     api, enviados = _api_que_registra(monkeypatch)
     await api.publicar_imagem_unica("999", "https://x/a.jpg", legenda="L", location_id="loc1")
