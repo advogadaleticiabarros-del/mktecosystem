@@ -839,6 +839,10 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 - **R1 pronto nos dois estilos** (`contrato-intermitente-{inteiro,dividida}-1.mp4`, 50,5 s, conferir sem avisos,
   -19,9 LUFS por causa dos picos), cópias em `Desktop\NOVOS REELS\VIDEO 1\PRONTOS`. Plano: os dois como **Trial Reels**
   (só não seguidores), mesma legenda; o vencedor vai aos seguidores e o R2 sai nesse estilo. **Ainda não foram ao Orbit.**
+- **Imagem da Dra. original (26/10/2026, "a cor não ficou legal"):** a gravação era HDR do iPhone (HLG/BT.2020) lida como
+  SDR, e a pele ficava acinzentada. `fala.py` agora converte HDR com tonemap mobius (testes em `test_fala.py`); os engines de
+  `motor/` e `motor-dividida/` não aplicam saturação, contraste nem grão em cena com `bg.rosto`; véu de rosto só no peito.
+  Saíram as **v2** (`contrato-intermitente-{inteiro,dividida}-v2-1.mp4`, conferir sem avisos); as v1 ficam como registro.
 - R2 ("Quando vira problema"): fala montada mas ainda com 3 emendas a acertar (trechos 9, 10 e 15 de `falas.py`).
 - Ferramentas novas na conta do Claude (fora do git): skills `watch` (vídeo por link, modo local), `impeccable` e
   `hallmark` (este só para site novo: proíbe itálico em título e caixa-alta espaçada, que são da identidade).

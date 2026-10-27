@@ -87,7 +87,7 @@ async function init(cfg) {
     if (c.bg) {
       const img = el('img', 'bg'); div.appendChild(img); c._img = img;
       if (c.bg.blur) img.style.filter = `blur(${c.bg.blur}px) saturate(${c.bg.sat ?? .9})`;
-      else img.style.filter = `saturate(${c.bg.sat ?? .9}) contrast(1.04)`;
+      else if (!c.bg.rosto) img.style.filter = `saturate(${c.bg.sat ?? .9}) contrast(1.04)`; // rosto da Dra.: imagem original, sem filtro (26/10/2026)
       if (c.bg.src) img.src = c.bg.src;
     } else div.style.background = 'radial-gradient(ellipse at 50% 40%, #3D332A 0%, #2A231E 55%, #1A1511 100%)';
     const veu = el('div', 'veu');
@@ -269,6 +269,9 @@ async function render(t) {
     else if (c._div.style.maskImage) { c._div.style.maskImage = c._div.style.webkitMaskImage = ''; }
     if (c.trans === 'luz' && kt >= 0 && kt < 1) luz(kt);
   });
+  // rosto da Dra. sem grão por cima: imagem original (pedido de 26/10/2026)
+  const noAr = [...C.cenas].reverse().find(c => t >= c.a);
+  document.querySelector('.grao').style.opacity = noAr && noAr.bg && noAr.bg.rosto ? 0 : '';
   for (const [d, c] of trFx) desenharPo(d, t, parseFloat(c._div.style.opacity || 1));
   explosoes(t);
   g.globalCompositeOperation = 'source-over';

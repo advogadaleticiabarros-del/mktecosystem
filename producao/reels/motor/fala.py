@@ -44,6 +44,22 @@ MULETAS = {"ne", "entao", "tipo", "ahn", "hum", "hmm", "eh", "assim"}
 ARTIGOS = {"o", "a", "os", "as", "um", "uma", "uns", "umas"}   # o Whisper troca um pelo outro; corte não gera troca
 CURTO = 0.08        # silêncio curto aparado nas pontas de cada trecho
 IMAGEM = f"scale=1080:1920:force_original_aspect_ratio=increase:flags=lanczos,crop=1080:1920,fps={FPS},setsar=1"
+# gravação HDR do iPhone (HLG ou PQ, cores BT.2020) lida como SDR fica acinzentada: converte para BT.709 com tonemap
+# mobius, que manteve a pele e a luz da sala na comparação da série 19 (26/10/2026). A imagem da Dra. não leva filtro.
+HDR = {"arib-std-b67", "smpte2084"}
+
+
+def imagem(transferencia: str) -> str:
+    """Filtro de imagem do corte: com fonte HDR, converte a cor antes de escalar."""
+    if transferencia not in HDR:
+        return IMAGEM
+    return (f"zscale=tin={transferencia}:min=bt2020nc:pin=bt2020:rin=tv:t=linear:npl=203,format=gbrpf32le,zscale=p=bt709,"
+            f"tonemap=tonemap=mobius:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p,{IMAGEM}")
+
+
+def transferencia(arq) -> str:
+    return subprocess.run([str(FFPROBE), "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=color_transfer",
+                           "-of", "csv=p=0", str(arq)], capture_output=True, text=True, check=True).stdout.strip()
 
 
 def ff(*args) -> None:
@@ -244,12 +260,12 @@ class Whisper:
 
 # --------------------------------------------------------------------------- montagem
 def _cortar(src: Path, pedacos, destino: Path, vel: float) -> None:
-    entradas, filtros = [], []
+    entradas, filtros, img = [], [], imagem(transferencia(src))
     for i, (a, b) in enumerate(pedacos):
         d = round(b - a, 4)
         cauda = FUSAO if i + 1 < len(pedacos) else 0.0   # o áudio avança e cruza com o pedaço seguinte
         entradas += ["-ss", f"{a:.4f}", "-t", f"{d + cauda + 0.1:.4f}", "-i", str(src)]
-        filtros.append(f"[{i}:v]trim=duration={d},setpts=PTS-STARTPTS,{IMAGEM}[v{i}]")
+        filtros.append(f"[{i}:v]trim=duration={d},setpts=PTS-STARTPTS,{img}[v{i}]")
         filtros.append(f"[{i}:a]atrim=duration={d + cauda:.4f},asetpts=PTS-STARTPTS,aresample=48000,aformat=channel_layouts=stereo[a{i}]")
     filtros.append("".join(f"[v{i}]" for i in range(len(pedacos))) + f"concat=n={len(pedacos)}:v=1:a=0[vc]")
     atual = "a0"
@@ -262,7 +278,7 @@ def _cortar(src: Path, pedacos, destino: Path, vel: float) -> None:
     else:
         filtros += ["[vc]null[v]", "[ac]anull[a]"]
     ff(*entradas, "-filter_complex", ";".join(filtros), "-map", "[v]", "-map", "[a]",
-       "-c:v", "libx264", "-preset", "medium", "-crf", "16", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "256k", "-ar", "48000", destino)
+       "-c:v", "libx264", "-preset", "medium", "-crf", "16", "-pix_fmt", "yuv420p", "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709", "-c:a", "aac", "-b:a", "256k", "-ar", "48000", destino)
 
 
 def montar(src, trechos, destino, ouvido, vel: float = VEL, vocabulario: str = "") -> list[str]:

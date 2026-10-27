@@ -160,3 +160,15 @@ def test_pausa_partida_por_estalo_entra_mas_consoante_dentro_da_palavra_nao():
     fracas = [(6.29, 6.64), (31.7, 32.1)]
     curtos = [(6.3, 6.4), (6.45, 6.63), (31.8, 31.89), (31.96, 32.08)]   # 31,7-32,1: o "t" de "atestado"
     assert fala.pausas_com_estalo(fracas, curtos) == [(6.29, 6.64)]
+
+
+def test_imagem_converte_hdr_do_iphone_para_a_cor_dos_reels():
+    # gravação HDR (HLG ou PQ) lida como SDR fica acinzentada (série 19, 26/10/2026): converte com tonemap
+    for trc in ("arib-std-b67", "smpte2084"):
+        f = fala.imagem(trc)
+        assert "tonemap=tonemap=mobius" in f and "t=bt709" in f and f.endswith(fala.IMAGEM)
+
+
+def test_imagem_de_fonte_comum_fica_como_estava():
+    assert fala.imagem("bt709") == fala.IMAGEM
+    assert fala.imagem("") == fala.IMAGEM

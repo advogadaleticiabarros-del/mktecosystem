@@ -15,7 +15,7 @@ m.AQUI = Path(__file__).resolve().parent
 m.CFG.update({"src": m.AQUI / "videos" / "fala-r1.mp4", "serie": "Contrato intermitente", "corrige": {},
               "destaques": {"hora", "intermitente.", "três", "recusar.", "acertado", "13º", "férias.", "direitos."}})
 
-FACE_VEU = "linear-gradient(180deg, rgba(26,21,17,.35) 0%, rgba(26,21,17,0) 14%, rgba(26,21,17,0) 46%, rgba(26,21,17,.55) 58%, rgba(26,21,17,.9) 100%)"
+FACE_VEU = "linear-gradient(180deg, rgba(26,21,17,0) 0%, rgba(26,21,17,0) 52%, rgba(26,21,17,.45) 62%, rgba(26,21,17,.8) 100%)"  # rosto intacto: só o peito escurece, para os textos (26/10/2026)
 STOCK_VEU = "linear-gradient(180deg, rgba(26,21,17,.82) 0%, rgba(26,21,17,.5) 30%, rgba(26,21,17,.45) 55%, rgba(26,21,17,.88) 100%)"
 DY = {1: -60}    # o rosto desta gravação já fica alto no quadro (folha do bruto): sobe pouco
 ZB = {1: 1.06}   # zoom-base leve: com mais, a testa e o cabelo saem cortados
@@ -92,7 +92,7 @@ def _reel(n, roteiro, serie, prefixo):
 
 
 REELS = {
-    1: _reel(1, reel1, "Contrato intermitente · 1/2", "contrato-intermitente-inteiro-"),
+    1: _reel(1, reel1, "Contrato intermitente · 1/2", "contrato-intermitente-inteiro-v2-"),
 }
 
 if __name__ == "__main__":

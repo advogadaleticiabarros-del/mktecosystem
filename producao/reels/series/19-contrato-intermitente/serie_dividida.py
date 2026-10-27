@@ -16,7 +16,7 @@ m.AQUI = Path(__file__).resolve().parent
 m.CFG.update({"src": m.AQUI / "videos" / "fala-r1.mp4", "serie": "Contrato intermitente", "corrige": {},
               "destaques": {"hora", "intermitente.", "três", "recusar.", "acertado", "13º", "férias.", "direitos."}})
 
-FACE_VEU = "linear-gradient(180deg, rgba(26,21,17,.35) 0%, rgba(26,21,17,0) 14%, rgba(26,21,17,0) 46%, rgba(26,21,17,.55) 58%, rgba(26,21,17,.9) 100%)"
+FACE_VEU = "linear-gradient(180deg, rgba(26,21,17,0) 0%, rgba(26,21,17,0) 52%, rgba(26,21,17,.45) 62%, rgba(26,21,17,.8) 100%)"  # rosto intacto: só o peito escurece, para os textos (26/10/2026)
 BAIXO_VEU = "linear-gradient(180deg, rgba(26,21,17,0) 0%, rgba(26,21,17,0) 70%, rgba(26,21,17,.55) 100%)"
 DY, ZB = -60, 1.06          # rosto em tela cheia (igual ao estilo inteiro)
 DY_BAIXO, FOCO_BAIXO = 650, 445  # tela dividida: a boca desce para y~1400; o punch-in gira em torno dela
@@ -76,7 +76,7 @@ def _reel(n, roteiro, serie, prefixo):
 
 
 REELS = {
-    1: _reel(1, reel1, "Contrato intermitente · 1/2", "contrato-intermitente-dividida-"),
+    1: _reel(1, reel1, "Contrato intermitente · 1/2", "contrato-intermitente-dividida-v2-"),
 }
 
 if __name__ == "__main__":

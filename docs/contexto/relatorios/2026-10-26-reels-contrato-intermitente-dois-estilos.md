@@ -18,10 +18,15 @@ assim consigo testar"; "eu quero furar a bolha". Também: instalar a skill `watc
 - Contexto em `docs/CONTEXTO_PROJETO.md`, seção "Série 19".
 - Fora do git (conta do Claude): skills `watch`, `impeccable`, `hallmark`; yt-dlp via pip --user (Scripts no PATH do usuário).
 
+- **Correção de cor (pedido: "não quero que mexa na imagem da Dra., deixe com a imagem original"):** a gravação é HDR
+  (HLG); estava convertida como SDR. `fala.py` converte HDR (tonemap mobius, escolhido entre 4 opções), engines sem filtro e sem
+  grão no rosto, véu só no peito. Saíram as v2 dos dois estilos (as v1 ficam).
+
 ## Verificado
 - `fala.py montar`: R1 "fala ok" (46,8 s). R2 ainda com avisos nos trechos 9, 10 e 15.
 - `serie.py 1 --checar` nos dois estilos: "área limpa: ok", sem aviso de LEITURA.
 - `conferir.py` nos dois R1: sem avisos (50,5 s, 1080×1920, 30 fps, 11 Mbps, −19,9 LUFS, pico ≤ −2,0 dBTP). Folha final revisada.
+- v2: `conferir.py` sem avisos nos dois; folha revisada (pele no tom real). `py -m pytest` em `motor/`: 42 passaram.
 - Não verificado: os vídeos não foram assistidos com som por uma pessoa; nada foi ao Orbit.
 
 ## Decisões e porquês
@@ -34,7 +39,7 @@ assim consigo testar"; "eu quero furar a bolha". Também: instalar a skill `watc
 - SkillSpector (NVIDIA) não instalado: o controle de permissões bloqueou; não houve contorno.
 
 ## Pendente
-- Jessica: assistir os dois R1 com som e aprovar; dizer se sobe ao Orbit como Trial Reels (o Orbit já tem `corpo.trial_reels`).
+- Jessica: assistir os dois R1 **v2** com som e aprovar; dizer se sobe ao Orbit como Trial Reels (o Orbit já tem `corpo.trial_reels`).
 - Depois do teste (24 a 72 h): escolher o estilo vencedor; o R2 sai nele.
 - R2: acertar as emendas dos trechos 9 ("grandes empresas… utilizam"), 10 ("ah" no fim) e 15 ("Ou" no começo).
 - VIDEO 2 (IMG_0387, 0388, 0390): ainda não começou; perguntar o estilo antes.
