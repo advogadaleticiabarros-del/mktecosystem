@@ -912,6 +912,22 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   facultativo" (é tempo rural + urbano, art. 48, § 3º, Lei 8.213); `carga-horaria-maxima-clt` fala só em 44 h e não
   cita a EC 141 (fim da 6x1). `areas/direito-familia` e `areas/direito-previdenciario` repetem as LPs de pensão e BPC.
 
+## Campanha "demissão pelo voto" (assédio eleitoral, 27/10/2026)
+
+- Pedido urgente da Jessica depois do 2º turno: falar só disso no dia, focado no trabalhador, com captação de leads.
+  Briefing único com fatos conferidos e regras (neutro, sem partido/candidato; formulário "Quero orientação"):
+  `producao/campanhas/2026-10-assedio-eleitoral/BRIEFING.md`.
+- No ar: LP `lp/demissao-por-voto.html` (guia de provas em 6 cartões, STF Tema 237, denúncia no MPT, formulário no
+  topo e no fim → `crm.advogadaleticiabarros.com.br/api/public/lead`, marca `[LP demissao-por-voto]`) e artigo
+  `blog/demitido-por-causa-do-voto-o-que-a-lei-garante.html` (4 CTAs para a LP com `utm_source=blog`).
+- Orbit em rascunho: 8 Stories (postar pelo app; enquete na 02, link na 08), frase 15h, carrossel 9 slides 18h
+  (`66ac094b`), estático "5 provas" 20h; post LinkedIn para empresas (`5f13e925`) parado por pedido ("trabalhadores
+  primeiro"). Arquivos para ela em `Desktop\ASSEDIO ELEITORAL\`.
+- Reels animado: roteiro, cenas e Pexels prontos em `producao/reels/series/22-assedio-eleitoral-motion/` (mídia em
+  `C:\tmp\videos-reels\22-assedio-eleitoral-motion\`), esperando o clone novo da voz: a chave do ElevenLabs não tem
+  `voices_write`; amostra de 3 min 54 s em `Desktop\NOVOS REELS\voz-para-clonar-leticia.wav` para ela clonar no site.
+- Impulsionar esse tema exige a autorização de "temas sociais, eleições ou política" da Meta.
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 - **Cliques no Google (27/10/2026)**: (1) em 17/11/2026 comparar o CTR das 5 páginas principais no Search Console
