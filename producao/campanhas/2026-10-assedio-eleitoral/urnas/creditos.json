@@ -1,0 +1,50 @@
+{
+ "pedido": "27/10/2026: 'Todos inclua fotos das urnas brasileiras'",
+ "descartadas": "Urna Eletrônica Brasileira (Vinicius Depizzol) e Eleição municipal 2016 em Itajubá (Mateus S. Figueiredo): CC BY-SA, obrigaria a arte a sair na mesma licença; fotos de mesários com camisas verde e amarela: leitura política.",
+ "fotos": [
+  {
+   "arquivo": "apps/api/_saida_producao_1510/_fotos_pexels/urna-mao-teclado.jpg",
+   "credito_na_arte": "Foto: Marri Nogueira/Agência Senado (CC BY 2.0)",
+   "fonte": "Senado Federal (Flickr), via Wikimedia Commons",
+   "licenca": "CC BY 2.0",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Eleições_(15263106629).jpg",
+   "url_original": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Elei%C3%A7%C3%B5es_%2815263106629%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "resolucao": "3888x2592",
+   "descricao": "Eleições 2014 - Voto em trânsito no IESB, Asa Sul, Brasília.\n\nFoto: Marri Nogueira/Agência Senado",
+   "onde_usada": "capa dos Stories v2 (01), capa do carrossel v10, estático v2"
+  },
+  {
+   "arquivo": "apps/api/_saida_producao_1510/_fotos_pexels/urna-confirma.jpg",
+   "credito_na_arte": "Foto: Alejandro Zambrana/TSE",
+   "fonte": "TSE (Flickr tsejusbr 52378910436), via Wikimedia Commons",
+   "licenca": "Public domain",
+   "pagina": "https://commons.wikimedia.org/wiki/File:TSE_apresenta_urna_eletrônica_durante_feira_de_ciência_em_escola_de_Santa_Maria.jpg",
+   "url_original": "https://upload.wikimedia.org/wikipedia/commons/d/dc/TSE_apresenta_urna_eletr%C3%B4nica_durante_feira_de_ci%C3%AAncia_em_escola_de_Santa_Maria.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "resolucao": "6720x4480",
+   "descricao": "Foto: Alejandro Zambrana/Secom/TSE",
+   "onde_usada": "Stories v2 (05), frase v3, carrossel v10 (04), fundo da LP, capa do artigo"
+  },
+  {
+   "arquivo": "apps/api/_saida_producao_1510/_fotos_pexels/urna-presidente-luz.jpg",
+   "credito_na_arte": "Foto: Antonio Cruz/Agência Brasil (CC BY 3.0 BR)",
+   "fonte": "Agência Brasil, via Wikimedia Commons",
+   "licenca": "CC BY 3.0 br",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Urnaeleições2006.jpg",
+   "url_original": "https://upload.wikimedia.org/wikipedia/commons/d/da/Urnaelei%C3%A7%C3%B5es2006.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "resolucao": "1999x1311",
+   "descricao": "New model of an electronic voting machine to be used in 2006 Brazilian general elections.",
+   "onde_usada": "Stories v2 (03), carrossel v10 (05)"
+  },
+  {
+   "arquivo": "apps/api/_saida_producao_1510/_fotos_pexels/urna-ue2020-tse.jpg",
+   "credito_na_arte": "Foto: Antonio Augusto/TSE",
+   "fonte": "TSE (Flickr tsejusbr 51744543743), via Wikimedia Commons",
+   "licenca": "Public domain",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Urna_eletrônica_brasileira_UE2020.jpg",
+   "url_original": "https://upload.wikimedia.org/wikipedia/commons/6/62/Urna_eletr%C3%B4nica_brasileira_UE2020.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "resolucao": "3543x2362",
+   "descricao": "Urna eletrônica brasileira modelo UE2020\nFoto: Antonio Augusto/secom/TSE",
+   "onde_usada": "Stories v2 (07), carrossel v10 (03)"
+  }
+ ]
+}
