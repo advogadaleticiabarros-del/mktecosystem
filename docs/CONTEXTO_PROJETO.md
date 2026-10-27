@@ -857,6 +857,16 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
     empresas, né"). Todos em `Desktop\NOVOS REELS\VIDEO 1\PRONTOS`, conferir sem avisos.
   - Regra do Reel de referência (27/10, "teste do mudo"): primeiro quadro forte, texto inteiro já na tela (`at=-1`), sem
     respiro antes de falar, resultado antes da explicação. Aplicada nas séries 19 (v3) e 20.
+  - **Terceira variação, "inteiro com motion"** (27/10, "faça na versão inteira, mas use os mesmos tipos de animações que
+    a outra está usando"): Dra. em tela cheia nas falas diretas; nos trechos de explicação, banco ou 3D bem escurecido
+    (`DIAGRAMA_VEU`) com os diagramas da tela dividida descidos 150 px (`desce()`) para a faixa limpa do quadro cheio.
+    Motor: cópia do `motor/` com `engine.html`, `fx.js` e `diagramas.py` da `motor-dividida/` (cena sem `painel` fica
+    igual ao `motor/`, que não mudou). Roteiro: `series/19-contrato-intermitente/serie_inteiro_motion.py`; trabalho em
+    `C:\tmp\videos-reels\19-video1\work-motion\`. Só o R1 por enquanto: os outros (R2 e os 3 da série 20) **só se ela
+    aprovar**. O banco `stock-calendario` tem corações vermelhos (fora da paleta): não usar atrás de diagrama.
+    Análise de ferramentas (Manim, Motion Canvas, SVG/Lottie): o motor já é "motion em código" (HTML + quadro a quadro,
+    o mesmo princípio do Motion Canvas) e já desenha traço SVG (`stroke-dasharray`, classe `desenha`); Manim e Motion
+    Canvas trariam outra cadeia de ferramentas sem ganho visual; Lottie só vale para ícones pontuais, com licença conferida.
 
 ## Série 20: Gestante, limbo e 11 horas (27/10/2026)
 
