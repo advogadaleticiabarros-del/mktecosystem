@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from unittest.mock import AsyncMock, patch
 
 from sqlalchemy import select
@@ -7,6 +7,7 @@ import pytest
 
 from app.core.crypto import encrypt_token
 from app.models.content_piece import ContentPiece
+from app.models.instagram_post import InstagramPost
 from app.models.pauta import Pauta
 from app.models.scheduled_post import ScheduledPost
 from app.models.social_connection import SocialConnection
@@ -268,3 +269,44 @@ async def test_trial_reels_agendado_sai_no_modo_trial_com_capa(db_session, tmp_p
     assert api.publicar_reels.await_args.kwargs["trial"] is True
     assert api.publicar_reels.await_args.kwargs["graduacao"] == "SS_PERFORMANCE"
     assert api.publicar_reels.await_args.kwargs["capa_ms"] == 1200
+
+
+@pytest.mark.anyio
+async def test_reels_que_depende_do_teste_fica_segurado_se_o_teste_foi_mal(db_session, tmp_path):
+    """Pedido de 27/10/2026: o post para seguidores só sai se o Reels de teste foi bem."""
+    corpo = {"video": "https://api.exemplo/media/reel.mp4", "legenda": "L", "depende_do_teste": "trial_1"}
+    tenant, agendamento = await _setup(db_session, tipo="reels", corpo=corpo, formato="reels")
+    db_session.add_all([InstagramPost(tenant_id=tenant.id, media_id=f"m{i}", publicado_em=datetime(2026, 10, i + 1, tzinfo=timezone.utc),
+                                      formato="Reels", area="Trabalhista", visualizacoes=300) for i in range(5)])
+    await db_session.commit()
+
+    with patch("app.services.instagram_publisher.InstagramAPI") as MockAPI, patch(
+        "app.services.instagram_publisher.MEDIA_DIR", tmp_path
+    ):
+        api = _api_falsa(MockAPI)
+        api.insights_reels = AsyncMock(return_value={"views": 50, "shares": 0, "saved": 0})
+        api.publicar_reels = AsyncMock(return_value="reel_1")
+        publicados = await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
+
+    assert publicados == 0 and api.publicar_reels.await_count == 0
+    await db_session.refresh(agendamento)
+    assert agendamento.status == "segurado"
+    api.insights_reels.assert_awaited_once_with("trial_1")
+
+
+@pytest.mark.anyio
+async def test_reels_que_depende_do_teste_sai_se_o_teste_foi_bem(db_session, tmp_path):
+    corpo = {"video": "https://api.exemplo/media/reel.mp4", "legenda": "L", "depende_do_teste": "trial_1"}
+    tenant, agendamento = await _setup(db_session, tipo="reels", corpo=corpo, formato="reels")
+
+    with patch("app.services.instagram_publisher.InstagramAPI") as MockAPI, patch(
+        "app.services.instagram_publisher.MEDIA_DIR", tmp_path
+    ):
+        api = _api_falsa(MockAPI)
+        api.insights_reels = AsyncMock(return_value={"views": 400, "shares": 2, "saved": 1})
+        api.publicar_reels = AsyncMock(return_value="reel_1")
+        api.comentar = AsyncMock()
+        publicados = await publicar_agendamentos_prontos(db_session, renderizador=RenderizadorFalso())
+
+    assert publicados == 1
+    assert api.publicar_reels.await_args.kwargs["trial"] is False

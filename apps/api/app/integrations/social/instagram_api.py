@@ -137,6 +137,10 @@ class InstagramAPI:
 
         return list(await asyncio.gather(*(com_insights(p) for p in posts)))
 
+    async def insights_reels(self, media_id: str) -> dict:
+        """Números de um Reels pelo id (o de teste, para decidir se ele sai para os seguidores)."""
+        return await self._insights_do_post({"id": media_id, "media_product_type": "REELS"})
+
     async def _insights_do_post(self, post: dict) -> dict:
         if post.get("media_product_type") == "REELS":
             tentativas = ["reach,saved,shares,total_interactions,views,likes,comments"]

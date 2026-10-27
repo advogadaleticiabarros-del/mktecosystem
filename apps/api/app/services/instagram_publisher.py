@@ -23,6 +23,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.config import settings
 from app.core.crypto import decrypt_token
 from app.integrations.social.instagram_api import InstagramAPI
+from app.services.teste_reels import avaliar as avaliar_teste
 from app.models.content_piece import ContentPiece
 from app.models.scheduled_post import ScheduledPost
 from app.models.social_connection import SocialConnection
@@ -85,6 +86,14 @@ async def publicar_agendamentos_prontos(
         api = InstagramAPI(page_token=decrypt_token(conexao.access_token_encrypted))
 
         try:
+            teste = (piece.corpo or {}).get("depende_do_teste")
+            if teste:  # Reels para seguidores que só sai se o Reels de teste foi bem (27/10/2026)
+                veredito = await avaliar_teste(db, api, agendamento.tenant_id, teste)
+                logger.info("Agendamento %s, teste %s: %s", agendamento.id, teste, veredito.motivo)
+                if not veredito.liberado:
+                    agendamento.status = "segurado"
+                    await db.commit()
+                    continue
             midia = await montar_midia(
                 piece,
                 identidade_visual=identidade_visual,

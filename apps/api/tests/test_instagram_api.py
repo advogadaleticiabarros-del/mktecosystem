@@ -225,3 +225,13 @@ async def test_imagem_e_carrossel_tambem_levam_localizacao(monkeypatch):
     enviados.clear()
     await api.publicar_carrossel("999", ["https://x/a.jpg", "https://x/b.jpg"], legenda="L", location_id="loc1")
     assert enviados[-2][1]["location_id"] == "loc1" and "location_id" not in enviados[0][1]
+
+
+@pytest.mark.anyio
+async def test_insights_reels_le_os_numeros_de_um_reels_pelo_id(monkeypatch):
+    api = InstagramAPI(page_token="t")
+    async def falso_get(path, params):
+        assert path == "/trial_1/insights" and "views" in params["metric"]
+        return {"data": [{"name": "views", "values": [{"value": 250}]}, {"name": "shares", "values": [{"value": 2}]}]}
+    monkeypatch.setattr(api, "_get", falso_get)
+    assert await api.insights_reels("trial_1") == {"views": 250, "shares": 2}
