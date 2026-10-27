@@ -12,7 +12,7 @@ assim consigo testar"; "eu quero furar a bolha". Também: instalar a skill `watc
 - **R1 pronto nos dois estilos:** `contrato-intermitente-inteiro-1.mp4` (roteiro `serie_inteiro.py`, banco Pexels + 3D) e
   `contrato-intermitente-dividida-1.mp4` (roteiro `serie_dividida.py`, diagramas no painel). Arquivos em
   `C:\tmp\videos-reels\19-video1\` e cópias em `Desktop\NOVOS REELS\VIDEO 1\PRONTOS`.
-- Estilo novo **tela dividida** em `producao/reels/motor-dividida/` (README explica o uso). `producao/reels/motor/` não mudou.
+- Estilo novo **tela dividida** em `producao/reels/motor-dividida/` (README explica o uso). O estilo de `producao/reels/motor/` não mudou; só a correção de cor do rosto (abaixo).
 - `producao/reels/motor3d/clip3d.py`: clipes 3D curtos sem textos (semana, cofre) para cena de fundo do motor 2D.
 - Skill `leticia-reels-premium`: regra "dois estilos, pergunte sempre".
 - Contexto em `docs/CONTEXTO_PROJETO.md`, seção "Série 19".
