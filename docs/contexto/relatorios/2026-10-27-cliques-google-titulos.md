@@ -2,7 +2,7 @@
 
 ## Pedido
 Print da tela "Google e site": "o que devemos fazer para aumentar esses cliques?", depois "faça tudo que puder para
-mim, vamos reverter isso, mais cliques, mais conversões".
+mim, vamos reverter isso, mais cliques, mais conversões" e, sobre a VPS, "você já tem acesso".
 
 ## Feito
 - Auditoria pública das 71 páginas do sitemap (título, descrição, eventos de contato). Quase todo título passava de
@@ -13,6 +13,10 @@ mim, vamos reverter isso, mais cliques, mais conversões".
 - `blog_seo.trocar_titulo_e_descricao` (troca só `<title>` e meta description, junta metas repetidas em qualquer ordem
   de atributo) e `apps/api/scripts/aplicar_titulos_google.py` (simula por padrão, backup .tgz, IndexNow).
 - 66 títulos/descrições novos em `producao/seo/2026-10-27-titulos-google.json`, com o motivo de cada um.
+- Deploy da API na VPS (backup do banco `/root/orbit-backups/antes-titulos-google-20261027.sql.gz`, `git pull`, rebuild).
+- Aplicados os 66 títulos/descrições no site (backup `/root/orbit-backups/site-titulos-20261027-1544.tgz`), IndexNow avisado.
+- Lidas as consultas e páginas do Search Console no painel salvo; 2 títulos refeitos pelas buscas reais (180 dias e
+  pensão atrasada), aplicados (backup `site-titulos-20261027-1546.tgz`).
 - Contexto em `docs/CONTEXTO_PROJETO.md` (seção "Cliques no Google" e pendência).
 
 ## Verificado
@@ -20,19 +24,21 @@ mim, vamos reverter isso, mais cliques, mais conversões".
   `test_render_artigo_blog` (5 novos).
 - Simulação nas cópias baixadas das 66 páginas: todas ficam com um `<title>` e uma meta description.
 - Todos os títulos ≤ 60 caracteres; descrições entre 110 e 155; sem travessão nem termos vetados.
-- Não verificado: nada foi aplicado no site nem publicado no Orbit (deploy da API não feito).
+- Site público conferido de fora: as 66 páginas mostram o título e a descrição novos, com uma meta description só.
+- API recriada na VPS (`f899d21`, que inclui `8408cba`).
+- Não verificado: efeito no CTR (o Search Console leva de dias a semanas para refletir; conferir em 17/11/2026).
 
 ## Decisões e porquês
-- Sem os dados de consultas do Search Console (leitura em produção barrada), a correção foi pelo que vale para todas
-  as páginas: título que cabe no Google e descrição com a resposta. Refinar por consulta fica para quando houver os dados.
+- Primeiro a correção que vale para todas as páginas (título que cabe no Google, descrição com a resposta); depois,
+  com as consultas reais, o ajuste fino das páginas com mais aparições.
+- Divórcio, plano de saúde e atestado falso aparecem na posição 30-90: título não resolve, precisa de conteúdo e links.
 - H1 e og:title não mudam: o título da aba é para o Google; o H1 e o compartilhamento seguem com o texto da página.
 
 ## Pendente
-- Jessica: autorizar o acesso à VPS para (1) simular e aplicar os títulos, (2) fazer o deploy da API, (3) ler a aba
-  Buscas do painel salvo.
-- Jessica/Dra.: marcar `contato_whatsapp`, `contato_ligacao` e `generate_lead` como eventos principais no GA4; conferir o
-  campo "site" do Perfil da Empresa; corrigir os artigos de aposentadoria híbrida e carga horária.
+- 17/11/2026: comparar o CTR das 5 páginas principais (ver CONTEXTO_PROJETO.md).
+- Jessica/Dra.: marcar `contato_whatsapp`, `contato_ligacao` e `generate_lead` como eventos principais no GA4 (o campo
+  "site" do Perfil da Empresa já está certo, com UTM); corrigir os artigos de aposentadoria híbrida e carga horária.
 
 ## Próxima sessão
-Na VPS: `docker compose cp` do JSON e do script para `/tmp`, rodar sem `--aplicar`, conferir, rodar com `--aplicar`,
-copiar o .tgz para `/root/orbit-backups/`.
+Ler o painel salvo (`social_metrics`, tipo `google_painel`, coluna `metricas` → `search_console.paginas/consultas`) e
+comparar com os números deste relatório. Skill sugerida: `leticia-seo-local`.

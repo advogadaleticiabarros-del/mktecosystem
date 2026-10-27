@@ -901,17 +901,23 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 - Páginas no ar: 66 títulos/descrições novos em `producao/seo/2026-10-27-titulos-google.json` (com o motivo de cada um).
   Aplicação: `apps/api/scripts/aplicar_titulos_google.py` (roda no container `api`; sem `--aplicar` só simula; guarda
   os originais num .tgz; avisa o IndexNow). Troca só `<title>` e meta description (`blog_seo.trocar_titulo_e_descricao`);
-  H1 e og:* ficam. **Ainda não aplicado**: a leitura/escrita em produção foi barrada nesta sessão; falta ela autorizar.
+  H1 e og:* ficam. **Aplicado em 27/10/2026 15h44 (UTC)**: 66 páginas conferidas no site público; originais em
+  `/root/orbit-backups/site-titulos-20261027-1544.tgz` (e `-1546.tgz` do ajuste de 2 títulos). API com o deploy.
+- Search Console (28 dias até 24/10): 5 páginas têm 80% das aparições: banheiro/desvio de função (2.583, posição 5,7,
+  CTR 0,5%), licença-maternidade 180 dias (1.336, posição 8,7), pai não paga pensão (328, 0 cliques), aborto espontâneo
+  (191), fim da 6x1 (177, 0 cliques). Divórcio, plano de saúde e atestado falso estão na posição 30-90 (problema de
+  ranking, não de título). "advogado trabalhista vitória" na posição 13-18. O Perfil da Empresa já tem o site com UTM
+  `perfil-empresa` e botão de agendar pelo WhatsApp.
 - Conteúdo com erro achado na auditoria: `aposentadoria-hibrida-como-funciona` define a híbrida como "contribuinte +
   facultativo" (é tempo rural + urbano, art. 48, § 3º, Lei 8.213); `carga-horaria-maxima-clt` fala só em 44 h e não
   cita a EC 141 (fim da 6x1). `areas/direito-familia` e `areas/direito-previdenciario` repetem as LPs de pensão e BPC.
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
-- **Cliques no Google (27/10/2026)**: (1) aplicar os 66 títulos (script acima) e conferir no Search Console em 3-4
-  semanas, pela aba Buscas, quais páginas subiram de CTR; (2) cruzar com as consultas reais (aba Buscas) e refazer os
-  títulos das páginas com mais aparições e CTR < 2%; (3) ela: marcar os 3 eventos de contato como principais no GA4,
-  conferir o campo "site" do Perfil da Empresa (0 cliques), 1 post por semana no Google com botão para artigo, pedir
+- **Cliques no Google (27/10/2026)**: (1) em 17/11/2026 comparar o CTR das 5 páginas principais no Search Console
+  (antes: 0,9% no geral, 0,5% na do banheiro); (2) se a do banheiro seguir abaixo de 2% na posição 5-6, reescrever o
+  primeiro parágrafo como resposta direta (o Google pode estar respondendo no próprio resultado); (3) ela: marcar os 3 eventos de contato como principais no GA4,
+  1 post por semana no Google com botão para artigo, pedir
   avaliações que citem área e cidade; (4) corrigir os artigos de aposentadoria híbrida e carga horária.
 
 - **Crescimento orgânico (19/10/2026, pedido "faça tudo")**:
