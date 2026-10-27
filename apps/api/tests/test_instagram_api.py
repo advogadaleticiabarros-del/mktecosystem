@@ -210,6 +210,14 @@ async def test_trial_reels_vai_primeiro_para_quem_nao_segue(monkeypatch):
 
 
 @pytest.mark.anyio
+async def test_trial_reels_com_graduacao_manual_nao_vai_sozinho_para_o_perfil(monkeypatch):
+    """Pedido de 27/10/2026: o teste fica só com quem não segue; se for bem, ele sai de novo como post comum."""
+    api, enviados = _api_que_registra(monkeypatch)
+    await api.publicar_reels("999", "https://x/reel.mp4", legenda="L", trial=True, graduacao="MANUAL")
+    assert json.loads(enviados[0][1]["trial_params"]) == {"graduation_strategy": "MANUAL"}
+
+
+@pytest.mark.anyio
 async def test_imagem_e_carrossel_tambem_levam_localizacao(monkeypatch):
     api, enviados = _api_que_registra(monkeypatch)
     await api.publicar_imagem_unica("999", "https://x/a.jpg", legenda="L", location_id="loc1")

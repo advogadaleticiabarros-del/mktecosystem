@@ -30,6 +30,7 @@ class Midia:
     video: str | None = None
     capa_ms: int | None = None  # Reels: quadro da capa (o do gancho)
     trial: bool = False  # Reels: Trial Reels (primeiro para quem não segue)
+    trial_graduacao: str = "SS_PERFORMANCE"  # ou "MANUAL": o teste não vira post dos seguidores sozinho
 
 
 CAPA_PADRAO_MS = 1200  # o texto do gancho já assentou na tela nesse quadro (motor de Reels)
@@ -99,7 +100,8 @@ async def montar_midia(
             raise PecaSemConteudo("reels sem vídeo pronto")
         return Midia(imagens=[], legenda=_legenda(corpo), video=corpo["video"],
                      primeiro_comentario=(corpo.get("primeiro_comentario") or "").strip(),
-                     capa_ms=int(corpo.get("capa_ms") or CAPA_PADRAO_MS), trial=bool(corpo.get("trial_reels")))
+                     capa_ms=int(corpo.get("capa_ms") or CAPA_PADRAO_MS), trial=bool(corpo.get("trial_reels")),
+                     trial_graduacao=corpo.get("trial_graduacao") or "SS_PERFORMANCE")
 
     # Arte já enviada à mão (POST /media/upload) tem prioridade sobre a gerada.
     if piece.tipo == "carrossel" and corpo.get("imagens"):

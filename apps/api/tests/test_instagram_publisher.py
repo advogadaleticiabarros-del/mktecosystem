@@ -266,4 +266,5 @@ async def test_trial_reels_agendado_sai_no_modo_trial_com_capa(db_session, tmp_p
 
     assert publicados == 1
     assert api.publicar_reels.await_args.kwargs["trial"] is True
+    assert api.publicar_reels.await_args.kwargs["graduacao"] == "SS_PERFORMANCE"
     assert api.publicar_reels.await_args.kwargs["capa_ms"] == 1200

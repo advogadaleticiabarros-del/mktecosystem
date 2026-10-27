@@ -162,4 +162,8 @@ async def test_reels_usa_capa_no_gancho_por_padrao_e_aceita_trial(tmp_path):
     assert midia.capa_ms == 1200 and midia.trial is False
     piece2 = _piece("reels", {"video": "https://api.exemplo/media/reel.mp4", "legenda": "L", "capa_ms": 3000, "trial_reels": True})
     midia2 = await montar_midia(piece2, identidade_visual={}, pasta=tmp_path, base_url="https://api.exemplo/media", prefixo="x")
-    assert midia2.capa_ms == 3000 and midia2.trial is True
+    assert midia2.capa_ms == 3000 and midia2.trial is True and midia2.trial_graduacao == "SS_PERFORMANCE"
+    piece3 = _piece("reels", {"video": "https://api.exemplo/media/reel.mp4", "legenda": "L", "trial_reels": True,
+                              "trial_graduacao": "MANUAL"})
+    midia3 = await montar_midia(piece3, identidade_visual={}, pasta=tmp_path, base_url="https://api.exemplo/media", prefixo="x")
+    assert midia3.trial_graduacao == "MANUAL"
