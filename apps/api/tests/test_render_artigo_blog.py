@@ -74,3 +74,30 @@ async def test_renderiza_capa_1200x630(tmp_path):
     assert saida.exists()
     with Image.open(saida) as img:
         assert img.size == (1200, 630)
+
+
+def test_titulo_curto_leva_a_marca_na_aba():
+    html = renderizar_artigo_html(
+        titulo="Carga horária máxima CLT",
+        meta_description="Descrição para SEO",
+        categoria="Trabalhista",
+        resumo="Resumo curto",
+        corpo_html="<p>Conteúdo</p>",
+        slug="carga-horaria-maxima-clt",
+        data_publicacao=date(2026, 7, 21),
+    )
+    assert "<title>Carga horária máxima CLT | Dra. Letícia Barros</title>" in html
+
+
+def test_titulo_longo_sai_sem_a_marca_para_nao_ser_cortado_no_google():
+    titulo = "Fim da escala 6x1: o que muda, quando começa e o que fazer agora"
+    html = renderizar_artigo_html(
+        titulo=titulo,
+        meta_description="Descrição para SEO",
+        categoria="Trabalhista",
+        resumo="Resumo curto",
+        corpo_html="<p>Conteúdo</p>",
+        slug="fim-da-escala-6x1",
+        data_publicacao=date(2026, 10, 22),
+    )
+    assert f"<title>{titulo}</title>" in html

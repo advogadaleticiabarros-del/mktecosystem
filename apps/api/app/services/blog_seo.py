@@ -121,6 +121,32 @@ def aplicar_seo(html: str, *, slug: str, relacionados: list[dict], data_iso: str
     return html
 
 
+def trocar_titulo_e_descricao(html: str, *, titulo: str | None, descricao: str | None) -> str:
+    """Troca só o <title> e a meta description (o que aparece no Google); H1 e og:* ficam como estão.
+
+    `None` mantém o atual. Sem meta description na página, ela é criada logo depois do <title>;
+    com mais de uma (o índice do blog tinha duas), fica só a nova.
+    """
+    aba = re.search(r"<title>.*?</title>", html, re.S | re.I)
+    if not aba:
+        raise ValueError("Página sem <title>.")
+    if titulo is not None:
+        html = html[:aba.start()] + f"<title>{html_lib.escape(titulo, quote=False)}</title>" + html[aba.end():]
+    if descricao is not None:
+        meta = f'<meta name="description" content="{html_lib.escape(descricao)}">'
+        atuais = list(re.finditer(r'<meta\s+[^>]*\bname="description"[^>]*>[ \t]*\n?', html, re.I))
+        if atuais:
+            for m in reversed(atuais[1:]):
+                html = html[:m.start()] + html[m.end():]
+            primeira = atuais[0]
+            quebra = "\n" if primeira.group().endswith("\n") else ""
+            html = html[:primeira.start()] + meta + quebra + html[primeira.end():]
+        else:
+            fim = re.search(r"</title>", html, re.I).end()
+            html = html[:fim] + "\n" + meta + html[fim:]
+    return html
+
+
 def capa_para_jpg(conteudo: bytes, largura_max: int = 1200) -> bytes:
     try:
         imagem = Image.open(io.BytesIO(conteudo))

@@ -2,8 +2,8 @@
 
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
-> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-16**
-> (6 artigos de atualidade + Stories + LP para empresas + plano até dezembro).
+> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-27**
+> (títulos e descrições do site para aumentar cliques no Google).
 
 ## O que é o Orbit
 
@@ -879,7 +879,33 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 - Ferramentas novas na conta do Claude (fora do git): skills `watch` (vídeo por link, modo local), `impeccable` e
   `hallmark` (este só para site novo: proíbe itálico em título e caixa-alta espaçada, que são da identidade).
 
+## Cliques no Google: títulos e descrições (27/10/2026)
+
+- Diagnóstico (tela Google e site): 5.665 aparições e 51 cliques em 28 dias (CTR 0,9% na posição média 7,7, quando o
+  esperado é 2-4%). Perfil da Empresa: 89 aparições em 30 dias, 0 cliques no site, 35 pedidos de rota. GA4 "Conversões
+  0" porque `contato_whatsapp`, `contato_ligacao` e `generate_lead` (já enviados por `/js/conversoes.js`) não estão
+  marcados como evento principal no GA4 (o OAuth do Orbit só tem `analytics.readonly`, então quem marca é ela).
+- Causa principal no site: quase todo `<title>` passava de 60 caracteres por causa do sufixo `| Dra. Letícia Barros`
+  (o Google corta), descrições de 160-220 caracteres e algumas vetadas pela OAB ("muito fácil", "sair recebendo tudo",
+  indenização de R$ 25 mil como chamariz). O índice do blog tinha **duas** meta descriptions.
+- Artigos novos: `render_artigo_blog.titulo_da_aba` põe a marca só se couber em 60 caracteres (artigo e jornal);
+  `REGRAS_TITULO_GOOGLE` em `routers/content.py` pede título de até 60 caracteres com o termo buscado primeiro e
+  descrição de 120-155 com dado concreto e sem termos vetados.
+- Páginas no ar: 66 títulos/descrições novos em `producao/seo/2026-10-27-titulos-google.json` (com o motivo de cada um).
+  Aplicação: `apps/api/scripts/aplicar_titulos_google.py` (roda no container `api`; sem `--aplicar` só simula; guarda
+  os originais num .tgz; avisa o IndexNow). Troca só `<title>` e meta description (`blog_seo.trocar_titulo_e_descricao`);
+  H1 e og:* ficam. **Ainda não aplicado**: a leitura/escrita em produção foi barrada nesta sessão; falta ela autorizar.
+- Conteúdo com erro achado na auditoria: `aposentadoria-hibrida-como-funciona` define a híbrida como "contribuinte +
+  facultativo" (é tempo rural + urbano, art. 48, § 3º, Lei 8.213); `carga-horaria-maxima-clt` fala só em 44 h e não
+  cita a EC 141 (fim da 6x1). `areas/direito-familia` e `areas/direito-previdenciario` repetem as LPs de pensão e BPC.
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
+
+- **Cliques no Google (27/10/2026)**: (1) aplicar os 66 títulos (script acima) e conferir no Search Console em 3-4
+  semanas, pela aba Buscas, quais páginas subiram de CTR; (2) cruzar com as consultas reais (aba Buscas) e refazer os
+  títulos das páginas com mais aparições e CTR < 2%; (3) ela: marcar os 3 eventos de contato como principais no GA4,
+  conferir o campo "site" do Perfil da Empresa (0 cliques), 1 post por semana no Google com botão para artigo, pedir
+  avaliações que citem área e cidade; (4) corrigir os artigos de aposentadoria híbrida e carga horária.
 
 - **Crescimento orgânico (19/10/2026, pedido "faça tudo")**:
   - Feito no Orbit: capa do Reels no quadro do gancho (`thumb_offset`, padrão 1200 ms, `corpo.capa_ms`); Trial

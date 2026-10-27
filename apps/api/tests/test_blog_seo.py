@@ -92,3 +92,46 @@ def test_capa_para_jpg_converte_e_limita_largura():
 
 def test_capa_para_jpg_devolve_original_quando_nao_e_imagem():
     assert capa_para_jpg(b"nao-e-imagem") == b"nao-e-imagem"
+
+
+def test_trocar_titulo_e_descricao_mexe_so_na_aba_e_na_meta():
+    from app.services.blog_seo import trocar_titulo_e_descricao
+
+    pagina = (
+        '<html><head><title>Antigo | Dra. Letícia Barros</title>\n'
+        '<meta name="description" content="Descrição antiga">\n'
+        '<meta property="og:title" content="Antigo"></head><body><h1>Antigo</h1></body></html>'
+    )
+    nova = trocar_titulo_e_descricao(pagina, titulo="Novo & certo", descricao='Diz "isto" aqui')
+    assert "<title>Novo &amp; certo</title>" in nova
+    assert '<meta name="description" content="Diz &quot;isto&quot; aqui">' in nova
+    assert '<meta property="og:title" content="Antigo">' in nova
+    assert "<h1>Antigo</h1>" in nova
+
+
+def test_trocar_titulo_e_descricao_cria_a_meta_quando_falta():
+    from app.services.blog_seo import trocar_titulo_e_descricao
+
+    nova = trocar_titulo_e_descricao("<head><title>Blog</title></head>", titulo=None, descricao="Artigos")
+    assert '<title>Blog</title>\n<meta name="description" content="Artigos">' in nova
+
+
+def test_trocar_titulo_e_descricao_sem_title_avisa():
+    import pytest
+
+    from app.services.blog_seo import trocar_titulo_e_descricao
+
+    with pytest.raises(ValueError):
+        trocar_titulo_e_descricao("<head></head>", titulo="X", descricao=None)
+
+
+def test_trocar_titulo_e_descricao_junta_metas_repetidas_em_qualquer_ordem_de_atributos():
+    from app.services.blog_seo import trocar_titulo_e_descricao
+
+    pagina = (
+        '<head><title>Blog</title>\n<meta content="Uma" name="description"/>\n'
+        '<meta content="Outra" name="description"/>\n</head>'
+    )
+    nova = trocar_titulo_e_descricao(pagina, titulo=None, descricao="Só esta")
+    assert nova.count('name="description"') == 1
+    assert '<meta name="description" content="Só esta">' in nova

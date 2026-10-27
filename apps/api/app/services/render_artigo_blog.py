@@ -19,6 +19,15 @@ LOGO_PATH = ASSETS_DIR / "logo-leticia.png"
 CAPA_LARGURA = 1200
 CAPA_ALTURA = 630
 
+# O Google corta o título do resultado perto de 60 caracteres. A marca só entra
+# na aba quando cabe; senão o termo que a pessoa buscou é que seria cortado.
+LIMITE_TITULO_GOOGLE = 60
+
+
+def titulo_da_aba(titulo: str, marca: str = "Dra. Letícia Barros") -> str:
+    com_marca = f"{titulo} | {marca}"
+    return com_marca if len(com_marca) <= LIMITE_TITULO_GOOGLE else titulo
+
 
 def _logo_data_uri() -> str:
     dados = base64.b64encode(LOGO_PATH.read_bytes()).decode()
@@ -65,6 +74,7 @@ def renderizar_artigo_html(
     template = _env.get_template("blog_artigo.html")
     return template.render(
         titulo=titulo,
+        titulo_aba=titulo_da_aba(titulo),
         meta_description=meta_description,
         categoria=categoria,
         resumo=resumo,
@@ -98,6 +108,7 @@ def renderizar_jornal_html(
     template = _env.get_template("jornal.html")
     return template.render(
         titulo=titulo,
+        titulo_aba=titulo_da_aba(titulo, "Jornal Jurídico"),
         meta_description=meta_description,
         resumo=resumo,
         corpo_html=corpo_html,

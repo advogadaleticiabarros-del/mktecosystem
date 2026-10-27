@@ -75,13 +75,28 @@ REGRAS_LEGENDA = (
     "'descubra', 'desvende', 'jornada', 'crucial', 'fundamental'.\n"
 )
 
+# O título e a descrição são o que a pessoa vê no Google antes de decidir clicar.
+# Em 27/10/2026 o site tinha 5.665 aparições e 0,9% de cliques na posição média 7,7:
+# títulos longos demais (cortados) e descrições que não entregavam a resposta.
+REGRAS_TITULO_GOOGLE = (
+    "Regras do título e da descrição (o que aparece no Google): o título tem no "
+    "máximo 60 caracteres e começa pelo termo que a pessoa digitaria (ex.: 'Fui "
+    "demitida grávida: o que fazer e quais os prazos'), com o ano quando a regra "
+    "mudou recentemente, sem o nome da advogada. A meta_description tem de 120 a "
+    "155 caracteres, entrega um dado concreto da resposta (prazo, valor, artigo de "
+    "lei) e termina dizendo o que a pessoa vai encontrar no texto. Proibido pela "
+    "OAB: promessa de resultado, 'garanta', 'ganhe', 'fácil', valores de "
+    "indenização como chamariz, 'melhor advogada'.\n"
+)
+
 PROMPTS = {
     "artigo": (
         "Escreva um artigo de blog completo (1200-1800 palavras) sobre '{titulo}' "
         "(ângulo: {angulo}, área: {area}). Estrutura: gancho, H2s com keyword, "
         "Perguntas frequentes, Leia também, 1 caso típico do escritório, 2 CTAs.\n"
-        "{voz}\nResponda em JSON: {{\"titulo\": str, \"html\": str, "
-        "\"meta_description\": str (até 155 caracteres, resumindo o artigo para SEO), "
+        + REGRAS_TITULO_GOOGLE
+        + "{voz}\nResponda em JSON: {{\"titulo\": str (até 60 caracteres), \"html\": str, "
+        "\"meta_description\": str (de 120 a 155 caracteres), "
         "\"resumo\": str (1-2 frases curtas, usadas como chamada nos cards do blog)}}"
     ),
     "carrossel": (
@@ -180,8 +195,9 @@ JORNAL_PROMPT = (
     "{voz}\n"
     "MATERIAL JÁ PESQUISADO (única fonte permitida — não pesquise nada além "
     "disso):\n{material}\n\n"
-    "Responda em JSON: {{\"titulo\": str, \"html\": str, "
-    "\"meta_description\": str (até 155 caracteres), "
+    + REGRAS_TITULO_GOOGLE
+    + "Responda em JSON: {{\"titulo\": str (até 60 caracteres), \"html\": str, "
+    "\"meta_description\": str (de 120 a 155 caracteres), "
     "\"resumo\": str (1-2 frases para o card/CTA)}}"
 )
 
