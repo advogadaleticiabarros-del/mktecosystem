@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "hyperframes-animation": {
+      "source": "heygen-com/hyperframes",
+      "sourceType": "github",
+      "skillPath": "skills/hyperframes-animation/SKILL.md",
+      "computedHash": "3d6678f0e325d69026678982b8616e181f8e92a4e7075f1f51a9b9696a265aba"
+    },
     "instagram-marketing": {
       "source": "sergebulaev/instagram-skills",
       "sourceType": "github",

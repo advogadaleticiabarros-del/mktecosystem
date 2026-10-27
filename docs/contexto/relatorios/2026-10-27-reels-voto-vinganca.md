@@ -27,7 +27,8 @@ voz da Dra. Letícia dos reels que já temos? veja se alguma dessas skills.sh aj
   desfoque) depois da 1ª revisão.
 - Chave do ElevenLabs testada: só tem Text to Speech (401 em `voices_read` e `user_read`), então não cria clone.
 - Render das prévias: as duas em 1080×1920 H.264 + AAC, 44,0 s (gancho A) e 42,6 s (gancho B), voz em −15 LUFS;
-  quadros do gancho, do "140", do "2x" e do fechamento conferidos. Cópias em `Desktop\ASSEDIO ELEITORALeels-previa-voz-provisoria\`
+  quadros do gancho, do "140", do "2x" e do fechamento conferidos. Cópias em `Desktop\ASSEDIO ELEITORAL
+eels-previa-voz-provisoria\`
   e em `https://api.orbit.advogadaleticiabarros.com.br/media/PREVIA-voz-provisoria-demissao-por-vinganca-1.mp4` (e `-2`).
 - Não verificado: qualidade do clone novo (não existe ainda).
 
