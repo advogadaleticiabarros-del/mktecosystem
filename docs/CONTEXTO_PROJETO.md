@@ -889,9 +889,13 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 ## Cliques no Google: títulos e descrições (27/10/2026)
 
 - Diagnóstico (tela Google e site): 5.665 aparições e 51 cliques em 28 dias (CTR 0,9% na posição média 7,7, quando o
-  esperado é 2-4%). Perfil da Empresa: 89 aparições em 30 dias, 0 cliques no site, 35 pedidos de rota. GA4 "Conversões
-  0" porque `contato_whatsapp`, `contato_ligacao` e `generate_lead` (já enviados por `/js/conversoes.js`) não estão
-  marcados como evento principal no GA4 (o OAuth do Orbit só tem `analytics.readonly`, então quem marca é ela).
+  esperado é 2-4%). Perfil da Empresa: 89 aparições em 30 dias, 0 cliques no site, 35 pedidos de rota.
+- **GA4 "Conversões 0" está certo; os "16 contatos" enganam.** `contato_whatsapp`, `contato_ligacao` e `generate_lead`
+  são eventos principais desde 22/10/2026 20h54 UTC (Admin API, `createTime`), e o Orbit já lê `keyEvents`. Os 16
+  eventos são todos de 22/10 (dia da instalação, testes antes da marcação, que não é retroativa). De 23 a 27/10: zero
+  contatos em ~50 visitas. Teste em navegador headless (envio ao GA bloqueado) em 27/10: o clique no WhatsApp dispara
+  `contato_whatsapp` no artigo e na home, então a medição funciona e a falta de contato é real. `purchase` e
+  `ads_conversion_Enviar_formul_rio_de_le_1` (jan/2025) seguem marcados sem dados.
 - Causa principal no site: quase todo `<title>` passava de 60 caracteres por causa do sufixo `| Dra. Letícia Barros`
   (o Google corta), descrições de 160-220 caracteres e algumas vetadas pela OAB ("muito fácil", "sair recebendo tudo",
   indenização de R$ 25 mil como chamariz). O índice do blog tinha **duas** meta descriptions.

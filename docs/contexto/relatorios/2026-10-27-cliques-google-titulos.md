@@ -26,6 +26,9 @@ mim, vamos reverter isso, mais cliques, mais conversões" e, sobre a VPS, "você
 - Todos os títulos ≤ 60 caracteres; descrições entre 110 e 155; sem travessão nem termos vetados.
 - Site público conferido de fora: as 66 páginas mostram o título e a descrição novos, com uma meta description só.
 - API recriada na VPS (`f899d21`, que inclui `8408cba`).
+- GA4 (pedido seguinte, depois de ela conferir que os 3 eventos já eram principais): marcados em 22/10 20h54 UTC; os 16
+  contatos do painel são todos de 22/10 (instalação, antes da marcação); de 23 a 27/10, zero. Teste headless com envio
+  bloqueado: o clique no WhatsApp dispara `contato_whatsapp` (artigo e home). O Orbit lê `keyEvents`, a métrica certa.
 - Não verificado: efeito no CTR (o Search Console leva de dias a semanas para refletir; conferir em 17/11/2026).
 
 ## Decisões e porquês
