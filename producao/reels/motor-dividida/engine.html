@@ -1,0 +1,299 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { font-variant-numeric: lining-nums; font-feature-settings:"lnum" 1; }
+body { width:1080px; height:1920px; overflow:hidden; background:#1A1511; font-family:'Inter',sans-serif; color:#FAF6F0; }
+#palco { position:absolute; inset:0; }
+.cena { position:absolute; inset:0; overflow:hidden; will-change:transform, opacity, filter; }
+.bg { position:absolute; inset:-4%; width:108%; height:108%; object-fit:cover; transform-origin:50% 50%; }
+.veu { position:absolute; inset:0; }
+.camada { position:absolute; inset:0; transform-origin:50% 45%; }
+.el { position:absolute; }
+.cg { font-family:'EB Garamond',serif; }
+em, .ouro { font-style:italic; color:#E2C77F; background:linear-gradient(100deg,#B8943F 0%,#E2C77F 30%,#FFF4D2 46%,#E9D398 54%,#C9A962 75%,#B8943F 100%);
+  background-size:260% 100%; background-position:var(--sh,50%) 0; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  text-shadow:none; filter:drop-shadow(0 6px 18px rgba(0,0,0,.55)); padding:0 .04em; }
+.ouro { font-style:normal; }
+#fx { position:absolute; inset:0; z-index:36; pointer-events:none; }
+.lin { display:block; overflow:hidden; padding:0.04em 0.06em 0.12em; margin:-0.04em -0.06em -0.12em; }
+.lin > span { display:inline-block; will-change:transform; }
+.w { display:inline-block; will-change:transform, opacity; }
+.kick { font-size:27px; font-weight:800; letter-spacing:5px; text-transform:uppercase; color:#C9A962; }
+.pill { display:inline-block; font-size:28px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:#231E1A;
+  background:linear-gradient(180deg,#F4E6BC,#C9A962); padding:12px 24px; border-radius:12px; box-shadow:0 16px 36px rgba(0,0,0,.45); }
+.carimbo { font-family:'Inter',sans-serif; font-weight:800; font-size:76px; letter-spacing:3px; text-transform:uppercase; color:#E9D398;
+  border:3px solid #C9A962; border-radius:10px; padding:8px 28px; white-space:nowrap; background:rgba(26,21,17,.55); } /* selo limpo: sem brilho, sem moldura dupla */
+.cartao { background:rgba(36,29,24,.78); border:1.5px solid #C9A9629e; border-radius:26px; box-shadow:0 30px 70px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,240,200,.18);
+  backdrop-filter: blur(18px); }
+.papel { background:#FCFAF5; color:#2B231C; border-radius:10px; box-shadow:0 40px 80px rgba(0,0,0,.55); }
+.grao { position:absolute; inset:0; z-index:50; pointer-events:none; opacity:.10; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='1.3' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>"); }
+.faixa { position:absolute; left:0; right:0; height:12px; z-index:60; background:linear-gradient(90deg,#8E6E2E,#E9D398 30%,#C9A962 55%,#F4E6BC 75%,#9C7B3A); }
+/* cabeçalho e barra de progresso embaixo da legenda (16/10/2026: no topo cobriam a testa da Dra.) */
+#cab { position:absolute; z-index:40; top:1198px; left:150px; right:150px; display:flex; justify-content:space-between; font-size:22px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#E8DED1; text-shadow:0 2px 10px rgba(0,0,0,.6); }
+#cab .d { color:#C9A962; }
+#cab span { white-space:nowrap; }
+#barra { position:absolute; z-index:40; top:1236px; left:150px; right:150px; height:5px; border-radius:3px; background:rgba(232,222,209,.18); overflow:hidden; }
+#barra i { display:block; height:100%; width:0; background:linear-gradient(90deg,#B8943F,#E9D398); }
+#leg { position:absolute; z-index:40; left:190px; right:190px; top:1070px; text-align:center; font-size:48px; font-weight:800; line-height:1.2; color:#FFF;
+  text-shadow:0 3px 0 rgba(26,21,17,.9), 0 0 22px rgba(0,0,0,.6); }
+#leg .w { margin:0 6px; opacity:.55; }
+#leg .w.dita { opacity:1; }
+#leg .w.on { color:#F4E6BC; }
+#leg .w.d.dita { color:#E9D398; }
+#flash { position:absolute; inset:0; z-index:45; background:#FFF6DC; opacity:0; pointer-events:none; }
+/* tela dividida (26/10/2026, referência dos Reels de explicação): painel café no alto com o diagrama, rosto embaixo.
+   A legenda passa para a linha da divisão e o cabeçalho/barra entram no pé do painel, longe do rosto. */
+.painel { position:absolute; left:0; right:0; top:0; background:radial-gradient(ellipse at 50% 30%, #3A3028 0%, #2A231E 55%, #1E1814 100%);
+  box-shadow:0 26px 60px rgba(0,0,0,.55); }
+.painel::after { content:''; position:absolute; left:0; right:0; bottom:0; height:4px; background:linear-gradient(90deg,#8E6E2E,#E9D398 30%,#C9A962 55%,#F4E6BC 75%,#9C7B3A); }
+body.split #leg { top:var(--leg-split, 1040px); }
+body.split #cab { top:calc(var(--painel-h, 1000px) - 92px); }
+body.split #barra { top:calc(var(--painel-h, 1000px) - 54px); }
+.part { position:absolute; border-radius:50%; background:radial-gradient(circle, rgba(244,230,188,.9), rgba(201,169,98,0) 70%); }
+</style></head><body>
+<div id="palco"></div>
+<div id="flash"></div>
+<canvas id="fx" width="1080" height="1920"></canvas>
+<div id="cab"><span id="cabE">Letícia Barros</span><span class="d" id="cabD"></span></div>
+<div id="barra"><i></i></div>
+<div id="leg"></div>
+<div class="grao"></div><div class="faixa" style="top:0"></div><div class="faixa" style="bottom:0"></div>
+<script>
+const clamp = (x, a=0, b=1) => Math.min(b, Math.max(a, x));
+const eOut = x => 1 - Math.pow(1 - clamp(x), 3);
+const eInOut = x => { x = clamp(x); return x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2; };
+const eBack = x => { x = clamp(x); const c = 1.6; return 1 + (c+1)*Math.pow(x-1,3) + c*Math.pow(x-1,2); };
+const lerp = (a, b, k) => a + (b - a) * k;
+let C, cenas = [], blocoAtual = -1;
+// área segura do Reels (corte do iPhone em tela cheia ~98 px por lado + ícones à direita): a camada gráfica de cada
+// cena é desenhada no quadro inteiro e encolhida para dentro a partir do centro (x 540, y 864), então o que nasce em
+// x=90 cai em x~155 (já contando o push-in de 1,03 da câmera). Vale também para o pó de ouro e as explosões (canvas), pela mesma conta.
+let ZONA = .83;
+const naZona = (x, y) => [540 + (x - 540) * ZONA, 864 + (y - 864) * ZONA];
+
+function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+
+// texto revelado por máscara: cada linha sobe de dentro de uma janela
+function montarTexto(e, d) {
+  const box = el('div', 'el ' + (d.cls || ''));
+  Object.assign(box.style, d.style || {});
+  const linhas = d.html.split('|');
+  linhas.forEach((ln, i) => { const L = el('span', 'lin'); const s = el('span', null, ln); L.appendChild(s); box.appendChild(L); });
+  return box;
+}
+
+async function init(cfg) {
+  C = cfg; ZONA = cfg.zona ?? .83;
+  (cfg.bursts || []).forEach(b => { [b.x, b.y] = naZona(b.x, b.y); b.raio = (b.raio ?? 420) * ZONA; });
+  cfg.cenas.forEach(c => (c.els || []).forEach(d => { if (d.tipo === 'po') { [d.x, d.y] = naZona(d.x, d.y); d.size *= ZONA; } }));
+  document.getElementById('cabD').textContent = cfg.serie;
+  const palco = document.getElementById('palco');
+  cfg.cenas.forEach((c, ic) => {
+    const div = el('div', 'cena'); div.style.zIndex = 10 + ic; div.style.visibility = 'hidden';
+    if (c.bg) {
+      const img = el('img', 'bg'); div.appendChild(img); c._img = img;
+      if (c.bg.blur) img.style.filter = `blur(${c.bg.blur}px) saturate(${c.bg.sat ?? .9})`;
+      else img.style.filter = `saturate(${c.bg.sat ?? .9}) contrast(1.04)`;
+      if (c.bg.src) img.src = c.bg.src;
+    } else div.style.background = 'radial-gradient(ellipse at 50% 40%, #3D332A 0%, #2A231E 55%, #1A1511 100%)';
+    const veu = el('div', 'veu');
+    veu.style.background = c.veu || 'linear-gradient(180deg, rgba(26,21,17,.78) 0%, rgba(26,21,17,.15) 30%, rgba(26,21,17,.15) 55%, rgba(26,21,17,.88) 100%)';
+    div.appendChild(veu);
+    if (c.painel) { const pn = el('div', 'painel'); pn.style.height = c.painel + 'px'; div.appendChild(pn); c._painel = pn; }
+    // partículas (camada de profundidade)
+    const part = el('div', 'camada'); c._part = part; div.appendChild(part);
+    c._ps = [];
+    for (let i = 0; i < (C.bolinhas ? (c.particulas ?? 0) : 0); i++) { // bolinhas desfocadas: desligadas, mesmo em cena antiga que pedia (imagem limpa, 16/10/2026)
+      const p = el('div', 'part'); const r = 6 + (i * 37 % 26); p.style.width = p.style.height = r + 'px';
+      const ps = { x: (i * 211) % 1080, y: 300 + (i * 389) % 1300, z: .3 + (i % 5) * .25, r }; c._ps.push([p, ps]);
+      p.style.filter = `blur(${(1.4 - ps.z) * 4}px)`; p.style.opacity = .25 + ps.z * .3; part.appendChild(p);
+    }
+    const cam = el('div', 'camada'); c._cam = cam; div.appendChild(cam);
+    c._els = (c.els || []).map(d => {
+      let n;
+      if (d.tipo === 'texto') n = montarTexto(cam, d);
+      else if (d.tipo === 'po') { n = el('div', 'el'); n.style.display = 'none'; }
+      else { n = el('div', 'el ' + (d.cls || ''), d.html || ''); Object.assign(n.style, d.style || {}); }
+      cam.appendChild(n);
+      if (d.tipo === 'traco') n.querySelectorAll('.desenha').forEach(p => { let L = 1200; try { L = p.getTotalLength(); } catch (e) {} p.style.strokeDasharray = L; p.style.strokeDashoffset = L; p._L = L; });
+      return [n, d];
+    });
+    palco.appendChild(div); c._div = div;
+  });
+  await Promise.all(cfg.cenas.filter(c => c._img && c._img.src).map(c => c._img.decode().catch(() => {})));
+  await document.fonts.load("700 100px 'EB Garamond'");
+  for (const c of cfg.cenas) for (const [n, d] of c._els) if (d.tipo === 'po') {
+    if (d.img) { d._im = new Image(); d._im.src = d.img; await d._im.decode().catch(() => {}); }
+    pontosDe(d);
+  }
+  // títulos: cada linha (separada por |) tem que caber numa linha só; senão a fonte reduz até caber
+  for (const c of cfg.cenas) {
+    c._div.style.visibility = 'visible';
+    for (const [n, d] of c._els) {
+      if ((d.cls || '').includes('carimbo')) { // carimbo que passaria da margem direita encolhe até caber
+        let fc = parseFloat(n.style.fontSize) || 76;
+        const cabe = () => 540 + (n.offsetLeft + n.offsetWidth - 540) * ZONA * 1.04 + 14 <= 928;
+        while (!cabe() && fc > 40) { fc *= 0.95; n.style.fontSize = fc + 'px'; }
+        continue;
+      }
+      if (d.tipo !== 'texto') continue;
+      let fs = parseFloat(n.style.fontSize) || 96;
+      const quebra = () => [...n.querySelectorAll('.lin > span')].some(sp => sp.offsetHeight > fs * 1.35);
+      while (quebra() && fs > 40) { fs *= 0.95; n.style.fontSize = fs + 'px'; }
+    }
+    c._div.style.visibility = 'hidden';
+  }
+}
+
+// animação de entrada/saída de cada elemento
+function animarEl(n, d, t) {
+  const a = d.at ?? -99, dur = d.dur ?? .55, k = (t - a) / dur;
+  const sai = d.ate != null ? clamp((t - d.ate) / .3) : 0;
+  let op = 1, tf = '', extra = '';
+  switch (d.anim || 'fade') {
+    case 'mascara': {
+      n.querySelectorAll('.lin > span').forEach((s, i) => {
+        const kk = eOut((t - a - i * .09) / dur); s.style.transform = `translateY(${(1 - kk) * 110}%)`;
+      });
+      op = t < a ? 0 : 1; break;
+    }
+    case 'pop': { const kk = eBack(k); if (n.classList.contains('pill')) n.style.transformOrigin = '0 50%'; // cresce da borda esquerda: o repique não invade a margem
+ op = clamp(k * 4); tf = `scale(${lerp(.4, 1, kk)})`; break; }
+    case 'carimbo': {
+      const kk = clamp(k / .45); op = clamp(k * 6);
+      // batida do carimbo: começa maior (até 2,4x), mas nunca a ponto de sair da área segura (150..930)
+      const cxC = 540 + (n.offsetLeft + n.offsetWidth / 2 - 540) * ZONA, hwC = n.offsetWidth / 2 * ZONA;
+      const s0 = Math.max(1, Math.min(1.18, (Math.min(cxC - 150, 930 - cxC) - 12) / hwC)); // entrada discreta (16/10: nada de batida exagerada)
+      const s = lerp(s0, 1, eOut(kk));
+      tf = `rotate(${C.inclinar ? (d.rot ?? -8) : 0}deg) scale(${s})`; break; // reto e sem tremor: visual limpo
+    }
+    case 'sobe': { const kk = eOut(k); op = clamp(k * 2); tf = `translateY(${(1 - kk) * 70}px)`; break; }
+    case 'desliza': { const kk = eOut(k); op = clamp(k * 2); tf = `translateX(${(1 - kk) * (d.dx ?? -120)}px)`; break; }
+    case 'fade': default: op = clamp(k); break;
+  }
+  if (d.tipo === 'traco') {
+    n.querySelectorAll('.desenha').forEach((p, i) => { const kk = eInOut((t - a - i * (d.stagger ?? 0)) / (d.durTraco ?? 1.2)); p.style.strokeDashoffset = p._L * (1 - kk); });
+    op = t < a ? 0 : 1;
+  }
+  if (d.tipo === 'contador') {
+    const kk = eOut((t - a) / (d.durConta ?? 1.4)); const v = Math.round(lerp(d.de, d.para, kk));
+    const alvo = n.querySelector('.num'); if (alvo) alvo.textContent = v;
+  }
+  if (d.tipo === 'risco') {
+    const kk = eInOut((t - a) / .45); n.style.width = (d.largura * kk) + 'px'; op = t < a ? 0 : 1;
+  }
+  if (d.tipo === 'linha') { // linha do tempo: largura acompanha a fala
+    const kk = clamp((t - a) / ((d.ateFim ?? a + 1) - a)); n.querySelector('.fill').style.width = (kk * 100) + '%'; op = t < a ? 0 : 1;
+  }
+  if (d.pulso && t > a + dur) tf += ` scale(${1 + .035 * Math.sin((t - a) * 5)})`;
+  if (d.brilho) { const kk = clamp((t - d.brilho) / .9); n.style.backgroundPosition = `${lerp(-60, 160, kk)}% 0`; }
+  op *= 1 - sai;
+  n.style.opacity = op; n.style.transform = tf + extra;
+}
+
+const T = .42;
+function transicao(c, t) {
+  // entrada da cena c (e saída da anterior, por baixo)
+  const k = (t - c.a) / (c.tdur ?? T);
+  const div = c._div; let tf = '', op = 1, fl = '', clip = '';
+  if (k >= 1 || c.trans === 'corte') return { tf, op, fl, clip };
+  const kk = eInOut(k);
+  switch (c.trans) {
+    case 'whip':   tf = `translateX(${(1 - kk) * 1080}px)`; fl = `blur(${(1 - kk) * 26}px)`; break;
+    case 'whipV':  tf = `translateY(${(1 - kk) * 1920}px)`; fl = `blur(${(1 - kk) * 26}px)`; break;
+    case 'zoom':   tf = `scale(${lerp(1.5, 1, kk)})`; op = kk; fl = `blur(${(1 - kk) * 18}px)`; break;
+    case 'iris':   clip = `circle(${lerp(0, 120, kk)}% at 50% ${c.irisY ?? 45}%)`; break;
+    case 'sobe':   tf = `translateY(${(1 - kk) * 700}px)`; op = kk; break;
+    case 'tinta':  break;
+    case 'luz':    op = clamp(kk * 1.6); break;
+    case 'dissolve': default: op = kk; break;
+  }
+  return { tf, op, fl, clip };
+}
+function saida(c, prox, t) {
+  if (!prox) return '';
+  const k = (t - prox.a) / (prox.tdur ?? T); if (k < 0 || k >= 1) return null;
+  const kk = eInOut(k);
+  switch (prox.trans) {
+    case 'whip': return [`translateX(${-kk * 1080}px)`, `blur(${kk * 26}px)`];
+    case 'whipV': return [`translateY(${-kk * 1920}px)`, `blur(${kk * 26}px)`];
+    case 'zoom': return [`scale(${lerp(1, 1.35, kk)})`, `blur(${kk * 10}px)`];
+    case 'sobe': return [`translateY(${-kk * 300}px)`, ''];
+    default: return ['', ''];
+  }
+}
+
+async function render(t) {
+  const promessas = [];
+  document.querySelector('#barra i').style.width = (100 * clamp(t / C.total)) + '%';
+  const E = energia(t);
+  document.querySelector('#barra i').style.boxShadow = `0 0 ${8 + 26 * E}px rgba(233,211,152,${.35 + .6 * E})`;
+  document.documentElement.style.setProperty('--sh', (130 - ((t % 3.2) / 3.2) * 160) + '%');
+  const palco = document.getElementById('palco'); palco.style.transformOrigin = '50% 42%'; palco.style.transform = `scale(${soco(t)})`;
+  g.clearRect(0, 0, 1080, 1920); g.globalCompositeOperation = 'lighter';
+  poeira(t, E);
+  const trFx = [];
+  // flash nos pontos marcados
+  const f = C.flashes.reduce((m, x) => (t >= x && t - x < m ? t - x : m), 9);
+  document.getElementById('flash').style.opacity = f < .16 ? .55 * (1 - f / .16) : 0;
+  C.cenas.forEach((c, i) => {
+    const prox = C.cenas[i + 1];
+    const fimVis = prox ? prox.a + (prox.tdur ?? T) : C.total + 1;
+    const vis = t >= c.a && t < fimVis;
+    c._div.style.visibility = vis ? 'visible' : 'hidden';
+    if (!vis) return;
+    const lt = t - c.a, dur = (prox ? prox.a : C.total) - c.a, p = clamp(lt / dur);
+    // fundo: foto ou sequência de quadros do vídeo, com Ken Burns
+    if (c.bg) {
+      const kb = c.bg.kb || [1.06, 1.16, 0, 0, 0, 0];
+      const pk = eInOut(p) * .85 + p * .15;
+      // punch-in nas emendas do rosto (bg.zooms): zoom seco em torno do rosto (bg.foco, px acima do centro)
+      const zm = (c.bg.zooms || []).reduce((m, [tz, z]) => (lt >= tz ? z : m), 1), fy = c.bg.foco ?? -360;
+      c._img.style.transform = `translate(${lerp(kb[2], kb[3], pk) * zm}px, ${lerp(kb[4], kb[5], pk) * zm + (1 - zm) * fy}px) scale(${lerp(kb[0], kb[1], pk) * zm})`;
+      if (c.bg.seq) {
+        const n = Math.min(c.bg.n - 1, Math.floor((lt * (c.bg.vel ?? 1) + (c.bg.ini ?? 0)) * 30));
+        const src = `${c.bg.seq}/${String(n + 1).padStart(4, '0')}.jpg`;
+        if (!c._img.src.endsWith(src)) { c._img.src = src; promessas.push(c._img.decode().catch(() => {})); }
+      }
+    }
+    // câmera da camada gráfica (push-in suave + deriva) e parallax das partículas
+    const cam = c.cam || [1, 1.03, 0, 0];
+    const ck = eInOut(p);
+    c._cam.style.transform = `translate(${lerp(cam[2], cam[3], ck)}px, 0) scale(${lerp(cam[0], cam[1], ck) * ZONA})`;
+    c._ps.forEach(([pe, ps]) => {
+      const y = ps.y - lt * 26 * ps.z, x = ps.x + Math.sin(lt * .7 + ps.x) * 18 * ps.z + lerp(cam[2], cam[3], ck) * ps.z * 1.8;
+      pe.style.transform = `translate(${x}px, ${((y % 1500) + 1500) % 1500 + 200}px)`;
+    });
+    c._els.forEach(([n, d]) => { if (d.tipo === 'po') trFx.push([d, c]); else animarEl(n, d, t); });
+    // transições
+    const tr = transicao(c, t);
+    const sa = saida(c, prox, t);
+    let tf = tr.tf, fl = tr.fl, op = tr.op;
+    if (sa) { tf = (tf + ' ' + sa[0]).trim(); fl = (fl + ' ' + sa[1]).trim(); }
+    c._div.style.transform = tf; c._div.style.filter = fl; c._div.style.opacity = op; c._div.style.clipPath = tr.clip;
+    const kt = (t - c.a) / (c.tdur ?? T);
+    if (c.trans === 'tinta' && kt < 1) promessas.push(tinta(c, clamp(kt)));
+    else if (c._div.style.maskImage) { c._div.style.maskImage = c._div.style.webkitMaskImage = ''; }
+    if (c.trans === 'luz' && kt >= 0 && kt < 1) luz(kt);
+  });
+  // tela dividida: vale o painel da cena que está entrando ou já está no ar
+  const atual = [...C.cenas].reverse().find(c => t >= c.a);
+  document.body.classList.toggle('split', !!(atual && atual.painel));
+  if (atual && atual.painel) { document.body.style.setProperty('--painel-h', atual.painel + 'px'); document.body.style.setProperty('--leg-split', (atual.painel + 40) + 'px'); }
+  for (const [d, c] of trFx) desenharPo(d, t, parseFloat(c._div.style.opacity || 1));
+  explosoes(t);
+  g.globalCompositeOperation = 'source-over';
+  // legenda por frase (adianta ~0,12 s da voz), palavra falada em destaque
+  const ib = C.leg.findIndex(b => t >= b.a - .12 && t < b.b);
+  const leg = document.getElementById('leg');
+  const semLeg = C.semLegenda.some(([a, b]) => t >= a && t < b);
+  leg.style.opacity = semLeg ? 0 : 1;
+  if (ib !== blocoAtual) { blocoAtual = ib; leg.innerHTML = ib < 0 ? '' : C.leg[ib].w.map(w => `<span class="w${w.d ? ' d' : ''}">${w.t}</span>`).join(''); }
+  if (ib >= 0) C.leg[ib].w.forEach((w, i) => { const s = leg.children[i]; s.classList.toggle('dita', t >= w.a - .1); s.classList.toggle('on', t >= w.a - .1 && t < w.b + .05);
+    const kk = eOut((t - w.a + .1) / .18); s.style.transform = `translateY(${(1 - kk) * 10}px)`; });
+  await Promise.all(promessas);
+}
+</script>
+<script src="fx.js"></script></body></html>

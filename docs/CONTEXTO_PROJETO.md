@@ -822,6 +822,27 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   comentário para manter 5 por semana.
 - 6 Stories de 16/10 ficaram como "pronto" e não saíram (o Orbit não publica Stories).
 
+## Série 19: Contrato intermitente e teste de dois estilos (26/10/2026)
+
+- Gravação `Desktop\NOVOS REELS\VIDEO 1` (IMG_0384 + IMG_0385, 4K HEVC 10 bits). Trabalho em
+  `C:\tmp\videos-reels\19-video1\` (`fontes/bruto-1080.mp4` é a cópia 1080 usada pelo `fala.py`: o 4K estourava a
+  memória). Textos em `producao/reels/series/19-contrato-intermitente/` (falas com fatos e cortes, roteiros dos dois
+  estilos, créditos Pexels, legenda). Cortes jurídicos: "24 horas para recusar" (lei: 1 dia útil, CLT 452-A §2º) e
+  FGTS "no valor do dia" (é depositado, §8º); a tela mostra o certo.
+- **Dois estilos de Reels (pedido da Jessica: "deixe o motor antigo intacto", "sempre me pergunte"):** inteiro com banco
+  de imagens (`producao/reels/motor/`, intocado) e **tela dividida** (`producao/reels/motor-dividida/`: `engine.html`
+  com cena `"painel"`, `fx.js` com o verificador da legenda invertido, `diagramas.py` com título, relógio recorrente,
+  calendário, recibo, dezembro, comparação, balão, meses e balança). Referências: dois Reels do
+  @viniciusguimaraes.ia (diagrama no alto, pessoa embaixo). A skill `leticia-reels-premium` já manda perguntar.
+- **3D como clipe de fundo:** `producao/reels/motor3d/clip3d.py <destino> semana cofre` grava `stock-3d-<nome>.mp4`
+  (mundo da 6x1 sem a camada 2D). Usado no R1 inteiro (convocação e FGTS).
+- **R1 pronto nos dois estilos** (`contrato-intermitente-{inteiro,dividida}-1.mp4`, 50,5 s, conferir sem avisos,
+  -19,9 LUFS por causa dos picos), cópias em `Desktop\NOVOS REELS\VIDEO 1\PRONTOS`. Plano: os dois como **Trial Reels**
+  (só não seguidores), mesma legenda; o vencedor vai aos seguidores e o R2 sai nesse estilo. **Ainda não foram ao Orbit.**
+- R2 ("Quando vira problema"): fala montada mas ainda com 3 emendas a acertar (trechos 9, 10 e 15 de `falas.py`).
+- Ferramentas novas na conta do Claude (fora do git): skills `watch` (vídeo por link, modo local), `impeccable` e
+  `hallmark` (este só para site novo: proíbe itálico em título e caixa-alta espaçada, que são da identidade).
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 - **Crescimento orgânico (19/10/2026, pedido "faça tudo")**:

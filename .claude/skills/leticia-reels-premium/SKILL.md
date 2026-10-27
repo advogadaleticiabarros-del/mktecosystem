@@ -9,6 +9,8 @@ Teoria e regras completas: manual aprovado pela Jessica, "Manual de edição pre
 
 ## Regras fixas
 
+- **Dois estilos; pergunte sempre qual antes de editar** (Jessica, 26/10/2026): **inteiro com banco de imagens** (este padrão, `producao/reels/motor/`, que fica intacto) e/ou **tela dividida** (diagrama animado no alto, Dra. embaixo: `producao/reels/motor-dividida/`, copiado por cima da cópia do motor; ver o README de lá). Ela está testando os dois para ver qual traz mais resultado.
+
 - **Uma versão só por vídeo** (Jessica, 21/10/2026: economizar token e trabalho). Tudo é conferido antes do render final (`fala ok`, `--checar`, amostras); nada de versões de teste guardadas. Se o `conferir.py` acusar algo, corrija e gere de novo no mesmo nome, apagando antes o arquivo ainda não entregue (nunca o que já foi ao Orbit).
 - **Voz da Dra. como foi gravada: não mexer no áudio.** Sem redução de ruído, equalização, realce, compressão nem portão: só ganho de volume. Em 21/10/2026 a cadeia de tratamento foi reprovada ("estragou o áudio, é melhor não mexer e manter o original"). Som intacto vale mais que volume (escolha dela).
 - **Sem música e sem ambiência**: voz tratada + efeitos sonoros. A ambiência (ruído de sala a −32 LUFS) virou chiado que abafava a voz da Dra. e foi tirada do motor em 21/10/2026.
