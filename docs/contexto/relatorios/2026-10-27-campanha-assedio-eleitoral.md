@@ -19,6 +19,16 @@ LinkedIn". A LP deve ser "extremamente explicativa, ensine como pegar provas, qu
 - LinkedIn: `linkedin-post.md`, na fila do Orbit em rascunho (`5f13e925`, marcado 27/10 17h30, não sai sem aprovação).
 - Reels: `producao/reels/series/22-assedio-eleitoral-motion/` (roteiro, serie.py, legendas, créditos Pexels).
 
+- Fotos reais de urna em todas as peças (pedido "todos inclua fotos das urnas brasileiras"): commit `7de267e`,
+  créditos e licenças em `producao/campanhas/2026-10-assedio-eleitoral/urnas/creditos.json` (CC BY-SA e camisas
+  verde-amarelas ficaram de fora). Stories v2, frase v3, carrossel v10, estático v2; versões anteriores em
+  `corpo.versoes_anteriores`; LP e capa do artigo com a urna.
+- Link curto **advogadaleticiabarros.com.br/voto** (pedido "preciso ajustar esse link, não está legal"): linha
+  `Redirect 302 /voto ...` no `.htaccess` da raiz do site (backup `/tmp/bkp_htaccess_2026-10-27` no container api),
+  leva à LP com UTM de Stories.
+- LP: os botões flutuantes (WhatsApp e o "ligar" do `/js/conversoes.js`) somem enquanto um formulário está na tela;
+  antes o "ligar" cobria o campo de WhatsApp no celular (backup `/tmp/bkp_lp_voto_flutuante/`).
+
 ## Verificado
 - LP e artigo: HTTP 200 no ar, FAQPage presente, nenhum termo vetado pela OAB ("consulta gratuita", "especialista",
   "garanta"). Formulários testados no ar: 201 e 200 (lead de teste no CRM).
@@ -43,7 +53,9 @@ LinkedIn". A LP deve ser "extremamente explicativa, ensine como pegar provas, qu
   trocar o link da bio pela LP (`utm_medium=bio`); fixar os primeiros comentários; postar o Facebook à mão
   (`Desktop\ASSEDIO ELEITORAL\carrossel\LEGENDAS.txt`); apagar o lead "TESTE CLAUDE - apagar" no CRM; Search
   Console → "Solicitar indexação" nas duas URLs; ler o artigo.
-- Jessica: decidir se o "Reels 3/3 gestante" de hoje 21h vai para terça 03/11 21h (sexta 30/10 já tem "Guarda 3/3").
+- Feito a pedido: "Reels 3/3 gestante" saiu de hoje 21h e foi para **quinta 29/10 21h** (agendamento `ed156262` e
+  `corpo.programacao` da peça `fcfde221`; terças e sextas ocupadas até 17/11; backup
+  `/root/orbit-backups/pre-mover-reels-gestante-2026-10-27.sql.gz`).
 - Jessica: criar o clone de voz no ElevenLabs (Voices → Add a new voice → Instant) com
   `Desktop\NOVOS REELS\voz-para-clonar-leticia.wav` e mandar o voice id. Reels do voto: Trial Reels ou troca de slot.
 - LinkedIn `5f13e925`: definir data e trocar o link pelo artigo quando ela liberar.
