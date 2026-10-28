@@ -3,6 +3,38 @@
 Todas terminam com o serviço do escritório (pedido da Jessica, que assumiu o risco da oferta de serviço).
 Primeiro comentário em todas: "Passo a passo das provas e de como denunciar, inclusive no ES: advogadaleticiabarros.com.br/voto"
 
+## 0. frase-demitido-posicao-politica
+
+🗳️ Demitido por causa do voto? Isso tem nome: dispensa discriminatória. E a lei proíbe.
+
+Não importa em quem você votou. O voto é secreto, e ninguém pode cobrar essa escolha de você, muito menos com o seu emprego.
+
+Desde a noite do 2º turno, o Ministério Público do Trabalho recebeu mais de 500 denúncias de ameaça e retaliação por causa do voto. Só aqui no Espírito Santo, já são 47 no ano.
+
+⚖️ O que a lei garante a quem foi demitido por isso
+🔹 Voltar ao emprego, com os salários do período afastado, ou receber o dobro desse período. A escolha é do trabalhador (Lei 9.029/1995, art. 4º).
+🔹 Indenização por dano moral, à parte.
+🔹 Ninguém perde direitos por convicção política (Constituição, art. 5º, VIII).
+
+🚨 E quem ameaça também responde
+🔹 Ameaçar para forçar o voto pode ser crime eleitoral (Código Eleitoral, art. 301).
+🔹 Assédio eleitoral no trabalho é proibido, inclusive no grupo de WhatsApp da empresa (Resolução TSE 23.755/2026).
+
+📌 Passou por isso? Antes de sair do grupo da empresa:
+🔹 Faça print das mensagens e guarde os áudios
+🔹 Anote o nome de quem viu ou ouviu
+🔹 Guarde a carta de dispensa e anote a data
+A denúncia pode ser feita no site do MPT, inclusive de forma sigilosa.
+
+Cada caso tem seus detalhes.
+📲 Fale com a gente pelo WhatsApp (27) 99515-1402 ou pelo link na bio.
+
+📤 Manda este post para quem precisa saber disso hoje. Pode ser o emprego de alguém que você ama.
+
+Dra. Letícia Barros · OAB/ES 39.948
+
+#AssédioEleitoral #DemissãoDiscriminatória #DireitoDoTrabalho #AdvogadaTrabalhista #VitóriaES
+
 ## 1. frase-escritorio-orientar
 
 🗳️ Demitido por causa da sua posição política? Você não precisa enfrentar isso sozinho.

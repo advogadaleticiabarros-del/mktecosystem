@@ -77,3 +77,8 @@ Publicar a LP do ES (comando acima), cadastrar o post do Google e então ligar o
   `producao/frases/2026-10-28-demitido-posicao-politica/` (gerador `gerar_frases.py`): `frase-escritorio-orientar`,
   `frase-500-denuncias-ilegal`, `frase-eleicao-acabou`, `frase-2364-denuncias-es` (as 3 com número têm a linha da fonte
   do MPT). Nenhuma foi agendada.
+- **No Orbit (rascunho), pedido "coloque no orbit":** pauta `d7b867af`, 5 peças `tipo="frase"` com legenda, primeiro
+  comentário, alt e `programacao`: 28/10 19h (gratuitamente), 29/10 12h (eleição acabou), 30/10 12h (2.364/ES), 31/10
+  12h (500 ilegal), 01/11 12h (orientar). Imagens em `/app/media/voto-frase-*.jpg` (HTTP 200). Script
+  `producao/frases/2026-10-28-demitido-posicao-politica/subir_orbit.py` (idempotente). Conflito com a regra de 1 feed
+  por dia: 29/10, 31/10 e 01/11 já têm carrossel/post "pronto"; a Jessica decide a troca de datas ao aprovar.
