@@ -1018,7 +1018,7 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   usam o mesmo `@id` e as 3 redes (`blog_seo.py`, `ID_DRA`/`REDES_DRA`). Falta o TikTok (pedir o @).
 - **LP do ES juntada à LP nacional** (pedido de 28/10): `lp/demissao-por-voto.html` ganhou a seção `#espirito-santo`, 4 perguntas do ES e números corrigidos (sem "recorde" nem "~10x 2022"); **no ar desde 28/10** (`blog-lp/publicar_lp_v2.py`, backup da v1 em `/tmp/bkp_lp_voto_v1.html` no container). Antes era:
   ângulo local para não concorrer com a LP nacional; marca `[LP assedio-eleitoral-es]`. **Ainda não está no ar.**
-  Post do Google pronto em `.../google-post-es/`, não cadastrado.
+  Post do Google publicado em 28/10 (`google_posts` f9fe7650); artigo do blog com os números corrigidos.
 - Frase "demitido pela posição política... atender gratuitamente" feita a pedido da Jessica, que assumiu o risco
   ético; não agendada. A LP nacional tem um "~10x mais que 2022" que os números do MPT não confirmam (a corrigir).
 

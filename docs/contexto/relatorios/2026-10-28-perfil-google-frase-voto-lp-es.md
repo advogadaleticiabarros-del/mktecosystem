@@ -89,3 +89,12 @@ Publicar a LP do ES (comando acima), cadastrar o post do Google e então ligar o
 - **LP publicada (28/10, "Publica a LP"):** `publicar_lp_v2.py` no container; backup da versão anterior em
   `/tmp/bkp_lp_voto_v1.html` (dentro do container da API, some se ele for recriado; a v1 também está no git em
   `cf014b6`). Conferido: a página no ar é idêntica à de `lp/demissao-por-voto.html`, com `#espirito-santo` e 2.364.
+- **Artigo corrigido no ar (28/10, "corrije"):** `blog-lp/corrigir_artigo_numeros.py` trocou o parágrafo do "1.939,
+  recorde, quase dez vezes 2022" pelos números de 27/10 (2.364 no ano, +500 depois do 2º turno, 47 no ES, com link
+  para `#espirito-santo`), tirou a comparação com o pico de 2022 (não conferida) e pôs `dateModified` 28/10. Backup em
+  `/tmp/bkp_artigo_voto_v1.html` no container. Conferido no ar: sem "1.939", "recorde" ou "dez vezes".
+- **IndexNow respondeu 403** ("UserForbiddedToAccessSite") ao avisar o artigo, mas a chave
+  `/6bc7d2f33225bd1d3c4af27b891f2ac6.txt` responde 200. Antes dava 202. Investigar no Bing Webmaster (pendente).
+- **Post do Google publicado (28/10, "leve para o orbit e já publique"):** `google_posts` f9fe7650 (aprovado →
+  `publicar_post` na hora), botão Saiba mais → LP `#espirito-santo` com UTM google/gbp-post. Link do post:
+  local.google.com (id do lugar 5130877975844596468). Script: `google-post-es/publicar_post_google.py`.
