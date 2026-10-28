@@ -218,3 +218,77 @@ exames preventivos (Lei 15.377/2026); assédio eleitoral (TST: 79% de acordo ou 
 **Próximos grupos sugeridos (na ordem):** (1) "Jornada depois da 6x1" (12x36, domingos no comércio, doméstica);
 (2) "Saúde e afastamento" (burnout em dez, NR-1, atestado e INSS); (3) "Saída do emprego" (rescisão indireta,
 pedido de demissão, acordo, seguro-desemprego), ligando ao artigo da rescisão indireta que já existe.
+
+### Comparação com o 1º resultado, 28/10/2026
+
+Pedido da Jessica (via sessão do Instagram), a partir do método de um Reel: abrir o 1º orgânico da busca,
+entender por que ele ranqueia e comparar com a nossa página. **Limite do estudo:** o Google bloqueou a busca
+automatizada (captcha) e o Bing devolveu resultados sem relação; os líderes foram identificados pela pesquisa web
+em português (próxima do Google, não idêntica). Comparação só para estudo: nada disso vai para conteúdo publicado
+(OAB). Densidade de palavra-chave foi ignorada (o Google não usa).
+
+**Busca 1: "atendente pode lavar banheiro"** (nossa página: banheiro, posição 5,7, 2.583 aparições, 0 cliques).
+Quem aparece em cima: notícias de tribunal (TRT-SC, garçom, 2016), imprensa (O Tempo, atendente de fast-food,
+2023), Jus.com.br (fórum de 2016, ~200 palavras, título com erro) e escritórios com texto genérico.
+
+| Eles têm e nós não | Nós temos e eles não |
+| --- | --- |
+| Domínio forte (Jus, tribunal, jornal) | Resposta direta na 1ª frase, por função (atendente, recepcionista, operador) |
+| Decisão real com tribunal e data | Perguntas frequentes com schema, autora com OAB, data de atualização |
+| Formato de notícia ("Justiça concede...") | Exemplo prático, passo a passo de prova, links do mesmo assunto |
+
+Leitura: a página já é melhor que a dos concorrentes; perde em autoridade do domínio e o Google provavelmente
+responde a pergunta no próprio resultado. **Feito hoje:** seção "O que a Justiça já decidiu" (TRT-SC 2016 e TRT-MG
+2023, sem valores).
+
+**Busca 2: "licença maternidade 180 dias"** (nossa página: licença 180 dias, posição 8,7, 1.336 aparições).
+Quem lidera: Serasa e C6 Bank (marcas fortes, guias longos de 4-6 mil palavras), Marra CLT e Direitos da Mamãe
+("Como conseguir em 2026": resposta rápida, tabela por situação, passo a passo, prazo, quem paga, 6 perguntas
+frequentes, advogada com OAB e data de atualização).
+
+| Eles têm e nós não (antes de hoje) | Nós temos e eles não |
+| --- | --- |
+| A intenção "como conseguir": passo a passo e prazo destacados | Explicação correta da ADI 7.495 (muita gente erra) |
+| Tabela "quem tem 120, quem tem 180" | Autora advogada com OAB, voz própria |
+| Quem paga os 60 dias e a dedução do IR | Perguntas frequentes com schema |
+| Links para salário-maternidade, estabilidade, retorno | |
+
+Leitura: o nosso artigo era notícia ("o que o STF decidiu de verdade") e a busca quer o guia prático; os links do
+fim levavam para pet no divórcio, violência de gênero e Pix da pensão. **Feito hoje:** tabela por situação, "Como
+pedir (passo a passo)", "Quem paga os 60 dias", pergunta nova (texto e schema), links para o guia da gestante, mãe
+adotante e paternidade.
+
+**Busca 3: "advogado trabalhista vitória es"** (nossa página: área trabalhista, posição 13-18).
+O que decide é o mapa (Perfil da Empresa: avaliações, distância, categoria), que não deu para ver (captcha). Os
+sites orgânicos de concorrentes são fracos: H1 "BLOG", sem endereço, sem mapa, sem OAB, sem perguntas locais; um
+mostra 8 avaliações do Google na página; o Jusbrasil aparece com o diretório de advogados de Vitória.
+
+| Eles têm e nós não | Nós temos e eles não |
+| --- | --- |
+| Página antiga e "advogado trabalhista em Vitória" repetido no texto | Título certo ("Advogada Trabalhista em Vitória-ES"), schema LegalService e FAQPage |
+| Perfil no diretório do Jusbrasil por cidade | OAB, endereço no rodapé, Grande Vitória citada, links para 6 artigos |
+
+Leitura: a busca local se ganha no Perfil da Empresa e em citações (Jusbrasil, OAB/ES, diretórios), não no texto.
+
+**Mudança no código (vale para todo artigo publicado daqui em diante):** o "Continue lendo" escolhia os 3 artigos
+mais recentes da área; agora escolhe pelo assunto (`blog_seo.escolher_relacionados`, commit 7c7910e). Precisa de
+deploy da API (barrado pela trava de segurança em 28/10; pendente).
+
+**Ações em ordem de impacto**
+1. **Responder a intenção da busca, não a notícia**: nas páginas na posição 5-15, abrir com a resposta, ter
+   "como fazer/pedir" em passo a passo e tabela "quem tem direito". Feito na licença; próximas: pensão (já tem
+   resposta rápida), aborto (feito), 6x1 (feito por outra sessão).
+2. **Links do mesmo assunto** em todo artigo (código feito; deploy pendente) e grupos de artigos ligados entre si
+   (grupo "O que a empresa pode exigir" em rascunho).
+3. **Autoridade de fora**: perfil completo no Jusbrasil (aparece no diretório de Vitória), OAB/ES com o site,
+   imprensa local (TV Tribuna, A Gazeta) com link, Bing Webmaster Tools.
+4. **Perfil da Empresa**: avaliações que citem área e cidade, 1 post por semana com link de artigo (os 5 do grupo
+   novo já estão em rascunho), categoria "Advogado trabalhista".
+5. **Decisões públicas citadas** (tribunal, turma, ano) nos artigos de dúvida prática: é o que os jornais e
+   tribunais têm e dá confiança (E-E-A-T).
+
+**Veredito:** o plano está no caminho certo (grupos de artigos, revisão dos mais vistos, Perfil da Empresa); a
+comparação confirmou que o conteúdo já é melhor que o da maioria dos concorrentes. O que faltava era **formato de
+"como fazer" nas páginas que estão na beira da 1ª página** e **links do mesmo assunto**, que foram corrigidos hoje,
+e **autoridade de fora do site**, que depende da Dra. (Jusbrasil, avaliações, imprensa). Não trocar a estratégia;
+acrescentar a regra "toda página na posição 5-15 ganha passo a passo, tabela e decisão real" e medir em 17/11.

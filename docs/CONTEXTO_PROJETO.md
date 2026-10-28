@@ -982,6 +982,12 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   só aparece depois de uma tela inteira de foto).
 - Caixa de contato duplicada nos artigos (`.article-cta` + `.contato-meio` do `conversoes.js`): avisado à sessão que
   cuida do `conversoes.js` (versão 20261027, publicação pendente).
+- **Comparação com o 1º do Google (28/10)**: seção em `docs/SEO_PLANO_GOOGLE_IA.md`. Google bloqueia busca
+  automatizada (captcha) e o Bing headless devolve lixo: líderes identificados pela pesquisa web. Aplicado no ar
+  (`producao/seo/2026-10-28-trocas-site.*`, backup `site-trocas-20261028-0929.tgz`): licença 180 dias com tabela,
+  passo a passo, quem paga e links de gestante; banheiro com "O que a Justiça já decidiu". **`escolher_relacionados`
+  agora escolhe por assunto (commit 7c7910e), mas o deploy da API foi barrado pela trava; até o deploy, artigos
+  publicados pelo Orbit seguem com "os 3 mais recentes da área".**
 
 ## Instagram: seguidores e visualizações (27/10/2026)
 
@@ -1006,6 +1012,9 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   primeiro parágrafo como resposta direta (o Google pode estar respondendo no próprio resultado); (3) ela: marcar os 3 eventos de contato como principais no GA4,
   1 post por semana no Google com botão para artigo, pedir
   avaliações que citem área e cidade; (4) [feito em 27/10] artigos de aposentadoria híbrida e carga horária.
+- **Deploy da API pendente (28/10/2026)**: `git pull` + `docker compose up -d --build api` na VPS para o "Continue
+  lendo" por assunto (commit 7c7910e) valer antes do artigo de 29/10, 9h. Barrado pela trava de segurança: precisa
+  da liberação dela.
 - **Furar a bolha (28/10/2026)**: (1) ela aprovar os 5 artigos das quintas (o 1º é 29/10) e os 5 posts do Google;
   (2) em 17/11 ver se as buscas de função/limpeza e as páginas da pensão e do aborto subiram de posição; (3) ela:
   Bing Webmaster Tools (IndexNow 403), decidir o texto das LPs ("análise do seu caso"); (4) próximos grupos em
