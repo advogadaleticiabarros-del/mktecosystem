@@ -954,6 +954,11 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   HTML/GSAP (o motor já cobre o que este Reels usa); `instagram-marketing` = gancho e legenda; `Trail-Code/` é mapa de
   código para agentes, sem relação com vídeo.
 - Impulsionar esse tema exige a autorização de "temas sociais, eleições ou política" da Meta.
+- **Ângulo "listas por causa do voto"** (28/10): roteiros para aprovação em
+  `producao/campanhas/2026-10-assedio-eleitoral/listas/ROTEIRO.md` (fatos e leis conferidos, carrossel 7 slides,
+  legenda, Stories, artigo completo, LinkedIn, Reels para a Dra. gravar). As listas do ES (6 cidades, incl. Cachoeiro,
+  A Gazeta 28/10) são de **boicote** a profissionais/comércio/igrejas, não de funcionários. Regra: nunca mostrar nem
+  citar uma lista ou quem está nela. Nada publicado ainda.
 
 ## Google: furar a bolha (27-28/10/2026)
 
