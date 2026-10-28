@@ -73,3 +73,7 @@ Publicar a LP do ES (comando acima), cadastrar o post do Google e então ligar o
 - Ainda com o número antigo ("quase dez vezes 2022", "recorde"): o artigo do blog no ar e as peças já publicadas
   (carrossel, Stories, legendas). Peças publicadas não se mexe; o artigo espera o ok da Jessica.
 - Frases novas sugeridas na conversa (variações mais suaves e com gancho de números), sem arte ainda.
+- Frases escolhidas pela Jessica viraram arte no mesmo estilo (a primeira ficou intacta), em
+  `producao/frases/2026-10-28-demitido-posicao-politica/` (gerador `gerar_frases.py`): `frase-escritorio-orientar`,
+  `frase-500-denuncias-ilegal`, `frase-eleicao-acabou`, `frase-2364-denuncias-es` (as 3 com número têm a linha da fonte
+  do MPT). Nenhuma foi agendada.
