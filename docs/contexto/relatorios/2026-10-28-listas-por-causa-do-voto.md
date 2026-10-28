@@ -57,3 +57,15 @@ Ler `listas/ROTEIRO.md`, aplicar os ajustes pedidos, gerar a arte do carrossel e
   uma) e as duas assinaturas nas legendas 1 a 4.
 - Não verificado: a seccional da Dra. Carolina. A arte usa "OAB/ES 29.557" (o escritório é do ES); confirmar com a Jessica.
 - Pendente: formato (carrossel das 4 ou posts separados), horário e subir ao Orbit como rascunho.
+
+## Continuação: no Orbit
+- Pedido: "Coloque elas no Orbit".
+- Feito: um carrossel em **rascunho** com as 4 artes (capa Cachoeiro, depois 6 cidades, seu nome, recebeu lista),
+  legenda explicativa no Instagram e no Facebook, primeiro comentário com o link /voto, alt text, programação 28/10 18h.
+  Peça `8126928c-c4ff-45aa-94e3-7dfdb9999ec9`, pauta `3ca54d6d-1c83-4093-a53f-4e183a37cb8f`. Script
+  `producao/frases/2026-10-28-listas-voto/subir_orbit.py`.
+- A legenda explicativa tinha 2.814 caracteres (o Instagram aceita 2.200); foi enxugada para 2.032 (2.046 contando os
+  emojis como o Instagram) e atualizada no rascunho.
+- Verificado: as 4 imagens respondem 200 (image/jpeg) em `api.orbit.advogadaleticiabarros.com.br/media/listas-voto-*.jpg`;
+  a peça está `rascunho`, 4 imagens, programação gravada; contagem de peças antes/depois sem perda (carrossel 46 → 47).
+- Pendente: aprovar no Editorial (ou postar à mão e marcar como publicado); confirmar a seccional da Dra. Carolina.

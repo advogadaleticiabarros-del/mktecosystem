@@ -958,7 +958,11 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   `producao/campanhas/2026-10-assedio-eleitoral/listas/ROTEIRO.md` (fatos e leis conferidos, carrossel 7 slides,
   legenda, Stories, artigo completo, LinkedIn, Reels para a Dra. gravar). As listas do ES (6 cidades, incl. Cachoeiro,
   A Gazeta 28/10) são de **boicote** a profissionais/comércio/igrejas, não de funcionários. Regra: nunca mostrar nem
-  citar uma lista ou quem está nela. Nada publicado ainda.
+  citar uma lista ou quem está nela.
+- **Frases das listas no Orbit (28/10)**: 4 frases-notícia assinadas pelas duas sócias (Letícia OAB/ES 39.948 e
+  Carolina Prado OAB/ES 29.557, seccional a confirmar) em `producao/frases/2026-10-28-listas-voto/`, subidas como **um
+  carrossel em rascunho** (peça `8126928c`, pauta `3ca54d6d`, 28/10 18h) com a legenda explicativa (≤ 2.200 caracteres,
+  limite do Instagram). Imagens em `/app/media/listas-voto-*.jpg`. Script `subir_orbit.py` na pasta.
 
 ## Google: furar a bolha (27-28/10/2026)
 
