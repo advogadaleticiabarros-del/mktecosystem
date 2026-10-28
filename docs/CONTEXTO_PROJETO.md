@@ -966,7 +966,8 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   `_saida_producao_1510/artigos_grupo_funcao.py`; capas e posts por `posts_google_grupo_funcao.py` (fotos Pexels,
   créditos em `_fotos_pexels/creditos-grupo-funcao.json`); carga por `subir_grupo_funcao.py` (idempotente, roda no
   container). Todos passaram em `verificar_texto_oab` (valores em reais por extenso, "em dobro" no lugar de "100%").
-  **O de 29/10 precisa de aprovação dela até quinta 9h.**
+  **Aprovados pela usuária em 28/10** (`_saida_producao_1510/aprovar_grupo_funcao.py`, mesmo caminho do PATCH
+  status=aprovado): `scheduled_posts` canal blog "pronto" nas 5 quintas às 9h; `google_posts` "aprovado" às 10h.
 - **Revisão no ar** por `scripts/aplicar_trocas_site.py` (trocas exatas de `producao/seo/<data>-trocas-site.json`,
   geradas e conferidas por `producao/seo/2026-10-27-trocas-site.py`; tudo ou nada; backup em `/root/orbit-backups/`;
   `blog_seo.aplicar_trocas`). Aplicado em 28/10 01h18 UTC (`site-trocas-20261028-0118.tgz`): pensão (caso real com
@@ -1015,7 +1016,7 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 - **Deploy da API pendente (28/10/2026)**: `git pull` + `docker compose up -d --build api` na VPS para o "Continue
   lendo" por assunto (commit 7c7910e) valer antes do artigo de 29/10, 9h. Barrado pela trava de segurança: precisa
   da liberação dela.
-- **Furar a bolha (28/10/2026)**: (1) ela aprovar os 5 artigos das quintas (o 1º é 29/10) e os 5 posts do Google;
+- **Furar a bolha (28/10/2026)**: (1) [aprovados e agendados em 28/10] 5 artigos das quintas e 5 posts do Google;
   (2) em 17/11 ver se as buscas de função/limpeza e as páginas da pensão e do aborto subiram de posição; (3) ela:
   Bing Webmaster Tools (IndexNow 403), decidir o texto das LPs ("análise do seu caso"); (4) próximos grupos em
   `docs/SEO_PLANO_GOOGLE_IA.md` (jornada depois da 6x1, saúde e afastamento, saída do emprego).
