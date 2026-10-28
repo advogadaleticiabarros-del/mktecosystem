@@ -98,3 +98,9 @@ Publicar a LP do ES (comando acima), cadastrar o post do Google e então ligar o
 - **Post do Google publicado (28/10, "leve para o orbit e já publique"):** `google_posts` f9fe7650 (aprovado →
   `publicar_post` na hora), botão Saiba mais → LP `#espirito-santo` com UTM google/gbp-post. Link do post:
   local.google.com (id do lugar 5130877975844596468). Script: `google-post-es/publicar_post_google.py`.
+- **Botão na home (28/10, "botão em evidência na hero do site, que usamos como link da bio"):**
+  `blog-lp/home_alerta.py` pôs um botão dourado "Demitido ou ameaçado por causa do voto? Veja seus direitos e como
+  denunciar" → LP (`utm_source=site&utm_medium=home-hero`). No computador fica acima do WhatsApp; no celular é o
+  primeiro item depois do menu (cópia `ha-mob`, antes da foto). Blocos entre comentários `alerta-campanha-voto`.
+  **Tirar quando a campanha acabar:** `python /tmp/home_alerta.py remover` no container (testado: volta a home
+  byte a byte). Backup da home anterior em `/tmp/bkp_home_v1.html` no container. Conferido no ar: 2 botões, LP 200.

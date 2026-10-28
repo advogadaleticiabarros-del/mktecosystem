@@ -1020,7 +1020,7 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   ângulo local para não concorrer com a LP nacional; marca `[LP assedio-eleitoral-es]`. **Ainda não está no ar.**
   Post do Google publicado em 28/10 (`google_posts` f9fe7650); artigo do blog com os números corrigidos.
 - Frase "demitido pela posição política... atender gratuitamente" feita a pedido da Jessica, que assumiu o risco
-  ético; não agendada. A LP nacional tem um "~10x mais que 2022" que os números do MPT não confirmam (a corrigir).
+  ético. Home com botão da campanha no topo (`blog-lp/home_alerta.py`, `remover` quando a campanha acabar).
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
