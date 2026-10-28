@@ -47,8 +47,8 @@ mim, vamos reverter isso, mais cliques, mais conversões" e, sobre a VPS, "você
 ## Pendente
 - Publicar o `conversoes.js` novo: a simulação deu 85 páginas, mas o `--aplicar` foi barrado pela trava de segurança.
   Comando na VPS (pasta `deploy/vps`): `docker compose exec -T -e PYTHONPATH=/app api python /tmp/publicar_conversoes.py
-  /tmp/conversoes.js 20261027 --aplicar` (os dois arquivos já estão no `/tmp` do container; se ele for recriado, copiar
-  de novo) e depois copiar o .tgz do `/tmp` para `/root/orbit-backups/`.
+  /tmp/conversoes.js 20261027 --aplicar` (antes, `git pull` em `/home/orbit-src` e copiar de novo `producao/site/conversoes.js` e o script
+  para o `/tmp` do container: a versão certa é a do commit `a1988f1`, sem bloco duplicado) e depois copiar o .tgz do `/tmp` para `/root/orbit-backups/`.
 - 17/11/2026: comparar o CTR das 5 páginas principais (ver CONTEXTO_PROJETO.md).
 - Dra.: ler os dois artigos reescritos (híbrida e carga horária). Ponto aberto na híbrida: para homem filiado antes da
   Reforma, o INSS pede 20 anos (Decreto 3.048, art. 57 c/c art. 51); o texto diz que há argumento para 15 (art. 188-H).
