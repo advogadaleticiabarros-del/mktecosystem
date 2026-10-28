@@ -1,0 +1,148 @@
+"""Revisão de 27/10/2026 (pedido "rankear mais no Google, furar a bolha"): gera 2026-10-27-trocas-site.json
+para apps/api/scripts/aplicar_trocas_site.py.
+
+- index.html: tela de carregamento esperava o 'load' (widget, pixel, imagens) + 1,4 s; no celular, o
+  translateX(40px) do .reveal-right deixava a página com 406 px numa tela de 390 (rolagem lateral).
+- Banheiro (2.583 aparições, posição 5,7): tirar valores de indenização e "garante" (OAB), alt da capa
+  errado, "Leia também" e "Continue lendo" com artigos do mesmo assunto.
+- Pensão (328 aparições, 0 cliques): "Caso real do escritório" com valor recuperado (OAB), prescrição
+  errada para filho menor (CC 197, II), Juizado Especial (Lei 9.099, art. 3º, § 2º), BACENJUD -> SISBAJUD,
+  resposta rápida no topo.
+- Aborto espontâneo (191 aparições): estabilidade depois do aborto estava errada (TST: limita-se às 2
+  semanas do art. 395; a partir da 23ª semana é parto), quem paga o salário-maternidade, resposta rápida.
+
+Uso: py producao/seo/2026-10-27-trocas-site.py <pasta com cópia do site>  (confere cada trecho antes de gravar)
+"""
+import json
+import sys
+from pathlib import Path
+
+AQUI = Path(__file__).resolve().parent
+HOJE_ISO, HOJE = "2026-10-27", "27 de outubro de 2026"
+
+PAGINAS = {
+    "index.html": [
+        {"de": "window.addEventListener('load', () => {\n    setTimeout(() => document.getElementById('loading').classList.add('hidden'), 1400);\n});",
+         "para": "// A tela de carregamento sai assim que o HTML está pronto (antes esperava imagens, widget e pixel + 1,4 s).\n"
+                 "document.addEventListener('DOMContentLoaded', () => {\n    setTimeout(() => document.getElementById('loading').classList.add('hidden'), 150);\n});"},
+        {"de": "        .reveal-right.visible { opacity: 1; transform: translateX(0); }",
+         "para": "        .reveal-right.visible { opacity: 1; transform: translateX(0); }\n"
+                 "        /* No celular o deslocamento lateral criava rolagem para o lado; entra de baixo para cima. */\n"
+                 "        @media (max-width: 768px) { .reveal-left, .reveal-right { transform: translateY(20px); } }"},
+    ],
+    "blog/empresa-pode-obrigar-limpar-banheiro.html": [
+        {"de": "isso pode configurar <strong>desvio de função</strong> e, em alguns casos, <strong>assédio moral</strong> — com direito a indenização.</p>",
+         "para": "isso pode configurar <strong>desvio de função</strong> e, em alguns casos, <strong>assédio moral</strong>.</p>"},
+        {"de": 'alt="Trabalhadora negra em serviço de limpeza — direitos e funções degradantes"',
+         "para": 'alt="Trabalhadora em ambiente de escritório: o que a empresa pode exigir de cada função"'},
+        {"de": "Isso garante FGTS + 40%, aviso prévio, seguro-desemprego e todas as verbas.</p>",
+         "para": "Se ela for reconhecida, você recebe as mesmas verbas de uma demissão sem justa causa: FGTS com a multa de 40%, aviso prévio e acesso ao seguro-desemprego.</p>"},
+        {"de": "<h2>O que posso receber de indenização?</h2>",
+         "para": "<h2>O que pode ser cobrado</h2>"},
+        {"de": "<li><strong>Dano moral</strong> — valores variam entre R$ 3 mil e R$ 30 mil, dependendo da gravidade;</li>",
+         "para": "<li><strong>Dano moral</strong> — quando há humilhação ou exposição, o juiz fixa o valor conforme a gravidade e as provas;</li>"},
+        {"de": "<li><strong>Diferenças salariais</strong> — se a função \"nova\" era mais bem paga, você recebe a diferença retroativa;</li>",
+         "para": "<li><strong>Diferenças salariais</strong> — se a função \"nova\" era mais bem paga, a diferença pode ser cobrada desde o início do desvio;</li>"},
+        {"de": "<li><a href=\"fui-demitida-gravida-o-que-fazer.html\">Fui demitida grávida, tenho direito? O que fazer passo a passo</a></li>",
+         "para": "<li><a href=\"funcoes-da-recepcionista-o-que-pode-ser-exigido.html\">Funções da recepcionista: o que a empresa pode exigir</a></li>\n"
+                 "    <li><a href=\"auxiliar-de-limpeza-insalubridade-grau-maximo.html\">Auxiliar de limpeza tem insalubridade? Quando o grau é máximo</a></li>\n"
+                 "    <li><a href=\"rescisao-indireta-o-que-e-quando-tenho-direito.html\">Rescisão indireta: o que é e quando você tem direito</a></li>\n"
+                 "    <li><a href=\"assedio-moral-digital-cobranca-fora-do-horario-de-trabalho.html\">Cobrança fora do horário pelo WhatsApp é assédio moral?</a></li>"},
+        {"de": "<a href=\"fgts-trabalhador-temporario-direitos-e-como-cobrar.html\" class=\"related-card\">\n                <span class=\"cat\">Trabalhista</span>\n                <h4>FGTS para trabalhador temporário: quem tem direito e como cobrar</h4>",
+         "para": "<a href=\"funcoes-da-recepcionista-o-que-pode-ser-exigido.html\" class=\"related-card\">\n                <span class=\"cat\">Trabalhista</span>\n                <h4>Funções da recepcionista: o que a empresa pode exigir</h4>"},
+        {"de": "<a href=\"folga-jogo-brasil-copa-direito-do-trabalhador.html\" class=\"related-card\">\n                <span class=\"cat\">Trabalhista</span>\n                <h4>Folga no jogo do Brasil na Copa 2026: a empresa é obrigada?</h4>",
+         "para": "<a href=\"auxiliar-de-limpeza-insalubridade-grau-maximo.html\" class=\"related-card\">\n                <span class=\"cat\">Trabalhista</span>\n                <h4>Auxiliar de limpeza tem insalubridade? Grau máximo de 40%</h4>"},
+        {"de": "<a href=\"aborto-espontaneo-direitos-da-trabalhadora-clt.html\" class=\"related-card\">\n                <span class=\"cat\">Trabalhista</span>\n                <h4>Aborto espontâneo: quais são os direitos da trabalhadora CLT?</h4>",
+         "para": "<a href=\"rescisao-indireta-o-que-e-quando-tenho-direito.html\" class=\"related-card\">\n                <span class=\"cat\">Trabalhista</span>\n                <h4>Rescisão indireta: o que é e quando você tem direito</h4>"},
+        {"de": "Atualizado em 22 de outubro de 2026", "para": f"Atualizado em {HOJE}"},
+        {"de": '"dateModified": "2026-10-22"', "para": f'"dateModified": "{HOJE_ISO}"'},
+    ],
+    "blog/pai-nao-paga-pensao-o-que-fazer.html": [
+        {"de": "<p><strong>O pai parou de pagar a pensão — e você está sustentando os filhos sozinha.</strong> Isso é inadimplência alimentar, e a lei brasileira tem instrumentos sérios para cobrar: bloqueio de conta, desconto direto no salário, negativação no Serasa e até prisão. Não aceite isso em silêncio. Veja o que fazer.</p>",
+         "para": "<p><strong>O pai parou de pagar a pensão, e você está sustentando os filhos sozinha.</strong> O depósito não caiu de novo, as contas não esperam e a criança não pode ficar sem. A boa notícia: a lei tem instrumentos sérios para cobrar, e você não precisa esperar a dívida crescer. Neste artigo eu explico, sem juridiquês, o que fazer.</p>\n\n"
+                 "<div class=\"callout-box\">\n    <h4>Resposta rápida</h4>\n"
+                 "    <p>Se o pai (genitor) não pagou ou atrasou a pensão fixada pelo juiz ou em acordo homologado, a cobrança pode ser pedida na Justiça já no primeiro mês de atraso. O juiz pode mandar descontar do salário, bloquear contas, penhorar bens, protestar a dívida e negativar o nome dele e, para as 3 últimas parcelas, decretar a prisão civil. Quem não pode pagar advogado pode procurar a Defensoria Pública.</p>\n</div>"},
+        {"de": "<p>Tecnicamente, você pode iniciar a cobrança já no <strong>primeiro mês de atraso</strong>. Na prática, os advogados costumam esperar acumular pelo menos 3 meses de atraso para que o processo de execução seja mais eficaz — mas isso não é uma regra legal.</p>",
+         "para": "<p>Desde o <strong>primeiro mês de atraso</strong>. Não existe prazo mínimo de espera. O que muda com o tempo é o caminho da cobrança: as <strong>3 últimas parcelas</strong> antes do pedido, e as que vencerem durante o processo, podem ser cobradas com pedido de prisão; as mais antigas são cobradas com bloqueio e penhora de bens (CPC, art. 528, e Súmula 309 do STJ). Por isso, esperar a dívida crescer não ajuda.</p>"},
+        {"de": "<h3>2. Bloqueio de conta bancária (BACENJUD)</h3>", "para": "<h3>2. Bloqueio de conta bancária (SISBAJUD)</h3>"},
+        {"de": "O juiz pode bloquear valores diretamente nas contas bancárias do devedor usando o sistema BACENJUD — que tem acesso a todas as contas em qualquer banco do Brasil.",
+         "para": "O juiz pode bloquear valores diretamente nas contas bancárias do devedor pelo SISBAJUD, o sistema que alcança contas e aplicações em qualquer banco do Brasil."},
+        {"de": "Desde 2017, o devedor de alimentos pode ter o nome inscrito no Serasa e SPC",
+         "para": "Desde o Código de Processo Civil de 2015, a dívida de pensão pode ser protestada em cartório e o nome do devedor pode ir para os cadastros de inadimplentes, como Serasa e SPC (CPC, arts. 528, § 1º, e 782, § 3º)"},
+        {"de": "O devedor pode ser preso por até 3 meses — e a prisão pode ser renovada.",
+         "para": "O devedor pode ficar preso de 1 a 3 meses, em regime fechado (CPC, art. 528, §§ 3º e 4º). A prisão vale para as 3 últimas parcelas antes do pedido e as que vencerem depois."},
+        {"de": "<p>Sim. O prazo prescricional para cobrar pensão alimentar em atraso é de <strong>2 anos</strong> — contados a partir de cada mês não pago. Ou seja, você pode cobrar os últimos 2 anos de atraso.</p>",
+         "para": "<p>Sim, e aqui está um ponto que quase ninguém conta. O prazo para cobrar pensão atrasada é de <strong>2 anos</strong> para cada parcela (Código Civil, art. 206, § 2º). Mas esse prazo <strong>NÃO CORRE</strong> enquanto o filho for menor de idade e estiver sob o poder familiar do pai (Código Civil, art. 197, II).</p>"},
+        {"de": "<p>Pensão mais antiga que 2 anos prescreve e não pode mais ser cobrada. Por isso, agir cedo é importante.</p>",
+         "para": "<p>Traduzindo: se o seu filho ainda é menor, parcelas de 3, 5 ou mais anos atrás, em regra, ainda podem ser cobradas. Os 2 anos começam a contar quando ele completa 18 anos; depois dos 20, as parcelas da infância normalmente não podem mais ser cobradas. Mesmo com esse prazo, agir cedo ajuda: fica mais fácil achar dinheiro e bens.</p>"},
+        {"de": "<h2>Caso real do escritório</h2>", "para": "<h2>Uma situação que se repete</h2>"},
+        {"de": "<h4><i class=\"fa-solid fa-scale-balanced\"></i> Caso prático</h4>\n    <p>Uma mãe chegou ao escritório após 8 meses sem receber pensão. O genitor havia mudado de emprego e \"sumido\" — mas ela tinha o CPF dele. Entramos com execução, localizamos as contas via BACENJUD e bloqueamos R$ 4.800 em menos de 2 semanas. Além dos atrasados, obtivemos desconto automático no novo emprego para garantir o pagamento futuro. Total recuperado: 8 meses de pensão + correção monetária.</p>",
+         "para": "<h4><i class=\"fa-solid fa-scale-balanced\"></i> Situação comum</h4>\n    <p>A mãe passa meses sem receber. O genitor mudou de emprego e parou de responder, e ela acha que, sem saber onde ele trabalha, não há o que fazer. Não é bem assim: com o CPF dele, o juiz pode pesquisar contas, vínculos de emprego e bens pelos sistemas oficiais e, achando o novo emprego, mandar descontar a pensão direto na folha. Cada caso depende do que for encontrado, por isso guardar o comprovante de cada mês sem depósito faz diferença.</p>"},
+        {"de": "<p>Formalmente, para valores menores nos Juizados Especiais, você pode atuar sem advogado. Mas na prática, ter representação acelera muito o processo — especialmente para acessar BACENJUD e outros sistemas. Vale muito a pena.</p>",
+         "para": "<p>Sim. A cobrança de pensão não pode ser feita no Juizado Especial (Lei 9.099/1995, art. 3º, § 2º), então precisa de advogada ou advogado. Se você não tem como pagar, procure a Defensoria Pública da sua cidade, que faz o pedido sem custo para você.</p>"},
+        {"de": "o BACENJUD funciona igualmente.", "para": "o SISBAJUD funciona do mesmo jeito.", "todas": True},
+        # FAQ repetido nos dados estruturados (texto puro), que é o que o Google lê
+        {"de": '"text": "Formalmente, para valores menores nos Juizados Especiais, você pode atuar sem advogado. Mas na prática, ter representação acelera muito o processo — especialmente para acessar BACENJUD e outros sistemas. Vale muito a pena."',
+         "para": '"text": "Sim. A cobrança de pensão não pode ser feita no Juizado Especial (Lei 9.099/1995, art. 3º, § 2º), então precisa de advogada ou advogado. Se você não tem como pagar, procure a Defensoria Pública da sua cidade, que faz o pedido sem custo para você."'},
+        {"de": '"dateModified": "2026-10-10"', "para": f'"dateModified": "{HOJE_ISO}"'},
+    ],
+    "blog/aborto-espontaneo-direitos-da-trabalhadora-clt.html": [
+        {"de": "<p>Respira. Vamos por partes.</p>",
+         "para": "<p>Respira. Vamos por partes.</p>\n\n"
+                 "<div class=\"callout-box\">\n    <h4>Resposta rápida</h4>\n"
+                 "    <p>Quem tem carteira assinada e sofre aborto espontâneo tem direito a <strong>2 semanas (14 dias) de repouso remunerado</strong>, com atestado médico (CLT, art. 395). O atestado costuma trazer o CID O03. Se o médico indicar mais tempo, o novo atestado segue a regra do afastamento por doença: os primeiros 15 dias pagos pela empresa e, depois, pelo INSS.</p>\n</div>"},
+        {"de": "<li>Os <strong>primeiros 14 dias</strong> são pagos diretamente pela empresa (conforme a CLT)</li>",
+         "para": "<li>As <strong>2 semanas de repouso</strong> são pagas pela empresa, junto com o salário (CLT, art. 395)</li>"},
+        {"de": "<li>A partir do <strong>15º dia</strong>, se o afastamento continuar com atestado, entra em cena o <strong>auxílio-doença pelo INSS</strong></li>",
+         "para": "<li>Se o médico indicar mais tempo, o novo atestado segue a regra do afastamento por doença: a empresa paga os <strong>primeiros 15 dias</strong> e, a partir do 16º, entra o <strong>auxílio por incapacidade temporária</strong> (o antigo auxílio-doença) do INSS</li>"},
+        {"de": "<p>A resposta que a maioria dos tribunais trabalhistas tem adotado é: <strong>sim, a estabilidade não se extingue imediatamente com o aborto</strong>. O raciocínio é que a trabalhadora já estava grávida, já tinha adquirido o direito, e que ela ainda está em processo de recuperação física e emocional.</p>",
+         "para": "<p>Vou ser honesta com você, porque muita gente lê o contrário na internet. Para o TST, o aborto espontâneo <strong>encerra</strong> a estabilidade de gestante. O que fica protegido é o emprego durante a gravidez e nas <strong>2 semanas de repouso</strong> depois da perda (CLT, art. 395), com retorno à mesma função.</p>\n\n"
+                 "<p>Na prática: se a empresa demitiu você durante a gravidez ou nessas 2 semanas, a dispensa pode ser questionada, e o que é devido vai do dia da demissão até o fim das 2 semanas. A estabilidade de 5 meses depois do parto não se aplica ao aborto espontâneo.</p>\n\n"
+                 "<p>Existe uma exceção importante: se a perda aconteceu <strong>a partir da 23ª semana de gestação</strong>, ela é tratada como parto (natimorto). Nesse caso valem a licença-maternidade de 120 dias e a estabilidade até 5 meses depois.</p>"},
+        {"de": "<p>O TST (Tribunal Superior do Trabalho) tem precedentes reconhecendo que a estabilidade gestante não desaparece automaticamente com o aborto espontâneo — especialmente durante o período de repouso. Se você foi demitida logo após um aborto espontâneo, esse caso merece análise jurídica cuidadosa.</p>",
+         "para": "<p>O TST (Tribunal Superior do Trabalho) entende que o aborto não criminoso limita a estabilidade ao período da gravidez e às 2 semanas de repouso do art. 395 da CLT. Se você foi demitida grávida ou logo depois da perda, guarde o atestado com a data e a comunicação da dispensa: são esses papéis que mostram se a demissão caiu dentro do período protegido.</p>"},
+        {"de": "<p style=\"color: var(--texto-claro);\">Isso pode ser demissão ilegal. Você não precisa enfrentar isso sozinha. Se essa é a sua situação, procure uma advogada de confiança.</p>",
+         "para": "<p style=\"color: var(--texto-claro);\">Se a demissão aconteceu durante a gravidez ou nas 2 semanas de repouso, ela pode ser questionada. Você não precisa enfrentar isso sozinha. Se essa é a sua situação, procure uma advogada de confiança.</p>"},
+        {"de": "<li>Agendamento no INSS — pelo site <strong>meu.inss.gov.br</strong> ou pelo telefone 135</li>",
+         "para": "<li>Quem tem carteira assinada recebe pela empresa, junto com o salário. O pedido direto no INSS (site <strong>meu.inss.gov.br</strong> ou telefone 135) é para quem é MEI, contribuinte individual, empregada doméstica ou está sem emprego</li>"},
+        {"de": "<li><strong>Proteção contra demissão</strong> — a estabilidade gestante pode persistir durante o período de repouso</li>",
+         "para": "<li><strong>Proteção contra demissão</strong> — durante a gravidez e nas 2 semanas de repouso; a partir da 23ª semana, a perda conta como parto e a estabilidade vai até 5 meses depois</li>"},
+        {"de": "<li><strong>Salário-maternidade pelo INSS</strong> — para os dias de afastamento reconhecidos</li>",
+         "para": "<li><strong>Salário-maternidade</strong> — correspondente às 2 semanas de repouso (pago pela empresa a quem tem carteira assinada)</li>"},
+        {"de": "<li><strong>Auxílio-doença</strong> — se o médico recomendar afastamento superior a 15 dias</li>",
+         "para": "<li><strong>Auxílio por incapacidade temporária (auxílio-doença)</strong> — se o médico indicar afastamento além das 2 semanas, a partir do 16º dia do novo atestado</li>"},
+        {"de": "<p>Em geral, não. Demissão durante o período de afastamento médico, especialmente em um contexto de instabilidade gestante, tem grande chance de ser considerada ilegal. Não assine nada e procure orientação jurídica antes de qualquer atitude.</p>",
+         "para": "<p>Durante as 2 semanas de repouso do art. 395, a demissão pode ser questionada, porque o período é protegido. Durante um afastamento por doença com atestado, o contrato fica interrompido ou suspenso, e a dispensa nesse período também pode ser questionada. Não assine nada sem entender o que está assinando e busque orientação jurídica antes de qualquer atitude.</p>"},
+        {"de": '"text": "Em geral, não. Demissão durante o período de afastamento médico, especialmente em um contexto de instabilidade gestante, tem grande chance de ser considerada ilegal. Não assine nada e procure orientação jurídica antes de qualquer atitude."',
+         "para": '"text": "Durante as 2 semanas de repouso do art. 395, a demissão pode ser questionada, porque o período é protegido. Durante um afastamento por doença com atestado, o contrato fica interrompido ou suspenso, e a dispensa nesse período também pode ser questionada. Não assine nada sem entender o que está assinando e busque orientação jurídica antes de qualquer atitude."'},
+        {"de": '"dateModified": "2026-10-10"', "para": f'"dateModified": "{HOJE_ISO}"'},
+    ],
+}
+
+
+def conferir_e_gravar(pasta: Path) -> None:
+    saida = {"paginas": []}
+    problemas = 0
+    for caminho, trocas in PAGINAS.items():
+        texto = (pasta / caminho).read_bytes().decode("utf-8-sig")  # sem normalizar: o site usa CRLF
+        crlf = "\r\n" in texto
+        prontas = []
+        for t in trocas:
+            de, para = t["de"], t["para"]
+            if crlf:
+                de, para = de.replace("\n", "\r\n"), para.replace("\n", "\r\n")
+            n = texto.count(de)
+            if n == 0 or (n > 1 and not t.get("todas")):
+                print(f"{caminho}: {n}x {de[:70]!r}")
+                problemas += 1
+            prontas.append({"de": de, "para": para, **({"todas": True} if t.get("todas") else {})})
+        saida["paginas"].append({"caminho": caminho, "trocas": prontas})
+    if problemas:
+        sys.exit(f"{problemas} trecho(s) não conferem; JSON não gravado")
+    destino = AQUI / "2026-10-27-trocas-site.json"
+    destino.write_text(json.dumps(saida, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"ok: {sum(len(p['trocas']) for p in saida['paginas'])} trocas em {len(saida['paginas'])} páginas -> {destino}")
+
+
+if __name__ == "__main__":
+    conferir_e_gravar(Path(sys.argv[1]))
