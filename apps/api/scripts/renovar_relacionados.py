@@ -53,7 +53,8 @@ async def main(aplicar: bool) -> None:
             if not SECAO.search(html):
                 continue
             antes = relacionados_atuais(html)
-            novos = escolher_relacionados(cards, slug=slug, categoria_slug=cat, reserva=antes)
+            # mantém quantas leituras a página já tinha (as de consumidor têm 2; não completar com outra área)
+            novos = escolher_relacionados(cards, slug=slug, categoria_slug=cat, reserva=antes)[:len(antes)]
             if [r["slug"] for r in novos] == antes:
                 continue
             bloco = _bloco_relacionados(novos)

@@ -53,7 +53,9 @@ _PALAVRAS_VAZIAS = {"como", "para", "que", "com", "sem", "por", "uma", "dos", "d
                     # verbos e palavras que aparecem em quase todo título e puxariam artigo sem relação
                     "provar", "calcular", "consultar", "pedir", "saber", "funciona", "muda", "mudou", "comeca", "vale",
                     "regra", "prazo", "empresa", "trabalho", "trabalhador", "clt", "stf", "tst", "verdade",
-                    "paga", "pagar", "dia", "mes", "ano", "valor", "artigo", "guia", "completo"}
+                    "paga", "pagar", "dia", "mes", "ano", "valor", "artigo", "guia", "completo",
+                    "quanto", "tempo", "custa", "leva", "brasil", "posso", "seus", "suas", "tem", "ser", "estava",
+                    "conheca", "essenciai", "mesmo", "agora", "entenda", "veja", "dias", "jogo"}
 
 
 def _termos(texto: str) -> set[str]:
