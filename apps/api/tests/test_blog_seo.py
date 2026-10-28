@@ -135,3 +135,83 @@ def test_trocar_titulo_e_descricao_junta_metas_repetidas_em_qualquer_ordem_de_at
     nova = trocar_titulo_e_descricao(pagina, titulo=None, descricao="Só esta")
     assert nova.count('name="description"') == 1
     assert '<meta name="description" content="Só esta">' in nova
+
+
+ARTIGO_PUBLICADO = """<html><head><title>Velho</title>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Velho", "description": "Desc velha",
+ "image": "https://x/logo.png", "datePublished": "2026-04-16", "dateModified": "2026-10-10"}
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+ {"@type": "ListItem", "position": 1, "name": "Início"}, {"@type": "ListItem", "position": 3, "name": "Velho"}]}
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Antiga?"}]}
+</script>
+</head><body><article><section class="article-hero"><h1>Velho: <span class="highlight">título</span></h1>
+<span><i class="fa-regular fa-clock"></i> 7 min de leitura</span></section>
+<section>
+<div class="article-body">
+<p>Texto antigo.</p>
+</div>
+</section>
+</article><section class="related-posts">relacionados</section></body></html>"""
+
+
+def test_atualizar_corpo_do_artigo_troca_texto_h1_e_dados_estruturados():
+    from app.services.blog_seo import atualizar_corpo_do_artigo
+
+    corpo = ("<p>Texto novo.</p>\n<h2>Perguntas frequentes</h2>\n<h3>Conta?</h3>\n<p>Sim, conta.</p>\n"
+             "<h2>Leia também</h2><p>x</p>")
+    novo = atualizar_corpo_do_artigo(ARTIGO_PUBLICADO, corpo=corpo, titulo="Novo: com destaque",
+                                     descricao="Desc nova", data_iso="2026-10-27")
+    assert "Texto antigo" not in novo and "<p>Texto novo.</p>" in novo
+    assert '<h1>Novo: <span class="highlight">com destaque</span></h1>' in novo
+    assert "relacionados" in novo
+    blocos = _schemas(novo)
+    assert blocos["BlogPosting"]["headline"] == "Novo: com destaque"
+    assert blocos["BlogPosting"]["description"] == "Desc nova"
+    assert blocos["BlogPosting"]["dateModified"] == "2026-10-27"
+    assert blocos["BlogPosting"]["datePublished"] == "2026-04-16"
+    assert blocos["BlogPosting"]["image"] == "https://x/logo.png"
+    assert blocos["BreadcrumbList"]["itemListElement"][-1]["name"] == "Novo: com destaque"
+    assert blocos["FAQPage"]["mainEntity"] == [
+        {"@type": "Question", "name": "Conta?", "acceptedAnswer": {"@type": "Answer", "text": "Sim, conta."}}]
+    assert "1 min de leitura" in novo
+
+
+def test_atualizar_corpo_do_artigo_sem_corpo_avisa():
+    import pytest
+
+    from app.services.blog_seo import atualizar_corpo_do_artigo
+
+    with pytest.raises(ValueError):
+        atualizar_corpo_do_artigo("<html></html>", corpo="<p>x</p>", titulo="T", descricao="D", data_iso="2026-10-27")
+
+
+def test_aplicar_trocas_troca_trecho_unico():
+    from app.services.blog_seo import aplicar_trocas
+
+    novo = aplicar_trocas("<p>Enviar para análise</p><p>fim</p>", [{"de": "Enviar para análise", "para": "Quero orientação"}])
+    assert novo == "<p>Quero orientação</p><p>fim</p>"
+
+
+def test_aplicar_trocas_recusa_trecho_ausente_ou_repetido():
+    import pytest
+
+    from app.services.blog_seo import TrocaInvalida, aplicar_trocas
+
+    with pytest.raises(TrocaInvalida, match="não encontrado"):
+        aplicar_trocas("<p>a</p>", [{"de": "b", "para": "c"}])
+    with pytest.raises(TrocaInvalida, match="2 vezes"):
+        aplicar_trocas("<p>a</p><p>a</p>", [{"de": "a", "para": "c"}])
+
+
+def test_aplicar_trocas_todas_e_reaplicar_sem_erro():
+    from app.services.blog_seo import aplicar_trocas
+
+    trocas = [{"de": "análise", "para": "orientação", "todas": True}, {"de": "<b>x</b>", "para": "<b>y</b>"}]
+    uma = aplicar_trocas("análise, análise <b>x</b>", trocas)
+    assert uma == "orientação, orientação <b>y</b>"
+    assert aplicar_trocas(uma, trocas) == uma  # já aplicada: o "para" está lá, nada muda

@@ -147,6 +147,70 @@ def trocar_titulo_e_descricao(html: str, *, titulo: str | None, descricao: str |
     return html
 
 
+class TrocaInvalida(ValueError):
+    pass
+
+
+def aplicar_trocas(html: str, trocas: list[dict]) -> str:
+    """Revisão pontual de página já publicada: cada troca é {"de", "para", "todas"?} com texto exato.
+
+    O trecho "de" precisa aparecer uma vez só (ou com "todas": true, quantas vezes for); se faltar,
+    a página não é tocada, a não ser que o "para" já esteja lá (troca aplicada antes: reaplicar não muda nada).
+    """
+    for troca in trocas:
+        de, para = troca["de"], troca["para"]
+        vezes = html.count(de)
+        if vezes == 0:
+            if para and para in html:
+                continue
+            raise TrocaInvalida(f"Trecho não encontrado: {de[:80]!r}")
+        if vezes > 1 and not troca.get("todas"):
+            raise TrocaInvalida(f"Trecho aparece {vezes} vezes (use \"todas\"): {de[:80]!r}")
+        html = html.replace(de, para)
+    return html
+
+
+def atualizar_corpo_do_artigo(html: str, *, corpo: str, titulo: str, descricao: str, data_iso: str) -> str:
+    """Reescreve um artigo já publicado: troca o texto (.article-body), o H1, o tempo de leitura e os dados
+    estruturados (título, descrição, data de atualização, breadcrumb e FAQ). Menu, capa, rodapé e
+    "Continue lendo" ficam como estão. No H1, o que vem depois do primeiro ":" ganha o destaque dourado.
+    """
+    bloco = re.search(r'(<div class="article-body">)(.*?)(</div>\s*</section>\s*</article>)', html, re.S)
+    if not bloco:
+        raise ValueError("Página sem .article-body.")
+    html = html[:bloco.start(2)] + "\n" + corpo.strip() + "\n" + html[bloco.end(2):]
+
+    antes, sep, depois = titulo.partition(":")
+    h1 = (f'{html_lib.escape(antes)}: <span class="highlight">{html_lib.escape(depois.strip())}</span>'
+          if sep else html_lib.escape(titulo))
+    html = re.sub(r"<h1([^>]*)>.*?</h1>", lambda m: f"<h1{m.group(1)}>{h1}</h1>", html, count=1, flags=re.S)
+    minutos = max(1, round(len(_texto(corpo).split()) / 200))
+    html = re.sub(r"\d+ min de leitura", f"{minutos} min de leitura", html, count=1)
+
+    perguntas = _faq(corpo)
+
+    def refazer(m: re.Match) -> str:
+        try:
+            dado = json.loads(m.group(2))
+        except ValueError:
+            return m.group(0)
+        tipo = dado.get("@type") if isinstance(dado, dict) else None
+        if tipo == "BlogPosting":
+            dado.update({"headline": titulo, "description": descricao, "dateModified": data_iso})
+        elif tipo == "BreadcrumbList" and dado.get("itemListElement"):
+            dado["itemListElement"][-1]["name"] = titulo
+        elif tipo == "FAQPage":
+            if not perguntas:
+                return ""
+            dado["mainEntity"] = [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": r}}
+                                  for q, r in perguntas]
+        else:
+            return m.group(0)
+        return f"{m.group(1)}\n{json.dumps(dado, ensure_ascii=False, indent=2)}\n{m.group(3)}"
+
+    return re.sub(r'(<script type="application/ld\+json">)(.*?)(</script>)', refazer, html, flags=re.S)
+
+
 def capa_para_jpg(conteudo: bytes, largura_max: int = 1200) -> bytes:
     try:
         imagem = Image.open(io.BytesIO(conteudo))

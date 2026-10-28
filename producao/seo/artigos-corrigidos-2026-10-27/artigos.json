@@ -1,0 +1,41 @@
+{
+  "_sobre": "Artigos corrigidos em 27/10/2026. 'corpo' = arquivo com o novo .article-body (texto inteiro reescrito); 'trocas' = pares [antigo, novo] aplicados em toda a página (cada antigo precisa existir). Aplicar com apps/api/scripts/atualizar_artigos.py.",
+  "data": "2026-10-27",
+  "artigos": [
+    {
+      "arquivo": "blog/aposentadoria-hibrida-como-funciona.html",
+      "motivo": "O texto definia a híbrida como soma de CLT, MEI e facultativo, com 30/35 anos de contribuição e fator previdenciário: tudo errado. A híbrida é a aposentadoria por idade que soma tempo rural (sem contribuição) e urbano (Lei 8.213, art. 48, § 3º; Decreto 3.048, art. 57; STJ Tema 1.007). Também tinha oferta direta de serviço ('posso ajudar nessa ação'), vetada pela OAB.",
+      "corpo": "aposentadoria-hibrida-como-funciona.html",
+      "titulo_h1": "Aposentadoria híbrida: como somar o tempo da roça e o da cidade",
+      "titulo_aba": "Aposentadoria híbrida: como somar tempo rural e urbano",
+      "descricao": "Trabalhou na roça e depois na cidade? A aposentadoria híbrida soma os dois tempos. Veja idade, tempo mínimo, valor e como provar o tempo rural.",
+      "trocas": [
+        ["Pessoa idosa negra — aposentadoria híbrida INSS e regime próprio", "Pessoa idosa: aposentadoria híbrida do INSS, que soma tempo rural e urbano"]
+      ]
+    },
+    {
+      "arquivo": "blog/carga-horaria-maxima-clt.html",
+      "motivo": "Sem o fim da 6x1 (EC 141/2026); dizia que 5x2 dá direito a 8h48 por dia (só com acordo de compensação), que a 12x36 tem hora extra embutida (o que está embutido é DSR e feriado, art. 59-A), explicava errado a prescrição e trazia um 'caso real' com resultado, sem fonte.",
+      "corpo": "carga-horaria-maxima-clt.html",
+      "titulo_h1": "Carga horária máxima CLT: o limite de hoje e o que muda com o fim da 6x1",
+      "titulo_aba": "Carga horária máxima CLT: 44h hoje, 40h com o fim da 6x1",
+      "descricao": "Hoje o limite é 8h por dia e 44h por semana. Com a EC 141, cai para 42h em 16/12/2026 e 40h em 2027, sem corte de salário. Veja como provar.",
+      "trocas": []
+    },
+    {
+      "arquivo": "blog/fim-da-escala-6x1-o-que-muda-e-quando-comeca.html",
+      "motivo": "Dizia '60 dias' onde a EC 141 diz '2 meses' (arts. 6º e 10); publicada no DOU de 16/10/2026 (edição extra), então 42h e 2 folgas em 16/12/2026 e 40h em 16/12/2027.",
+      "trocas": [
+        ["\"dateModified\": \"2026-10-16\"", "\"dateModified\": \"2026-10-27\""],
+        ["<p><em>Atualizado em 15 de outubro de 2026.</em></p>", "<p><em>Atualizado em 27 de outubro de 2026.</em></p>"],
+        ["passam a valer 60 dias depois da publicação. Até lá, valem as regras atuais.", "passam a valer em 16 de dezembro de 2026, dois meses depois da publicação. Até lá, valem as regras atuais."],
+        ["Cerca de 14 meses depois da publicação: primeiro cai para 42 horas (em 60 dias), e 12 meses depois para 40.", "Em 16 de dezembro de 2027. Primeiro cai para 42 horas, em 16 de dezembro de 2026, e um ano depois para 40."],
+        ["42 horas e escala 5x2 em 60 dias contados da publicação da emenda, e 40 horas 12 meses depois disso.", "42 horas e escala 5x2 em 16 de dezembro de 2026 (dois meses depois da publicação, feita em 16 de outubro), e 40 horas em 16 de dezembro de 2027."],
+        ["<strong>até o fim dos primeiros 60 dias</strong> contados da publicação, continua valendo a regra atual de 44 horas.", "<strong>até 15 de dezembro de 2026</strong>, continua valendo a regra atual de 44 horas."],
+        ["<td>60 dias depois da publicação</td>", "<td>16 de dezembro de 2026 (dois meses depois da publicação)</td>"],
+        ["<td>12 meses depois disso (cerca de 14 meses no total)</td>", "<td>16 de dezembro de 2027 (um ano depois)</td>"],
+        ["o prazo de 60 dias é curto.", "o prazo até 16 de dezembro é curto."]
+      ]
+    }
+  ]
+}
