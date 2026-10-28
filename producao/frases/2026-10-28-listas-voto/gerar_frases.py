@@ -1,5 +1,6 @@
 """Frases-notícia sobre as listas por causa do voto (28/10/2026), no mesmo estilo das frases da campanha do voto
 (producao/frases/2026-10-28-demitido-posicao-politica): fundo escuro, caixa-alta grossa, fecho em dourado.
+Assinatura das duas sócias (pedido de 28/10); as PNG sem o sufixo "-duas-advogadas" são a versão anterior, só com a Letícia.
 Uso, de apps/api: py ../../producao/frases/2026-10-28-listas-voto/gerar_frases.py
 """
 import asyncio
@@ -33,15 +34,17 @@ HTML = """<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
 h1 { font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: 112px; line-height: .93;
   letter-spacing: -1px; color: #FFFFFF; text-transform: uppercase; white-space: nowrap; }
 h1 em { font-style: normal; color: #C9A962; }
-.fonte { position: absolute; left: 104px; bottom: 236px; font: 500 22px 'Inter', sans-serif; color: rgba(232,222,209,.7); }
+.fonte { position: absolute; left: 104px; bottom: 262px; font: 500 22px 'Inter', sans-serif; color: rgba(232,222,209,.7); }
 .assinatura { position: absolute; left: 104px; bottom: 150px; display: flex; align-items: center; gap: 18px;
   font-family: 'Inter', sans-serif; font-weight: 600; font-size: 26px; color: #E8DED1; letter-spacing: .5px; }
-.assinatura img { width: 64px; height: 64px; object-fit: contain; }
+.assinatura img { width: 76px; height: 76px; object-fit: contain; }
 .assinatura span { color: #C9A962; }
+.assinatura p { line-height: 1.45; }
 </style></head><body><div class="card">
 <h1>FRASE</h1>
 FONTE
-<div class="assinatura"><img src="LOGO">Letícia Barros <span>·</span> OAB/ES 39.948</div>
+<div class="assinatura"><img src="LOGO"><div><p>Dra. Letícia Barros <span>·</span> OAB/ES 39.948</p>
+<p>Dra. Carolina Prado <span>·</span> OAB/ES 29.557</p></div></div>
 </div></body></html>"""
 
 # Diminui a letra até a frase caber na largura útil (880 px) e acima da assinatura.
@@ -60,7 +63,7 @@ async def main() -> None:
             await page.set_content(html, wait_until="networkidle")
             await page.evaluate("document.fonts.ready")
             tamanho = await page.evaluate(AJUSTAR)
-            arquivo = AQUI / f"{nome}-1080x1440.png"
+            arquivo = AQUI / f"{nome}-duas-advogadas-1080x1440.png"
             await page.screenshot(path=str(arquivo))
             _aplicar_acabamento_dourado(str(arquivo))
             print(arquivo.name, f"{tamanho}px")

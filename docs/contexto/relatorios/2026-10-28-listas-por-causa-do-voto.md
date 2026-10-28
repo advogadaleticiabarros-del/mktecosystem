@@ -49,3 +49,11 @@ Ler `listas/ROTEIRO.md`, aplicar os ajustes pedidos, gerar a arte do carrossel e
 - Verificado: as 4 imagens abertas e conferidas (texto dentro da largura, letra entre 94 e 100 px, fonte e assinatura).
 - Pendente: escolher qual(is) vão ao ar e subir ao Orbit como rascunho (modelo:
   `producao/frases/2026-10-28-demitido-posicao-politica/subir_orbit.py`, JPG em `/app/media/voto-<nome>.jpg`).
+
+## Continuação: as 4 frases com as duas sócias e legenda explicativa
+- Pedido: "Faça todas, embaixo coloque o nome de Dra Letícia e Dra Carolina Prado OAB 29557" e "Faça uma legenda explicativa".
+- Feito: `*-duas-advogadas-1080x1440.png` (4 artes, assinatura em duas linhas; as PNG anteriores, só com a Letícia,
+  ficaram intactas). `LEGENDAS.md` ganhou a seção 0 "legenda explicativa" (serve para o carrossel das 4 ou para cada
+  uma) e as duas assinaturas nas legendas 1 a 4.
+- Não verificado: a seccional da Dra. Carolina. A arte usa "OAB/ES 29.557" (o escritório é do ES); confirmar com a Jessica.
+- Pendente: formato (carrossel das 4 ou posts separados), horário e subir ao Orbit como rascunho.

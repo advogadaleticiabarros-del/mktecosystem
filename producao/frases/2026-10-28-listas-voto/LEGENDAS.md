@@ -4,6 +4,53 @@ Mesmo formato das frases da campanha do voto (`../2026-10-28-demitido-posicao-po
 Fatos e leis em `producao/campanhas/2026-10-assedio-eleitoral/listas/ROTEIRO.md`. Nunca citar quem está numa lista.
 Primeiro comentário em todas: "Passo a passo das provas e de como denunciar, inclusive no ES: advogadaleticiabarros.com.br/voto"
 
+## 0. legenda-explicativa
+
+Pedido de 28/10: legenda explicativa, assinada pelas duas sócias. Serve para as 4 frases juntas (carrossel, capa
+`frase-listas-cachoeiro`) ou para qualquer uma delas sozinha.
+
+🚨 Listas por causa do voto estão circulando no Espírito Santo. Entenda o que a lei diz sobre quem está nelas e sobre quem cria e repassa.
+
+Depois do 2º turno, começaram a circular em grupos de WhatsApp e nas redes listas de pessoas, comércios e até igrejas, separados pela posição política. Algumas pedem boicote. Outras pedem que empregadores demitam quem votou em determinado candidato. Segundo A Gazeta, no ES já há relatos em pelo menos 6 cidades: Vitória, Colatina, Santa Maria de Jetibá, Afonso Cláudio, Baixo Guandu e Cachoeiro de Itapemirim.
+
+Não importa em quem você votou. A regra vale para todo mundo.
+
+🗳️ Se o seu nome está numa lista
+🔹 Você não fez nada de errado. O voto é secreto e ninguém perde direitos por opinião política (Constituição, arts. 5º, VIII, e 14)
+🔹 Sua honra e sua imagem são protegidas por lei. Quem expõe, rotula ou ofende responde por dano moral (Constituição, art. 5º, X, e Código Civil, art. 927)
+
+⚖️ Quando a lista pode ser crime
+🔹 Difamação: atribuir a alguém um fato que ofende a reputação, como "não paga" ou "engana cliente" (Código Penal, art. 139)
+🔹 Injúria: xingar ou rotular, como "larápio" ou "vagabundo" (Código Penal, art. 140)
+🔹 Ameaça e perseguição, se houver intimidação ou exposição repetida (arts. 147 e 147-A)
+Deixar de comprar de alguém é escolha de cada consumidor. O problema é o que vem junto: expor, ofender, ameaçar.
+
+💼 Se você é empregado
+🔹 A empresa não pode demitir nem deixar de contratar por causa do voto (Lei 9.029/1995)
+🔹 Se demitir, você escolhe: voltar ao emprego com os salários do período ou receber o dobro desse período, além de dano moral
+🔹 A denúncia ao Ministério Público do Trabalho pode ser sigilosa
+
+📲 Recebeu uma lista? Não repasse
+Quem repassa também pode responder, mesmo que só tenha encaminhado. Se quiser ajudar quem está na lista, entregue o print a quem vai apurar: Polícia Civil, MPT ou advogada.
+
+📌 O que fazer hoje
+🔹 Print da lista e da conversa, com data, hora, nome do grupo e número de quem enviou
+🔹 Não responda com ofensa e não apague nada
+🔹 Denuncie o conteúdo na rede social ou no aplicativo
+🔹 Registre boletim de ocorrência na Polícia Civil
+🔹 Atenção ao prazo: a queixa-crime por difamação ou injúria tem que ser feita em até 6 meses depois de você descobrir quem fez a lista
+
+Cada caso tem seus detalhes. A Dra. Letícia Barros (trabalhista) e a Dra. Carolina Prado (criminal) atendem em Vitória e on-line em todo o Espírito Santo. Fale com a gente pelo WhatsApp (27) 99515-1402 ou pelo link na bio.
+
+📤 Salve e mande para quem precisa saber disso hoje.
+
+Dra. Letícia Barros · OAB/ES 39.948
+Dra. Carolina Prado · OAB/ES 29.557
+
+Esse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre Direito Trabalhista.
+
+#AssédioEleitoral #EspíritoSanto #CachoeiroDeItapemirim #DireitoDoTrabalho #DireitoCriminal
+
 ## 1. frase-listas-6-cidades-es
 
 🚨 Listas de pessoas para boicotar ou demitir por causa do voto já circulam em pelo menos 6 cidades do Espírito Santo: Vitória, Colatina, Santa Maria de Jetibá, Afonso Cláudio, Baixo Guandu e Cachoeiro de Itapemirim.
@@ -22,6 +69,7 @@ Não importa em quem você votou. Ter opinião política é direito seu (Constit
 📤 Manda para quem precisa saber disso hoje.
 
 Dra. Letícia Barros · OAB/ES 39.948
+Dra. Carolina Prado · OAB/ES 29.557
 
 #AssédioEleitoral #EspíritoSanto #CachoeiroDeItapemirim #DireitoDoTrabalho #AdvogadaTrabalhista
 
@@ -43,6 +91,7 @@ Recebeu uma? Não repasse, nem para avisar quem está nela. Quem repassa conteú
 📤 Manda para um capixaba que precisa saber disso.
 
 Dra. Letícia Barros · OAB/ES 39.948
+Dra. Carolina Prado · OAB/ES 29.557
 
 #AssédioEleitoral #EspíritoSanto #CachoeiroDeItapemirim #DireitoDoTrabalho #AdvogadaTrabalhista
 
@@ -64,6 +113,7 @@ O voto é secreto e ninguém perde direitos por opinião política (Constituiç�
 📤 Manda para quem está numa dessas listas.
 
 Dra. Letícia Barros · OAB/ES 39.948
+Dra. Carolina Prado · OAB/ES 29.557
 
 #AssédioEleitoral #DanoMoral #DireitoDoTrabalho #AdvogadaTrabalhista #VitóriaES
 
@@ -85,5 +135,6 @@ Não importa em quem você votou. A regra vale para todo mundo.
 📤 Manda para o grupo que precisa ler isso.
 
 Dra. Letícia Barros · OAB/ES 39.948
+Dra. Carolina Prado · OAB/ES 29.557
 
 #AssédioEleitoral #DireitoDigital #DireitoDoTrabalho #AdvogadaTrabalhista #VitóriaES
