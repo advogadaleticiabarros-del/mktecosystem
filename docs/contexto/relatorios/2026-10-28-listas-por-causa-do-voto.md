@@ -98,3 +98,12 @@ Ler `listas/ROTEIRO.md`, aplicar os ajustes pedidos, gerar a arte do carrossel e
   Bing: 200. IndexNow: 403 (chave de verificação, problema antigo).
 - Stories continuam em rascunho no Orbit; a Jessica posta à mão (marcar como publicados se ela pedir).
 - Próximo passo dela: Search Console > Inspecionar URL > Solicitar indexação.
+
+
+## Continuação: Stories das frases do trabalhador demitido (28/10, noite)
+
+- **Pedido:** "Faça storie das frases dos trabalhadores sendo mandado embora, e me dê o link da página e do blog"; depois "Quero de todas as frases, faça e coloque no órbit".
+- **Feito:** `producao/frases/2026-10-28-demitido-posicao-politica/gerar_stories.py` gera 5 Stories (as 4 frases de `gerar_frases.py` + a do atendimento gratuito, texto copiado da arte). `gerar_frases.py` ganhou a guarda `if __name__ == "__main__"` para poder ser importado (as artes do feed não foram refeitas). `subir_stories.py` criou 5 peças `stories` em rascunho na pauta d7b867af; o story 5 tem `link` para a LP com UTM.
+- **Verificado:** contagem de peças antes e depois (stories 25 → 30, nenhum tipo diminuiu); as 5 imagens respondem 200 em `api.orbit.../media/story-demissao-voto-N.jpg`; LP e artigo respondem 200.
+- **Decisões:** assinatura só da Letícia (as artes do feed dessas frases são só dela); a frase do atendimento gratuito fica por último, junto do link do formulário.
+- **Pendente:** a Jessica posta à mão; depois marcar os Stories como publicados se ela pedir.

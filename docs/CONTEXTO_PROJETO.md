@@ -953,6 +953,10 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 - Skills do skills.sh avaliadas para o Reels: nenhuma clona voz. `hyperframes-animation` = receitas de animação em
   HTML/GSAP (o motor já cobre o que este Reels usa); `instagram-marketing` = gancho e legenda; `Trail-Code/` é mapa de
   código para agentes, sem relação com vídeo.
+- **Stories das 5 frases do trabalhador demitido** (28/10): `producao/frases/2026-10-28-demitido-posicao-politica/gerar_stories.py`
+  (1080x1920, ordem: eleição acabou, 500 ilegal, 2.364/ES, escritório orientar, atendimento gratuito + adesivo de link
+  para a LP com `utm_content=frases`). No Orbit como 5 `stories` em rascunho na pauta d7b867af (`subir_stories.py`,
+  imagens `/app/media/story-demissao-voto-{1..5}.jpg`). A Jessica posta à mão.
 - Impulsionar esse tema exige a autorização de "temas sociais, eleições ou política" da Meta.
 - **Ângulo "listas por causa do voto"** (28/10): roteiros para aprovação em
   `producao/campanhas/2026-10-assedio-eleitoral/listas/ROTEIRO.md` (fatos e leis conferidos, carrossel 7 slides,
