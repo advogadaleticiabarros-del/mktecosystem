@@ -11,6 +11,7 @@ import html as html_lib
 import io
 import json
 import re
+import unicodedata
 
 from PIL import Image
 
@@ -47,11 +48,37 @@ def cards_do_indice(indice_html: str) -> list[dict]:
     return cards
 
 
+_PALAVRAS_VAZIAS = {"como", "para", "que", "com", "sem", "por", "uma", "dos", "das", "nao", "pode", "quem", "qual",
+                    "quando", "fazer", "direito", "direitos", "tenho", "voce", "sua", "seu", "lei", "nova", "2026", "2027",
+                    # verbos e palavras que aparecem em quase todo título e puxariam artigo sem relação
+                    "provar", "calcular", "consultar", "pedir", "saber", "funciona", "muda", "mudou", "comeca", "vale",
+                    "regra", "prazo", "empresa", "trabalho", "trabalhador", "clt", "stf", "tst", "verdade",
+                    "paga", "pagar", "dia", "mes", "ano", "valor", "artigo", "guia", "completo"}
+
+
+def _termos(texto: str) -> set[str]:
+    """Palavras de assunto de um slug ou título, sem acento e sem plural simples ("horas" e "hora" casam)."""
+    sem_acento = unicodedata.normalize("NFKD", texto.lower()).encode("ascii", "ignore").decode()
+    return {p[:-1] if p.endswith("s") and len(p) > 4 else p
+            for p in re.findall(r"[a-z0-9]+", sem_acento) if len(p) > 2 and p not in _PALAVRAS_VAZIAS}
+
+
 def escolher_relacionados(cards: list[dict], *, slug: str, categoria_slug: str, n: int = 3) -> list[dict]:
-    outros = [c for c in cards if c["slug"] != slug]
-    mesma_area = [c for c in outros if c["cat"] == categoria_slug]
-    resto = [c for c in outros if c not in mesma_area]
-    return (mesma_area + resto)[:n]
+    """Artigos do mesmo assunto (mais palavras em comum com o slug) primeiro; no empate, os da mesma área.
+    Empate fica na ordem do índice, que é a mais recente primeiro (sort estável)."""
+    alvo = _termos(slug)
+    vistos = {slug}
+    outros = []
+    for c in cards:  # o índice repete alguns artigos (destaque + grade)
+        if c["slug"] not in vistos:
+            vistos.add(c["slug"])
+            outros.append(c)
+
+    def afinidade(c: dict) -> int:
+        return len(alvo & (_termos(c["slug"]) | _termos(c["titulo"])))
+
+    # Mais palavras em comum primeiro; no empate (inclusive sem nenhuma em comum), a mesma área.
+    return sorted(outros, key=lambda c: (afinidade(c), c["cat"] == categoria_slug), reverse=True)[:n]
 
 
 def _faq(html: str) -> list[tuple[str, str]]:

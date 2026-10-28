@@ -215,3 +215,23 @@ def test_aplicar_trocas_todas_e_reaplicar_sem_erro():
     uma = aplicar_trocas("análise, análise <b>x</b>", trocas)
     assert uma == "orientação, orientação <b>y</b>"
     assert aplicar_trocas(uma, trocas) == uma  # já aplicada: o "para" está lá, nada muda
+
+
+def test_relacionados_preferem_o_mesmo_assunto_dentro_da_area():
+    # Antes: os 3 mais recentes da área (o artigo da licença de 180 dias indicava pet no divórcio e Pix da pensão).
+    rel = escolher_relacionados(cards_do_indice(INDICE), slug="hora-extra-nao-paga-como-calcular", categoria_slug="trabalhista")
+    assert rel[0]["slug"] == "horas-extras"
+    assert all(r["cat"] == "trabalhista" for r in rel)
+    rel2 = escolher_relacionados(cards_do_indice(INDICE), slug="gestante-demitida-gravida-direitos", categoria_slug="trabalhista")
+    assert rel2[0]["slug"] == "fui-demitida-gravida"
+
+
+def test_relacionados_sem_repetir_artigo_do_indice():
+    indice = INDICE.replace("</div>", '<a class="blog-card" data-cat="trabalhista" href="horas-extras.html"><h3>Horas extras</h3></a></div>')
+    rel = escolher_relacionados(cards_do_indice(indice), slug="hora-extra-como-provar", categoria_slug="trabalhista")
+    assert [r["slug"] for r in rel].count("horas-extras") == 1
+
+
+def test_relacionados_do_mesmo_assunto_vem_de_outra_area_antes_de_artigo_sem_relacao():
+    rel = escolher_relacionados(cards_do_indice(INDICE), slug="pensao-alimenticia-atrasada", categoria_slug="trabalhista")
+    assert rel[0]["slug"] == "pensao"
