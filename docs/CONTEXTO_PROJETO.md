@@ -963,6 +963,8 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   Carolina Prado OAB/ES 29.557, seccional a confirmar) em `producao/frases/2026-10-28-listas-voto/`, subidas como **um
   carrossel em rascunho** (peça `8126928c`, pauta `3ca54d6d`, 28/10 18h) com a legenda explicativa (≤ 2.200 caracteres,
   limite do Instagram). Imagens em `/app/media/listas-voto-*.jpg`. Script `subir_orbit.py` na pasta.
+  Stories (4, 1080x1920) no Orbit em rascunho na mesma pauta (`subir_stories.py`). Artigo "Lista por causa do voto é
+  crime?" (`blog-lp/artigo-lista-por-causa-do-voto.html`, script `publicar_artigo_listas.py`) esperando o ok.
 
 ## Google: furar a bolha (27-28/10/2026)
 

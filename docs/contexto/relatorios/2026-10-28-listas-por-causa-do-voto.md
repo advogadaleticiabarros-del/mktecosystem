@@ -69,3 +69,21 @@ Ler `listas/ROTEIRO.md`, aplicar os ajustes pedidos, gerar a arte do carrossel e
 - Verificado: as 4 imagens respondem 200 (image/jpeg) em `api.orbit.advogadaleticiabarros.com.br/media/listas-voto-*.jpg`;
   a peça está `rascunho`, 4 imagens, programação gravada; contagem de peças antes/depois sem perda (carrossel 46 → 47).
 - Pendente: aprovar no Editorial (ou postar à mão e marcar como publicado); confirmar a seccional da Dra. Carolina.
+
+## Continuação: Stories e artigo do blog
+- Pedido: "faça as frases em storie, e gere um artigo sobre isso para que eu possa divulgar e rankear no google também".
+- Stories: `producao/frases/2026-10-28-listas-voto/gerar_stories.py` → `story-listas-voto-1..4-1080x1920.png` (áreas
+  livres de 270 px no topo e 420 px embaixo; o 4 tem "Passo a passo no link abaixo" e espaço para o adesivo). No Orbit
+  em **rascunho**, mesma pauta `3ca54d6d`, 28/10 18h05 a 18h08 (`subir_stories.py`); o story 4 leva o link do artigo
+  com UTM e a reserva `/voto` se o artigo não estiver no ar. Imagens 200 em `/media/story-listas-voto-*.jpg`.
+  `gerar_frases.py` ganhou a guarda `if __name__` (o gerador dos Stories importa os textos dele).
+- Artigo: corpo em `producao/campanhas/2026-10-assedio-eleitoral/blog-lp/artigo-lista-por-causa-do-voto.html`, título
+  "Lista por causa do voto é crime? O que a lei garante a quem está nela", slug `lista-por-causa-do-voto-e-crime`;
+  capa `capa-blog-lista-voto.jpg` (Pexels 13801812, Mizuno K; descartadas fotos com logo da Apple). Script pronto
+  `publicar_artigo_listas.py` (cópia do fluxo de `publicar_artigo.py`: backup, HTML, capa, índice, sitemap, llms.txt,
+  IndexNow e Bing). **Não publicado:** a skill `leticia-blog-artigo` manda mostrar o rascunho e esperar o ok.
+- Delegacia Online do ES: não confirmado que aceita crime contra a honra; o artigo diz só "Polícia Civil" e explica que
+  o BO não basta (queixa-crime por advogado em 6 meses).
+- Publicar: `scp` do corpo, da capa e do script para a VPS → `docker compose cp` para `/tmp` do container `api` →
+  `docker compose exec -T -e PYTHONPATH=/app -w /app api python /tmp/publicar_artigo_listas.py` → conferir com curl
+  (`article-hero` presente, `blog-grid` zero, card no índice, URL no sitemap) → pedir indexação no Search Console.
