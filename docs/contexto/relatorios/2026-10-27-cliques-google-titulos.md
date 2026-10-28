@@ -46,8 +46,8 @@ mim, vamos reverter isso, mais cliques, mais conversões" e, sobre a VPS, "você
   /tmp/conversoes.js 20261027 --aplicar` (os dois arquivos já estão no `/tmp` do container; se ele for recriado, copiar
   de novo) e depois copiar o .tgz do `/tmp` para `/root/orbit-backups/`.
 - 17/11/2026: comparar o CTR das 5 páginas principais (ver CONTEXTO_PROJETO.md).
-- Jessica/Dra.: marcar `contato_whatsapp`, `contato_ligacao` e `generate_lead` como eventos principais no GA4 (o campo
-  "site" do Perfil da Empresa já está certo, com UTM); corrigir os artigos de aposentadoria híbrida e carga horária.
+- Dra.: corrigir os artigos de aposentadoria híbrida e carga horária. (Eventos principais do GA4 e site do Perfil da
+  Empresa já estavam certos.)
 
 ## Próxima sessão
 Ler o painel salvo (`social_metrics`, tipo `google_painel`, coluna `metricas` → `search_console.paginas/consultas`) e
