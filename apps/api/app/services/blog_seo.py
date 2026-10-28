@@ -63,9 +63,11 @@ def _termos(texto: str) -> set[str]:
             for p in re.findall(r"[a-z0-9]+", sem_acento) if len(p) > 2 and p not in _PALAVRAS_VAZIAS}
 
 
-def escolher_relacionados(cards: list[dict], *, slug: str, categoria_slug: str, n: int = 3) -> list[dict]:
-    """Artigos do mesmo assunto (mais palavras em comum com o slug) primeiro; no empate, os da mesma área.
-    Empate fica na ordem do índice, que é a mais recente primeiro (sort estável)."""
+def escolher_relacionados(cards: list[dict], *, slug: str, categoria_slug: str, n: int = 3,
+                          reserva: list[str] | None = None) -> list[dict]:
+    """Artigos do mesmo assunto (mais palavras em comum com o slug) primeiro; de outra área, só com 2 ou mais.
+    As vagas que sobram vão para `reserva` (as leituras que a página já tem, ao refazer artigo publicado) e
+    depois para a mesma área, na ordem do índice (a mais recente primeiro)."""
     alvo = _termos(slug)
     vistos = {slug}
     outros = []
@@ -75,10 +77,20 @@ def escolher_relacionados(cards: list[dict], *, slug: str, categoria_slug: str, 
             outros.append(c)
 
     def afinidade(c: dict) -> int:
-        return len(alvo & (_termos(c["slug"]) | _termos(c["titulo"])))
+        comum = len(alvo & (_termos(c["slug"]) | _termos(c["titulo"])))
+        return comum if c["cat"] == categoria_slug or comum >= 2 else 0
 
-    # Mais palavras em comum primeiro; no empate (inclusive sem nenhuma em comum), a mesma área.
-    return sorted(outros, key=lambda c: (afinidade(c), c["cat"] == categoria_slug), reverse=True)[:n]
+    escolhidos = sorted((c for c in outros if afinidade(c)), key=lambda c: (afinidade(c), c["cat"] == categoria_slug),
+                        reverse=True)[:n]
+    por_slug = {c["slug"]: c for c in outros}
+    sobra = [por_slug[s] for s in (reserva or []) if s in por_slug]
+    sobra += [c for c in outros if c["cat"] == categoria_slug] + [c for c in outros if c["cat"] != categoria_slug]
+    for c in sobra:
+        if len(escolhidos) >= n:
+            break
+        if c not in escolhidos:
+            escolhidos.append(c)
+    return escolhidos
 
 
 def _faq(html: str) -> list[tuple[str, str]]:

@@ -233,5 +233,17 @@ def test_relacionados_sem_repetir_artigo_do_indice():
 
 
 def test_relacionados_do_mesmo_assunto_vem_de_outra_area_antes_de_artigo_sem_relacao():
-    rel = escolher_relacionados(cards_do_indice(INDICE), slug="pensao-alimenticia-atrasada", categoria_slug="trabalhista")
+    rel = escolher_relacionados(cards_do_indice(INDICE), slug="pensao-e-guarda-atrasada", categoria_slug="trabalhista")
     assert rel[0]["slug"] == "pensao"
+
+
+def test_relacionados_sem_assunto_em_comum_mantem_a_reserva():
+    rel = escolher_relacionados(cards_do_indice(INDICE), slug="fim-da-escala-6x1", categoria_slug="trabalhista",
+                                reserva=["assedio", "rescisao-indireta"])
+    assert [r["slug"] for r in rel][:2] == ["assedio", "rescisao-indireta"]
+
+
+def test_relacionados_de_outra_area_precisam_de_duas_palavras():
+    indice = INDICE.replace("</div>", '<a class="blog-card" data-cat="consumidor" href="plano-de-saude.html"><h3>Plano de saúde</h3></a></div>')
+    rel = escolher_relacionados(cards_do_indice(indice), slug="saude-no-trabalho-nr-1", categoria_slug="trabalhista")
+    assert "plano-de-saude" not in [r["slug"] for r in rel]
