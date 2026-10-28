@@ -960,11 +960,12 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   A Gazeta 28/10) são de **boicote** a profissionais/comércio/igrejas, não de funcionários. Regra: nunca mostrar nem
   citar uma lista ou quem está nela.
 - **Frases das listas no Orbit (28/10)**: 4 frases-notícia assinadas pelas duas sócias (Letícia OAB/ES 39.948 e
-  Carolina Prado OAB/ES 29.557, seccional a confirmar) em `producao/frases/2026-10-28-listas-voto/`, subidas como **um
+  Carolina Prado OAB/ES 29.557, confirmada em 28/10) em `producao/frases/2026-10-28-listas-voto/`, subidas como **um
   carrossel em rascunho** (peça `8126928c`, pauta `3ca54d6d`, 28/10 18h) com a legenda explicativa (≤ 2.200 caracteres,
   limite do Instagram). Imagens em `/app/media/listas-voto-*.jpg`. Script `subir_orbit.py` na pasta.
-  Stories (4, 1080x1920) no Orbit em rascunho na mesma pauta (`subir_stories.py`). Artigo "Lista por causa do voto é
-  crime?" (`blog-lp/artigo-lista-por-causa-do-voto.html`, script `publicar_artigo_listas.py`) esperando o ok.
+  Stories (4, 1080x1920) no Orbit em rascunho na mesma pauta (`subir_stories.py`). Artigo **no ar desde 28/10**:
+  https://advogadaleticiabarros.com.br/blog/lista-por-causa-do-voto-e-crime.html (`blog-lp/artigo-lista-por-causa-do-voto.html`,
+  `publicar_artigo_listas.py`; backup em `/tmp/bkp_artigo_lista_voto/` no container). Stories: a Jessica posta à mão.
 
 ## Google: furar a bolha (27-28/10/2026)
 

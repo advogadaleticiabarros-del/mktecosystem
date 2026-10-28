@@ -87,3 +87,14 @@ Ler `listas/ROTEIRO.md`, aplicar os ajustes pedidos, gerar a arte do carrossel e
 - Publicar: `scp` do corpo, da capa e do script para a VPS → `docker compose cp` para `/tmp` do container `api` →
   `docker compose exec -T -e PYTHONPATH=/app -w /app api python /tmp/publicar_artigo_listas.py` → conferir com curl
   (`article-hero` presente, `blog-grid` zero, card no índice, URL no sitemap) → pedir indexação no Search Console.
+
+## Continuação: artigo publicado
+- Pedido: "está aprovado, publique o artigo e me dê o link aqui, os stories eu mesmo publico". OAB da Dra. Carolina
+  confirmada pela Jessica: **OAB/ES 29.557** (as artes e legendas já estavam assim).
+- No ar: https://advogadaleticiabarros.com.br/blog/lista-por-causa-do-voto-e-crime.html (autoria só da Letícia, sem
+  resposta sobre coautoria). Relacionados escolhidos pelo blog: o artigo da demissão pelo voto e mais dois.
+- Verificado por curl: artigo 200, `article-hero` presente e `blog-grid` zero, título certo, og:image na capa (200,
+  image/jpeg), card no índice do blog, URL no sitemap e no llms.txt, CTA final para a LP com `utm_content=listas-cta-final`.
+  Bing: 200. IndexNow: 403 (chave de verificação, problema antigo).
+- Stories continuam em rascunho no Orbit; a Jessica posta à mão (marcar como publicados se ela pedir).
+- Próximo passo dela: Search Console > Inspecionar URL > Solicitar indexação.
