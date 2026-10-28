@@ -86,3 +86,6 @@ Publicar a LP do ES (comando acima), cadastrar o post do Google e então ligar o
   `corpo.postado_manualmente`). A "eleição acabou" já tinha 1 agendamento (aprovada no Orbit), que também foi para
   "publicado", para o publicador não postar de novo. Script: `marcar_postadas.py` na pasta das frases. O conflito de
   datas deixou de existir.
+- **LP publicada (28/10, "Publica a LP"):** `publicar_lp_v2.py` no container; backup da versão anterior em
+  `/tmp/bkp_lp_voto_v1.html` (dentro do container da API, some se ele for recriado; a v1 também está no git em
+  `cf014b6`). Conferido: a página no ar é idêntica à de `lp/demissao-por-voto.html`, com `#espirito-santo` e 2.364.
