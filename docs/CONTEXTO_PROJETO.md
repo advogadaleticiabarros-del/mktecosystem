@@ -2,8 +2,8 @@
 
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
-> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-27**
-> (títulos e descrições do site para aumentar cliques no Google).
+> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-28**
+> ("furar a bolha" no Google: grupo de artigos de trabalhador em geral e revisão dos artigos mais vistos).
 
 ## O que é o Orbit
 
@@ -955,6 +955,34 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   código para agentes, sem relação com vídeo.
 - Impulsionar esse tema exige a autorização de "temas sociais, eleições ou política" da Meta.
 
+## Google: furar a bolha (27-28/10/2026)
+
+- Pedido: "rankear mais no Google, meu conteúdo tem que furar a bolha", depois "faça o que for necessário, pesquise
+  os temas, revise o site". Análise completa (dados, buscas, temas em alta, fontes) em `docs/SEO_PLANO_GOOGLE_IA.md`,
+  seção 27/10/2026. Resumo: aparições +62% em 28 dias com cliques parados; a página do banheiro já traz trabalhador
+  em geral (fora da bolha) e é a base do grupo novo.
+- **Grupo "O que a empresa pode exigir de você"**: 5 artigos em **rascunho** no Orbit (pautas novas nas quintas
+  29/10, 05/11, 12/11, 19/11 e 26/11, 9h) + 5 `google_posts` em rascunho (mesmo dia, 10h, botão LEARN_MORE). Fonte
+  `_saida_producao_1510/artigos_grupo_funcao.py`; capas e posts por `posts_google_grupo_funcao.py` (fotos Pexels,
+  créditos em `_fotos_pexels/creditos-grupo-funcao.json`); carga por `subir_grupo_funcao.py` (idempotente, roda no
+  container). Todos passaram em `verificar_texto_oab` (valores em reais por extenso, "em dobro" no lugar de "100%").
+  **O de 29/10 precisa de aprovação dela até quinta 9h.**
+- **Revisão no ar** por `scripts/aplicar_trocas_site.py` (trocas exatas de `producao/seo/<data>-trocas-site.json`,
+  geradas e conferidas por `producao/seo/2026-10-27-trocas-site.py`; tudo ou nada; backup em `/root/orbit-backups/`;
+  `blog_seo.aplicar_trocas`). Aplicado em 28/10 01h18 UTC (`site-trocas-20261028-0118.tgz`): pensão (caso real com
+  valor, prescrição, Juizado, SISBAJUD), aborto espontâneo (estabilidade), banheiro (valores de dano moral), home
+  (tela de carregamento em 0,9 s; sem rolagem lateral no celular). **O site usa CRLF:** o gerador lê bytes, sem
+  normalizar, e as respostas do FAQ se repetem no JSON-LD (trocar as duas).
+- **IndexNow respondeu 403 `UserForbiddedToAccessSite`** em 28/10 (em 20/10 dava 202). A hospedagem barra
+  user-agents de robô vindos de IP que não é do robô (Googlebot/Bingbot falsos → 403), então o teste local não
+  conclui; o caminho é ela cadastrar o site no Bing Webmaster Tools (importar do Search Console).
+- Ficou para decisão dela: as 10 LPs de área usam "Enviar meu caso para análise / Receba a análise do seu caso"
+  (não é "gratuita", mas é o tom que o 10/10 tirou); selo "5.0 no Google" e "5+ anos" nos blocos de contato dos
+  artigos; "© 2025" no rodapé; foto de banco de imagens grande antes da resposta nos artigos (no celular a resposta
+  só aparece depois de uma tela inteira de foto).
+- Caixa de contato duplicada nos artigos (`.article-cta` + `.contato-meio` do `conversoes.js`): avisado à sessão que
+  cuida do `conversoes.js` (versão 20261027, publicação pendente).
+
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
 - **Cliques no Google (27/10/2026)**: (1) em 17/11/2026 comparar o CTR das 5 páginas principais no Search Console
@@ -962,6 +990,10 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   primeiro parágrafo como resposta direta (o Google pode estar respondendo no próprio resultado); (3) ela: marcar os 3 eventos de contato como principais no GA4,
   1 post por semana no Google com botão para artigo, pedir
   avaliações que citem área e cidade; (4) [feito em 27/10] artigos de aposentadoria híbrida e carga horária.
+- **Furar a bolha (28/10/2026)**: (1) ela aprovar os 5 artigos das quintas (o 1º é 29/10) e os 5 posts do Google;
+  (2) em 17/11 ver se as buscas de função/limpeza e as páginas da pensão e do aborto subiram de posição; (3) ela:
+  Bing Webmaster Tools (IndexNow 403), decidir o texto das LPs ("análise do seu caso"); (4) próximos grupos em
+  `docs/SEO_PLANO_GOOGLE_IA.md` (jornada depois da 6x1, saúde e afastamento, saída do emprego).
 
 - **Crescimento orgânico (19/10/2026, pedido "faça tudo")**:
   - Feito no Orbit: capa do Reels no quadro do gancho (`thumb_offset`, padrão 1200 ms, `corpo.capa_ms`); Trial

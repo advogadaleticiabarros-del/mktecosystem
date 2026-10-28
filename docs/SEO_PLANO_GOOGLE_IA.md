@@ -169,3 +169,52 @@ Outros temas com muita busca:
   A cada artigo novo, acrescentar o post com `ArtifactData`. A marcação "Publiquei" dela fica em
   `publicados`.
 - Os 2 artigos do grupo Gestante (12 e 15/10) foram aprovados e agendados em 10/10.
+
+### 27/10/2026: "rankear mais e furar a bolha" (revisão com os dados do Search Console)
+
+**Dados (28 dias até 24/10, `social_metrics` tipo `google_painel`):** 5.665 aparições (+62% sobre os 28 dias
+anteriores, 3.503) e 51 cliques (eram 48). O site é mostrado mais, mas fica no fim da 1ª página e não convence o
+clique. 80% das aparições vêm de 5 páginas. O Google só mostra 132 das buscas (o resto é anônimo). Leitura:
+
+- **A porta fora da bolha já existe:** as buscas que caem na página do banheiro são de trabalhador em geral
+  ("atendente pode lavar banheiro" 18, "atendente pode fazer limpeza de banheiro" 16, "recepcionista pode fazer
+  limpeza" 13, "lavar banheiro é desvio de função" 12, "operador de loja pode fazer limpeza", "funcionário pode
+  lavar banheiro da empresa"), posição 5 a 10, quase sem clique. A da recepcionista está na posição 2 a 4.
+- **Na beira da 1ª página (posição 8 a 11):** licença-maternidade 180 dias (1.336), pai não paga pensão (328; busca
+  com "pai" e com "genitor"), aborto espontâneo/dias de atestado (191), fim da 6x1 (177).
+- **Perdidas (posição 20 a 95):** divórcio, atestado falso, plano de saúde. Não investir agora.
+- **Busca pelo nome:** "advogada letícia" na posição 5,8 e "leticia barros" na 11. Melhora com autoridade de fora
+  (Perfil da Empresa, Jusbrasil, OAB/ES, imprensa), não com texto.
+- Busca local ("advogado trabalhista vitória") tem 1 a 2 aparições por mês: não é a alavanca principal.
+
+**Temas trabalhistas mais procurados em 2026 (pesquisa de 27/10):** fim da 6x1 (EC 141, 42 h em 16/12/2026 e 40 h
+um ano depois); pejotização (STF Tema 1.389); saúde mental e NR-1; jornada, banco de horas e hora extra; FGTS não
+depositado e rescisão indireta (TST Tema 70, fev/2025: basta a falta de depósito, sem imediatidade); teletrabalho;
+exames preventivos (Lei 15.377/2026); assédio eleitoral (TST: 79% de acordo ou procedência em 2026). Fontes:
+[Âmbito Jurídico](https://ambitojuridico.com.br/guia-completo-de-direitos-trabalhistas-em-2026-para-trabalhadores-brasileiros/),
+[Lefosse](https://lefosse.com/newsletter/temas-trabalhistas-a-serem-julgados-no-stf-e-tst-em-2026/),
+[EC 141 no Planalto](https://www.planalto.gov.br/ccivil_03/constituicao/emendas/emc/emc141.htm),
+[Conjur sobre a EC 141](https://conjur.com.br/2026-out-23/a-emenda-constitucional-no-141-da-reducao-da-jornada-e-da-dobra-do-descanso/),
+[Contábeis sobre o Tema 70](https://www.contabeis.com.br/artigos/69843/falta-de-fgts-pode-levar-a-rescisao-indireta-alerta-tst/),
+[ICL/Folhapress sobre assédio eleitoral](https://iclnoticias.com.br/economia/justica-do-trabalho-fecha-acordo-ou/).
+
+**Feito em 27-28/10:**
+- **Grupo novo "O que a empresa pode exigir de você"** (trabalhador em geral, homem e mulher), página principal =
+  artigo do banheiro. 5 artigos em rascunho no Orbit, quintas 9h: acúmulo de função (29/10), FGTS não depositado
+  (05/11), hora extra não paga (12/11), desconto no salário (19/11), banco de horas e 6x1 (26/11). Cada um com post
+  do Perfil da Empresa em rascunho (mesmo dia, 10h). Fonte: `apps/api/_saida_producao_1510/artigos_grupo_funcao.py`
+  (+ `posts_google_grupo_funcao.py` e `subir_grupo_funcao.py`). As pautas de gestante das mesmas quintas, sem texto,
+  ficaram como estavam: as segundas seguem com o grupo Gestante já aprovado.
+- **Revisão de conteúdo no ar** (`producao/seo/2026-10-27-trocas-site.py` → `apps/api/scripts/aplicar_trocas_site.py`):
+  - pensão: "caso real do escritório" com valor recuperado (OAB), prescrição errada (não corre contra filho menor,
+    CC 197, II), Juizado Especial (não cabe pensão, Lei 9.099, art. 3º, § 2º), BACENJUD → SISBAJUD, prisão (CPC 528),
+    resposta rápida;
+  - aborto espontâneo: estabilidade errada (TST: gravidez + 2 semanas do art. 395; a partir da 23ª semana é parto),
+    quem paga o salário-maternidade, resposta rápida;
+  - banheiro: sem valores de dano moral nem "garante", leituras do mesmo assunto;
+  - home: tela de carregamento sai em 0,9 s (antes: `load` + 1,4 s) e sem rolagem lateral no celular.
+- O 6x1, a carga horária e a aposentadoria híbrida foram corrigidos na mesma noite por outra sessão (commit 8f9d4bf).
+
+**Próximos grupos sugeridos (na ordem):** (1) "Jornada depois da 6x1" (12x36, domingos no comércio, doméstica);
+(2) "Saúde e afastamento" (burnout em dez, NR-1, atestado e INSS); (3) "Saída do emprego" (rescisão indireta,
+pedido de demissão, acordo, seguro-desemprego), ligando ao artigo da rescisão indireta que já existe.
