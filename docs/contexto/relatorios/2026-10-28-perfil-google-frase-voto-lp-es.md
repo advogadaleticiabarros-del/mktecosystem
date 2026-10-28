@@ -59,3 +59,17 @@
 Publicar a LP do ES (comando acima), cadastrar o post do Google e então ligar o plano de crescimento em
 `app/services/agenda.py` e nos prompts de `app/routers/content.py`. Skills: `contexto-orbit`, `leticia-seo-local`,
 `codebase-design` + `tdd`.
+
+## Atualização (mesmo dia): LP do ES juntada à nacional
+- Pedido: "junta com essa lp, e deixa mais completa". `lp/assedio-eleitoral-es.html` e o gerador saíram (ficam no
+  histórico do git); `lp/demissao-por-voto.html` ganhou a seção `#espirito-santo`, o atalho no topo, MPT-ES no passo 1
+  da denúncia, "sem prova o MPT ainda investiga", 4 perguntas novas (FAQ e schema: 11) e números corrigidos
+  (2.364 no ano, +500 depois do 2º turno, 47 no ES; sem "recorde" nem "~10x 2022").
+- Verificado: JSON-LD válido, sem erro de JS e sem rolagem lateral a 390 px. A versão no ar só diferia na versão do
+  `conversoes.js` (a do git é a mais nova).
+- Publicar: copiar `lp/demissao-por-voto.html` e `blog-lp/publicar_lp_v2.py` para `/tmp` da VPS, `docker cp` no
+  container da API e `docker exec -w /app <api> python /tmp/publicar_lp_v2.py` (faz backup antes). **Não publicado.**
+- Post do Google agora aponta para `demissao-por-voto.html#espirito-santo`.
+- Ainda com o número antigo ("quase dez vezes 2022", "recorde"): o artigo do blog no ar e as peças já publicadas
+  (carrossel, Stories, legendas). Peças publicadas não se mexe; o artigo espera o ok da Jessica.
+- Frases novas sugeridas na conversa (variações mais suaves e com gancho de números), sem arte ainda.

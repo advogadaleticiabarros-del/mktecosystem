@@ -1,7 +1,7 @@
 # Post do Perfil da Empresa no Google: demitido pelo voto no ES (28/10/2026)
 
 Imagem: `google-post-demitido-voto-es-1200x900.jpg`
-Botão: **Saiba mais** → `https://advogadaleticiabarros.com.br/lp/assedio-eleitoral-es.html?utm_source=google&utm_medium=gbp-post&utm_campaign=assedio-eleitoral-es-2026`
+Botão: **Saiba mais** → `https://advogadaleticiabarros.com.br/lp/demissao-por-voto.html?utm_source=google&utm_medium=gbp-post&utm_campaign=assedio-eleitoral-2026#espirito-santo`
 
 Texto (sem telefone, que o Google recusa no corpo do post):
 
@@ -13,6 +13,6 @@ Quem foi dispensado por isso pode escolher entre voltar ao emprego, com os salá
 
 Antes de sair do grupo da empresa, guarde prints, áudios e nomes de testemunhas. A denúncia ao MPT-ES pode ser anônima.
 
-Na página: o passo a passo para denunciar no ES e as provas que mais ajudam. Cada caso tem seus detalhes.
+Na página: o passo a passo das provas e de como denunciar, com uma parte só sobre o Espírito Santo. Cada caso tem seus detalhes.
 
 Letícia Barros · Advogada trabalhista em Vitória-ES · OAB/ES 39.948

@@ -1016,7 +1016,7 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 - **Perfil na Pesquisa** (creators.google/profile): 10 mil seguidores em uma rede e só EUA/Canadá/Índia. A Dra. não
   entra hoje. O site já tem `sameAs` (Instagram, LinkedIn, Facebook) em `sobre.html` e na home; os artigos novos agora
   usam o mesmo `@id` e as 3 redes (`blog_seo.py`, `ID_DRA`/`REDES_DRA`). Falta o TikTok (pedir o @).
-- **LP do ES** `lp/assedio-eleitoral-es.html` (gerador `producao/campanhas/2026-10-assedio-eleitoral/blog-lp/gerar_lp_es.py`):
+- **LP do ES juntada à LP nacional** (pedido de 28/10): `lp/demissao-por-voto.html` ganhou a seção `#espirito-santo`, 4 perguntas do ES e números corrigidos (sem "recorde" nem "~10x 2022"); publicar com `blog-lp/publicar_lp_v2.py`. Antes era:
   ângulo local para não concorrer com a LP nacional; marca `[LP assedio-eleitoral-es]`. **Ainda não está no ar.**
   Post do Google pronto em `.../google-post-es/`, não cadastrado.
 - Frase "demitido pela posição política... atender gratuitamente" feita a pedido da Jessica, que assumiu o risco
