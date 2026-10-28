@@ -3,7 +3,7 @@
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
 > (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-28**
-> ("furar a bolha" no Google: grupo de artigos de trabalhador em geral e revisão dos artigos mais vistos).
+> (Instagram: análise de seguidores e visualizações e coleta do tempo médio dos Reels).
 
 ## O que é o Orbit
 
@@ -982,6 +982,22 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   só aparece depois de uma tela inteira de foto).
 - Caixa de contato duplicada nos artigos (`.article-cta` + `.contato-meio` do `conversoes.js`): avisado à sessão que
   cuida do `conversoes.js` (versão 20261027, publicação pendente).
+
+## Instagram: seguidores e visualizações (27/10/2026)
+
+- Pedido: "preciso ganhar seguidores e views" (método dos 10 passos de um post do @denderson.ai). Análise completa
+  em `docs/ANALISE_INSTAGRAM_2026-10-27.md` (337 posts do banco, retrato da conta, 30 ideias de Reels com gancho A/B,
+  rotina de sexta).
+- Diagnóstico: 415 seguidores parados desde 09/10; 987 contas alcançadas em 30 dias; 23 envios e 2 salvamentos no mês.
+  Os 8 Reels acima do dobro da média (751) são todos rosto + humor, bastidor ou relato pessoal, com legenda curta e de
+  15 a 60 envios. Os Reels de série (pergunta e resposta, 19 a 23/10) tiveram de 57 a 333, e a agenda até janeiro só tem
+  esse tipo. Reels à tarde tiveram alcance mediano maior que às 21h (amostra pequena: testar, não trocar).
+- **Feito:** a coleta grava `instagram_posts.tempo_medio_ms` (`ig_reels_avg_watch_time`, com volta às métricas de
+  sempre se a Meta recusar; migração `b4d6f8a0c2e4`). **Falta publicar a API na VPS** (o deploy foi bloqueado pela
+  permissão nesta sessão) e rodar "Atualizar dados" na tela Crescimento.
+- **Esperando o ok da Dra./Jessica** (mexe em regra dela): 1 dos 2 Reels semanais no formato que funcionou; sexta às
+  15h por 4 semanas; Trial Reels de 1 para 2 por semana; legenda pedindo envio; 1 collab por mês; refazer e fixar o
+  post de apresentação.
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
