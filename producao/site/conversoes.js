@@ -142,7 +142,13 @@
   function secaoDoBloco(corpo) {
     var titulos = corpo.querySelectorAll('h2');
     for (var i = 0; i < titulos.length; i++) {
-      if (/como provar|o que (voc[eê] pode )?fazer|o que acontece/i.test(titulos[i].textContent)) return titulos[i];
+      if (/como provar|o que (voc[eê] pode )?fazer|o que acontece/i.test(titulos[i].textContent)) {
+        // A seção já tem bloco de contato no HTML: um segundo logo abaixo só repete a chamada.
+        for (var el = titulos[i].nextElementSibling; el && el.tagName !== 'H2'; el = el.nextElementSibling) {
+          if (el.classList && el.classList.contains('article-cta')) return null;
+        }
+        return titulos[i];
+      }
     }
     if (corpo.querySelector('.article-cta')) return null;
     var conteudo = [];
