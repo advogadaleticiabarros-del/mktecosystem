@@ -39,3 +39,13 @@ publicar sobre isso, tudo relativo ao direito, de quem está nessa lista, no que
 ## Próxima sessão
 Ler `listas/ROTEIRO.md`, aplicar os ajustes pedidos, gerar a arte do carrossel e publicar o artigo com
 `leticia-blog-artigo`. Skills: `voz-leticia`, `leticia-carrossel`, `leticia-blog-artigo`, `contexto-orbit`.
+
+## Continuação: frases-notícia (mesmo dia)
+- Pedido: "quero uma frase para chamar a atenção, deve ser notícia direta, ninguém vai ficar lendo post no Instagram
+  sobre isso, vamos fazer igual às frases".
+- Feito: 4 frases no modelo das frases da campanha do voto (fundo escuro, caixa-alta, fecho dourado) em
+  `producao/frases/2026-10-28-listas-voto/` (`gerar_frases.py`, 4 PNG 1080x1440, `LEGENDAS.md` no mesmo formato das
+  anteriores, com WhatsApp, como a Jessica aprovou para essas frases). As frases anteriores ficaram intactas.
+- Verificado: as 4 imagens abertas e conferidas (texto dentro da largura, letra entre 94 e 100 px, fonte e assinatura).
+- Pendente: escolher qual(is) vão ao ar e subir ao Orbit como rascunho (modelo:
+  `producao/frases/2026-10-28-demitido-posicao-politica/subir_orbit.py`, JPG em `/app/media/voto-<nome>.jpg`).
