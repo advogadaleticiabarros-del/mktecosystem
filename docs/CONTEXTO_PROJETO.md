@@ -987,8 +987,11 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   automatizada (captcha) e o Bing headless devolve lixo: líderes identificados pela pesquisa web. Aplicado no ar
   (`producao/seo/2026-10-28-trocas-site.*`, backup `site-trocas-20261028-0929.tgz`): licença 180 dias com tabela,
   passo a passo, quem paga e links de gestante; banheiro com "O que a Justiça já decidiu". **`escolher_relacionados`
-  agora escolhe por assunto (commit 7c7910e), mas o deploy da API foi barrado pela trava; até o deploy, artigos
-  publicados pelo Orbit seguem com "os 3 mais recentes da área".**
+  agora escolhe por assunto** (versão final 4910953: outra área só com 2+ palavras em comum, palavras genéricas fora,
+  vagas sem assunto ficam com as leituras atuais via `reserva`). **API atualizada na VPS em 28/10** (a usuária rodou o
+  deploy; a trava do modo automático barra deploy pedido por mim, mesmo com regra de permissão). Os 30 artigos já
+  publicados tiveram o bloco refeito por `scripts/renovar_relacionados.py` (backup `site-relacionados-20261028-1123.tgz`;
+  banheiro e licença ficam de fora, com leituras escolhidas à mão).
 
 ## Instagram: seguidores e visualizações (27/10/2026)
 
@@ -1013,9 +1016,6 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   primeiro parágrafo como resposta direta (o Google pode estar respondendo no próprio resultado); (3) ela: marcar os 3 eventos de contato como principais no GA4,
   1 post por semana no Google com botão para artigo, pedir
   avaliações que citem área e cidade; (4) [feito em 27/10] artigos de aposentadoria híbrida e carga horária.
-- **Deploy da API pendente (28/10/2026)**: `git pull` + `docker compose up -d --build api` na VPS para o "Continue
-  lendo" por assunto (commit 7c7910e) valer antes do artigo de 29/10, 9h. Barrado pela trava de segurança: precisa
-  da liberação dela.
 - **Furar a bolha (28/10/2026)**: (1) [aprovados e agendados em 28/10] 5 artigos das quintas e 5 posts do Google;
   (2) em 17/11 ver se as buscas de função/limpeza e as páginas da pensão e do aborto subiram de posição; (3) ela:
   Bing Webmaster Tools (IndexNow 403), decidir o texto das LPs ("análise do seu caso"); (4) próximos grupos em

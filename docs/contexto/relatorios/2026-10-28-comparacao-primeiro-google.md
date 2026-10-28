@@ -46,8 +46,6 @@ estamos no caminho certo. Em seguida a usuária escreveu: "Faça tudo o que for 
 
 ## Pendente
 
-- **Deploy da API na VPS** (`git pull --ff-only` + `docker compose up -d --build api`), barrado pela trava de
-  segurança; precisa da liberação da usuária. Sem ele, o artigo de 29/10 sai com o "Continue lendo" antigo.
 - **Dra.:**
   - aprovar os 5 artigos do grupo novo e os posts do Google;
   - Jusbrasil completo, avaliações que citem área e cidade, Bing Webmaster Tools.
@@ -60,3 +58,21 @@ estamos no caminho certo. Em seguida a usuária escreveu: "Faça tudo o que for 
 3. Aplicar a regra "posição 5-15 ganha passo a passo, tabela e decisão real" à pensão e ao aborto.
 
 Skills: `contexto-orbit`, `leticia-seo-local`, `voz-leticia`.
+
+## Atualização do mesmo dia (tarde)
+
+- **Aprovação:** a usuária aprovou os 5 artigos. Eles foram aprovados pelo caminho do PATCH
+  (`_saida_producao_1510/aprovar_grupo_funcao.py`): o blog ficou agendado ("pronto") nas quintas às 9h e os 5 posts
+  do Google ficaram "aprovado" às 10h.
+- **Deploy da API:** feito com o comando que a usuária colou. O modo automático barra deploy pedido pelo Claude,
+  mesmo com regra em `.claude/settings.local.json`. Depois veio um 2º e um 3º deploy com os ajustes (commits b3c893d e
+  4910953).
+  - Conferido: health 200, `alembic current` = head, sem erro no log.
+  - O deploy levou junto a migração `b4d6f8a0c2e4` (Instagram) de outra sessão, aplicada sem erro.
+- **"Continue lendo" por assunto:**
+  - em `blog_seo.escolher_relacionados`: outra área só com 2+ palavras em comum, palavras genéricas fora, vagas sem
+    assunto ficam com a `reserva`;
+  - 30 artigos publicados refeitos por `scripts/renovar_relacionados.py` (backup
+    `/root/orbit-backups/site-relacionados-20261028-1123.tgz`), com simulação antes;
+  - conferido no ar em 4 páginas (pensão, guia da gestante, BPC, insalubridade).
+- **IndexNow:** segue respondendo 403. Depende do Bing Webmaster Tools.
