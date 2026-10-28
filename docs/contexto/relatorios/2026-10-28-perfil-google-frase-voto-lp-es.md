@@ -82,3 +82,7 @@ Publicar a LP do ES (comando acima), cadastrar o post do Google e então ligar o
   12h (500 ilegal), 01/11 12h (orientar). Imagens em `/app/media/voto-frase-*.jpg` (HTTP 200). Script
   `producao/frases/2026-10-28-demitido-posicao-politica/subir_orbit.py` (idempotente). Conflito com a regra de 1 feed
   por dia: 29/10, 31/10 e 01/11 já têm carrossel/post "pronto"; a Jessica decide a troca de datas ao aprovar.
+- **Postadas à mão (Jessica, 28/10):** as 5 frases foram para `status="publicado"`, sem `programacao` (guardada em
+  `corpo.postado_manualmente`). A "eleição acabou" já tinha 1 agendamento (aprovada no Orbit), que também foi para
+  "publicado", para o publicador não postar de novo. Script: `marcar_postadas.py` na pasta das frases. O conflito de
+  datas deixou de existir.
