@@ -151,7 +151,10 @@ class InstagramAPI:
 
     async def _insights_do_post(self, post: dict) -> dict:
         if post.get("media_product_type") == "REELS":
-            tentativas = ["reach,saved,shares,total_interactions,views,likes,comments"]
+            tentativas = [
+                "reach,saved,shares,total_interactions,views,likes,comments,ig_reels_avg_watch_time",
+                "reach,saved,shares,total_interactions,views,likes,comments",
+            ]
         else:
             tentativas = [
                 "reach,saved,shares,total_interactions,views,likes,comments,profile_visits,follows",

@@ -18,7 +18,7 @@ class ApiFalsa:
             {"id": "m1", "media_type": "VIDEO", "media_product_type": "REELS", "timestamp": "2026-05-28T23:00:00+0000",
              "caption": "Fez a grávida chorar? Processamos", "permalink": "https://ig/m1",
              "insights": {"reach": self.alcance, "views": 1800, "likes": 40, "comments": 5, "shares": 5,
-                          "saved": 1, "total_interactions": 51}},
+                          "saved": 1, "total_interactions": 51, "ig_reels_avg_watch_time": 7400}},
             {"id": "m2", "media_type": "CAROUSEL_ALBUM", "media_product_type": "FEED",
              "timestamp": "2026-08-10T15:00:00+0000", "caption": "Pensão pelo Pix",
              "insights": {"reach": 100, "follows": 3, "profile_visits": 4}},
@@ -51,7 +51,8 @@ async def test_grava_posts_com_formato_area_e_metricas_e_o_raio_x(db_session):
     assert posts["m1"].formato == "Reels" and posts["m1"].area == "Trabalhista"
     assert posts["m1"].alcance == 900 and posts["m1"].interacoes == 51 and posts["m1"].salvamentos == 1
     assert posts["m2"].formato == "Carrossel" and posts["m2"].area == "Família"
-    assert posts["m2"].seguidores_ganhos == 3
+    assert posts["m1"].tempo_medio_ms == 7400
+    assert posts["m2"].seguidores_ganhos == 3 and posts["m2"].tempo_medio_ms is None
     raio_x = (await db_session.execute(select(SocialMetric).where(SocialMetric.tipo == "ig_raio_x"))).scalar_one()
     assert raio_x.metricas["perfil"]["followers_count"] == 416
 

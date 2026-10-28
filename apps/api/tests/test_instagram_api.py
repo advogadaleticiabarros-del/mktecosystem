@@ -248,3 +248,20 @@ async def test_insights_reels_le_os_numeros_de_um_reels_pelo_id(monkeypatch):
         return {"data": [{"name": "views", "values": [{"value": 250}]}, {"name": "shares", "values": [{"value": 2}]}]}
     monkeypatch.setattr(api, "_get", falso_get)
     assert await api.insights_reels("trial_1") == {"views": 250, "shares": 2}
+
+
+@pytest.mark.anyio
+async def test_reels_pede_tempo_medio_assistido_e_volta_ao_basico_se_a_meta_recusar(monkeypatch):
+    """O tempo médio assistido (ms) mostra se o gancho segura; se a Meta recusar a métrica, os outros números vêm."""
+    api = InstagramAPI(page_token="t")
+    pedidos = []
+    async def falso_get(path, params):
+        pedidos.append(params["metric"])
+        if len(pedidos) == 1:
+            raise httpx.HTTPStatusError("recusada", request=httpx.Request("GET", "x"), response=httpx.Response(400))
+        return {"data": [{"name": "views", "values": [{"value": 250}]}]}
+    monkeypatch.setattr(api, "_get", falso_get)
+
+    assert await api.insights_reels("r1") == {"views": 250}
+    assert "ig_reels_avg_watch_time" in pedidos[0]
+    assert "ig_reels_avg_watch_time" not in pedidos[1]

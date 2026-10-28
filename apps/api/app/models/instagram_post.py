@@ -30,6 +30,7 @@ class InstagramPost(Base):
     interacoes: Mapped[int] = mapped_column(Integer, default=0)
     seguidores_ganhos: Mapped[int | None] = mapped_column(Integer, nullable=True)
     visitas_perfil: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    tempo_medio_ms: Mapped[int | None] = mapped_column(Integer, nullable=True)  # só Reels: tempo médio assistido
     atualizado_em: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )

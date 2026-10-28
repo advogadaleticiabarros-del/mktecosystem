@@ -51,6 +51,7 @@ def _campos(post: dict) -> dict:
         "interacoes": i.get("total_interactions", 0),
         "seguidores_ganhos": i.get("follows"),
         "visitas_perfil": i.get("profile_visits"),
+        "tempo_medio_ms": i.get("ig_reels_avg_watch_time"),
         "atualizado_em": datetime.now(timezone.utc),
     }
 
