@@ -896,6 +896,13 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   contatos em ~50 visitas. Teste em navegador headless (envio ao GA bloqueado) em 27/10: o clique no WhatsApp dispara
   `contato_whatsapp` no artigo e na home, então a medição funciona e a falta de contato é real. `purchase` e
   `ads_conversion_Enviar_formul_rio_de_le_1` (jan/2025) seguem marcados sem dados.
+- **Contato nos artigos (`conversoes.js`, versão `20261027`)**: o botão dos blocos `.article-cta` ("Busque orientação
+  jurídica") levava a `contato.html`; agora abre o WhatsApp com o título do artigo (onde não há botão, entra um
+  "Orientação pelo WhatsApp"). Bloco do meio também em artigos sem "O que fazer", se o texto não tiver `.article-cta`.
+  Testado com Playwright nos 5 artigos mais lidos (script trocado na requisição, envio ao GA bloqueado): sem erro, evento
+  `contato_whatsapp` no clique. Publicação: `apps/api/scripts/publicar_conversoes.py <js> <versão> [--aplicar]` (troca o
+  `?v=` em todas as páginas; a hospedagem guarda o .js 30 dias). Simulado em 27/10: 85 páginas. **O `--aplicar` foi
+  barrado pela trava de segurança e ainda não rodou.** Templates do Orbit já apontam para `?v=20261027` (deploy feito).
 - Causa principal no site: quase todo `<title>` passava de 60 caracteres por causa do sufixo `| Dra. Letícia Barros`
   (o Google corta), descrições de 160-220 caracteres e algumas vetadas pela OAB ("muito fácil", "sair recebendo tudo",
   indenização de R$ 25 mil como chamariz). O índice do blog tinha **duas** meta descriptions.

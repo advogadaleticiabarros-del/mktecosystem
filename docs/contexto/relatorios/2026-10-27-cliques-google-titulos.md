@@ -17,6 +17,9 @@ mim, vamos reverter isso, mais cliques, mais conversões" e, sobre a VPS, "você
 - Aplicados os 66 títulos/descrições no site (backup `/root/orbit-backups/site-titulos-20261027-1544.tgz`), IndexNow avisado.
 - Lidas as consultas e páginas do Search Console no painel salvo; 2 títulos refeitos pelas buscas reais (180 dias e
   pensão atrasada), aplicados (backup `site-titulos-20261027-1546.tgz`).
+- Contato nos artigos (pedido "faça o que precisa"): `producao/site/conversoes.js` faz o botão dos blocos de contato abrir o
+  WhatsApp direto (antes levava à página de contato); `apps/api/scripts/publicar_conversoes.py`; templates e LPs com
+  `?v=20261027`; commit `fcf1a16`, API recriada na VPS (backup `antes-conversoes-v20261027.sql.gz`).
 - Contexto em `docs/CONTEXTO_PROJETO.md` (seção "Cliques no Google" e pendência).
 
 ## Verificado
@@ -38,6 +41,10 @@ mim, vamos reverter isso, mais cliques, mais conversões" e, sobre a VPS, "você
 - H1 e og:title não mudam: o título da aba é para o Google; o H1 e o compartilhamento seguem com o texto da página.
 
 ## Pendente
+- Publicar o `conversoes.js` novo: a simulação deu 85 páginas, mas o `--aplicar` foi barrado pela trava de segurança.
+  Comando na VPS (pasta `deploy/vps`): `docker compose exec -T -e PYTHONPATH=/app api python /tmp/publicar_conversoes.py
+  /tmp/conversoes.js 20261027 --aplicar` (os dois arquivos já estão no `/tmp` do container; se ele for recriado, copiar
+  de novo) e depois copiar o .tgz do `/tmp` para `/root/orbit-backups/`.
 - 17/11/2026: comparar o CTR das 5 páginas principais (ver CONTEXTO_PROJETO.md).
 - Jessica/Dra.: marcar `contato_whatsapp`, `contato_ligacao` e `generate_lead` como eventos principais no GA4 (o campo
   "site" do Perfil da Empresa já está certo, com UTM); corrigir os artigos de aposentadoria híbrida e carga horária.
