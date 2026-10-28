@@ -122,29 +122,48 @@
       'border:1px solid #c9a962;border-radius:999px;color:#c9a962;text-decoration:none;font-weight:600;';
   }
 
+  // WhatsApp que já abre a conversa dizendo de qual artigo a pessoa veio.
+  function botaoWhatsArtigo() {
+    var whats = document.createElement('a');
+    var texto = /\/blog\//.test(location.pathname)
+      ? 'Olá, li o artigo "' + tituloDaPagina() + '" e gostaria de orientação.'
+      : 'Olá, gostaria de orientação jurídica.';
+    whats.href = WHATS + '?text=' + encodeURIComponent(texto);
+    whats.target = '_blank';
+    whats.rel = 'noopener';
+    whats.textContent = 'Orientação pelo WhatsApp';
+    whats.style.cssText = 'display:inline-flex;align-items:center;margin:12px 0 0;padding:12px 22px;border-radius:999px;' +
+      'background:#c9a962;color:#111;text-decoration:none;font-weight:600;';
+    return whats;
+  }
+
+  // Seção depois da qual entra o bloco: a de "Como provar" / "O que fazer"; sem ela, a do meio do artigo,
+  // desde que o texto ainda não tenha nenhum bloco de contato (27/10: os artigos mais lidos ficavam sem).
+  function secaoDoBloco(corpo) {
+    var titulos = corpo.querySelectorAll('h2');
+    for (var i = 0; i < titulos.length; i++) {
+      if (/como provar|o que (voc[eê] pode )?fazer|o que acontece/i.test(titulos[i].textContent)) return titulos[i];
+    }
+    if (corpo.querySelector('.article-cta')) return null;
+    var conteudo = [];
+    for (var j = 0; j < titulos.length; j++) {
+      if (!/perguntas frequentes|leia tamb[eé]m/i.test(titulos[j].textContent)) conteudo.push(titulos[j]);
+    }
+    return conteudo.length >= 3 ? conteudo[Math.floor((conteudo.length - 1) / 2)] : null;
+  }
+
   function blocoNoMeioDoArtigo(corpo) {
     if (corpo.querySelector('.contato-meio')) return;
-    var titulos = corpo.querySelectorAll('h2');
-    var gatilho = null;
-    for (var i = 0; i < titulos.length; i++) {
-      if (/como provar|o que (voc[eê] pode )?fazer|o que acontece/i.test(titulos[i].textContent)) { gatilho = titulos[i]; break; }
-    }
+    var gatilho = secaoDoBloco(corpo);
     if (!gatilho) return;
     // fim da seção = próximo h2 (ou nada, se for a última)
     var proximo = gatilho.nextElementSibling;
     while (proximo && proximo.tagName !== 'H2') { proximo = proximo.nextElementSibling; }
     if (!proximo) return;
 
-    var tema = tituloDaPagina();
     var bloco = document.createElement('div');
     bloco.className = 'callout-box contato-meio';
-    var whats = document.createElement('a');
-    whats.href = WHATS + '?text=' + encodeURIComponent('Olá, li o artigo "' + tema + '" e gostaria de orientação.');
-    whats.target = '_blank';
-    whats.rel = 'noopener';
-    whats.textContent = 'Orientação pelo WhatsApp';
-    whats.style.cssText = 'display:inline-flex;align-items:center;margin:12px 0 0;padding:12px 22px;border-radius:999px;' +
-      'background:#c9a962;color:#111;text-decoration:none;font-weight:600;';
+    var whats = botaoWhatsArtigo();
     var ligar = botaoLigar('Ligar: ' + TEL_TEXTO);
     estilizarBotaoLigar(ligar);
     bloco.innerHTML = '<h4>Está passando por isso?</h4><p>Se essa é a sua situação, busque orientação jurídica antes de tomar qualquer decisão.</p>';
@@ -154,12 +173,27 @@
   }
 
   function prepararPagina() {
-    // Botão "Ligar" nos blocos de contato do fim dos artigos.
+    // WhatsApp e "Ligar" nos blocos de contato dos artigos. Antes eles só levavam à página de contato
+    // (um passo a mais); em 23-27/10 nenhuma visita virou contato.
     var ctas = document.querySelectorAll('.article-cta');
     for (var i = 0; i < ctas.length; i++) {
+      if (!ctas[i].querySelector('a[href*="wa.me"]')) {
+        var paraContato = ctas[i].querySelector('a[href*="contato.html"]');
+        var w = botaoWhatsArtigo();
+        if (paraContato) {
+          // O botão do bloco ("Busque orientação jurídica") passa a abrir o WhatsApp direto.
+          paraContato.href = w.href;
+          paraContato.target = '_blank';
+          paraContato.rel = 'noopener';
+        } else {
+          w.style.marginRight = '12px';
+          ctas[i].appendChild(w);
+        }
+      }
       if (ctas[i].querySelector('a[href^="tel:"]')) continue;
       var b = botaoLigar('Ligar: ' + TEL_TEXTO);
       estilizarBotaoLigar(b);
+      b.style.marginLeft = '0';
       ctas[i].appendChild(b);
     }
     // Bloco de contato no meio dos artigos do blog.
