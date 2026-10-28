@@ -69,6 +69,12 @@ def test_aplicar_seo_monta_schema_completo_com_faq_e_breadcrumb():
     assert html.count('application/ld+json') == 3
 
 
+def test_aplicar_seo_liga_a_autora_ao_perfil_do_site_e_a_todas_as_redes():
+    post = _schemas(aplicar_seo(ARTIGO, slug="estabilidade-gestante", relacionados=[], data_iso="2026-10-12"))["BlogPosting"]
+    assert post["author"]["@id"] == "https://advogadaleticiabarros.com.br/sobre.html#leticia-barros"
+    assert {"instagram.com", "linkedin.com", "facebook.com"} <= {u.split("/")[2].removeprefix("www.") for u in post["author"]["sameAs"]}
+
+
 def test_aplicar_seo_sem_perguntas_frequentes_nao_cria_faq():
     sem_faq = ARTIGO.replace("Perguntas frequentes", "Outra seção")
     s = _schemas(aplicar_seo(sem_faq, slug="a", relacionados=[], data_iso="2026-10-12"))

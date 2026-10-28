@@ -16,6 +16,10 @@ import unicodedata
 from PIL import Image
 
 SITE = "https://advogadaleticiabarros.com.br"
+# Mesmo @id e mesmas redes do Person em sobre.html: o Google junta tudo numa entidade só (painel de informações).
+ID_DRA = f"{SITE}/sobre.html#leticia-barros"
+REDES_DRA = ["https://www.instagram.com/adv.leticiabarros2/", "https://www.linkedin.com/in/leticia-barros-996699158/",
+             "https://www.facebook.com/profile.php?id=61576777010109"]
 NOMES_AREA = {"trabalhista": "Trabalhista", "familia": "Família", "previdenciario": "Previdenciário", "consumidor": "Consumidor"}
 
 CSS_RELACIONADOS = """
@@ -117,8 +121,8 @@ def _schemas(html: str, slug: str, data_iso: str) -> list[dict]:
     post.update({
         "@context": "https://schema.org", "@type": "BlogPosting", "headline": post.get("headline") or titulo,
         "inLanguage": "pt-BR", "mainEntityOfPage": url, "url": url, "image": f"{SITE}/blog/capas/{slug}.jpg",
-        "author": {"@type": "Person", "name": "Dra. Letícia Barros", "jobTitle": "Advogada", "identifier": "OAB/ES 39.948",
-                   "url": f"{SITE}/sobre.html", "sameAs": ["https://www.instagram.com/adv.leticiabarros2/"]},
+        "author": {"@type": "Person", "@id": ID_DRA, "name": "Dra. Letícia Barros", "jobTitle": "Advogada",
+                   "identifier": "OAB/ES 39.948", "url": f"{SITE}/sobre.html", "sameAs": REDES_DRA},
         "publisher": {"@type": "LegalService", "name": "Letícia Barros Advocacia", "url": f"{SITE}/",
                       "logo": {"@type": "ImageObject", "url": f"{SITE}/assets/logo/logo-800x800.png"}},
         "datePublished": post.get("datePublished") or data_iso, "dateModified": data_iso,

@@ -3,7 +3,7 @@
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
 > (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-28**
-> (Instagram: análise de seguidores e visualizações e coleta do tempo médio dos Reels).
+> (Perfil na Pesquisa do Google, LP do ES sobre demissão pelo voto, sameAs dos artigos).
 
 ## O que é o Orbit
 
@@ -1008,6 +1008,19 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 - **Esperando o ok da Dra./Jessica** (mexe em regra dela): 1 dos 2 Reels semanais no formato que funcionou; sexta às
   15h por 4 semanas; Trial Reels de 1 para 2 por semana; legenda pedindo envio; 1 collab por mês; refazer e fixar o
   post de apresentação.
+  - 28/10: a Jessica pediu "o ideal" e Instagram e TikTok "por igual". Recomendado ligar os 4 primeiros; ainda não
+    implementado (relatório `docs/contexto/relatorios/2026-10-28-perfil-google-frase-voto-lp-es.md`).
+
+## Perfil na Pesquisa do Google e LP do ES (28/10/2026)
+
+- **Perfil na Pesquisa** (creators.google/profile): 10 mil seguidores em uma rede e só EUA/Canadá/Índia. A Dra. não
+  entra hoje. O site já tem `sameAs` (Instagram, LinkedIn, Facebook) em `sobre.html` e na home; os artigos novos agora
+  usam o mesmo `@id` e as 3 redes (`blog_seo.py`, `ID_DRA`/`REDES_DRA`). Falta o TikTok (pedir o @).
+- **LP do ES** `lp/assedio-eleitoral-es.html` (gerador `producao/campanhas/2026-10-assedio-eleitoral/blog-lp/gerar_lp_es.py`):
+  ângulo local para não concorrer com a LP nacional; marca `[LP assedio-eleitoral-es]`. **Ainda não está no ar.**
+  Post do Google pronto em `.../google-post-es/`, não cadastrado.
+- Frase "demitido pela posição política... atender gratuitamente" feita a pedido da Jessica, que assumiu o risco
+  ético; não agendada. A LP nacional tem um "~10x mais que 2022" que os números do MPT não confirmam (a corrigir).
 
 ## Pendências conhecidas (por ordem de "quão perto de virar trabalho ativo")
 
