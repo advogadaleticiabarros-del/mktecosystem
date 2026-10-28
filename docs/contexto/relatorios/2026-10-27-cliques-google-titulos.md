@@ -20,6 +20,8 @@ mim, vamos reverter isso, mais cliques, mais conversões" e, sobre a VPS, "você
 - Contato nos artigos (pedido "faça o que precisa"): `producao/site/conversoes.js` faz o botão dos blocos de contato abrir o
   WhatsApp direto (antes levava à página de contato); `apps/api/scripts/publicar_conversoes.py`; templates e LPs com
   `?v=20261027`; commit `fcf1a16`, API recriada na VPS (backup `antes-conversoes-v20261027.sql.gz`).
+- Artigos corrigidos (pedido "Corrija você!"): híbrida e carga horária reescritas, datas da EC 141 no 6x1; commit `8f9d4bf`,
+  publicados com backup `/root/orbit-backups/site-artigos-20261028-0114.tgz` e IndexNow.
 - Contexto em `docs/CONTEXTO_PROJETO.md` (seção "Cliques no Google" e pendência).
 
 ## Verificado
@@ -32,6 +34,8 @@ mim, vamos reverter isso, mais cliques, mais conversões" e, sobre a VPS, "você
 - GA4 (pedido seguinte, depois de ela conferir que os 3 eventos já eram principais): marcados em 22/10 20h54 UTC; os 16
   contatos do painel são todos de 22/10 (instalação, antes da marcação); de 23 a 27/10, zero. Teste headless com envio
   bloqueado: o clique no WhatsApp dispara `contato_whatsapp` (artigo e home). O Orbit lê `keyEvents`, a métrica certa.
+- Artigos corrigidos conferidos no site público: textos novos no ar, trechos errados ausentes, 1 meta description e
+  FAQPage nos 3. Visual no celular conferido antes de publicar (Playwright).
 - Não verificado: efeito no CTR (o Search Console leva de dias a semanas para refletir; conferir em 17/11/2026).
 
 ## Decisões e porquês
@@ -46,8 +50,8 @@ mim, vamos reverter isso, mais cliques, mais conversões" e, sobre a VPS, "você
   /tmp/conversoes.js 20261027 --aplicar` (os dois arquivos já estão no `/tmp` do container; se ele for recriado, copiar
   de novo) e depois copiar o .tgz do `/tmp` para `/root/orbit-backups/`.
 - 17/11/2026: comparar o CTR das 5 páginas principais (ver CONTEXTO_PROJETO.md).
-- Dra.: corrigir os artigos de aposentadoria híbrida e carga horária. (Eventos principais do GA4 e site do Perfil da
-  Empresa já estavam certos.)
+- Dra.: ler os dois artigos reescritos (híbrida e carga horária). Ponto aberto na híbrida: para homem filiado antes da
+  Reforma, o INSS pede 20 anos (Decreto 3.048, art. 57 c/c art. 51); o texto diz que há argumento para 15 (art. 188-H).
 
 ## Próxima sessão
 Ler o painel salvo (`social_metrics`, tipo `google_painel`, coluna `metricas` → `search_console.paginas/consultas`) e

@@ -919,9 +919,14 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   (191), fim da 6x1 (177, 0 cliques). Divórcio, plano de saúde e atestado falso estão na posição 30-90 (problema de
   ranking, não de título). "advogado trabalhista vitória" na posição 13-18. O Perfil da Empresa já tem o site com UTM
   `perfil-empresa` e botão de agendar pelo WhatsApp.
-- Conteúdo com erro achado na auditoria: `aposentadoria-hibrida-como-funciona` define a híbrida como "contribuinte +
-  facultativo" (é tempo rural + urbano, art. 48, § 3º, Lei 8.213); `carga-horaria-maxima-clt` fala só em 44 h e não
-  cita a EC 141 (fim da 6x1). `areas/direito-familia` e `areas/direito-previdenciario` repetem as LPs de pensão e BPC.
+- **Artigos corrigidos e publicados (27/10/2026, `scripts/atualizar_artigos.py` + `blog_seo.atualizar_corpo_do_artigo`,
+  textos em `producao/seo/artigos-corrigidos-2026-10-27/`, backup `/root/orbit-backups/site-artigos-20261028-0114.tgz`)**:
+  `aposentadoria-hibrida-como-funciona` reescrito (antes: "CLT + facultativo", 30/35 anos, fator previdenciário e oferta
+  direta de serviço; agora: rural + urbano, 62/65 anos, Decreto 3.048 art. 57 na redação do Decreto 10.410/2020, STJ
+  Tema 1.007, prova do tempo rural); `carga-horaria-maxima-clt` reescrito (EC 141, 8h48 só com compensação, 12x36 com DSR
+  e feriado embutidos e não hora extra, prescrição 2+5 anos, Súmula 338, sem "caso real"); `fim-da-escala-6x1` com as
+  datas da EC 141 (publicada no DOU de 16/10/2026, edição extra: 42h e 2 folgas em 16/12/2026, 40h em 16/12/2027; o texto
+  dizia "60 dias", a emenda diz "2 meses"). Fontes lidas no Planalto (Lei 8.213, EC 103, Decreto 3.048, EC 141). `areas/direito-familia` e `areas/direito-previdenciario` repetem as LPs de pensão e BPC.
 
 ## Campanha "demissão pelo voto" (assédio eleitoral, 27/10/2026)
 
@@ -956,7 +961,7 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   (antes: 0,9% no geral, 0,5% na do banheiro); (2) se a do banheiro seguir abaixo de 2% na posição 5-6, reescrever o
   primeiro parágrafo como resposta direta (o Google pode estar respondendo no próprio resultado); (3) ela: marcar os 3 eventos de contato como principais no GA4,
   1 post por semana no Google com botão para artigo, pedir
-  avaliações que citem área e cidade; (4) corrigir os artigos de aposentadoria híbrida e carga horária.
+  avaliações que citem área e cidade; (4) [feito em 27/10] artigos de aposentadoria híbrida e carga horária.
 
 - **Crescimento orgânico (19/10/2026, pedido "faça tudo")**:
   - Feito no Orbit: capa do Reels no quadro do gancho (`thumb_offset`, padrão 1200 ms, `corpo.capa_ms`); Trial
