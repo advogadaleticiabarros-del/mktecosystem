@@ -52,6 +52,12 @@ com edições anteriores.
     - **Prevenção:** o crontab do root roda `docker builder prune -f --filter
       until=168h` todo domingo às 4h (log em `/var/log/docker-builder-prune.log`),
       e o CRM avisa quando o disco passa de 85%.
+    - **30/10/2026:** a prevenção não bastou. O cache voltou a 44,6 GB (112
+      entradas, todas com menos de 7 dias), e o disco chegou a 90%. Foi limpo com
+      `docker builder prune -af` (ficou em 47%). A troca proposta para o cron é
+      `0 4 * * * docker builder prune -f --max-used-space 5GB` (diário, teto de
+      5 GB; Docker 29.7 aceita a opção), mas ainda **não foi aplicada**: espera o ok
+      da Jessica. Relatório: `docs/contexto/relatorios/2026-10-30-disco-vps-cache-docker.md`.
     - **Depois da limpeza:** o primeiro `--build` refaz o cache e demora uns
       minutos a mais.
     - **Cuidado:** os `.tar` em `/tmp` (capas, reels, `pxv*`, `subir*`) são
