@@ -16,13 +16,13 @@ A Jessica perguntou quanto de memória o Orbit usa na VPS. O painel da Hostinger
 
 ## Decisões e porquês
 - Foi usado `prune -af` (tudo), porque nenhuma entrada estava ativa. O custo é só que o próximo `--build` do Orbit demora alguns minutos a mais.
-- A troca do cron para diário com teto de 5 GB (`--max-used-space 5GB`) foi **bloqueada pelo modo automático**, por se tratar de uma mudança persistente em produção. Ela precisa do ok explícito da Jessica.
+- O cron passou a ser diário com teto de 5 GB (`--max-used-space 5GB`) em vez de semanal com filtro de idade: mesmo com muitos builds na semana, o cache nunca passa de 5 GB. O modo automático bloqueou a primeira tentativa, e a troca foi aplicada depois do ok da Jessica ("ok, faça a limpeza diária").
 
 ## Pendente
-1. **Cron com teto de 5 GB** (decide a Jessica): `crontab -e` do root, trocando a linha de domingo por `0 4 * * * /usr/bin/docker builder prune -f --max-used-space 5GB >> /var/log/docker-builder-prune.log 2>&1`.
-2. **Backup do CRM da Letícia falhando** (projeto CRMLRTICIA, não é do Orbit): o último `.sql.gz.enc` em `/home/crmapp/backups-crm` é de 28/10 às 22h. O syslog registra OOM-kill do `node /home/crmapp...` (pm2-crmapp, com 4,2 GB de RSS) às 05:47 de 30/10, na hora do backup das 05:45. Hipótese: o processo de backup estoura a memória, morre e deixa o dump cru em `/tmp`. Não investigado.
-3. Os 21 GB de dumps em `/tmp` continuam lá. Foram mantidos porque, sem backup válido desde 28/10, o mais recente pode ser o único recente.
+1. ~~Cron com teto de 5 GB~~: aplicado em 30/10. O crontab do root agora tem `0 4 * * * /usr/bin/docker builder prune -f --max-used-space 5GB >> /var/log/docker-builder-prune.log 2>&1`.
+2. **Backup do CRM da Letícia** (projeto CRMLRTICIA): o OOM-kill do Node na hora do backup acontecia desde pelo menos 20/10 (4,5 a 5,3 GB de RSS). Outra sessão corrigiu no commit `8b70e13` do CRMLRTICIA (backup em fluxo, mais a limpeza das sobras em `/tmp`). O deploy estava em andamento às 11h54 UTC de 30/10. Falta conferir se o próximo backup sai completo; nada foi mexido daqui.
+3. Os 21 GB de dumps em `/tmp`: a própria correção do CRM (`limparSobrasDeTentativas`) apaga essas sobras no próximo backup.
 4. `laya-serve` (`/opt/laya`, usuário crmapp) usa 1,7 GB de RAM. A origem não foi verificada.
 
 ## Próxima sessão
-Com o ok da Jessica, aplicar o cron (item 1). Depois, abrir o CRMLRTICIA (ler `docs/contexto/LEIA-PRIMEIRO.md` e `ESTADO.md`) e diagnosticar o OOM do backup (skill `diagnosing-bugs`). Só depois de um backup válido, apagar os dumps antigos de `/tmp`.
+Conferir `/var/log/docker-builder-prune.log` depois das 4h de 31/10. No CRMLRTICIA, conferir se o backup seguinte ao deploy de `8b70e13` gerou o `.sql.gz.enc` e se `/tmp` ficou sem `crm-backup-*.sql`.
