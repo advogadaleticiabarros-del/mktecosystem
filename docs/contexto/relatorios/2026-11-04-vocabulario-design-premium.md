@@ -19,6 +19,7 @@ Jessica pediu uma pesquisa "minuciosa em todas as redes" sobre nomes de elemento
 - Arco fica em "evitar sem pedido", porque já foi reprovado em 10/10/2026.
 
 ## Pendente
+- **Jessica:** o push não saiu (403 para `alcancelegalmkt-collab`, que só tem leitura neste repositório). Os commits estão só neste computador. As liberações anteriores para usar a conta `advogadaleticiabarros-del` foram pontuais, então é preciso um novo ok ou dar acesso de escrita à colaboradora.
 - **Jessica e Dra. Letícia:** decidir se testam texto atrás do sujeito com máscara manual (seção 4.1).
 - **Jessica e Dra. Letícia:** decidir o que fazer com itens aprovados que as fontes listam como sinal de IA: cartão de vidro, título em ouro metalizado, brilhos, eixo centralizado, emoji por item.
 - **Jessica:** resolver as contradições entre documentos da seção 4 (fonte de título, rembg, arcos, retratos com IA, 1080x1440 ou 1080x1350, grão).
