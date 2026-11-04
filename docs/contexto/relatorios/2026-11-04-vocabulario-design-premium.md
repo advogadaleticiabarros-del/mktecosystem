@@ -25,5 +25,12 @@ Jessica pediu uma pesquisa "minuciosa em todas as redes" sobre nomes de elemento
 - **Jessica:** resolver as contradições entre documentos da seção 4 (fonte de título, rembg, arcos, retratos com IA, 1080x1440 ou 1080x1350, grão).
 - Lacunas da pesquisa: poucas fontes para fita, órbita, arame, fio e halo; nenhum exemplo bom de advocacia premium.
 
+## Ferramentas para ver as redes (continuação do mesmo dia)
+Jessica pediu para instalar as skills de acesso e o Agent Reach.
+- **Instalado neste computador, fora do repositório:** `uv` 0.13.7 e Agent Reach 1.6.1 (GitHub, sha256 conferido), com os canais web, youtube, github, v2ex e bilibili. O `setup` também copiou a skill para `.agents`, `.claude`, `.gemini`, `.copilot` e `.claude-conta-2`. Remover: `agent-reach uninstall`.
+- **Verificado:** `agent-reach check` passou em youtube e web; busca no YouTube e leitura de resultado do Behance funcionaram; a `watch` extraiu quadros de um tutorial. Reddit continua bloqueado sem login.
+- **Não instalado (decisão da Jessica):** canais Instagram, Facebook, Reddit e X, que usam CloakBrowser (navegador feito para passar por detecção de robô) e podem copiar cookies do Chrome logado.
+- **Indisponível:** ferramentas do Claude in Chrome não aparecem nesta sessão. Apify exige token dela.
+
 ## Próxima sessão
 Se aprovarem um teste, ler as seções 3 e 4 da pesquisa e renderizar uma prévia com as técnicas "Direto" (sugestão: 4.3, 4.5, 4.7 e 4.11), sem trocar o padrão aprovado. Skills: `leticia-carrossel`, `contexto-orbit`. Para olhar referências visuais de fato, é preciso abrir as redes com navegador logado ou receber prints da Jessica.
