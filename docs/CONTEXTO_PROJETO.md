@@ -2,8 +2,9 @@
 
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
-> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-10-28**
-> (Perfil na Pesquisa do Google, LP do ES sobre demissão pelo voto, sameAs dos artigos).
+> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-11-04**
+> (pesquisa de vocabulário de design premium em `docs/PESQUISA_VOCABULARIO_DESIGN_PREMIUM.md`:
+> só referência, não muda nenhuma regra; contradições entre documentos na seção 4 esperam decisão).
 
 ## O que é o Orbit
 
