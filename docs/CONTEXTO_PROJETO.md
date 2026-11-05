@@ -2,8 +2,10 @@
 
 > Este arquivo é a "consciência" do projeto: o que existe, o que está em andamento,
 > o que falta. Deve ser atualizado ao final de toda mudança/implementação relevante
-> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-11-04**
-> (pesquisa de vocabulário de design premium em `docs/PESQUISA_VOCABULARIO_DESIGN_PREMIUM.md`:
+> (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-11-05**
+> (skill `leticia-linkedin` com verificador `conferir_post.py`, a partir do Hat Tip LinkedIn OS; primeira revisão em
+> `producao/linkedin/revisao-2026-11-05-fila-10-a-19-nov.md`, sem mudar a fila, com correções esperando a Jessica;
+> 04/11: pesquisa de vocabulário de design premium em `docs/PESQUISA_VOCABULARIO_DESIGN_PREMIUM.md`:
 > só referência, não muda nenhuma regra; contradições entre documentos na seção 4 esperam decisão;
 > novos estilos visuais **Palavra de Ouro** (`docs/ESTILO_PALAVRA_DE_OURO.md`), **Verbete** (`docs/ESTILO_VERBETE.md`) e
 > **Papel e Ouro** (`docs/ESTILO_PAPEL_E_OURO.md`), aprovados pela Jessica, sem peça publicada).

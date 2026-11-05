@@ -29,7 +29,7 @@ Mídia paga (Meta Ads): `docs/MIDIA_PAGA_META_ADS.md` é obrigatório antes de q
 **interesses cruzados**, limites da OAB para impulsionamento, público qualificado trabalhista). Pedido de 16/10/2026.
 LinkedIn (B2B, PMEs): `docs/ESTRATEGIA_LINKEDIN_PME.md` vale até 31/01/2027 (pedido de 23/10/2026: "manter a mesma
 estratégia até janeiro"): fila terça e quinta 8h, funil LP de empresas + Checklist 2027, página da empresa, nada de
-abordagem direta.
+abordagem direta. Escrever ou revisar post: skill `leticia-linkedin`, com `conferir_post.py` (pedido de 05/11/2026).
 Instagram: **Reels só 2 vezes por semana, terça e sexta 21h** (pedido de 23/10/2026; `agenda.py` já aplica).
 TikTok: **agenda e editorial próprios** (pedido de 23/10/2026): `docs/ESTRATEGIA_TIKTOK.md` (5 vídeos por semana na
 `GRADE_TIKTOK`, som comercial "Em alta" a 10-15% sob a voz, séries em dias seguidos, resposta a comentário, revisão

@@ -4,6 +4,7 @@ Pedido da Jessica em 22-23/10/2026: montar a estratégia completa para captar pe
 assessoria jurídica e prevenção trabalhista, automatizar o máximo e **manter a mesma estratégia até janeiro de 2027**.
 Objetivo maior: entrar em 2027 com mais reconhecimento público da marca **Letícia Barros**.
 Complementa `PLANO_CRESCIMENTO_OUT_DEZ_2026.md` (pilar 5, "Empresa em dia") e segue `MANUAL_CONTEUDO_REDES.md`.
+Escrita e revisão de cada post: skill `leticia-linkedin` (05/11/2026).
 
 ## 1. Regra de base (OAB, Provimento 205/2021)
 
