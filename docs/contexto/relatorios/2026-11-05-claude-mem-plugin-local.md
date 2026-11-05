@@ -25,5 +25,11 @@ A Jessica pediu para instalar uma lista de ferramentas "nesse projeto". Depois p
 - O banco `~/.claude-mem` é compartilhado entre os perfis e passa a poder guardar dados de clientes e acessos da VPS. Passagens sensíveis podem ir entre tags `<private>`, recurso citado na documentação e não testado aqui.
 - Lista original: headroom (hoje há espaço para a versão sem `[all]`), ponytail (conflito com `codebase-design`), code setup e carrosséis e PDF (confirmar qual é), mailerfind (sem repositório; risco LGPD e OAB).
 
+## Push do repositório (continuação do mesmo dia)
+- **Causa do 403:** `alcancelegalmkt-collab` não tem escrita neste repositório; o Git não tinha conta própria para ele.
+- **Feito, com o ok da Jessica:** credencial só deste repositório (`git config --local`) usando `advogadaleticiabarros-del`, no modelo da Agenda Online. O token vem do `gh` e não fica no arquivo. A conta ativa do `gh` não mudou.
+- **Revisão antes do envio:** busca de senhas, chaves e dados pessoais nos 8 commits parados, e leitura dos documentos de maior risco. Nada desse tipo encontrado. A revisão não foi uma leitura integral de todos os arquivos.
+- **Atenção:** o repositório é público. Relatórios e a revisão da fila do LinkedIn ficam visíveis, inclusive observações internas sobre posts ainda não publicados. Tornar privado depende da Jessica.
+
 ## Próxima sessão
 Abrir uma sessão nova no `mktecosystem` e conferir em `http://127.0.0.1:37777/api/stats` se `sessions` e `observations` sobem. Se continuarem em 0, usar a skill `diagnosing-bugs`.
