@@ -129,6 +129,11 @@ código em `producao/estilos/verbete/`. Aprovado pela Jessica; a Dra. ainda não
 Diagramação de revista em papel e café foscos, com ouro brilhante em poucos pontos e grade de 9 peças. Regras e cuidados em
 `docs/ESTILO_PAPEL_E_OURO.md`; código em `producao/estilos/papel-e-ouro/`. Aprovado pela Jessica; a Dra. ainda não avaliou.
 
+## ESTILO APROVADO — Manchete (05/11/2026)
+
+Título grande como manchete, com faixa de ouro e imagem forte, seguindo os layouts de um perfil de referência em café e ouro, com as faixas douradas. Regras em
+`docs/ESTILO_MANCHETE.md`; código em `producao/estilos/manchete/`. Aprovado pela Jessica; a Dra. ainda não avaliou.
+
 ## Estado do conteúdo (atualizado em 09/10/2026, noite)
 
 - **Publicado**: 08/10 19h (relato assédio) — primeira publicação automática + primeiro comentário.

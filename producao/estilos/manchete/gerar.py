@@ -1,5 +1,5 @@
-"""Layouts da referência enviada pela Jessica em 05/11/2026, trocando só as cores (azul vira café e ouro).
-Uso: python gerar.py [prefixo]. Grava em pecas/ (fora do git). Nunca sobrescreva peça pronta: peça nova = nome novo."""
+"""Estilo Manchete (docs/ESTILO_MANCHETE.md): layouts da referência de 05/11/2026 em café e ouro, com as faixas douradas.
+Uso: python gerar.py [prefixo]. As peças 04 a 13 ficam em fora_da_caixa.py. Grava em pecas/ (fora do git). Nunca sobrescreva peça pronta: peça nova = nome novo."""
 import asyncio
 import base64
 import io
@@ -11,6 +11,7 @@ from playwright.async_api import async_playwright
 
 AQUI = Path(__file__).resolve().parent
 RAIZ = AQUI.parents[2]
+ACAB = next((RAIZ / "apps" / "api" / "app" / "assets").glob("*dourad*"))
 BANCO = RAIZ / "apps" / "api" / "_saida_producao_1510" / "_fotos_pexels"
 DRA = Path(r"C:\Users\prosy\Desktop\PROJETOS\modelo-visual-site\assets\images\hero-leticia-sem-fundo.png")
 SAIDA = AQUI / "pecas"
@@ -115,31 +116,37 @@ def palavra():
 <div class="abs p" style="left:0;right:0;bottom:62px;text-align:center;font-size:34px;font-weight:500;letter-spacing:.14em;color:{AREIA}">LETÍCIA BARROS</div>""")
 
 
-PECAS = {"01-te-disseram": te_disseram, "02-caderno": caderno, "03-palavra": palavra}
+APROVADAS = {"manchete-01-te-disseram": te_disseram, "manchete-02-caderno": caderno, "manchete-03-palavra": palavra}
 
 
 async def main():
+    from fora_da_caixa import LOTE
+
     so = sys.argv[1:]
+    pecas = APROVADAS | LOTE
     SAIDA.mkdir(exist_ok=True)
+    ac = Image.open(ACAB).convert("RGBA").resize((1080, 1440))
     async with async_playwright() as p:
         b = await p.chromium.launch()
         pg = await b.new_page(viewport={"width": 1080, "height": 1440})
-        for nome, fn in PECAS.items():
-            if so and not any(nome.startswith(s) for s in so):
+        for nome, fn in pecas.items():
+            if so and not any(nome.startswith(x) for x in so):
                 continue
             css, corpo = fn()
             await pg.set_content(BASE.replace("CSS</style>", css + "</style>").replace("CORPO", corpo), wait_until="networkidle")
             await pg.wait_for_selector("body[data-ok]", state="attached")
             bruto = await pg.screenshot(clip={"x": 0, "y": 0, "width": 1080, "height": 1440})
-            Image.open(io.BytesIO(bruto)).convert("RGB").save(SAIDA / f"{nome}.jpg", quality=90)
+            Image.alpha_composite(Image.open(io.BytesIO(bruto)).convert("RGBA"), ac).convert("RGB").save(SAIDA / f"{nome}.jpg", quality=90)
             print(nome)
         await b.close()
-    fs = [SAIDA / f"{n}.jpg" for n in PECAS]
+    fs = [SAIDA / f"{n}.jpg" for n in pecas]
     if all(f.exists() for f in fs):
-        tira = Image.new("RGB", (3 * 720 + 16, 960), "white")
+        linhas = (len(fs) + 3) // 4
+        grade = Image.new("RGB", (4 * 480 + 24, linhas * 648 - 8), "white")
         for i, f in enumerate(fs):
-            tira.paste(Image.open(f).resize((720, 960), Image.LANCZOS), (i * 728, 0))
-        tira.save(AQUI / "tira.jpg", quality=88)
+            grade.paste(Image.open(f).resize((480, 640), Image.LANCZOS), ((i % 4) * 488, (i // 4) * 648))
+        grade.save(AQUI / "grade.jpg", quality=86)
 
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())

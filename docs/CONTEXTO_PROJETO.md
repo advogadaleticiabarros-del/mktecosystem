@@ -8,7 +8,8 @@
 > 04/11: pesquisa de vocabulário de design premium em `docs/PESQUISA_VOCABULARIO_DESIGN_PREMIUM.md`:
 > só referência, não muda nenhuma regra; contradições entre documentos na seção 4 esperam decisão;
 > novos estilos visuais **Palavra de Ouro** (`docs/ESTILO_PALAVRA_DE_OURO.md`), **Verbete** (`docs/ESTILO_VERBETE.md`) e
-> **Papel e Ouro** (`docs/ESTILO_PAPEL_E_OURO.md`), aprovados pela Jessica, sem peça publicada).
+> **Papel e Ouro** (`docs/ESTILO_PAPEL_E_OURO.md`), aprovados pela Jessica, sem peça publicada; 05/11: estilo **Manchete**
+> (`docs/ESTILO_MANCHETE.md`), também aprovado pela Jessica, com 13 peças e nada publicado).
 
 ## O que é o Orbit
 
