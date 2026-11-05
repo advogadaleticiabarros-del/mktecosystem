@@ -114,6 +114,11 @@ Um objeto grande com luz dramática (maleta, ampulheta, cadeira de couro, papel 
 fundo atmosférico com grão, serifa grande + sans pequena, um destaque por peça, marca
 discreta no topo, cartões de vidro flutuando. Usar isso nas próximas frentes.
 
+## ESTILO APROVADO — Palavra de Ouro (04/11/2026)
+
+Uma palavra em ouro com brilho, foto em preto e branco e fundo fosco. Regras, composições e cuidados em
+`docs/ESTILO_PALAVRA_DE_OURO.md`; código em `producao/estilos/palavra-de-ouro/`. Aprovado pela Jessica; a Dra. ainda não avaliou.
+
 ## Estado do conteúdo (atualizado em 09/10/2026, noite)
 
 - **Publicado**: 08/10 19h (relato assédio) — primeira publicação automática + primeiro comentário.
