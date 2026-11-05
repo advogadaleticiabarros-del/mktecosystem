@@ -52,7 +52,12 @@ function montarTexto(n, e) {
   }
   for (const i of n.querySelectorAll("i")) {
     i.style.fontWeight = e.peso_destaque ?? 400;
-    if (e.cor_destaque) i.style.color = e.cor_destaque;
+    if (e.cor_destaque === OURO_BRILHO) {
+      // O respiro evita cortar o traço inclinado do itálico.
+      Object.assign(i.style, { background: FOIL, webkitBackgroundClip: "text", backgroundClip: "text", color: "transparent", padding: "0 .08em .1em 0", marginRight: "-.08em", caretColor: "#E8DED1" });
+    } else if (e.cor_destaque) {
+      i.style.color = e.cor_destaque;
+    }
   }
 }
 
@@ -65,6 +70,14 @@ function montarImagem(n, e, urlFoto) {
   Object.assign(img.style, { width: "100%", display: "block", filter: filtroDaFoto(e) });
   if (e.mascara_foto) { img.style.webkitMaskImage = e.mascara_foto; img.style.maskImage = e.mascara_foto; }
   n.append(img);
+}
+
+// Luz: brilho redondo que some nas bordas. O canto redondo também faz o clique valer só dentro do círculo.
+function montarLuz(n, e) {
+  Object.assign(n.style, {
+    width: e.largura + "px", height: e.altura + "px", borderRadius: "50%", opacity: e.intensidade ?? 0.5, mixBlendMode: e.mistura ?? "screen",
+    background: `radial-gradient(closest-side,${e.cor},transparent)`,
+  });
 }
 
 function desenharPeca(doc, palco, urlFoto) {
@@ -87,7 +100,8 @@ function desenharElemento(e, urlFoto) {
   Object.assign(n.style, { position: "absolute", left: e.x + "px", top: e.y + "px", transformOrigin: "0 0", transform: e.rotacao ? `rotate(${e.rotacao}deg)` : "" });
   if (e.tipo === "texto") montarTexto(n, e);
   else if (e.tipo === "imagem") montarImagem(n, e, urlFoto);
-  else Object.assign(n.style, { width: e.largura + "px", height: e.altura + "px", background: e.cor });
+  else if (e.tipo === "luz") montarLuz(n, e);
+  else Object.assign(n.style, { width: e.largura + "px", height: e.altura + "px", background: e.cor === OURO_BRILHO ? FOIL : e.cor });
   return n;
 }
 

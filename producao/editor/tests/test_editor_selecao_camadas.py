@@ -154,6 +154,35 @@ def test_arrastar_na_lista_de_camadas_muda_a_ordem(ambiente):
     assert ordem(acervo) == ["frase", "nome", "foto"]
 
 
+def test_luz_nova_pode_ser_ajustada_e_vira_brilho_redondo_na_arte(ambiente):
+    pagina, acervo, _ = ambiente
+    pagina.get_by_role("button", name="+ Luz").click()
+    campo = pagina.get_by_label("Intensidade")
+    campo.fill("0.4")
+    campo.press("Tab")
+    salvo(pagina)
+    luz = next(e for e in acervo.abrir("arte")["elementos"] if e["tipo"] == "luz")
+    assert luz["intensidade"] == 0.4
+    estilo = pagina.evaluate("""() => { const s = getComputedStyle(document.querySelector('#palco .el-luz'));
+        return { fundo: s.backgroundImage, opacidade: s.opacity, canto: s.borderTopLeftRadius }; }""")
+    assert "radial-gradient" in estilo["fundo"] and estilo["opacidade"] == "0.4" and estilo["canto"] == "50%"
+
+
+def test_fio_e_trecho_destacado_podem_ser_ouro_com_brilho(ambiente):
+    pagina, acervo, _ = ambiente
+    clicar(pagina, "frase")
+    pagina.get_by_role("button", name="Ouro com brilho no destaque").click()
+    salvo(pagina)
+    assert elemento(acervo, "frase")["cor_destaque"] == "ouro-brilho"
+    assert "linear-gradient" in pagina.evaluate("getComputedStyle(document.querySelector('#palco [data-id=frase] i')).backgroundImage")
+    pagina.get_by_role("button", name="+ Fio").click()
+    pagina.get_by_role("button", name="Ouro com brilho").click()
+    salvo(pagina)
+    fio = next(e for e in acervo.abrir("arte")["elementos"] if e["tipo"] == "retangulo")
+    assert fio["cor"] == "ouro-brilho"
+    assert "linear-gradient" in pagina.evaluate("getComputedStyle(document.querySelector('#palco .el-retangulo')).backgroundImage")
+
+
 def test_botao_direito_abre_menu_com_camadas_e_copiar(ambiente):
     pagina, acervo, _ = ambiente
     el(pagina, "foto").click(button="right")

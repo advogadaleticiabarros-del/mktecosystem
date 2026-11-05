@@ -108,7 +108,7 @@ def test_tamanho_nao_desce_de_22_e_avisa(ambiente):
 def test_mudar_cor_para_ouro_com_brilho(ambiente):
     pagina, acervo, _ = ambiente
     el(pagina, "nome").click()
-    pagina.get_by_role("button", name="Ouro com brilho").click()
+    pagina.get_by_role("button", name="Ouro com brilho", exact=True).click()
     salvo(pagina)
     assert elemento(acervo, "nome")["cor"] == "ouro-brilho"
 

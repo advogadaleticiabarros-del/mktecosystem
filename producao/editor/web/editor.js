@@ -2,6 +2,7 @@
 // O desenho fica em peca.js; o documento em memória é a única verdade e cada gesto termina em registrar().
 const OURO = "#C9A962", AREIA = "#EFE6D9", TAMANHO_MINIMO = 22, ENCOSTO = 6;
 const CORES = [["Ouro com brilho", OURO_BRILHO, FOIL], ["Ouro", OURO, OURO], ["Areia", AREIA, AREIA], ["Branco", "#FFFFFF", "#FFFFFF"], ["Café", "#231E1A", "#231E1A"]];
+const LUZES = [["Dourado quente", "#E8B04A"], ["Ouro", OURO], ["Luz branca quente", "#FFF1D6"]];
 const FUNDOS = [["Café", "#231E1A"], ["Café escuro", "#1E1814"], ["Papel", "#EFE6D9"]];
 const $ = (s) => document.querySelector(s);
 const palco = $("#palco"), area = $("#palco-area"), escalaEl = $("#palco-escala"), selecao = $("#selecao");
@@ -419,7 +420,7 @@ function painelTexto(e) {
   p.append(escolha("Fonte", e.fonte, [["EB Garamond (títulos)", "EB Garamond"], ["Inter (textos)", "Inter"]], muda("fonte")));
   p.append(escolha("Peso", e.peso ?? 400, [["Normal", 400], ["Médio", 500], ["Forte", 600]], (v) => muda("peso")(+v)));
   p.append(seletorCor("Cor do texto", e.cor, CORES, muda("cor")));
-  p.append(seletorCor("Cor do destaque (itálico)", e.cor_destaque, CORES.slice(1), muda("cor_destaque")));
+  p.append(seletorCor("Cor do destaque (itálico)", e.cor_destaque, CORES.map(([nome, ...resto]) => [`${nome} no destaque`, ...resto]), muda("cor_destaque")));
   p.append(escolha("Alinhamento", e.alinhamento ?? "left", [["Esquerda", "left"], ["Centro", "center"], ["Direita", "right"]], muda("alinhamento")));
   const finos = document.createElement("div");
   finos.className = "dois";
@@ -457,10 +458,21 @@ function painelImagem(e) {
 
 function painelRetangulo(e) {
   const p = $("#painel"), muda = (k) => (v) => { e[k] = v; redesenharElemento(e); };
-  p.append(seletorCor("Cor", e.cor, CORES.slice(1), muda("cor")));
+  p.append(seletorCor("Cor", e.cor, CORES, muda("cor")));
   const dois = document.createElement("div");
   dois.className = "dois";
   dois.append(numero("Largura", e.largura, muda("largura"), { min: 1 }), numero("Espessura", e.altura, muda("altura"), { min: 1 }));
+  p.append(dois);
+}
+
+function painelLuz(e) {
+  const p = $("#painel"), muda = (k) => (v) => { e[k] = v; redesenharElemento(e); };
+  p.append(seletorCor("Cor da luz", e.cor, LUZES, muda("cor")));
+  p.append(numero("Intensidade", e.intensidade ?? 0.5, muda("intensidade"), { min: 0.02, passo: 0.05 }));
+  p.append(escolha("Efeito", e.mistura ?? "screen", [["Clarear", "screen"], ["Luz suave", "soft-light"], ["Luz forte", "overlay"]], muda("mistura")));
+  const dois = document.createElement("div");
+  dois.className = "dois";
+  dois.append(numero("Largura", e.largura, muda("largura"), { min: 20 }), numero("Altura", e.altura, muda("altura"), { min: 20 }));
   p.append(dois);
 }
 
@@ -497,7 +509,7 @@ function montarPainel() {
   const titulo = document.createElement("h2");
   titulo.textContent = e.nome || e.id;
   p.append(titulo, linhaBotoes(ACOES_CAMADA), linhaBotoes(ACOES_ELEMENTO));
-  ({ texto: painelTexto, imagem: painelImagem, retangulo: painelRetangulo })[e.tipo](e);
+  ({ texto: painelTexto, imagem: painelImagem, retangulo: painelRetangulo, luz: painelLuz })[e.tipo](e);
   p.append(posicaoCampos(e));
 }
 
@@ -715,6 +727,7 @@ window.addEventListener("pointerdown", (ev) => { if (!ev.target.closest("#menu")
 $("#novo-texto").addEventListener("click", () => adicionar({ id: novoId("texto"), nome: "Texto novo", tipo: "texto", x: 96, y: 620, html: "Texto novo", fonte: "Inter", tamanho: 36, peso: 400, cor: AREIA, entrelinha: 1.34 }));
 $("#nova-foto").addEventListener("click", () => pedirFoto("nova"));
 $("#novo-fio").addEventListener("click", () => adicionar({ id: novoId("fio"), nome: "Fio", tipo: "retangulo", x: 96, y: 720, largura: 888, altura: 2, cor: OURO }));
+$("#nova-luz").addEventListener("click", () => adicionar({ id: novoId("luz"), nome: "Luz", tipo: "luz", x: 240, y: 420, largura: 600, altura: 600, cor: "#E8B04A", intensidade: 0.5, mistura: "screen" }));
 $("#desfazer").addEventListener("click", () => andarHistorico(-1));
 $("#refazer").addEventListener("click", () => andarHistorico(1));
 

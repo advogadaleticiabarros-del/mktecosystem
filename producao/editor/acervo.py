@@ -26,7 +26,7 @@ def _validar(doc):
         raise PecaInvalida("Peça sem elementos.")
     for e in doc["elementos"]:
         tipo = e.get("tipo") if isinstance(e, dict) else None
-        if tipo not in ("texto", "imagem", "retangulo"):
+        if tipo not in ("texto", "imagem", "retangulo", "luz"):
             raise PecaInvalida(f"Elemento desconhecido: {tipo}.")
         if tipo == "texto":
             if e.get("fonte") not in FONTES:

@@ -1188,7 +1188,8 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
 A Jessica ajusta artes à mão em `producao/editor/` (atalho "Editor de artes" na Área de Trabalho, ou `Abrir editor.bat`).
 Local e gratuito, sem conta. Salva em `pecas/<nome>/peca.json`, e a versão dela vale mais que o script de origem: leia esse
 arquivo antes de continuar uma peça. As fotos e as imagens baixadas (`saidas/`) não vão para o git. Por enquanto só
-`grito-D-editorial` está no editor; peça nova entra por importador (modelo: `importar_grito_d.py`). Detalhes em
+`grito-D-editorial` (versão dela) e `grito-D-luz` (com mais luz e ouro) estão no editor; peça de outro estilo entra por
+importador (modelo: `importar_grito_d.py`). Detalhes em
 `docs/contexto/relatorios/2026-11-05-editor-de-artes.md`.
 
 ## Como continuar uma sessão neste projeto

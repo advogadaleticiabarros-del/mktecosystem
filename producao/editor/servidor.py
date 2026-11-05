@@ -75,6 +75,10 @@ def criar_servidor(acervo, renderizar, porta=0):
 
         def _tratar(self):
             if not self._origem_permitida():
+                # Lê o que foi enviado antes de recusar: no Windows, fechar com dados pendentes derruba a resposta.
+                tamanho = int(self.headers.get("Content-Length") or 0)
+                if tamanho <= LIMITE_ENVIO:
+                    self.rfile.read(tamanho)
                 return self._responder(403)
             caminho = unquote(urlsplit(self.path).path)
             partes = caminho.strip("/").split("/")

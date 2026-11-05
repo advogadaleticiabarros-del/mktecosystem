@@ -18,9 +18,17 @@ Segundo pedido, no mesmo dia: "selecionar mais de um texto para mover", "copiar 
 - **Copiar e colar:** Ctrl+C, Ctrl+X e Ctrl+V, também entre peças (a foto é levada para a peça de destino); imagem copiada de fora ou print vira foto nova.
 - **Camadas:** botões Trazer para o topo, Para frente, Para trás e Enviar para o fundo, no alto do painel e no botão direito; arrastar na lista; Ctrl+[ e Ctrl+], com Shift para os extremos.
 
+Terceiro pedido, sobre a arte ajustada por ela: "um pouco mais de dourado, um pouco mais de luz, iluminação, para deixar mais profissional".
+
+- Editor: elemento **Luz** (`+ Luz`, com cor, intensidade, efeito e tamanho); ouro com brilho também em fios, faixas e trecho destacado.
+- Peça nova `grito-D-luz`, copiada da versão dela (`grito-D-editorial` não mudou). Tirada a foto duplicada, que estava deslocada 1,5 px e borrava o rosto; foto mais clara e quente; GRITAR à frente da foto; duas luzes; faixas de 10 px, fio e "cobrar." em ouro com brilho; nome em ouro.
+- Composição, textos e posições dela foram mantidos, exceto a faixa do rodapé, reposicionada para a nova espessura, e o fio, 1 px mais grosso.
+
 ## Verificado
 
-- 44 testes passaram (`python -m pytest producao/editor/tests -p no:cacheprovider`), 18 deles no editor em navegador real.
+- 46 testes passaram (`python -m pytest producao/editor/tests -p no:cacheprovider`), 20 deles no editor em navegador real.
+- Na primeira rodada, 2 testes falharam: um por botão ambíguo no próprio teste e outro intermitente, `test_outro_site_...`, que passou sozinho. Causa provável, não reproduzida: recusa sem ler o corpo enviado derrubava a conexão no Windows. Corrigido em `servidor.py`; depois, 25 repetições sem falha.
+- Arte conferida por imagem; celular real não verificado. Revisão da Dra. e licença da foto continuam pendentes.
 - A área de transferência real do Windows não foi exercitada: Ctrl+C e Ctrl+V rodaram no navegador de teste, sem visual, e a imagem vinda de fora foi simulada.
 - Exportação comparada com `grito-D-editorial.jpg` do estilo: diferença média abaixo de 1 em 255, máximo 29, compatível com a compressão do JPG.
 - Uso completo numa cópia temporária, conferido por imagem: arrastar, redimensionar, reescrever, destacar e baixar, sem erro no navegador.
@@ -36,6 +44,8 @@ Segundo pedido, no mesmo dia: "selecionar mais de um texto para mover", "copiar 
 - Só EB Garamond e Inter e nada abaixo de 22 px: regras da marca e do manual, barradas no servidor. Fundo e cor são livres, então texto dourado em fundo claro não é barrado, embora o manual proíba.
 - Texto vazio não é aceito; para tirar um texto, usa-se Excluir.
 - O laço pega só o que fica inteiro dentro, para a foto grande não entrar por acaso. Por isso, arrastar a partir da foto move a foto, não abre laço.
+- "cobrar." em ouro com brilho contraria a crítica de 05/11 (brilho em um só ponto): o pedido dela de mais dourado vem depois e prevalece.
+- Luz é elemento próprio, não ajuste escondido na foto, para ela poder mover, reduzir ou excluir.
 - Copiar grava também na área de transferência do sistema, para não colar por engano uma imagem copiada antes.
 - As edições da Jessica em `pecas/grito-D-editorial/peca.json` ficaram fora dos commits: são trabalho dela e continuam no disco.
 
