@@ -9,6 +9,8 @@ Jessica pediu para achar a skill `hattip-linkedin-os` e dizer como ajuda. Depois
 - Primeiro teste: `producao/linkedin/revisao-2026-11-05-fila-10-a-19-nov.md` e `revisao-2026-11-05-textos-sugeridos.json`.
 - Ponteiros em `CLAUDE.md`, `docs/ESTRATEGIA_LINKEDIN_PME.md` e `docs/CONTEXTO_PROJETO.md`.
 - Fila do Orbit, código de produção e site não foram alterados.
+- Continuação: "deixe o acionamento automático quando formos falar de linkdin". Criado `.claude/skills/leticia-linkedin/gatilho.py` (com testes), ligado como gancho `UserPromptSubmit` em `.claude/settings.local.json`, que fica fora do git. Em outro computador ou clone, é preciso repetir essa configuração. O comando chama `python`, que precisa existir no PATH. Reconhece variações como "linkdin" e "linkedln" e ignora "link do artigo". A descrição da skill e o `CLAUDE.md` também foram reforçados.
+- O gancho só cobre mensagens desta pasta do projeto. Teste na sessão: 23 testes passaram e o comando real foi executado com a entrada simulada. **Não verificado:** disparo numa mensagem real, a conferir na próxima mensagem sobre LinkedIn.
 
 ## Verificado
 - `pytest` da skill: 10 passaram. Os testes pegaram um bug real ("O ex-empregado" era bloqueado).

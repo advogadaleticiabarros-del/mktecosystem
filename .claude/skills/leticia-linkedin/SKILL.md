@@ -1,6 +1,6 @@
 ---
 name: leticia-linkedin
-description: Sistema editorial do LinkedIn da Dra. Letícia Barros (PMEs, RH e contadores). Use para escrever ou revisar post do LinkedIn, entrevista semanal de pautas, post sobre notícia ou decisão recente e análise de desempenho no LinkedIn.
+description: LinkedIn da Dra. Letícia Barros (PMEs, RH e contadores). Use SEMPRE que o assunto for LinkedIn, mesmo com grafia errada ("linkdin") ou pergunta simples: escrever ou revisar post, fila, pautas, entrevista semanal, notícia ou decisão recente, desempenho, página da empresa.
 ---
 
 # LinkedIn da Dra. Letícia
