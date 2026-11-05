@@ -60,8 +60,12 @@ P = {
     "05-antes": rosto("4672015.jpg", "ANTES", "de <i>nascer.</i>", "A pensão pode ser pedida durante a gestação. Lei 11.804/2008.", topo=-120),
     "06-burnout": rosto("original-burnout-trabalho.jpg", "BURNOUT", "tem <i>nome.</i>", "Está na CID-11, como fenômeno ligado ao trabalho.", topo=-520, luz=1.2),
 }
-def foto_grito(nome, caixa=None):
-    f = Image.open(AQUI / "fotos" / f"{nome}.jpg").convert("L").convert("RGB")
+def foto_grito(nome, caixa=None, teto=None):
+    """teto: comprime só as altas luzes da pele até esse valor; o preto continua preto e não aparece halo no screen."""
+    f = Image.open(AQUI / "fotos" / f"{nome}.jpg").convert("L")
+    if teto:
+        f = f.point(lambda v: v if v < 110 else 110 + (v - 110) * (teto - 110) / 145)
+    f = f.convert("RGB")
     if caixa:
         f = f.crop(caixa)
     b = io.BytesIO()
@@ -98,6 +102,22 @@ GRITO["C-boca"] = ("", f"""{cab('Assédio moral')}
 {ASS}""", "esc")
 
 
+# D. A-perfil revista pela crítica de direção de arte (05/11/2026): tudo no eixo x=320, ouro com brilho só na palavra,
+# rosto menor e mais suave, assinatura editorial. Teste: as faixas finas ainda não são regra do estilo.
+OURO = "#C9A962"
+GRITO["D-editorial"] = ("", f"""<div class=abs style="left:0;right:0;top:0;height:6px;background:{OURO}"></div>
+<div class=abs style="left:0;right:0;bottom:0;height:6px;background:{OURO}"></div>
+<div class=abs style="left:300px;top:310px;width:740px;height:952px;overflow:hidden;mix-blend-mode:screen;-webkit-mask-image:linear-gradient(#000 88%,transparent);mask-image:linear-gradient(#000 88%,transparent)"><img src="{foto_grito('10675499', teto=205)}" style="width:740px;display:block;filter:sepia(.14);-webkit-mask-image:radial-gradient(ellipse 54% 50% at 58% 54%,#000 58%,transparent 100%);mask-image:radial-gradient(ellipse 54% 50% at 58% 54%,#000 58%,transparent 100%)"></div>
+<div class="abs g f" style="left:9px;top:1348px;width:max-content;font-size:270px;line-height:1;white-space:nowrap;transform-origin:0 0;transform:rotate(-90deg);letter-spacing:.015em">GRITAR</div>
+<div class=abs style="left:320px;right:96px;top:96px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:600 32px Inter;letter-spacing:.12em;color:{OURO}">ASSÉDIO MORAL</span><span style="font:500 24px Inter">Direito do Trabalho</span></div>
+<div class=g style="font-size:132px;line-height:1.02;margin-top:18px;white-space:nowrap">não é <i style="color:{OURO}">cobrar.</i></div>
+<div class=corpo style="font-size:32px;margin-top:18px">Cobrar resultados é legítimo.<br>Humilhar trabalhadores, não.</div>
+<div style="font:400 26px/1.35 Inter;margin-top:14px">Abuso repetido pode configurar assédio moral.</div></div>
+<div class=abs style="left:320px;right:96px;bottom:96px;border-top:2px solid {OURO};padding-top:16px;font:500 24px/1.35 Inter"><span style="font-weight:600;letter-spacing:.12em">LETÍCIA BARROS</span><br>Advocacia · OAB/ES 39.948</div>""", "esc")
+ACAB_PROPRIO = {"grito-D-editorial"}
+
+
 P.update({"grito-" + k: v for k, v in GRITO.items()})
 AJUSTA = """()=>{document.querySelectorAll('.ajusta').forEach(e=>{const s=parseFloat(getComputedStyle(e).fontSize),w=e.getBoundingClientRect().width;e.style.fontSize=Math.min(s,s*892/w)+'px'});return 1}"""
 
@@ -116,7 +136,10 @@ async def main():
             await pg.wait_for_selector("body[data-ok]", state="attached")
             await pg.evaluate(AJUSTA)
             bruto = await pg.screenshot(clip={"x": 0, "y": 0, "width": 1080, "height": 1440})
-            Image.alpha_composite(Image.open(io.BytesIO(bruto)).convert("RGBA"), ac).convert("RGB").save(SAIDA / f"{nome}.jpg", quality=89)
+            arte = Image.open(io.BytesIO(bruto)).convert("RGBA")
+            if nome not in ACAB_PROPRIO:
+                arte = Image.alpha_composite(arte, ac)
+            arte.convert("RGB").save(SAIDA / f"{nome}.jpg", quality=89)
             print(nome)
         await b.close()
 
