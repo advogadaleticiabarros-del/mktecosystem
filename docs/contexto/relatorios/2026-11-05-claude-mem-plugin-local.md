@@ -31,5 +31,12 @@ A Jessica pediu para instalar uma lista de ferramentas "nesse projeto". Depois p
 - **Revisão antes do envio:** busca de senhas, chaves e dados pessoais nos 8 commits parados, e leitura dos documentos de maior risco. Nada desse tipo encontrado. A revisão não foi uma leitura integral de todos os arquivos.
 - **Atenção:** o repositório é público. Relatórios e a revisão da fila do LinkedIn ficam visíveis, inclusive observações internas sobre posts ainda não publicados. Tornar privado depende da Jessica.
 
+## Deploy do Orbit (continuação do mesmo dia)
+- **Pedido:** "faça o deploy". VPS em `4910953` (28/10), 28 commits atrás; foi para `3e346fc` com `git pull --ff-only` e `docker compose up -d --build`.
+- **Mudança real na API:** só `apps/api/app/services/blog_seo.py` (`@id` e redes da Dra. no schema dos artigos). Sem migração, dependência ou mudança no painel, por isso sem novo build do `apps/web`.
+- **Verificado:** `tests/test_blog_seo.py` com 23 testes passando; `/health` 200 local e público; painel e CRM 200; sem erro no log da API logo após subir; disco da VPS em 30%.
+- **Não verificado:** schema em um artigo novo publicado de fato; jobs agendados depois do reinício.
+- **Fora deste deploy:** `lp/`, porque o site vai por outro caminho. Continuam sem commit na VPS: `apps/web/package-lock.json`, `_editorial_import/` e `deploy/vps/docker-compose.yml.bak`.
+
 ## Próxima sessão
 Abrir uma sessão nova no `mktecosystem` e conferir em `http://127.0.0.1:37777/api/stats` se `sessions` e `observations` sobem. Se continuarem em 0, usar a skill `diagnosing-bugs`.
