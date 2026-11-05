@@ -40,3 +40,14 @@ input[type=checkbox]{margin-right:6px}
 .linha{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 #camadas button{display:block;width:100%;text-align:left;margin-bottom:4px;background:#141110;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 #camadas button.ativa{border-color:#5fb6ff}
+#palco-area{user-select:none}
+.moldura{position:absolute;border:1.5px solid #5fb6ff;pointer-events:none}
+#laco{position:absolute;border:1px dashed #5fb6ff;background:rgb(95 182 255/.12);pointer-events:none}
+#menu{position:fixed;z-index:10;min-width:190px;padding:4px;background:#2b2520;border:1px solid #4a4037;border-radius:8px;box-shadow:0 8px 24px #000}
+#menu[hidden]{display:none}
+#menu button{display:block;width:100%;text-align:left;background:none;border:0;border-radius:4px;padding:6px 10px}
+#menu button:hover{background:#3a322b}
+#camadas button{border-left:4px double #6b5f54;cursor:grab}
+#camadas button.alvo-acima{box-shadow:0 -2px 0 #C9A962}
+#camadas button.alvo-abaixo{box-shadow:0 2px 0 #C9A962}
+.linha button{flex:1 1 auto}

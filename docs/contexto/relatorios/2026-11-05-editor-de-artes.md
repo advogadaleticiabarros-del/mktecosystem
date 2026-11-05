@@ -12,9 +12,16 @@
 - Fontes EB Garamond e Inter copiadas para `web/`, com licença em `licencas-fontes/`, para exportar igual sem internet.
 - Dá para: escrever, destacar trecho, arrastar (com encosto e guias), redimensionar, mudar fonte, peso, cor e fundo, trocar ou somar foto, ajustar brilho e contraste, mudar camadas, duplicar, excluir, desfazer, criar nova versão, voltar ao original e baixar JPG 1080×1440.
 
+Segundo pedido, no mesmo dia: "selecionar mais de um texto para mover", "copiar fotos e colar novamente" e "mudar posição de camadas, frente, trás". Em `web/editor.js`:
+
+- **Seleção múltipla:** Shift ou Ctrl + clique, laço a partir do fundo e Ctrl+A; arrastar, setas, duplicar e excluir valem para o grupo.
+- **Copiar e colar:** Ctrl+C, Ctrl+X e Ctrl+V, também entre peças (a foto é levada para a peça de destino); imagem copiada de fora ou print vira foto nova.
+- **Camadas:** botões Trazer para o topo, Para frente, Para trás e Enviar para o fundo, no alto do painel e no botão direito; arrastar na lista; Ctrl+[ e Ctrl+], com Shift para os extremos.
+
 ## Verificado
 
-- 34 testes passaram (`python -m pytest producao/editor/tests -p no:cacheprovider`), 8 deles no editor em navegador real.
+- 44 testes passaram (`python -m pytest producao/editor/tests -p no:cacheprovider`), 18 deles no editor em navegador real.
+- A área de transferência real do Windows não foi exercitada: Ctrl+C e Ctrl+V rodaram no navegador de teste, sem visual, e a imagem vinda de fora foi simulada.
 - Exportação comparada com `grito-D-editorial.jpg` do estilo: diferença média abaixo de 1 em 255, máximo 29, compatível com a compressão do JPG.
 - Uso completo numa cópia temporária, conferido por imagem: arrastar, redimensionar, reescrever, destacar e baixar, sem erro no navegador.
 - `Abrir editor.bat` subiu o servidor e respondeu em 127.0.0.1:8765.
@@ -28,6 +35,9 @@
 - Nada de material pronto é sobrescrito: cada exportação vira arquivo novo em `saidas/`, e `original.json` não muda.
 - Só EB Garamond e Inter e nada abaixo de 22 px: regras da marca e do manual, barradas no servidor. Fundo e cor são livres, então texto dourado em fundo claro não é barrado, embora o manual proíba.
 - Texto vazio não é aceito; para tirar um texto, usa-se Excluir.
+- O laço pega só o que fica inteiro dentro, para a foto grande não entrar por acaso. Por isso, arrastar a partir da foto move a foto, não abre laço.
+- Copiar grava também na área de transferência do sistema, para não colar por engano uma imagem copiada antes.
+- As edições da Jessica em `pecas/grito-D-editorial/peca.json` ficaram fora dos commits: são trabalho dela e continuam no disco.
 
 ## Pendente
 
