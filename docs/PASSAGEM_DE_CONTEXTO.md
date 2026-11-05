@@ -124,6 +124,11 @@ Uma palavra em ouro com brilho, foto em preto e branco e fundo fosco. Regras, co
 Peça em forma de página de dicionário, em papel claro com fios de ouro. Regras e cuidados em `docs/ESTILO_VERBETE.md`;
 código em `producao/estilos/verbete/`. Aprovado pela Jessica; a Dra. ainda não avaliou.
 
+## ESTILO APROVADO — Papel e Ouro (04/11/2026)
+
+Diagramação de revista em papel e café foscos, com ouro brilhante em poucos pontos e grade de 9 peças. Regras e cuidados em
+`docs/ESTILO_PAPEL_E_OURO.md`; código em `producao/estilos/papel-e-ouro/`. Aprovado pela Jessica; a Dra. ainda não avaliou.
+
 ## Estado do conteúdo (atualizado em 09/10/2026, noite)
 
 - **Publicado**: 08/10 19h (relato assédio) — primeira publicação automática + primeiro comentário.

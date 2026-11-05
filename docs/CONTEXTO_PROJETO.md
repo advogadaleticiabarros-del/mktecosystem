@@ -5,8 +5,8 @@
 > (ver `.claude/skills/contexto-orbit/SKILL.md`). Última atualização: **2026-11-04**
 > (pesquisa de vocabulário de design premium em `docs/PESQUISA_VOCABULARIO_DESIGN_PREMIUM.md`:
 > só referência, não muda nenhuma regra; contradições entre documentos na seção 4 esperam decisão;
-> novos estilos visuais **Palavra de Ouro** em `docs/ESTILO_PALAVRA_DE_OURO.md` e **Verbete** em `docs/ESTILO_VERBETE.md`,
-> aprovados pela Jessica, sem peça publicada).
+> novos estilos visuais **Palavra de Ouro** (`docs/ESTILO_PALAVRA_DE_OURO.md`), **Verbete** (`docs/ESTILO_VERBETE.md`) e
+> **Papel e Ouro** (`docs/ESTILO_PAPEL_E_OURO.md`), aprovados pela Jessica, sem peça publicada).
 
 ## O que é o Orbit
 
