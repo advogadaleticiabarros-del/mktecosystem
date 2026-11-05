@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Peça</title>
+<link href="fontes.css" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#000}</style>
+<script src="peca.js"></script></head>
+<body><div id="palco"></div>
+<script>
+(async () => {
+  const nome = new URLSearchParams(location.search).get("peca");
+  const doc = await (await fetch(`/api/pecas/${encodeURIComponent(nome)}`)).json();
+  const palco = document.getElementById("palco");
+  desenharPeca(doc, palco, (a) => `/api/pecas/${encodeURIComponent(nome)}/fotos/${a}`);
+  await pecaCarregada(doc, palco);
+  document.body.dataset.pronto = "1";
+})();
+</script></body></html>
