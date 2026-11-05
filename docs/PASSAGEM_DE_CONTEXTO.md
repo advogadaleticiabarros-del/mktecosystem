@@ -119,6 +119,11 @@ discreta no topo, cartões de vidro flutuando. Usar isso nas próximas frentes.
 Uma palavra em ouro com brilho, foto em preto e branco e fundo fosco. Regras, composições e cuidados em
 `docs/ESTILO_PALAVRA_DE_OURO.md`; código em `producao/estilos/palavra-de-ouro/`. Aprovado pela Jessica; a Dra. ainda não avaliou.
 
+## ESTILO APROVADO — Verbete (04/11/2026)
+
+Peça em forma de página de dicionário, em papel claro com fios de ouro. Regras e cuidados em `docs/ESTILO_VERBETE.md`;
+código em `producao/estilos/verbete/`. Aprovado pela Jessica; a Dra. ainda não avaliou.
+
 ## Estado do conteúdo (atualizado em 09/10/2026, noite)
 
 - **Publicado**: 08/10 19h (relato assédio) — primeira publicação automática + primeiro comentário.
