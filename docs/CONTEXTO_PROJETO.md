@@ -1207,3 +1207,11 @@ artigo no 1º comentário. Os 4 Reels do 13º desceram uma vaga (10, 13, 17 e 20
 3. Ao terminar uma implementação/mudança relevante (feature nova, bugfix não-trivial,
    decisão de design), **atualize este arquivo** — seções "O que está pronto",
    "Pendências" e "Decisões" são as que mais mudam.
+
+## Calculadora do 13º salário (06/11/2026)
+
+LP `lp/calculadora-13-salario.html` + cálculo `lp/js/calculo-13.js` (testes `node lp/js/calculo-13.test.js`). O
+resultado só aparece depois de nome, WhatsApp e e-mail, que vão ao CRM (`[LP calculadora-13]`, `utm_campaign`
+`calculadora-13-2026`). Tabelas 2026: INSS Portaria MPS/MF 13/2026, IR com a redução da Lei 15.270/2025. **Ainda
+não está no ar** (publicar os dois arquivos por SFTP com o ok da Jessica). Relatório:
+`docs/contexto/relatorios/2026-11-06-calculadora-13-salario.md`.
