@@ -1192,6 +1192,13 @@ arquivo antes de continuar uma peça. As fotos e as imagens baixadas (`saidas/`)
 importador (modelo: `importar_grito_d.py`). Detalhes em
 `docs/contexto/relatorios/2026-11-05-editor-de-artes.md`.
 
+## Reels 23h47 e artigo do WhatsApp fora do horário (06/11/2026)
+
+Artigo `blog/chefe-manda-mensagem-no-whatsapp-fora-do-horario-preciso-responder.html` no ar (FAQ no schema, link
+para o artigo de assédio moral digital). Reels motion 23h47 (Papel e Ouro) agendado 06/11 21h no Orbit, link do
+artigo no 1º comentário. Os 4 Reels do 13º desceram uma vaga (10, 13, 17 e 20/11). Scripts e textos em
+`producao/estilos/papel-e-ouro/motion-23h47/`; relatório `docs/contexto/relatorios/2026-11-06-reels-23h47-whatsapp-e-artigo.md`.
+
 ## Como continuar uma sessão neste projeto
 
 1. Leia este arquivo primeiro.
