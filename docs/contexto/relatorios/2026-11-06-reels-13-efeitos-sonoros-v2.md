@@ -22,3 +22,8 @@ O visual não mudou.
 - A Jessica ouvir (cópias em `C:\tmp\videos-reels\13-reels-procedural\renders_som2\`). Para voltar: trocar `video` por
   `video_antes_som2` na peça.
 - 1º deles vai ao ar em 10/11 21h.
+## Continuação: 2/3 versão 2 (aparência e alinhamento)
+- Pedido: "faça o v2 para ver como vai ficar, quero melhorar a aparência também, o alinhamento das frases e elementos" (depois da análise do hook-lab).
+- Feito: `work/serie_r2v2.py` (skill `leticia-reels-motion`). Tudo centralizado no eixo da legenda; gancho na tela "Entrou no meio do ano?"; saiu o "Na parte 3." solto; fotos com rosto desfocadas e véu mais escuro; efeitos sonoros v2. Saída `C:\tmp\videos-reels\13-reels-procedural\13-sem-susto-reel-2-v2.mp4` (27,8 s, −14,4 LUFS), cópia em `renders_som2\`.
+- Verificado: `--checar` "área limpa: ok", sem LEITURA; amostras e quadros finais conferidos.
+- Pendente: aprovação da Jessica. O Orbit continua com o `-som2` agendado para 10/11; só troca depois do ok. Se aprovar, aplicar o mesmo tratamento aos outros 3.
