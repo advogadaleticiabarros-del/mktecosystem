@@ -27,3 +27,11 @@ O visual não mudou.
 - Feito: `work/serie_r2v2.py` (skill `leticia-reels-motion`). Tudo centralizado no eixo da legenda; gancho na tela "Entrou no meio do ano?"; saiu o "Na parte 3." solto; fotos com rosto desfocadas e véu mais escuro; efeitos sonoros v2. Saída `C:\tmp\videos-reels\13-reels-procedural\13-sem-susto-reel-2-v2.mp4` (27,8 s, −14,4 LUFS), cópia em `renders_som2\`.
 - Verificado: `--checar` "área limpa: ok", sem LEITURA; amostras e quadros finais conferidos.
 - Pendente: aprovação da Jessica. O Orbit continua com o `-som2` agendado para 10/11; só troca depois do ok. Se aprovar, aplicar o mesmo tratamento aos outros 3.
+
+## Continuação: V2 aprovado e aplicado nos 4 (06–07/11/2026)
+- Pedido: "ótimo, faça nos demais que estão prontos e substitua as postagens - Aprovadíssimo, com ritmo maravilhoso".
+- Feito: `work/v2base.py` (blocos centralizados + efeitos v2), `serie_r3v2.py` (3/3) e `serie2_v2.py` (proporcional e 4 regras). Nas 4 regras, a regra 2 ia até "período no" (palavra cortada); agora vai até "no cálculo do benefício" (trecho 26,9–35,9).
+- Orbit: as 4 peças apontam para `/app/media/<nome>-v2.mp4`; `corpo.video_antes_v2` guarda o `-som2`. Datas iguais (10, 13, 17 e 20/11, 21h). Backup `/root/orbit-backups/antes-reels-13-v2.sql.gz`. Script `subir2/trocar_video_v2.py`.
+- Verificado: `--checar` "área limpa: ok" nos 3; amostras conferidas; −14,0 a −14,6 LUFS; os 4 respondem 206.
+- Disco C: encheu no meio do render (0 MB). Com o ok da Jessica, apaguei só temporários desta sessão (quadros do 2/3 e 3/3 já codificados, áudios intermediários e amostras). Ficaram ~1,2 GB livres; o disco segue quase cheio.
+- O Reels 23h47 consta como publicado em 06/11 21h.

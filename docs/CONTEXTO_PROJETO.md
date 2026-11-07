@@ -1199,6 +1199,10 @@ para o artigo de assédio moral digital). Reels motion 23h47 (Papel e Ouro) agen
 artigo no 1º comentário. Os 4 Reels do 13º desceram uma vaga (10, 13, 17 e 20/11). Scripts e textos em
 `producao/estilos/papel-e-ouro/motion-23h47/`; relatório `docs/contexto/relatorios/2026-11-06-reels-23h47-whatsapp-e-artigo.md`.
 
+## Reels do 13º versão 2 (06–07/11/2026)
+
+Os 4 Reels do 13º (10, 13, 17 e 20/11) foram refeitos: tudo centralizado no eixo da legenda, fotos com rosto desfocadas, efeitos sonoros v2 (`som2.py`), gancho do 2/3 "Entrou no meio do ano?" e sobras de corte retiradas. Aprovado pela Jessica ("ritmo maravilhoso"): usar `v2base.py` como padrão de layout nos próximos motion. Relatório `docs/contexto/relatorios/2026-11-06-reels-13-efeitos-sonoros-v2.md`.
+
 ## Como continuar uma sessão neste projeto
 
 1. Leia este arquivo primeiro.
