@@ -1219,3 +1219,9 @@ resultado só aparece depois de nome, WhatsApp e e-mail, que vão ao CRM (`[LP c
 `calculadora-13-2026`). Tabelas 2026: INSS Portaria MPS/MF 13/2026, IR com a redução da Lei 15.270/2025. **Ainda
 não está no ar** (publicar os dois arquivos por SFTP com o ok da Jessica). Relatório:
 `docs/contexto/relatorios/2026-11-06-calculadora-13-salario.md`.
+
+### Reels Gestante e insalubridade + Pensão 30%, versão 2 (07/11/2026)
+Mesmo visual da V2 do 13º (`work/serie_gest_v2.py`, números 11, 12, 13 e 15). Efeitos sonoros v3 com gravações reais
+da Mixkit (`work/som3.py`), que agora são o padrão de som para os próximos Reels motion. As peças agendadas (24/11,
+27/11, 01/12 e 11/12) apontam para `<nome>-v2.mp4`, e as versões antigas ficam guardadas. Relatório:
+`docs/contexto/relatorios/2026-11-07-reels-gestante-pensao-v2.md`.
