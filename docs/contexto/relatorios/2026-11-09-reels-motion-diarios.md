@@ -25,3 +25,16 @@ assuntos e com a mesma criatividade, ótimos efeitos sonoros."
 - Aprovação da Jessica/Dra. dos textos (situações fictícias; comentários respondidos só em tese).
 - Decidir onde entra "1 por dia": Instagram está limitado a terça e sexta 21h; TikTok tem 5 por semana.
 - Não agendado nem publicado.
+
+## Atualização (09/11/2026, à tarde) · lote 2 e fechamento novo
+Pedido: "pode fazer mais, vamos soltar pelo menos 2 por semana desses, e coloque leia a legenda... e coloque também,
+quer ficar por dentro dos seus direitos, clique em seguir e compartilhe com quem precisa saber disso."
+- Fechamento novo no motor (versão v2, 22 s): "Leia a legenda" em marca-texto, depois "Quer ficar por dentro dos seus
+  direitos?" e "Clique em seguir e compartilhe com quem precisa saber disso.", com som. A mesma frase entra na legenda
+  antes da ressalva final. Os 7 do lote 1 foram renderizados de novo como `<nome>-v2.mp4`; os originais ficaram guardados.
+- Lote 2 (6 novos): 08 salário por fora, 09 sem carteira na experiência, 10 salário atrasado, 11 FGTS não depositado,
+  12 sem folga, 13 aviso prévio no horário normal.
+- Página de aprovação para a Dra. (gerada por `gerar_pagina.py`): https://claude.ai/artifact/3wR9ZJ3KxvrNhCkSv9BAVo
+- Volume entre -14,6 e -16,7 LUFS (só efeitos, sem voz). Área segura ok em todos.
+- Ritmo: pelo menos 2 por semana. Ainda não agendado: falta a aprovação da Dra. e conferir as vagas de terça e sexta
+  21h, que já têm Reels do 13º e de gestante até 11/12.

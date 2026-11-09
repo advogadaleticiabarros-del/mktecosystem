@@ -20,7 +20,10 @@ from base import FOIL, LOGO, MARCA, ruido  # noqa: E402
 
 AQUI = Path(__file__).resolve().parent
 SFX = AQUI / "sfx"
-FPS, SR, FIM = 30, 48000, 4.0  # o fechamento ocupa os últimos 4 s
+FPS, SR = 30, 48000
+EXTRA = 2.0  # v2: o fechamento ganhou 2 s (leia a legenda + seguir e compartilhar)
+VERSAO = "v2"
+CTA = "Quer ficar por dentro dos seus direitos? Clique em seguir e compartilhe com quem precisa saber disso."
 
 # nome: (id Mixkit, início s, duração máx. s, ganho)
 SONS = {
@@ -118,12 +121,14 @@ body{{width:1080px;height:1920px;overflow:hidden;background:#231E1A}}
 .sub{{position:absolute;left:150px;right:150px;text-align:center;font:400 34px/1.35 Inter}}
 .ouro{{background:{FOIL};-webkit-background-clip:text;background-clip:text;color:transparent}}
 #fim{{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:270px 150px 672px}}
-#fim img{{width:130px;height:130px}}
-#nome{{font:500 74px/1.05 'EB Garamond',serif;margin-top:22px}}
+#fim img{{width:110px;height:110px}}
+#nome{{font:500 66px/1.05 'EB Garamond',serif;margin-top:22px}}
 #oab{{font:500 30px Inter;margin-top:10px}}
-#fio{{width:780px;height:3px;background:{FOIL};margin:40px 0}}
-#salve{{font:italic 400 62px/1.14 'EB Garamond',serif}}
-#caso{{font:400 31px/1.36 Inter;margin-top:30px}}"""
+#fio{{width:780px;height:3px;background:{FOIL};margin:30px 0}}
+#leia{{display:inline-block;padding:4px 22px 10px;font:italic 400 58px/1.12 'EB Garamond',serif;color:#1E1814;background:{MARCA};margin-bottom:30px}}
+#seg{{font:400 31px/1.36 Inter;margin-top:16px}}
+#salve{{font:italic 400 54px/1.14 'EB Garamond',serif}}
+#caso{{font:400 27px/1.36 Inter;margin-top:26px;opacity:.75}}"""
 
 JS_BASE = """const $=i=>document.getElementById(i),cl=x=>Math.min(1,Math.max(0,x));
 const io=x=>{x=cl(x);return 1-Math.pow(1-x,3)},ioo=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
@@ -140,14 +145,14 @@ const pad=(n,k=2)=>String(n).padStart(k,'0');"""
 
 
 def montar(ep):
-    fim0 = ep["dur"] - FIM
+    fim0 = ep["dur"] - 4.0
     return f"""<!doctype html><html lang=pt-BR><head><meta charset=utf-8>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel=stylesheet>
 <style>{CSS_BASE}
 {ep['css']}</style></head><body><div id=c>
 <div id=cena>{ep['html']}</div>
 <div id=fim><img src="{LOGO}"><div id=nome>Letícia Barros</div><div id=oab>OAB/ES 39.948</div><div id=fio></div>
-<div id=salve>{ep['salve']}</div><div id=caso>Cada caso tem detalhes. Procure uma advogada de confiança.</div></div>
+<div id=leia>Leia a legenda</div><div id=salve>Quer ficar por dentro dos seus direitos?</div><div id=seg>Clique em seguir e compartilhe com quem precisa saber disso.</div><div id=caso>Cada caso tem detalhes. Procure uma advogada de confiança.</div></div>
 <div id=g></div><div class=fx style="top:0"></div><div class=fx style="bottom:0"></div></div>
 <script>{JS_BASE}
 {ep['js']}
@@ -155,7 +160,7 @@ window.render=t=>{{
  cena(t);
  const sai=cl((t-{fim0})/.5);$('cena').style.opacity=1-sai;$('fim').style.opacity=sai;
  $('fim').querySelector('img').style.opacity=cl((t-{fim0 + .1})/.4);
- sobe('nome',t,{fim0 + .25},.45);sobe('oab',t,{fim0 + .35},.45);sobe('salve',t,{fim0 + .7},.45);sobe('caso',t,{fim0 + 1.3},.45);
+ sobe('nome',t,{fim0 + .25},.45);sobe('oab',t,{fim0 + .35},.45);sobe('leia',t,{fim0 + .7},.45);sobe('salve',t,{fim0 + 2.0},.45);sobe('seg',t,{fim0 + 2.5},.45);sobe('caso',t,{fim0 + 3.4},.45);
  $('fio').style.clipPath=`inset(0 ${{(1-ioo((t-{fim0 + .45})/.6))*100}}% 0 0)`;
 }};
 window.medir=()=>{{const o=[];document.querySelectorAll('#cena *,#fim *').forEach(e=>{{
@@ -183,10 +188,11 @@ async def _rodar(ep, pasta, modo, ts):
             fol.save(pasta / "amostras.jpg", quality=88)
             (pasta / "_q.jpg").unlink()
         else:
-            dur = ep["dur"]
+            dur = ep["dur"] + EXTRA
             som = pasta / "som.wav"
-            mixar(ep["sons"], dur, som)
-            saida = pasta / f"{ep['nome']}.mp4"
+            f0 = ep["dur"] - 4.0
+            mixar(ep["sons"] + [(f0 + .7, "escreve", .7), (f0 + 2.0, "brilho", .5), (f0 + 2.5, "bolha", .7)], dur, som)
+            saida = pasta / f"{ep['nome']}-{VERSAO}.mp4"
             ff = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "image2pipe", "-c:v", "mjpeg", "-r", str(FPS),
                                    "-i", "-", "-i", str(som), "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p",
                                    "-c:a", "aac", "-b:a", "160k", "-ar", str(SR), "-shortest", "-movflags", "+faststart",
@@ -206,7 +212,10 @@ async def _rodar(ep, pasta, modo, ts):
 def rodar(ep, arquivo):
     pasta = Path(arquivo).resolve().parent / ep["nome"]
     pasta.mkdir(exist_ok=True)
-    (pasta / "legenda.json").write_text(json.dumps(ep["legenda"], ensure_ascii=False, indent=2), encoding="utf-8")
+    leg = dict(ep["legenda"])
+    if CTA not in leg["legenda"]:
+        leg["legenda"] = leg["legenda"].replace("Cada caso tem detalhes.", CTA + "\n\nCada caso tem detalhes.", 1)
+    (pasta / "legenda.json").write_text(json.dumps(leg, ensure_ascii=False, indent=2), encoding="utf-8")
     modo = sys.argv[1] if len(sys.argv) > 1 else "amostras"
-    ts = [float(x) for x in sys.argv[2].split(",")] if len(sys.argv) > 2 else [0.6, 3, 6, 9, 11, 13, 15.5, 18]
+    ts = [float(x) for x in sys.argv[2].split(",")] if len(sys.argv) > 2 else [0.6, 3, 6, 9, 11, 13, 17, 21.5]
     asyncio.run(_rodar(ep, pasta, modo, ts))
