@@ -52,3 +52,14 @@ comissão e adicionais já visíveis e botão de "adicionar mais" evidente. Feit
   mantidos de propósito (são da marca).
 - **v2 no ar em 09/11** com o ok da Jessica, conferida no site (celular e computador). Script
   (`publicar_calculadora.py`, backup da v1 em `/tmp/bkp_calc13_v1/` no container).
+
+## Story e SEO (09/11/2026)
+- **Story** 1080x1920 Papel e Ouro + imagem de compartilhamento 1200x630: `producao/campanhas/2026-11-calculadora-13/gerar_artes.py`
+  (cópia em `Desktop\CALCULADORA 13\`, com `TEXTOS.md`: link com UTM para Stories e mensagem de WhatsApp para clientes).
+- **SEO no ar** (`publicar_seo.py`, backup em `/tmp/bkp_calc13_seo/` no container): LP no `sitemap.xml`; schema
+  `WebApplication` (FinanceApplication) além do FAQPage; `og:image`, `twitter:card`, `robots max-image-preview:large`;
+  título da calculadora vira "Calculadora do 13º salário" (palavra-chave num h2); link da LP para o artigo do 13º da
+  gestante e link do artigo para a LP (com UTM `utm_source=blog`). Bing avisado pela API (200); IndexNow devolveu 403
+  mesmo com o arquivo de chave no ar (problema antigo do lado deles, não desta página).
+- **Pendente (Jessica):** pedir a indexação no Google Search Console (Inspeção de URL → Solicitar indexação), que não
+  tem API para páginas comuns.
