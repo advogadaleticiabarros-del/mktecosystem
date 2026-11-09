@@ -1226,3 +1226,7 @@ efeitos reais Mixkit, -14 LUFS, sem narração). Cada episódio é um arquivo `N
 Lote 1 (7 dias): atestado, holerite, ponto britânico, pedido de demissão, férias, almoço de 20 min, experiência.
 **Nada agendado:** a regra de Reels no Instagram é terça e sexta 21h; um por dia precisa de decisão dela (TikTok diário
 ou mudar a regra). Relatório `docs/contexto/relatorios/2026-11-09-reels-motion-diarios.md`.
+
+## Link na bio (09/11/2026)
+
+`lp/bio/index.html` no ar em https://advogadaleticiabarros.com.br/bio/ (Papel e Ouro, foto real, faixas com o público, WhatsApp em destaque, calculadora, guia da gestante, empresas via WhatsApp até a LP de empresas subir, blog, site; UTM `linkbio`; noindex). Publicação: `producao/campanhas/publicar_bio.py`. Relatório: `docs/contexto/relatorios/2026-11-09-link-na-bio.md`.
