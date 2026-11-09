@@ -30,18 +30,25 @@ body{background:var(--papel);color:var(--tinta);font-family:Inter,system-ui,sans
 .fio{height:2px;background:linear-gradient(90deg,transparent,var(--ouro),transparent)}
 main{max-width:480px;margin:0 auto;padding:28px 16px 40px}
 .atende{text-align:center;font-family:"EB Garamond",serif;font-style:italic;font-size:22px;color:var(--suave);margin-bottom:24px}
-.btn{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--tinta);background:#F7F2EA;border:1px solid rgba(184,147,90,.45);border-radius:14px;padding:16px 18px;margin-bottom:12px;transition:transform .15s,border-color .15s}
-.btn:hover{transform:translateY(-2px);border-color:var(--ouro)}
-.btn b{display:block;font-weight:500;font-size:17px}
-.btn small{color:var(--suave);font-size:14px}
-.btn .ic{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--papel);color:var(--ouro);font-family:"EB Garamond",serif;font-size:22px}
-.btn.principal{background:linear-gradient(135deg,#0B5F4E,#0E7A5F);color:#fff;border-color:#25D366;box-shadow:0 6px 18px rgba(11,95,78,.28)}
+.btn{display:flex;align-items:center;gap:16px;text-decoration:none;color:var(--tinta);padding:18px 4px;border-top:1px solid rgba(184,147,90,.35);transition:padding .25s ease,background .25s ease}
+.lista{counter-reset:item;border-bottom:1px solid rgba(184,147,90,.35);margin-bottom:8px}
+.lista .btn{counter-increment:item}
+.lista .btn::before{content:counter(item,decimal-leading-zero);flex:none;width:30px;font-family:"EB Garamond",serif;font-size:17px;color:var(--ouro);letter-spacing:.04em}
+.lista .btn::after{content:"";flex:none;width:18px;height:1px;background:var(--ouro);margin-left:auto;position:relative;transition:width .25s ease}
+.lista .btn:hover{padding-left:10px;background:rgba(184,147,90,.07)}
+.lista .btn:hover::after{width:30px}
+.btn b{display:block;font-family:"EB Garamond",serif;font-weight:400;font-size:22px;line-height:1.15}
+.btn small{display:block;color:var(--suave);font-size:13px;letter-spacing:.02em;margin-top:3px}
+.btn .ic{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center}
+.btn.principal{border-radius:14px;border:1px solid;margin-bottom:8px;background:linear-gradient(135deg,#0B5F4E,#0E7A5F);color:#fff;border-color:#25D366;box-shadow:0 6px 18px rgba(11,95,78,.28)}
 .btn.principal:hover{border-color:#25D366;box-shadow:0 8px 22px rgba(11,95,78,.38)}
 .btn.principal{justify-content:center;text-align:center;padding:18px}
+.btn.principal b{font-family:Inter,sans-serif;font-weight:500;font-size:17px}
+.btn.principal:hover{padding:18px}
 .btn.principal small{color:#CFF5DD}
 .btn.principal .ic{background:#25D366;color:#fff}
 .btn.principal .ic svg{width:24px;height:24px;fill:currentColor}
-h2{font-family:"EB Garamond",serif;font-weight:400;font-size:24px;margin:28px 0 12px;display:flex;align-items:center;gap:10px}
+h2{font-family:Inter,sans-serif;font-weight:500;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ouro);margin:36px 0 6px;display:flex;align-items:center;gap:10px}
 h2::after{content:"";flex:1;height:1px;background:rgba(184,147,90,.5)}
 footer{text-align:center;color:var(--suave);font-size:13px;padding:8px 16px 32px;max-width:480px;margin:0 auto}
 </style>
@@ -66,40 +73,46 @@ footer{text-align:center;color:var(--suave);font-size:13px;padding:8px 16px 32px
   </a>
 
   <h2>Como posso ajudar</h2>
+  <div class="lista">
   <a class="btn" href="https://advogadaleticiabarros.com.br/lp/gestante-clt.html?utm_source=instagram&utm_medium=bio&utm_campaign=linkbio" data-link="lp-gestante">
-    <span class="ic">♀</span><span><b>Gestante CLT</b><small>Estabilidade, demissão na gravidez e licença</small></span>
+    <span><b>Gestante CLT</b><small>Estabilidade, demissão na gravidez e licença</small></span>
   </a>
   <a class="btn" href="https://advogadaleticiabarros.com.br/lp/pensao-alimenticia.html?utm_source=instagram&utm_medium=bio&utm_campaign=linkbio" data-link="lp-pensao">
-    <span class="ic">♡</span><span><b>Pensão alimentícia</b><small>Pedir, revisar ou cobrar a pensão dos filhos</small></span>
+    <span><b>Pensão alimentícia</b><small>Pedir, revisar ou cobrar a pensão dos filhos</small></span>
   </a>
   <a class="btn" href="https://advogadaleticiabarros.com.br/areas/direito-trabalhista.html?utm_source=instagram&utm_medium=bio&utm_campaign=linkbio" data-link="lp-trabalhista">
-    <span class="ic">⚖</span><span><b>Direito trabalhista</b><small>Demissão, verbas, horas extras e assédio</small></span>
+    <span><b>Direito trabalhista</b><small>Demissão, verbas, horas extras e assédio</small></span>
   </a>
   <a class="btn" href="https://advogadaleticiabarros.com.br/lp/insalubridade-clt.html?utm_source=instagram&utm_medium=bio&utm_campaign=linkbio" data-link="lp-insalubridade">
-    <span class="ic">⚠</span><span><b>Insalubridade</b><small>Adicional para quem trabalha exposto a riscos</small></span>
+    <span><b>Insalubridade</b><small>Adicional para quem trabalha exposto a riscos</small></span>
   </a>
   <a class="btn" href="https://advogadaleticiabarros.com.br/lp/bpc-loas-criancas.html?utm_source=instagram&utm_medium=bio&utm_campaign=linkbio" data-link="lp-bpc">
-    <span class="ic">✦</span><span><b>BPC/LOAS para crianças</b><small>Benefício do INSS para crianças com deficiência</small></span>
+    <span><b>BPC/LOAS para crianças</b><small>Benefício do INSS para crianças com deficiência</small></span>
   </a>
+  </div>
 
   <h2>Ferramentas gratuitas</h2>
+  <div class="lista">
   <a class="btn" href="https://advogadaleticiabarros.com.br/lp/calculadora-13-salario.html?utm_source=instagram&utm_medium=bio&utm_campaign=linkbio" data-link="calculadora-13">
-    <span class="ic">13º</span><span><b>Calculadora do 13º salário 2026</b><small>Parcelas, INSS e Imposto de Renda</small></span>
+    <span><b>Calculadora do 13º salário 2026</b><small>Parcelas, INSS e Imposto de Renda</small></span>
   </a>
   <a class="btn" href="https://advogadaleticiabarros.com.br/lp/guia-direitos-gestante-trabalhadora.html?utm_source=instagram&utm_medium=bio&utm_campaign=linkbio" data-link="guia-gestante">
-    <span class="ic">♀</span><span><b>Guia da gestante que trabalha</b><small>Estabilidade, licença e o que fazer</small></span>
+    <span><b>Guia da gestante que trabalha</b><small>Estabilidade, licença e o que fazer</small></span>
   </a>
   <a class="btn" href="https://wa.me/5527995151402?text=Ol%C3%A1%2C%20Dra.%20Let%C3%ADcia!%20Tenho%20uma%20empresa%20e%20quero%20falar%20sobre%20consultoria%20trabalhista." target="_blank" rel="noopener" data-link="empresas">
-    <span class="ic">§</span><span><b>Para empresas</b><small>Consultoria trabalhista preventiva</small></span>
+    <span><b>Para empresas</b><small>Consultoria trabalhista preventiva</small></span>
   </a>
+  </div>
 
   <h2>Leia e conheça</h2>
+  <div class="lista">
   <a class="btn" href="https://advogadaleticiabarros.com.br/blog/?utm_source=instagram&utm_medium=bio&utm_campaign=linkbio" data-link="blog">
-    <span class="ic">✎</span><span><b>Blog</b><small>Seus direitos explicados sem juridiquês</small></span>
+    <span><b>Blog</b><small>Seus direitos explicados sem juridiquês</small></span>
   </a>
   <a class="btn" href="https://advogadaleticiabarros.com.br/?utm_source=instagram&utm_medium=bio&utm_campaign=linkbio" data-link="site">
-    <span class="ic">⌂</span><span><b>Site do escritório</b><small>Áreas de atuação e contato</small></span>
+    <span><b>Site do escritório</b><small>Áreas de atuação e contato</small></span>
   </a>
+  </div>
 </main>
 <footer>
   <div class="fio" style="margin-bottom:16px"></div>
