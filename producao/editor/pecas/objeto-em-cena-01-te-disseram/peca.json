@@ -35,7 +35,7 @@
    "tipo": "texto",
    "x": 72,
    "y": 770,
-   "html": "Te disseram que<br>só tem <i>estabilidade</i><br>quem já avisou o patrão?",
+   "html": "Te disseram que<br>só tem <i>estabilidade</i><br>quem <mark>já avisou o patrão?</mark>",
    "fonte": "EB Garamond",
    "tamanho": 92,
    "cor": "#EFE6D9",
@@ -44,7 +44,8 @@
    "espacamento": -0.015,
    "alinhamento": "left",
    "largura": 937,
-   "peso_destaque": 400
+   "peso_destaque": 400,
+   "cor_marca": "#1E1814"
   },
   {
    "id": "texto-3",
@@ -52,7 +53,7 @@
    "tipo": "texto",
    "x": 72,
    "y": 1110,
-   "html": "A empresa não saber da gravidez não tira o direito. O que conta é a gravidez já existir na dispensa.",
+   "html": "Mesmo que a empresa não saiba, vale a estabilidade. O que conta é a gravidez já existir na data da dispensa.",
    "fonte": "Inter",
    "tamanho": 32,
    "cor": "#EFE6D9",

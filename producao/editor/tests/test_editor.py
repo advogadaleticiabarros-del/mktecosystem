@@ -160,5 +160,5 @@ def test_nova_versao_nao_muda_a_peca_de_origem_e_original_pode_voltar(ambiente):
 
 def test_negrito_e_sobrescrito_sobrevivem_e_estilo_estranho_some(ambiente):
     pagina, _, _ = ambiente
-    limpo = pagina.evaluate("limparTexto('<sup>1.</sup> <b>A</b> <span style=\"color:red\">x</span><script>y</script>')")
-    assert limpo == "<sup>1.</sup> <b>A</b> x"
+    limpo = pagina.evaluate("limparTexto('<sup>1.</sup> <b>A</b> <mark>m</mark> <span style=\"color:red\">x</span><script>y</script>')")
+    assert limpo == "<sup>1.</sup> <b>A</b> <mark>m</mark> x"

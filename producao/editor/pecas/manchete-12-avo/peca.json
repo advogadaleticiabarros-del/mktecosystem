@@ -52,7 +52,7 @@
    "tipo": "texto",
    "x": 72,
    "y": 150,
-   "html": "<i>Avó também<br>pode pagar pensão?</i>",
+   "html": "<i>Avó também<br><mark>pode pagar pensão?</mark></i>",
    "fonte": "Playfair Display",
    "tamanho": 112,
    "cor": "#FFFFFF",
@@ -61,7 +61,8 @@
    "espacamento": 0,
    "alinhamento": "left",
    "largura": 939,
-   "peso_destaque": 400
+   "peso_destaque": 400,
+   "cor_marca": "#E8D08A"
   },
   {
    "id": "texto-4",

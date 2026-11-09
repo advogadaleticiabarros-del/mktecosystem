@@ -51,7 +51,7 @@ for (const b of vistos) {
   if (!fonte || ![0, -90, 90].includes(rot)) continue;
   const tamanho = parseFloat(s.fontSize);
   const caixa = s.textTransform === 'uppercase' ? (x) => x.toUpperCase() : (x) => x;
-  let destaque = null;
+  let destaque = null, marca = null;
   const html = (n) => [...n.childNodes].map((c) => {
     if (c.nodeType === 3) return caixa(c.textContent).replace(/&/g, '&amp;').replace(/</g, '&lt;');
     if (c.nodeType !== 1 || c.closest('svg')) return '';
@@ -61,6 +61,7 @@ for (const b of vistos) {
     if (cs.fontStyle === 'italic' && s.fontStyle !== 'italic') { destaque = destaque || cs; return '<i>' + html(c) + '</i>'; }
     if (cs.verticalAlign === 'super' || parseFloat(cs.fontSize) < tamanho * 0.8) return '<sup>' + html(c) + '</sup>';
     if (+cs.fontWeight >= +s.fontWeight + 200) return '<b>' + html(c) + '</b>';
+    if (hex(cs.color) !== hex(s.color) && cs.backgroundClip !== 'text') { marca = marca || hex(cs.color); return '<mark>' + html(c) + '</mark>'; }
     return html(c);
   }).join('');
   let texto = html(b).replace(/\s+/g, ' ').replace(/ ?<br> ?/g, '<br>').trim();
@@ -89,7 +90,7 @@ for (const b of vistos) {
     largura: s.whiteSpace === 'nowrap' ? null : Math.ceil(largura) + 1, rotacao: rot || null,
     cor_destaque: todoItalico ? null : (destCor && destCor !== cor ? destCor : null),
     peso_destaque: todoItalico ? +s.fontWeight : (destaque ? +destaque.fontWeight : null),
-    _altura: altura });
+    cor_marca: marca, _altura: altura });
   b.setAttribute('data-ed-oculto', '');
 }
 const estilo = document.createElement('style');

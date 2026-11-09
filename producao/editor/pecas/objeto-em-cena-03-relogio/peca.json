@@ -35,7 +35,7 @@
    "tipo": "texto",
    "x": 0,
    "y": 215,
-   "html": "Ficar depois da hora<br><i>não é favor,</i> é hora extra.",
+   "html": "Ficar depois da hora<br><i>não é favor,</i> <mark>é hora extra.</mark>",
    "fonte": "EB Garamond",
    "tamanho": 88,
    "cor": "#EFE6D9",
@@ -44,7 +44,8 @@
    "espacamento": -0.015,
    "alinhamento": "center",
    "largura": 1081,
-   "peso_destaque": 400
+   "peso_destaque": 400,
+   "cor_marca": "#1E1814"
   },
   {
    "id": "texto-3",

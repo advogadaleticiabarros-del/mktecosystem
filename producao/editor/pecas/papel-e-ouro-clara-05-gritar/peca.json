@@ -31,22 +31,6 @@
    "largura": 237
   },
   {
-   "id": "texto-2",
-   "nome": "Letícia Barros · OAB/ES 39.948",
-   "tipo": "texto",
-   "x": 628.78,
-   "y": 103,
-   "html": "Letícia Barros · OAB/ES 39.948",
-   "fonte": "Inter",
-   "tamanho": 24,
-   "cor": "#1E1814",
-   "peso": 500,
-   "entrelinha": "normal",
-   "espacamento": 0,
-   "alinhamento": "left",
-   "largura": 356
-  },
-  {
    "id": "texto-3",
    "nome": "Gritar",
    "tipo": "texto",

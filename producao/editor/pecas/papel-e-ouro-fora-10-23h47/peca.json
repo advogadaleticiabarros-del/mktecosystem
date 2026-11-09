@@ -180,7 +180,7 @@
    "tipo": "texto",
    "x": 96,
    "y": 964,
-   "html": "<i>Quem está errado?</i>",
+   "html": "<mark><i>Quem está errado?</i></mark>",
    "fonte": "EB Garamond",
    "tamanho": 112,
    "cor": "#E8DFD2",
@@ -190,7 +190,8 @@
    "alinhamento": "left",
    "largura": 889,
    "cor_destaque": "#1E1814",
-   "peso_destaque": 400
+   "peso_destaque": 400,
+   "cor_marca": "#1E1814"
   },
   {
    "id": "texto-12",

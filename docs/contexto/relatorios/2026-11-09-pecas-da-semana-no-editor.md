@@ -31,3 +31,13 @@
 ## Próxima sessão
 
 Peça nova de estilo: rodar `python importar_estilos.py <estilo>`. A peça que já existe no editor é pulada. Skills: `codebase-design`, `tdd`.
+
+## Revisão dos textos (mesmo dia)
+
+Pedido: "revise todos os textos e concordâncias, deve ser simples o entendimento, bater o olho e ler rápido".
+
+- `producao/editor/revisar_textos_2026_11_09.py`: 14 peças com texto mais curto, concordância e precisão legal. Exemplos: exame "ATÉ 3 DIAS" (CLT 473, XII diz "até"), grávida "Gravidez não é justa causa para demitir", errata "Demitido sem justa causa recebe o 13º proporcional", assinatura repetida retirada do cabeçalho em 3 peças. Cada peça guarda `original.json`; os JPG prontos não mudaram. `grito-D-editorial` (da Jessica) não foi tocada.
+- Defeito da importação corrigido: trecho de outra cor sobre marca-texto dourado vinha claro e ilegível. Agora vira `<mark>` com `cor_marca` (4 peças: avó, te disseram, relógio, 23:47).
+- Os textos que ficaram no fundo (clara-01 com a tarja do art. 391, clara-08 com "prometer" riscado) não podem ser revisados no editor.
+- Achado: `manchete/gerar.py` já tem 34 peças (14 a 34 feitas depois); elas não estão no editor.
+- Carrosséis v5 (Ouro editorial, foto escura em tela cheia) ficam escuros ao lado das peças claras: simulação de grade feita, decisão de direção com a Jessica.

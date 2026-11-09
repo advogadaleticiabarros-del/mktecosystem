@@ -7,7 +7,7 @@ const GRAO = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
   + "%3CfeColorMatrix values='0 0 0 0 .9 0 0 0 0 .9 0 0 0 0 .9 0 0 0 .9 0'/%3E%3C/filter%3E"
   + "%3Crect width='900' height='900' filter='url(%23n)'/%3E%3C/svg%3E";
 
-// Só <i>, <b>, <sup> e <br> sobrevivem: colar texto de outro lugar não traz estilo nem código junto.
+// Só <i>, <b>, <sup>, <mark> e <br> sobrevivem: colar texto de outro lugar não traz estilo nem código junto.
 function limparTexto(html) {
   const saida = document.createElement("div");
   const copiar = (origem, destino) => {
@@ -20,6 +20,7 @@ function limparTexto(html) {
         else if (tag === "I" || tag === "EM") copiar(no, destino.appendChild(document.createElement("i")));
         else if (tag === "B" || tag === "STRONG") copiar(no, destino.appendChild(document.createElement("b")));
         else if (tag === "SUP") copiar(no, destino.appendChild(document.createElement("sup")));
+        else if (tag === "MARK") copiar(no, destino.appendChild(document.createElement("mark")));
         else {
           // Enter no campo de texto vira <div>: cada um é uma linha nova.
           if ((tag === "DIV" || tag === "P") && destino.childNodes.length) destino.append(document.createElement("br"));
@@ -55,6 +56,8 @@ function montarTexto(n, e) {
   }
   // Sobrescrito pequeno sem empurrar a linha: o "1." do Verbete.
   for (const s of n.querySelectorAll("sup")) Object.assign(s.style, { fontSize: ".4em", lineHeight: "0", verticalAlign: ".9em" });
+  // Trecho sobre marca-texto dourado: letra café para ler sobre o ouro.
+  for (const m of n.querySelectorAll("mark")) Object.assign(m.style, { background: e.fundo_marca ?? "none", color: e.cor_marca ?? "#1E1814", webkitTextFillColor: e.cor_marca ?? "#1E1814" });
   for (const i of n.querySelectorAll("i")) {
     i.style.fontWeight = e.peso_destaque ?? 400;
     if (e.cor_destaque === OURO_BRILHO) {
