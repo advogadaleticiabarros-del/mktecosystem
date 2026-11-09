@@ -1,6 +1,6 @@
 """Capas dos Reels Flagrante (1080×1920), feitas para a grade: o Instagram mostra o recorte central 1080×1440,
 então faixas douradas, tema, fala e pergunta ficam entre y=240 e y=1680. Papel claro, como os estáticos Manchete.
-Uso: python capas.py [prefixo ...]  → <episódio>/capa.jpg (arquivo novo; não toca nos vídeos)."""
+Uso: python capas.py [--clara|--cafe|--dividida|--textura|--cena] [prefixo ...]  → <episódio>/capa-<estilo>.jpg (não toca nos vídeos)."""
 import asyncio
 import html
 import importlib.util
@@ -48,56 +48,97 @@ def dados(arquivo):
     return {"nome": ep["nome"], "tema": tema, "fala": max(falas[-2:], key=len) if falas else "", "pergunta": pergunta}
 
 
-def pagina(d):
-    grao = ruido(".95", ".25", ".9")
+ESTILOS = {
+    # fundo, texto, cor do tema, balão (fundo, texto), parte de cima (só na dividida)
+    "clara": dict(fundo="#EFE6D9", cor="#1E1814", tema="#8A6420", balao=("#2B2520", "#EFE6D9"), grao=("multiply", ".08", ".25")),
+    "cafe": dict(fundo="#231E1A", cor="#EFE6D9", tema="#C9A962", balao=("#EFE6D9", "#1E1814"), grao=("screen", ".04", ".9")),
+    "textura": dict(fundo="#231E1A", cor="#EFE6D9", tema="#C9A962", balao=("#EFE6D9", "#1E1814"), grao=("overlay", ".5", ".9"),
+                    luz="radial-gradient(ellipse 70% 45% at 75% 30%,rgb(201 169 98/.28),transparent 70%),radial-gradient(ellipse 60% 40% at 15% 85%,rgb(201 169 98/.16),transparent 70%)"),
+    "cena": dict(fundo="#231E1A", cor="#EFE6D9", tema="#C9A962", balao=("#EFE6D9", "#1E1814"), grao=("screen", ".04", ".9"),
+                 luz="linear-gradient(#231E1A 0 19%,rgb(35 30 26/.55) 30%,rgb(35 30 26/.2) 50%,rgb(35 30 26/.55) 70%,#231E1A 84%)"),
+    "dividida": dict(fundo="#EFE6D9", cor="#1E1814", tema="#C9A962", balao=("#EFE6D9", "#1E1814"), grao=("multiply", ".08", ".25"), topo="#231E1A"),
+}
+EIXO = 96  # todo o texto começa nesta margem: tema, fala, pergunta e rodapé
+
+
+def pagina(d, estilo="clara", fundo_img=None):
+    e = ESTILOS[estilo]
+    grao = ruido(".95", e["grao"][2], ".9")
+    topo = e.get("topo")
+    # Na dividida, tema e fala ficam no café (alto) e a pergunta no papel (baixo); a divisão segue a fala.
     return f"""<!doctype html><html lang=pt-BR><head><meta charset=utf-8>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel=stylesheet>
 <style>*{{margin:0;padding:0;box-sizing:border-box}}
-body{{width:1080px;height:1920px;background:#EFE6D9}}
-#c{{position:relative;width:1080px;height:1920px;overflow:hidden;background:#EFE6D9;color:#1E1814;font-family:Inter,sans-serif}}
-#c::before{{content:"";position:absolute;inset:0;background:url("{grao}");mix-blend-mode:multiply;opacity:.08}}
-.fx{{position:absolute;left:0;right:0;height:14px;background:{FOIL}}}
-.cab{{position:absolute;left:72px;right:72px;top:290px;display:flex;justify-content:space-between;font:500 24px Inter;letter-spacing:.12em;text-transform:uppercase}}
-.tema{{position:absolute;left:72px;right:72px;top:420px;font:600 30px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A6420}}
-.fala{{position:absolute;left:72px;max-width:936px;top:500px;background:#2B2520;color:#EFE6D9;border-radius:30px 30px 30px 8px;padding:34px 40px;font:400 54px/1.25 Inter;box-shadow:0 18px 40px rgb(30 24 20/.18)}}
-.perg{{position:absolute;left:0;right:0;top:880px;text-align:center}}
-.perg span{{display:inline-block;max-width:980px;padding:10px 34px 22px;font:italic 400 150px/1.05 'EB Garamond',serif;background:{MARCA};-webkit-box-decoration-break:clone;box-decoration-break:clone}}
-.ver{{position:absolute;left:0;right:0;top:1520px;display:flex;justify-content:center;align-items:center;gap:16px;font:600 26px Inter;letter-spacing:.14em;text-transform:uppercase}}
-.ver b{{width:54px;height:54px;border-radius:50%;background:#1E1814;display:grid;place-items:center}}
-.ver b::after{{content:"";border-left:18px solid #E8D08A;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:5px}}
-.ass{{position:absolute;left:72px;bottom:290px;display:flex;align-items:center;gap:14px;font:500 24px Inter}}
-.ass img{{width:44px;height:44px}}
+body{{width:1080px;height:1920px;background:{e["fundo"]}}}
+#c{{position:relative;width:1080px;height:1920px;overflow:hidden;background:{e["fundo"]};color:{e["cor"]};font-family:Inter,sans-serif}}
+#topo{{position:absolute;left:0;right:0;top:0;height:0;background:{topo or "transparent"}}}
+#img{{position:absolute;inset:-60px;background:{f'url({fundo_img}) center/cover' if fundo_img else 'none'};filter:blur(14px) brightness(.55) saturate(.7)}}
+#luz{{position:absolute;inset:0;background:{e.get("luz", "none")}}}
+#c::after{{content:"";position:absolute;inset:0;background:url("{grao}");mix-blend-mode:{e["grao"][0]};opacity:{e["grao"][1]};pointer-events:none}}
+.fx{{position:absolute;left:0;right:0;height:14px;background:{FOIL};z-index:2}}
+.cab,.rod{{position:absolute;left:{EIXO}px;right:{EIXO}px;display:flex;justify-content:space-between;align-items:center;font:500 24px Inter}}
+.cab{{top:290px;letter-spacing:.12em;text-transform:uppercase;color:{topo and "#EFE6D9" or e["cor"]}}}
+.rod{{bottom:290px}}
+.rod .ass{{display:flex;align-items:center;gap:14px}}
+.rod img{{width:44px;height:44px}}
+.ver{{display:flex;align-items:center;gap:14px;font:600 22px Inter;letter-spacing:.14em;text-transform:uppercase}}
+.ver b{{width:46px;height:46px;border-radius:50%;background:{FOIL};display:grid;place-items:center}}
+.ver b::after{{content:"";border-left:15px solid #1E1814;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}}
+.tema{{position:absolute;left:{EIXO}px;right:{EIXO}px;font:600 30px Inter;letter-spacing:.14em;text-transform:uppercase;color:{e["tema"]}}}
+.tema::after{{content:"";display:block;width:120px;height:3px;background:{FOIL};margin-top:22px}}
+.fala{{position:absolute;left:{EIXO}px;max-width:{1080-2*EIXO}px;text-wrap:balance;background:{e["balao"][0]};color:{e["balao"][1]};border-radius:30px 30px 30px 8px;padding:32px 40px;font:400 52px/1.25 Inter;box-shadow:0 18px 40px rgb(0 0 0/.22)}}
+.perg{{position:absolute;left:{EIXO - 26}px;right:{EIXO - 26}px}}
+.perg span{{display:inline;padding:4px 26px 14px;font:italic 400 150px/1.18 'EB Garamond',serif;color:#1E1814;background:{MARCA};-webkit-box-decoration-break:clone;box-decoration-break:clone}}
 </style></head><body><div id=c>
+<div id=img></div><div id=luz></div><div id=topo></div>
 <div class=fx style="top:240px"></div><div class=fx style="top:1666px"></div>
 <div class=cab><span>Letícia Barros</span><span>Direito do Trabalho</span></div>
 <div class=tema>{html.escape(d["tema"])}</div>
 {f'<div class=fala>“{html.escape(d["fala"])}”</div>' if d["fala"] else ""}
 <div class=perg><span>{html.escape(d["pergunta"])}</span></div>
-<div class=ver><b></b>Assista e comente</div>
-<div class=ass><img src="{LOGO}">Letícia Barros · OAB/ES 39.948</div>
+<div class=rod><span class=ass><img src="{LOGO}">Letícia Barros · OAB/ES 39.948</span><span class=ver><b></b>Assista</span></div>
 </div><script>document.fonts.ready.then(()=>{{
- // tema, fala e pergunta formam um bloco centrado na área que aparece na grade (y 340 a 1480)
+ // a pergunta encolhe até caber entre as margens (o marca-texto avança 26 px de cada lado)
+ const sp=document.querySelector('.perg span');
+ const lim=1080-2*(96-26)+1, cabe=()=>[...sp.getClientRects()].every(q=>q.width<=lim);
+ let s=150; for(;s>=104;s-=4){{sp.style.fontSize=s+'px';if(sp.getClientRects().length===1&&cabe())break}}
+ if(s<104){{document.querySelector('.perg').style.textWrap='balance';for(s=150;s>84;s-=4){{sp.style.fontSize=s+'px';if(sp.getClientRects().length<=2&&cabe())break}}}}
+ // tema, fala e pergunta formam um bloco centrado entre o cabeçalho e o rodapé da área da grade
  const tm=document.querySelector('.tema'),p=document.querySelector('.perg'),f=document.querySelector('.fala');
- const alt=tm.offsetHeight+40+(f?f.offsetHeight+80:0)+p.offsetHeight, topo=340+(1140-alt)/2;
- tm.style.top=topo+'px'; let y=topo+tm.offsetHeight+40;
- if(f){f.style.top=y+'px';y+=f.offsetHeight+80} p.style.top=y+'px';
+ const alt=tm.offsetHeight+56+(f?f.offsetHeight+96:0)+p.offsetHeight, topo=360+(1180-alt)/2;
+ tm.style.top=topo+'px'; let y=topo+tm.offsetHeight+56;
+ if(f){{f.style.top=y+'px';y+=f.offsetHeight+96}} p.style.top=y+'px';
+ const t=document.getElementById('topo'); if({'true' if topo else 'false'}) t.style.height=(f?y-48:topo+tm.offsetHeight+28)+'px';
  document.body.dataset.ok=1}})</script></body></html>"""
 
 
+def quadro(pasta):
+    """Quadro do clímax do próprio Reels (70% da duração), para a variação cena."""
+    import base64, subprocess
+    video = max(pasta.glob("*.mp4"), key=lambda p: p.stat().st_mtime)
+    dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(video)],
+                               capture_output=True, text=True).stdout)
+    jpg = subprocess.run(["ffmpeg", "-loglevel", "error", "-ss", f"{dur * .7:.2f}", "-i", str(video), "-frames:v", "1",
+                          "-vf", "scale=540:-1", "-f", "image2", "-c:v", "mjpeg", "-"], capture_output=True).stdout
+    return "data:image/jpeg;base64," + base64.b64encode(jpg).decode()
+
+
 async def main():
-    so = sys.argv[1:]
+    args = sys.argv[1:]
+    estilo = args.pop(0)[2:] if args and args[0].startswith("--") else "clara"
+    so = args
     eps = sorted(p for p in AQUI.glob("[0-9][0-9]_*.py") if not so or any(p.stem.startswith(s) for s in so))
     async with async_playwright() as p:
         b = await p.chromium.launch()
         pg = await b.new_page(viewport={"width": 1080, "height": 1920})
         for arq in eps:
             d = dados(arq)
-            await pg.set_content(pagina(d), wait_until="networkidle")
+            fundo_img = quadro(arq.parent / d["nome"]) if estilo == "cena" else None
+            await pg.set_content(pagina(d, estilo, fundo_img), wait_until="networkidle")
             await pg.wait_for_selector("body[data-ok]", state="attached")
-            destino = AQUI / d["nome"] / "capa.jpg"
-            destino.parent.mkdir(exist_ok=True)
+            destino = AQUI / d["nome"] / f"capa-{estilo}.jpg"
             await pg.screenshot(path=str(destino), type="jpeg", quality=92)
-            print(d["nome"], "|", d["tema"], "|", d["fala"], "|", d["pergunta"])
+            print(d["nome"], estilo)
         await b.close()
 
 

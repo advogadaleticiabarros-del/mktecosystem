@@ -28,3 +28,13 @@
 ## Próxima sessão
 
 Com aprovação, adicionar `cover_url` em `instagram_api.publicar_reels` e `midia_instagram` (TDD), subir as capas em `/media` e ligar cada Reels agendado à sua capa. Skills: `codebase-design`, `tdd`.
+
+## Variações (mesmo dia)
+
+Pedido: "o perfil ficou muito claro com isso! Me dê variações dessas capas e melhore o alinhamento", "coloque alguma textura ou imagem atrás em alguma variação".
+
+- `capas.py --clara|--cafe|--dividida|--textura|--cena` grava `<episódio>/capa-<estilo>.jpg` (165 capas: 33 × 5).
+- Alinhamento: tema, fala, pergunta e rodapé num eixo único de 96 px; fala com quebra equilibrada; pergunta numa linha (de 150 até 104 px) ou duas linhas equilibradas; assinatura e "Assista" na mesma linha do rodapé.
+- Textura: grão forte e brilho dourado. Cena: quadro de 70% do próprio vídeo, desfocado, com alto e base escurecidos para o cabeçalho ler.
+- Documento atualizado (versão 2) com as 5 variações e a grade do feed com cada uma, mais a opção alternada.
+- Não foram usadas fotos do banco: as de pessoas são de outros temas.
