@@ -1216,6 +1216,13 @@ da Mixkit (`work/som3.py`), que agora são o padrão de som para os próximos Re
 27/11, 01/12 e 11/12) apontam para `<nome>-v2.mp4`, e as versões antigas ficam guardadas. Relatório:
 `docs/contexto/relatorios/2026-11-07-reels-gestante-pensao-v2.md`.
 
+## Manchete é o padrão do estático único (09/11/2026)
+
+Pedido da Jessica: toda peça avulsa de feed sai no estilo Manchete, com faixa dourada em cima e embaixo. Feitos 21
+estáticos novos (`manchete-14` a `34`, temas dos Flagrantes; o 20 do Flagrante ficou de fora por repetir a manchete-10)
+e 11 Flagrantes novos (23 a 33, temas do Manchete; a 03 e a 10 ficaram de fora). Nada agendado; a Dra. confere as
+citações. Detalhes em `docs/ESTILO_MANCHETE.md` e `docs/ESTILO_FLAGRANTE.md`.
+
 ## Reels motion diários · Estilo Flagrante (09/11/2026)
 
 Nome do estilo: **Flagrante** (`docs/ESTILO_FLAGRANTE.md`). Os 13 foram aprovados pela Jessica em 09/11.
@@ -1230,3 +1237,19 @@ ou mudar a regra). Relatório `docs/contexto/relatorios/2026-11-09-reels-motion-
 ## Link na bio (09/11/2026)
 
 `lp/bio/index.html` no ar em https://advogadaleticiabarros.com.br/bio/ (Papel e Ouro, foto real, faixas com o público, WhatsApp em destaque, calculadora, guia da gestante, empresas via WhatsApp até a LP de empresas subir, blog, site; UTM `linkbio`; noindex). Publicação: `producao/campanhas/publicar_bio.py`. Relatório: `docs/contexto/relatorios/2026-11-09-link-na-bio.md`.
+
+## Carrossel contínuo a partir de referências (09/11/2026), em espera
+
+A Jessica mandou referências de carrosséis em panorama, em que os slides formam uma imagem só. Refizemos o "Mãe por adoção" (textos de `carrosseis_v5_dados.py`, chave `licenca-adotante`) em `producao/estilos/carrossel-referencias/`:
+- `gerar.py` (v1, slides soltos);
+- `gerar_v2.py` (panorama contínuo);
+- `gerar_v2_brilho.py` (a V2 com dourado metálico e foto do tema na capa);
+- `gerar_v3.py` (5 variações contínuas: A Ouro em diagonal, B Revista, C Fio condutor, D Cartões, E Objetos e arco).
+
+Página com as 6 opções (V2 e A a E) para a Dra. escolher: https://claude.ai/artifact/BmAEyzh7RXCsfrw4VRPNsF.
+
+**Situação:** em espera ("decidimos outra hora"). Por enquanto, continua valendo o que já existe da Dra.; nada foi aplicado nem programado. Os PNGs ficam só local (`.gitignore`); gere de novo com os scripts.
+
+Regras novas da Jessica:
+- capa sempre com foto do assunto e última página sempre a Dra.;
+- todo dourado em degradê metálico com reflexo e brilho (constantes `METAL`/`GLOW` em `gerar_v3.py`).
