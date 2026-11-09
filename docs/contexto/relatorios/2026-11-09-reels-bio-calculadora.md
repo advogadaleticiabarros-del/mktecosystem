@@ -19,3 +19,10 @@
 
 - `reels-bio-calculadora-13-v3.mp4` (50 s): igual à v2, mais zoom no Seguir → "Seguindo ✓" → volta e toque no link; som de moedas quando o resultado aparece (sino mantido no total). v1 e v2 guardadas.
 - Página de aprovação atualizada (registro em `aprovacoes/reels-bio-calculadora-13-v3`).
+
+## Aprovado e programado (09/11/2026)
+
+- A Jessica aprovou a v3 e pediu para postar hoje no horário de maior atividade. Programado para **09/11/2026 às 21h** no Instagram (peça `72b8aca8`, pauta `9ef1e59b`), com `subir_reels.py`; vídeo em `/media/reels-bio-calculadora-13-v3.mp4`.
+- A API não devolveu dados de seguidores online (`online_followers` vazio); 21h é o horário de pico dos Reels pelos dados do perfil usados na agenda.
+- Exceção pedida por ela à regra "Reels só terça e sexta": hoje é segunda. Amanhã (10/11, 21h) já há outro Reels na fila (13º proporcional).
+- Lembrete: trocar o link do perfil para advogadaleticiabarros.com.br/bio antes das 21h.
