@@ -50,5 +50,5 @@ comissão e adicionais já visíveis e botão de "adicionar mais" evidente. Feit
 - Teste Playwright 390 e 1366 px: R$ 3.924,20 bruto → R$ 3.564,70 líquido conferido à mão; sem erro, sem rolagem lateral.
 - Detector da skill: contraste do placeholder e do verde do WhatsApp corrigidos; avisos de Inter e fundo creme
   mantidos de propósito (são da marca).
-- **Publicação da v2: pendente**, a trava de deploy pediu o ok da Jessica. Script pronto
+- **v2 no ar em 09/11** com o ok da Jessica, conferida no site (celular e computador). Script
   (`publicar_calculadora.py`, backup da v1 em `/tmp/bkp_calc13_v1/` no container).

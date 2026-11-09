@@ -1206,7 +1206,8 @@ LP `lp/calculadora-13-salario.html` + cálculo `lp/js/calculo-13.js` (testes `no
 resultado só aparece depois de nome, WhatsApp e e-mail, que vão ao CRM (`[LP calculadora-13]`, `utm_campaign`
 `calculadora-13-2026`). Tabelas 2026: INSS Portaria MPS/MF 13/2026, IR com a redução da Lei 15.270/2025. **No ar desde 09/11**:
 https://advogadaleticiabarros.com.br/lp/calculadora-13-salario.html (publicada por
-`producao/campanhas/2026-11-calculadora-13/publicar_calculadora.py`, no container da API). Relatório:
+`producao/campanhas/2026-11-calculadora-13/publicar_calculadora.py`, no container da API).
+**v2 clara (Papel e Ouro, resultado em recibo) no ar desde 09/11**; backup da v1 em `/tmp/bkp_calc13_v1/` no container. Relatório:
 `docs/contexto/relatorios/2026-11-06-calculadora-13-salario.md`.
 
 ### Reels Gestante e insalubridade + Pensão 30%, versão 2 (07/11/2026)
