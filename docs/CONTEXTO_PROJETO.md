@@ -1225,3 +1225,12 @@ Mesmo visual da V2 do 13º (`work/serie_gest_v2.py`, números 11, 12, 13 e 15). 
 da Mixkit (`work/som3.py`), que agora são o padrão de som para os próximos Reels motion. As peças agendadas (24/11,
 27/11, 01/12 e 11/12) apontam para `<nome>-v2.mp4`, e as versões antigas ficam guardadas. Relatório:
 `docs/contexto/relatorios/2026-11-07-reels-gestante-pensao-v2.md`.
+
+## Reels motion diários (09/11/2026)
+
+Pedido da Jessica: "pelo menos 1 motion original desse [23:47] por dia, com variados assuntos". Motor comum em
+`producao/estilos/papel-e-ouro/motion-diario/motor.py` (fundo café, fios de ouro, marca-texto, fechamento, área segura,
+efeitos reais Mixkit, -14 LUFS, sem narração). Cada episódio é um arquivo `NN_assunto.py` com cena, sons e legenda.
+Lote 1 (7 dias): atestado, holerite, ponto britânico, pedido de demissão, férias, almoço de 20 min, experiência.
+**Nada agendado:** a regra de Reels no Instagram é terça e sexta 21h; um por dia precisa de decisão dela (TikTok diário
+ou mudar a regra). Relatório `docs/contexto/relatorios/2026-11-09-reels-motion-diarios.md`.
