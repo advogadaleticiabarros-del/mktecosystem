@@ -6,148 +6,149 @@
     <meta name="viewport" content="width=1080, height=1920" />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
     <style>
-      :root {
-        --cafe: #231E1A; --cafe2: #2E2722; --papel: #EFE6D9; --ouro: #B8935A; --ouro-claro: #D4B483;
-        --serif: "EB Garamond", serif; --sans: "Inter", sans-serif;
-      }
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--cafe); }
-      #root { position: relative; width: 100%; height: 100%; font-family: var(--sans); color: var(--papel); overflow: hidden; }
-      #fundo { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% 40%, #3A2F27 0%, var(--cafe) 70%); }
-      .titulo { position: absolute; left: 90px; right: 90px; top: 178px; text-align: center; font-family: var(--serif); font-size: 66px; line-height: 1.05; color: var(--papel); }
-      .titulo em { font-style: normal; color: var(--ouro-claro); }
-      .passo { display: block; font-family: var(--sans); font-size: 26px; letter-spacing: .2em; text-transform: uppercase; color: var(--ouro); margin-bottom: 14px; }
-      #celular { position: absolute; left: 216px; top: 380px; width: 648px; height: 1370px; border-radius: 64px; background: #0E0B09; border: 2px solid rgba(212,180,131,.45); box-shadow: 0 40px 90px rgba(0,0,0,.55); }
-      #tela { position: absolute; left: 230px; top: 394px; width: 620px; height: 1342px; border-radius: 52px; overflow: hidden; background: #FDFBF7; }
-      .cena { position: absolute; inset: 0; }
-      .cena img.full { position: absolute; left: 0; top: 0; width: 620px; }
-      /* perfil (desenho genérico, sem marca de app) */
-      #perfil { background: #fff; color: #111; font-family: var(--sans); }
-      .p-top { height: 120px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 18px; font-weight: 700; font-size: 26px; border-bottom: 1px solid #eee; }
-      .p-head { display: flex; align-items: center; gap: 28px; padding: 28px 30px 10px; }
-      .p-head img { width: 150px; height: 150px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 0 0 3px var(--ouro); }
-      .p-nome { font-weight: 700; font-size: 26px; }
-      .p-cat { color: #777; font-size: 22px; margin-top: 4px; }
-      .p-bio { padding: 14px 30px 0; font-size: 22px; line-height: 1.4; }
-      #p-link { display: inline-block; margin-top: 8px; color: #1F4E9C; font-weight: 600; font-size: 23px; padding: 2px 6px; margin-left: -6px; border-radius: 8px; }
-      .p-btns { display: flex; gap: 10px; padding: 22px 30px; }
-      .p-btns div { flex: 1; background: #EFEFEF; border-radius: 12px; text-align: center; padding: 14px 0; font-weight: 600; font-size: 21px; }
-      .p-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
-      .p-grid div { aspect-ratio: 3/4; display: grid; place-items: center; font-family: var(--serif); font-size: 40px; color: var(--ouro-claro); background: var(--cafe2); }
-      .p-grid div:nth-child(even) { background: var(--papel); color: var(--cafe); }
-      /* toque */
-      .toque { position: absolute; width: 90px; height: 90px; margin: -45px 0 0 -45px; border-radius: 50%; background: rgba(255,255,255,.55); border: 4px solid #fff; box-shadow: 0 6px 20px rgba(0,0,0,.35); opacity: 0; z-index: 20; }
-      .onda { position: absolute; width: 90px; height: 90px; margin: -45px 0 0 -45px; border-radius: 50%; border: 4px solid var(--ouro-claro); opacity: 0; z-index: 19; }
-      #digitando { position: absolute; left: 48px; top: 640px; width: 380px; height: 58px; line-height: 58px; padding-left: 24px !important; font-size: 27px; color: #2A231E; font-family: var(--sans); background: #FDFBF7; padding: 0 4px; white-space: nowrap; }
-      #destaque { position: absolute; left: 50px; top: 905px; width: 300px; height: 90px; border: 4px solid var(--ouro); border-radius: 12px; opacity: 0; }
-      /* final */
-      #final { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 100px; background: var(--cafe); }
-      #final .linha { width: 120px; height: 2px; background: var(--ouro); margin: 36px 0; }
-      #cta { font-family: var(--serif); font-size: 92px; line-height: 1.02; color: var(--papel); }
-      #cta-sub { font-size: 34px; color: var(--ouro-claro); letter-spacing: .04em; }
-      #arroba { font-size: 30px; color: var(--papel); opacity: .85; margin-top: 18px; }
-      #oab { position: absolute; bottom: 640px; left: 0; right: 0; text-align: center; font-size: 24px; color: rgba(239,230,217,.6); }
+      :root { --cafe:#231E1A; --papel:#EFE6D9; --ouro:#B8935A; --ouro-claro:#D4B483; --serif:"EB Garamond",serif; --sans:"Inter",sans-serif; }
+      * { margin:0; padding:0; box-sizing:border-box; }
+      html, body { width:1080px; height:1920px; overflow:hidden; background:var(--cafe); }
+      #root { position:relative; width:100%; height:100%; font-family:var(--sans); color:var(--papel); overflow:hidden; }
+      #fundo { position:absolute; inset:0; background:radial-gradient(ellipse 80% 50% at 50% 40%, #3A2F27 0%, var(--cafe) 70%); }
+      .titulo { position:absolute; left:80px; right:80px; top:176px; text-align:center; font-family:var(--serif); font-weight:400; font-size:58px; line-height:1.06; color:var(--papel); text-wrap:balance; }
+      .titulo em { font-style:normal; color:var(--ouro-claro); }
+      .passo { display:block; font-family:var(--sans); font-size:26px; letter-spacing:.2em; text-transform:uppercase; color:var(--ouro); margin-bottom:12px; }
+      #celular { position:absolute; left:216px; top:380px; width:648px; height:1370px; border-radius:64px; background:#0E0B09; border:2px solid rgba(212,180,131,.45); box-shadow:0 40px 90px rgba(0,0,0,.55); }
+      #tela { position:absolute; left:230px; top:394px; width:620px; height:1342px; border-radius:52px; overflow:hidden; background:#fff; }
+      #gravacao { position:absolute; left:0; top:0; width:620px; height:1342px; }
+      /* perfil real (dados da conta), desenhado sem a marca do app */
+      #perfil { position:absolute; inset:0; background:#fff; color:#111; font-family:var(--sans); }
+      #perfil-rola { position:absolute; left:0; right:0; top:0; }
+      .p-top { height:118px; display:flex; align-items:flex-end; padding:0 26px 16px; font-weight:700; font-size:27px; }
+      .p-head { display:flex; align-items:center; gap:22px; padding:6px 26px 0; }
+      .p-head img { width:150px; height:150px; border-radius:50%; object-fit:cover; flex:none; }
+      .p-num { flex:1; display:flex; justify-content:space-around; text-align:center; }
+      .p-num b { display:block; font-size:27px; } .p-num span { font-size:20px; color:#333; }
+      .p-nome { padding:16px 26px 0; font-weight:700; font-size:21px; line-height:1.3; }
+      .p-bio { padding:4px 26px 0; font-size:21px; line-height:1.35; }
+      #p-link { display:inline-block; margin:6px 0 0 20px; padding:2px 6px; border-radius:8px; color:#00376B; font-weight:600; font-size:21px; }
+      .p-btns { display:flex; gap:8px; padding:18px 26px; }
+      .p-btns div { flex:1; background:#EFEFEF; border-radius:10px; text-align:center; padding:12px 0; font-weight:600; font-size:20px; }
+      .p-btns div:first-child { background:#0095F6; color:#fff; }
+      .p-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:3px; border-top:1px solid #eee; padding-top:3px; }
+      .post { aspect-ratio:3/4; overflow:hidden; background:#ddd; }
+      .post img { width:100%; height:100%; object-fit:cover; display:block; }
+      .toque { position:absolute; left:0; top:0; width:84px; height:84px; margin:-42px 0 0 -42px; border-radius:50%; background:rgba(255,255,255,.5); border:4px solid #fff; box-shadow:0 6px 20px rgba(0,0,0,.35); opacity:0; z-index:20; }
+      .onda { position:absolute; left:0; top:0; width:84px; height:84px; margin:-42px 0 0 -42px; border-radius:50%; border:4px solid var(--ouro-claro); opacity:0; z-index:19; }
+      #final { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 100px 260px; background:var(--cafe); }
+      #final .linha { width:120px; height:2px; background:var(--ouro); margin:34px 0; }
+      #cta { font-family:var(--serif); font-size:96px; line-height:1.02; color:var(--papel); }
+      #cta-sub { font-size:34px; color:var(--ouro-claro); letter-spacing:.04em; }
+      #arroba { font-size:32px; color:var(--papel); }
+      #oab { font-size:24px; color:rgba(239,230,217,.6); margin-top:14px; }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="24" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="main" data-start="0" data-duration="46.92" data-width="1080" data-height="1920">
       <div id="fundo"></div>
-
-      <h1 id="t1" class="titulo clip" data-start="0" data-duration="4.6" data-track-index="1"><span class="passo">Calculadora do 13º</span>Onde fica? <em>No link da bio.</em></h1>
-      <h1 id="t2" class="titulo clip" data-start="4.6" data-duration="5.4" data-track-index="1"><span class="passo">Passo 1</span>Desça até <em>Ferramentas gratuitas</em></h1>
-      <h1 id="t3" class="titulo clip" data-start="10" data-duration="3.8" data-track-index="1"><span class="passo">Passo 2</span>Digite o seu <em>salário bruto</em></h1>
-      <h1 id="t4" class="titulo clip" data-start="13.8" data-duration="2.8" data-track-index="1"><span class="passo">Passo 3</span>Informe o contato e <em>veja o resultado</em></h1>
-      <h1 id="t5" class="titulo clip" data-start="16.6" data-duration="3.6" data-track-index="1"><span class="passo">Pronto</span>Cada parcela, <em>já com descontos</em></h1>
+      <h1 id="t0" class="titulo clip" data-start="0.00" data-duration="6.00" data-track-index="1"><span class="passo">Calculadora do 13º</span>Onde fica? <em>No link da bio.</em></h1>
+      <h1 id="t1" class="titulo clip" data-start="6.00" data-duration="4.85" data-track-index="1"><span class="passo">Passo 1</span>Na página da bio, desça até <em>Ferramentas gratuitas</em></h1>
+      <h1 id="t2" class="titulo clip" data-start="10.85" data-duration="3.15" data-track-index="1"><span class="passo">Passo 2</span>Abra a <em>Calculadora do 13º</em></h1>
+      <h1 id="t3" class="titulo clip" data-start="14.00" data-duration="2.38" data-track-index="1"><span class="passo">Passo 3</span>Digite o <em>salário bruto</em> do holerite</h1>
+      <h1 id="t4" class="titulo clip" data-start="16.38" data-duration="2.67" data-track-index="1"><span class="passo">Passo 4</span>Escolha a sua <em>situação</em> no emprego</h1>
+      <h1 id="t5" class="titulo clip" data-start="19.05" data-duration="1.66" data-track-index="1"><span class="passo">Passo 5</span>Recebe <em>comissão</em>? Coloque a média do mês</h1>
+      <h1 id="t6" class="titulo clip" data-start="20.71" data-duration="2.29" data-track-index="1"><span class="passo">Passo 6</span><em>Horas extras</em> e noturno também entram</h1>
+      <h1 id="t7" class="titulo clip" data-start="23.00" data-duration="1.67" data-track-index="1"><span class="passo">Passo 7</span>Abra as <em>informações extras</em></h1>
+      <h1 id="t8" class="titulo clip" data-start="24.67" data-duration="2.18" data-track-index="1"><span class="passo">Passo 8</span>Tem filhos? Informe os <em>dependentes</em> do IR</h1>
+      <h1 id="t9" class="titulo clip" data-start="26.85" data-duration="1.38" data-track-index="1"><span class="passo">Passo 9</span>Toque em <em>Calcular meu 13º</em></h1>
+      <h1 id="t10" class="titulo clip" data-start="28.23" data-duration="8.29" data-track-index="1"><span class="passo">Passo 10</span>Nome, WhatsApp e e-mail para <em>ver o resultado</em></h1>
+      <h1 id="t11" class="titulo clip" data-start="36.52" data-duration="2.40" data-track-index="1"><span class="passo">Resultado</span>Cada parcela, já com <em>INSS e Imposto de Renda</em></h1>
+      <h1 id="t12" class="titulo clip" data-start="38.92" data-duration="3.00" data-track-index="1"><span class="passo">No exemplo</span>Salário de R$ 4.500 + comissão e extras: <em>R$ 4.829,38</em></h1>
 
       <div id="celular"></div>
       <div id="tela">
-        <div id="perfil" class="cena clip" data-start="0" data-duration="4.6" data-track-index="2">
-          <div class="p-top">adv.leticiabarros</div>
-          <div class="p-head"><img src="assets/avatar.jpg" alt="" />
-            <div><div class="p-nome">Letícia Barros</div><div class="p-cat">Advogada · OAB/ES 39.948</div></div></div>
-          <div class="p-bio">Direito do trabalho para CLT, mães solo e gestantes.<br />Vitória/ES<br /><span id="p-link">advogadaleticiabarros.com.br/bio</span></div>
-          <div class="p-btns"><div>Seguir</div><div>Mensagem</div></div>
-          <div class="p-grid"><div>13º</div><div>CLT</div><div>Mães</div><div>Gestante</div><div>Pensão</div><div>FGTS</div></div>
-        </div>
-        <div id="bio" class="cena clip" data-start="4.6" data-duration="5.6" data-track-index="2">
-          <img id="bio-img" class="full" src="assets/bio-full.png" alt="" />
-        </div>
-        <div id="form" class="cena clip" data-start="10.2" data-duration="3.8" data-track-index="2">
-          <img class="full" src="assets/calc-form-vazio.png" alt="" />
-          <div id="digitando">R$&nbsp; <span id="valor"></span></div>
-        </div>
-        <div id="contato" class="cena clip" data-start="14" data-duration="2.6" data-track-index="2">
-          <img class="full" src="assets/calc-contato.png" alt="" />
-        </div>
-        <div id="resultado" class="cena clip" data-start="16.6" data-duration="3.6" data-track-index="2">
-          <img id="res-img" class="full" src="assets/calc-resultado.png" alt="" />
+        <video id="gravacao" class="clip" src="assets/tela.mp4" muted playsinline data-start="6.0" data-duration="35.92" data-track-index="2"></video>
+        <div id="perfil" class="clip" data-start="0" data-duration="6.0" data-track-index="3">
+          <div id="perfil-rola">
+            <div class="p-top">adv.leticiabarros2</div>
+            <div class="p-head"><img src="assets/feed/avatar.jpg" alt="" />
+              <div class="p-num"><div><b>334</b><span>posts</span></div><div><b>424</b><span>seguidores</span></div><div><b>446</b><span>seguindo</span></div></div></div>
+            <div class="p-nome">Advogada | Direito Trabalhista, Direito das Gravidas e Famílias</div>
+            <div class="p-bio">Atendimento humano, exclusivo e personalizado<br>📲 Fale comigo ⬇</div>
+            <span id="p-link">advogadaleticiabarros.com.br/bio</span>
+            <div class="p-btns"><div>Seguir</div><div>Mensagem</div></div>
+            <div class="p-grid"><div class="post"><img src="assets/feed/post00.jpg" alt=""></div><div class="post"><img src="assets/feed/post01.jpg" alt=""></div><div class="post"><img src="assets/feed/post02.jpg" alt=""></div><div class="post"><img src="assets/feed/post03.jpg" alt=""></div><div class="post"><img src="assets/feed/post04.jpg" alt=""></div><div class="post"><img src="assets/feed/post05.jpg" alt=""></div><div class="post"><img src="assets/feed/post06.jpg" alt=""></div><div class="post"><img src="assets/feed/post07.jpg" alt=""></div><div class="post"><img src="assets/feed/post08.jpg" alt=""></div><div class="post"><img src="assets/feed/post09.jpg" alt=""></div><div class="post"><img src="assets/feed/post10.jpg" alt=""></div><div class="post"><img src="assets/feed/post11.jpg" alt=""></div></div>
+          </div>
         </div>
       </div>
 
-      <div id="toque" class="toque clip" data-start="0" data-duration="20.2" data-track-index="3"></div>
-      <div id="onda" class="onda clip" data-start="0" data-duration="20.2" data-track-index="3"></div>
+      <div id="toque" class="toque clip" data-start="0" data-duration="41.92" data-track-index="4"></div>
+      <div id="onda" class="onda clip" data-start="0" data-duration="41.92" data-track-index="4"></div>
 
-      <audio id="som-toque0" class="clip" src="assets/toque.wav" data-start="3.6" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som-toque1" class="clip" src="assets/toque.wav" data-start="9.5" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som-toque2" class="clip" src="assets/toque.wav" data-start="10.9" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som-toque3" class="clip" src="assets/toque.wav" data-start="15.9" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som-tecla0" class="clip" src="assets/tecla.wav" data-start="11.46" data-duration="0.1" data-track-index="6" data-volume="0.5"></audio>
-      <audio id="som-tecla1" class="clip" src="assets/tecla.wav" data-start="11.62" data-duration="0.1" data-track-index="6" data-volume="0.5"></audio>
-      <audio id="som-tecla2" class="clip" src="assets/tecla.wav" data-start="11.78" data-duration="0.1" data-track-index="6" data-volume="0.5"></audio>
-      <audio id="som-tecla3" class="clip" src="assets/tecla.wav" data-start="11.94" data-duration="0.1" data-track-index="6" data-volume="0.5"></audio>
-      <audio id="som-tecla4" class="clip" src="assets/tecla.wav" data-start="12.10" data-duration="0.1" data-track-index="6" data-volume="0.5"></audio>
-      <audio id="som-tecla5" class="clip" src="assets/tecla.wav" data-start="12.26" data-duration="0.1" data-track-index="6" data-volume="0.5"></audio>
-      <audio id="som-tecla6" class="clip" src="assets/tecla.wav" data-start="12.42" data-duration="0.1" data-track-index="6" data-volume="0.5"></audio>
-      <audio id="som-tecla7" class="clip" src="assets/tecla.wav" data-start="12.58" data-duration="0.1" data-track-index="6" data-volume="0.5"></audio>
-      <audio id="som-resultado" class="clip" src="assets/resultado.wav" data-start="16.7" data-duration="1.2" data-track-index="7" data-volume="0.6"></audio>
+      <audio id="som0" class="clip" src="assets/toque.wav" data-start="4.60" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som1" class="clip" src="assets/toque.wav" data-start="10.75" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som2" class="clip" src="assets/toque.wav" data-start="14.95" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som3" class="clip" src="assets/toque.wav" data-start="17.23" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som4" class="clip" src="assets/toque.wav" data-start="19.50" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som5" class="clip" src="assets/toque.wav" data-start="21.16" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som6" class="clip" src="assets/toque.wav" data-start="23.45" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som7" class="clip" src="assets/toque.wav" data-start="25.12" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som8" class="clip" src="assets/toque.wav" data-start="27.30" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som9" class="clip" src="assets/toque.wav" data-start="28.68" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som10" class="clip" src="assets/toque.wav" data-start="30.45" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som11" class="clip" src="assets/toque.wav" data-start="32.22" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som12" class="clip" src="assets/toque.wav" data-start="34.12" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som13" class="clip" src="assets/toque.wav" data-start="35.42" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som-total" class="clip" src="assets/resultado.wav" data-start="38.92" data-duration="1.2" data-track-index="6" data-volume="0.6"></audio>
 
-      <div id="final" class="clip" data-start="20.2" data-duration="3.8" data-track-index="4">
+      <div id="final" class="clip" data-start="41.92" data-duration="5.0" data-track-index="7">
         <div id="cta-sub">Calcule o seu 13º de 2026</div>
         <div class="linha"></div>
         <div id="cta" data-var-text="cta">Clique no link da bio e faça o seu cálculo</div>
         <div class="linha"></div>
-        <div id="arroba">@adv.leticiabarros</div>
+        <div id="arroba">@adv.leticiabarros2</div>
         <div id="oab">Dra. Letícia Barros · OAB/ES 39.948</div>
       </div>
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
       const E = "power3.out";
-      // títulos entram
-      ["#t1","#t2","#t3","#t4","#t5"].forEach((id, i) => {
-        const st = [0, 4.6, 10, 13.8, 16.6][i];
-        if (i === 0) return;
-        tl.fromTo(id, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .45, ease: E }, st + .05);
-      });
-      
-      // toque: x,y em px do quadro
+      tl.fromTo("#t1",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},6.02);
+      tl.fromTo("#t2",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},10.87);
+      tl.fromTo("#t3",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},14.02);
+      tl.fromTo("#t4",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},16.40);
+      tl.fromTo("#t5",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},19.07);
+      tl.fromTo("#t6",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},20.73);
+      tl.fromTo("#t7",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},23.02);
+      tl.fromTo("#t8",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},24.69);
+      tl.fromTo("#t9",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},26.87);
+      tl.fromTo("#t10",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},28.25);
+      tl.fromTo("#t11",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},36.54);
+      tl.fromTo("#t12",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},38.94);
+      // abertura: o feed desce um pouco, volta, e o link acende
+      tl.fromTo("#perfil-rola", { y: 0 }, { y: -420, duration: 1.5, ease: "power2.inOut" }, 0.6);
+      tl.to("#perfil-rola", { y: 0, duration: 1.2, ease: "power2.inOut" }, 2.3);
+      tl.fromTo("#p-link", { backgroundColor: "rgba(212,180,131,0)" }, { backgroundColor: "rgba(212,180,131,.5)", duration: .35, yoyo: true, repeat: 1 }, 3.5);
       function tocar(t, x, y) {
-        tl.set("#toque", { x: x, y: y }, t - .5);
-        tl.fromTo("#toque", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: .3, ease: E }, t - .5);
-        tl.to("#toque", { scale: .8, duration: .12 }, t);
-        tl.to("#toque", { scale: 1, opacity: 0, duration: .3 }, t + .15);
+        tl.set("#toque", { x: x, y: y }, t - .4);
+        tl.fromTo("#toque", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: .25, ease: E }, t - .4);
+        tl.to("#toque", { scale: .8, duration: .1 }, t);
+        tl.to("#toque", { scale: 1, opacity: 0, duration: .25 }, t + .12);
         tl.set("#onda", { x: x, y: y }, t);
-        tl.fromTo("#onda", { opacity: .9, scale: .6 }, { opacity: 0, scale: 2.4, duration: .55, ease: "power2.out" }, t);
+        tl.fromTo("#onda", { opacity: .9, scale: .6 }, { opacity: 0, scale: 2.3, duration: .5, ease: "power2.out" }, t);
       }
-      // 1) link da bio
-      tl.fromTo("#p-link", { backgroundColor: "rgba(212,180,131,0)" }, { backgroundColor: "rgba(212,180,131,.45)", duration: .4, yoyo: true, repeat: 3 }, 1.4);
-      tocar(3.6, 440, 800);
-      // 2) bio: rola até a calculadora
-      tl.fromTo("#bio-img", { y: 0 }, { y: -1676, duration: 3.2, ease: "power2.inOut" }, 5.4);
-      tocar(9.5, 540, 1250);
-      // 3) digita salário
-      tocar(10.9, 540, 1065);
-      const alvo = "3.000,00";
-      for (let i = 1; i <= alvo.length; i++) tl.set("#valor", { textContent: alvo.slice(0, i) }, 11.3 + i * .16);
-      tl.fromTo("#form img", { y: 0 }, { y: 0, duration: .01 }, 10.2);
-      // 4) contato: toca em Ver meu resultado
-      tocar(15.9, 540, 801);
-      // 5) resultado: aproxima no total
-      tl.fromTo("#res-img", { scale: 1, y: 0, transformOrigin: "50% 60%" }, { scale: 1.12, y: -60, duration: 1.6, ease: "power2.inOut" }, 17.6);
-      // final
-      tl.fromTo("#final", { opacity: 0 }, { opacity: 1, duration: .4 }, 20.2);
-      tl.fromTo("#cta", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .6, ease: E }, 20.5);
-      tl.fromTo("#arroba, #cta-sub", { opacity: 0 }, { opacity: 1, duration: .5 }, 21);
+      tocar(4.60,430,815);
+      tocar(10.75,540,1132);
+      tocar(14.95,540,1036);
+      tocar(17.23,540,1186);
+      tocar(19.50,540,968);
+      tocar(21.16,540,1118);
+      tocar(23.45,540,1046);
+      tocar(25.12,540,1036);
+      tocar(27.30,540,1175);
+      tocar(28.68,540,901);
+      tocar(30.45,540,1051);
+      tocar(32.22,540,1201);
+      tocar(34.12,294,1282);
+      tocar(35.42,540,1175);
+      tl.fromTo("#final", { opacity: 0 }, { opacity: 1, duration: .4 }, 41.92);
+      tl.fromTo("#cta", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .6, ease: E }, 42.22);
       window.__timelines["main"] = tl;
       tl.seek(0);
     </script>

@@ -6,3 +6,11 @@
 - Sons: cliques e um sino sintetizados, sem música.
 - Legenda com foco em SEO e respostas de IA: `legenda.md`.
 - Não agendado. Reels só terça e sexta 21h (próximas: 10/11 e 13/11).
+
+## Versão 2, detalhada (09/11/2026)
+
+- `reels-bio-calculadora-13-v2.mp4` (47 s). A v1 continua guardada.
+- Abertura com o **perfil real** (@adv.leticiabarros2, foto, números e os 12 últimos posts, lidos pela API do Instagram com `baixar_feed.py`, só leitura). Atenção: o @ certo tem o "2"; a v1 mostrava @adv.leticiabarros.
+- Navegação real gravada quadro a quadro (`gravar.py`): salário R$ 4.500, comissão R$ 800, horas extras R$ 300, 1 dependente → total R$ 4.829,38 (INSS R$ 585,51, IR R$ 185,11). Rede bloqueada, nenhum lead criado.
+- Composição gerada por `montar.py`; legenda nova em `legenda-v2.md`.
+- Página de aprovação atualizada: https://claude.ai/artifact/9AwWip5MJtxiWnNa1pMXMW (registro em `aprovacoes/reels-bio-calculadora-13-v2`).
