@@ -42,3 +42,10 @@ Pedido: "o perfil ficou muito claro com isso! Me dê variações dessas capas e 
 ## Escolha
 
 A Jessica escolheu a **textura** ("Gostei da capa textura"). Agora é o padrão de `capas.py` e está registrada em `docs/ESTILO_FLAGRANTE.md`. Falta a Dra. aprovar e ligar `cover_url` no publicador.
+
+## Publicador com capa própria (código pronto, sem deploy)
+
+- `InstagramAPI.publicar_reels(capa_url=...)` envia `cover_url`; com ele, `thumb_offset` não vai. `Midia.capa_url` vem de `corpo.capa` da peça; o publicador repassa. Sem `corpo.capa`, tudo segue como antes (quadro de 1,2 s).
+- Testes: 3 novos ou ampliados, passando. Suíte da API: 368 passaram e 2 falharam, `test_agenda_um_por_dia::...fora_de_terca_ou_sexta...` e `test_onda1::test_aprovar_agenda_no_calendario`. As duas também falham sem esta mudança (conferido com `git stash`); parecem depender da data e não foram investigadas.
+- Não feito, depende do ok da Dra. e da Jessica: deploy na VPS, envio das `capa-textura.jpg` para `/media` e preenchimento de `corpo.capa` nos Reels agendados.
+- `cover_url` segue a documentação da Graph API de memória e não foi testado contra a Meta; conferir no primeiro post.

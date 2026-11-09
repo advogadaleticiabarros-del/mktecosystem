@@ -265,3 +265,12 @@ async def test_reels_pede_tempo_medio_assistido_e_volta_ao_basico_se_a_meta_recu
     assert await api.insights_reels("r1") == {"views": 250}
     assert "ig_reels_avg_watch_time" in pedidos[0]
     assert "ig_reels_avg_watch_time" not in pedidos[1]
+
+
+@pytest.mark.anyio
+async def test_reels_com_capa_propria_envia_a_imagem_e_nao_o_quadro(monkeypatch):
+    """Capa própria (imagem 1080x1920, ex.: capa com textura) vai em cover_url; o quadro do vídeo deixa de valer."""
+    api, enviados = _api_que_registra(monkeypatch)
+    await api.publicar_reels("999", "https://x/reel.mp4", legenda="L", capa_ms=1200, capa_url="https://x/capa.jpg")
+    dados = enviados[0][1]
+    assert dados["cover_url"] == "https://x/capa.jpg" and "thumb_offset" not in dados

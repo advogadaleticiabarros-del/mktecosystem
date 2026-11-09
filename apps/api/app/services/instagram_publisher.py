@@ -106,7 +106,7 @@ async def publicar_agendamentos_prontos(
             if midia.video:
                 post_id = await api.publicar_reels(conexao.ig_user_id, midia.video, legenda=midia.legenda,
                                                    capa_ms=midia.capa_ms, location_id=local, trial=midia.trial,
-                                                   graduacao=midia.trial_graduacao)
+                                                   graduacao=midia.trial_graduacao, capa_url=midia.capa_url)
             elif len(midia.imagens) == 1:
                 post_id = await api.publicar_imagem_unica(
                     conexao.ig_user_id, midia.imagens[0], legenda=midia.legenda, location_id=local

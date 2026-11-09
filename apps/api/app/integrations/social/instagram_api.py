@@ -63,10 +63,11 @@ class InstagramAPI:
 
     async def publicar_reels(self, ig_user_id: str, video_url: str, legenda: str = "", capa_ms: int | None = None,
                              location_id: str | None = None, trial: bool = False,
-                             graduacao: str = "SS_PERFORMANCE") -> str:
+                             graduacao: str = "SS_PERFORMANCE", capa_url: str | None = None) -> str:
         """Reels com vídeo já pronto (URL pública, MP4 H.264/AAC). O vídeo leva minutos para a
         Meta processar, por isso a espera é bem maior que a de imagem (até ~10 min).
-        capa_ms: quadro da capa (o do gancho, que aparece na grade e na busca). location_id: local do post.
+        capa_ms: quadro da capa (o do gancho, que aparece na grade e na busca). capa_url: imagem própria de capa
+        (URL pública), que substitui o quadro. location_id: local do post.
         trial: Trial Reels, mostrado primeiro só a quem não segue. graduacao: "SS_PERFORMANCE" (se for bem, a Meta leva
         para o perfil) ou "MANUAL" (fica só no teste; o post para seguidores sai à parte)."""
         dados = {"media_type": "REELS", "video_url": video_url, "caption": legenda}
@@ -74,7 +75,9 @@ class InstagramAPI:
             dados["trial_params"] = json.dumps({"graduation_strategy": graduacao})
         else:
             dados["share_to_feed"] = "true"
-        if capa_ms is not None:
+        if capa_url:
+            dados["cover_url"] = capa_url
+        elif capa_ms is not None:
             dados["thumb_offset"] = str(int(capa_ms))
         if location_id:
             dados["location_id"] = location_id

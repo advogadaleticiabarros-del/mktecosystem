@@ -167,3 +167,13 @@ async def test_reels_usa_capa_no_gancho_por_padrao_e_aceita_trial(tmp_path):
                               "trial_graduacao": "MANUAL"})
     midia3 = await montar_midia(piece3, identidade_visual={}, pasta=tmp_path, base_url="https://api.exemplo/media", prefixo="x")
     assert midia3.trial_graduacao == "MANUAL"
+
+
+@pytest.mark.anyio
+async def test_reels_com_capa_propria_no_corpo(tmp_path):
+    piece = _piece("reels", {"video": "https://api.exemplo/media/reel.mp4", "legenda": "L", "capa": "https://api.exemplo/media/capa.jpg"})
+    midia = await montar_midia(piece, identidade_visual={}, pasta=tmp_path, base_url="https://api.exemplo/media", prefixo="x")
+    assert midia.capa_url == "https://api.exemplo/media/capa.jpg"
+    sem = await montar_midia(_piece("reels", {"video": "https://api.exemplo/media/reel.mp4"}), identidade_visual={},
+                             pasta=tmp_path, base_url="https://api.exemplo/media", prefixo="x")
+    assert sem.capa_url is None

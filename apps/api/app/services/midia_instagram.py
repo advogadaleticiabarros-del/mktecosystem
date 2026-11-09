@@ -29,6 +29,7 @@ class Midia:
     primeiro_comentario: str = ""
     video: str | None = None
     capa_ms: int | None = None  # Reels: quadro da capa (o do gancho)
+    capa_url: str | None = None  # Reels: imagem própria de capa (corpo.capa); se houver, vale no lugar do quadro
     trial: bool = False  # Reels: Trial Reels (primeiro para quem não segue)
     trial_graduacao: str = "SS_PERFORMANCE"  # ou "MANUAL": o teste não vira post dos seguidores sozinho
 
@@ -100,7 +101,8 @@ async def montar_midia(
             raise PecaSemConteudo("reels sem vídeo pronto")
         return Midia(imagens=[], legenda=_legenda(corpo), video=corpo["video"],
                      primeiro_comentario=(corpo.get("primeiro_comentario") or "").strip(),
-                     capa_ms=int(corpo.get("capa_ms") or CAPA_PADRAO_MS), trial=bool(corpo.get("trial_reels")),
+                     capa_ms=int(corpo.get("capa_ms") or CAPA_PADRAO_MS), capa_url=corpo.get("capa") or None,
+                     trial=bool(corpo.get("trial_reels")),
                      trial_graduacao=corpo.get("trial_graduacao") or "SS_PERFORMANCE")
 
     # Arte já enviada à mão (POST /media/upload) tem prioridade sobre a gerada.
