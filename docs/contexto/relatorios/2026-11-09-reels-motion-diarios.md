@@ -41,3 +41,16 @@ quer ficar por dentro dos seus direitos, clique em seguir e compartilhe com quem
 
 ## Aprovação e nome (09/11/2026)
 "Todos aprovados": os 13. O estilo passou a se chamar **Flagrante**, documentado em `docs/ESTILO_FLAGRANTE.md`.
+
+## Lote 3 (09/11/2026, noite) · 9 Flagrantes
+Pedido: banheiro (recepcionista, alto fluxo), pensão (público: a mãe), guarda compartilhada, férias de fim de ano
+de pais separados, 13º, trabalho temporário, pausa para banheiro e os artigos mais visitados.
+- Feitos: 14 banheiro, 15 pensão, 16 guarda, 17 férias de Natal, 18 13º, 19 temporário, 20 pausa para banheiro,
+  21 licença-maternidade 120/180 e 22 fim da 6x1.
+- Os de família falam com a mãe. Os que têm artigo trazem o link no `primeiro_comentario`.
+- Artigos mais vistos: a leitura de hoje no Search Console/GA4 (pelo container da API na VPS) foi bloqueada pela
+  permissão automática. Usei a leitura registrada de 24/10 (banheiro, licença 180, pensão, aborto espontâneo, 6x1).
+  Aborto espontâneo ficou de fora: é um tema delicado para animação e depende da decisão da Dra.
+- O fim da 6x1 usa as datas da EC 141 registradas no CONTEXTO_PROJETO (42h em 16/12/2026, 40h em 16/12/2027).
+- Volume entre -15,0 e -16,7 LUFS. Área segura ok.
+- Página de aprovação atualizada com os 22 vídeos (versão 3).

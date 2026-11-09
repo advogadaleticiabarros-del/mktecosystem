@@ -22,6 +22,17 @@ LOTES = [
         ("12-sem-folga", "Sem folga", "Duas semanas de calendário são marcadas como trabalhadas, com os domingos em ouro.", "Quando é a folga?", "Lei 605/1949, CLT art. 67, Súmula 146 do TST"),
         ("13-aviso-previo", "Aviso prévio no horário normal", "O RH manda cumprir o aviso no horário normal; o relógio volta para 15:00 e aparecem as duas opções da lei.", "Horário normal?", "CLT, art. 488"),
     ]),
+    ("Lote 3 · novos, para aprovar (fim de ano, família e artigos mais vistos do blog)", [
+        ("14-banheiro", "Recepcionista lavando banheiro", "O gerente manda a recepcionista lavar os banheiros antes de abrir; o contador mostra 300 pessoas por dia.", "Isso é função dela?", "Súmula 448, II, do TST · artigo mais visto do blog"),
+        ("15-pensao", "Pensão atrasada", "Extrato de Pix da pensão: agosto pago, setembro a novembro em branco, e a mensagem “Esse mês não dá”.", "Atrasou. E agora?", "CPC, art. 528 · Súmula 309 do STJ · artigo entre os mais vistos"),
+        ("16-guarda", "Guarda compartilhada", "As tarefas da semana com o filho vão sendo marcadas uma a uma: todas ficam com a mãe.", "Compartilhada?", "Código Civil, art. 1.583"),
+        ("17-ferias-natal", "Natal e Ano-Novo com pais separados", "O pai avisa que vai levar o filho nas festas, e 24, 25, 31 e 1º ficam todos com ele.", "Pode levar assim?", "ECA, arts. 83 e 84"),
+        ("18-decimo-terceiro", "13º salário", "As datas viram até 30/11 e 20/12, as duas parcelas caem e a segunda vem menor.", "Por que veio menor?", "Lei 4.749/1965"),
+        ("19-temporario", "Temporário de fim de ano", "Chega a vaga temporária de Natal, e os direitos do temporário vão sendo marcados.", "Você recebe tudo isso?", "Lei 6.019/1974, art. 12"),
+        ("20-pausa-banheiro", "Pausa para o banheiro", "O contador chega a 3 idas e o supervisor proíbe e ameaça expor o nome no quadro.", "Pode proibir?", "Constituição, arts. 1º, III, e 5º, X"),
+        ("21-licenca-180", "Licença-maternidade: 120 ou 180?", "O grupo da família diz que o STF deu 180 dias para todas; o contador sobe a 180 e volta a 120.", "180 pra todas?", "ADI 7.495 · Lei 11.770/2008 · artigo entre os mais vistos"),
+        ("22-fim-6x1", "Fim da escala 6x1", "A semana de 6 dias de trabalho vira 5 com 2 folgas a partir de 16/12/2026.", "Sua escala muda?", "EC 141/2026 · artigo entre os mais vistos"),
+    ]),
 ]
 
 
@@ -71,9 +82,9 @@ footer{{border-top:1px solid var(--linha);padding-top:24px;color:var(--mute);fon
 </style>
 <main><div class="fio"></div>
 <h1>Reels motion · aprovação</h1>
-<p class="intro">Dra. Letícia, estes são <strong>13 Reels curtos (22 segundos cada)</strong> no estilo do “23:47”. A ideia é publicar <strong>pelo menos 2 por semana</strong>. Não têm narração: só animação, textos e efeitos sonoros. Ative o som para ouvir. <strong>Nada foi publicado.</strong></p>
+<p class="intro">Dra. Letícia, estes são <strong>22 Reels curtos (22 segundos cada)</strong> no estilo do “23:47”. A ideia é publicar <strong>pelo menos 2 por semana</strong>. Não têm narração: só animação, textos e efeitos sonoros. Ative o som para ouvir. <strong>Nada foi publicado.</strong></p>
 <div class="regras">
-<div><b>Novo em todos:</b> o fechamento agora diz “Leia a legenda”, porque a explicação fica na legenda, e convida: “Quer ficar por dentro dos seus direitos? Clique em seguir e compartilhe com quem precisa saber disso.” A mesma frase entrou nas legendas.</div>
+<div><b>Lote 3 (novo):</b> 9 Reels sobre fim de ano, família e os artigos mais vistos do blog. Os de família falam com a mãe que recebe a pensão pela criança. Os que têm artigo trazem o link no primeiro comentário.</div><div><b>Em todos:</b> o fechamento agora diz “Leia a legenda”, porque a explicação fica na legenda, e convida: “Quer ficar por dentro dos seus direitos? Clique em seguir e compartilhe com quem precisa saber disso.” A mesma frase entrou nas legendas.</div>
 <div><b>O que precisamos da senhora:</b> aprovar, pedir ajuste ou descartar cada vídeo, principalmente os do lote 2. Pode comentar nesta página ou mandar mensagem citando o número do Reels.</div>
 <div><b>Situações fictícias:</b> os comentários serão respondidos só em tese, sem análise de caso.</div>
 </div>
