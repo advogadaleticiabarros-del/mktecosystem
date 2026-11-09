@@ -38,3 +38,7 @@ Pedido: "o perfil ficou muito claro com isso! Me dê variações dessas capas e 
 - Textura: grão forte e brilho dourado. Cena: quadro de 70% do próprio vídeo, desfocado, com alto e base escurecidos para o cabeçalho ler.
 - Documento atualizado (versão 2) com as 5 variações e a grade do feed com cada uma, mais a opção alternada.
 - Não foram usadas fotos do banco: as de pessoas são de outros temas.
+
+## Escolha
+
+A Jessica escolheu a **textura** ("Gostei da capa textura"). Agora é o padrão de `capas.py` e está registrada em `docs/ESTILO_FLAGRANTE.md`. Falta a Dra. aprovar e ligar `cover_url` no publicador.

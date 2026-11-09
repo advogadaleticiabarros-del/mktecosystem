@@ -125,7 +125,7 @@ def quadro(pasta):
 
 async def main():
     args = sys.argv[1:]
-    estilo = args.pop(0)[2:] if args and args[0].startswith("--") else "clara"
+    estilo = args.pop(0)[2:] if args and args[0].startswith("--") else "textura"  # escolhida pela Jessica em 09/11/2026
     so = args
     eps = sorted(p for p in AQUI.glob("[0-9][0-9]_*.py") if not so or any(p.stem.startswith(s) for s in so))
     async with async_playwright() as p:

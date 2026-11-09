@@ -26,7 +26,19 @@ Nome dado em 09/11/2026, quando a Jessica aprovou os 13 primeiros ("Todos aprova
 4. Gere o vídeo com `python NN_assunto.py video`. O resultado sai em `NN-assunto/NN-assunto-v2.mp4`, junto com `legenda.json`.
 5. Inclua o episódio em `gerar_pagina.py` e republique a página de aprovação para a Dra.
 
+## Par com o Manchete (09/11/2026)
+Todo tema tem um Reels Flagrante e um estático Manchete. Os episódios 23 a 33 vieram dos temas do Manchete e pegam a
+legenda de `producao/estilos/manchete/legendas.md` por `manchete_leg.py`, que troca o fechamento pelo do Flagrante.
+
 ## Regras
 - Situação fictícia: comentários respondidos só em tese.
 - Ritmo de pelo menos 2 por semana.
 - Material pronto não é sobrescrito: uma versão nova é um arquivo novo.
+
+## Capa dos Reels (09/11/2026)
+
+Capa própria em vez do quadro do vídeo. Padrão escolhido pela Jessica: **textura** (café com fibra de papel e brilho dourado no canto), para equilibrar o perfil com os posts claros.
+
+- Gerar: `python producao/estilos/papel-e-ouro/motion-diario/capas.py [prefixo ...]`, que grava `<episódio>/capa-textura.jpg`. As outras variações (`--clara`, `--cafe`, `--dividida`, `--cena`) ficam disponíveis.
+- Conteúdo dentro do recorte 3:4 da grade (y 240 a 1680): faixas douradas, tema curto (`TEMAS`), fala do conflito e pergunta em marca-texto, rodapé com assinatura e "Assista", tudo na margem de 96 px.
+- Publicação: o Orbit ainda usa `thumb_offset` (quadro do vídeo). Usar a capa exige `cover_url` no publicador e deploy, com aprovação.
