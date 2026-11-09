@@ -30,7 +30,7 @@
       #p-link { display:inline-block; margin:6px 0 0 20px; padding:2px 6px; border-radius:8px; color:#00376B; font-weight:600; font-size:21px; }
       .p-btns { display:flex; gap:8px; padding:18px 26px; }
       .p-btns div { flex:1; background:#EFEFEF; border-radius:10px; text-align:center; padding:12px 0; font-weight:600; font-size:20px; }
-      .p-btns div:first-child { background:#0095F6; color:#fff; }
+      #seguir { position:relative; background:#0095F6; color:#fff; } #seg-b { position:absolute; inset:0; display:grid; place-items:center; color:#111; opacity:0; }
       .p-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:3px; border-top:1px solid #eee; padding-top:3px; }
       .post { aspect-ratio:3/4; overflow:hidden; background:#ddd; }
       .post img { width:100%; height:100%; object-fit:cover; display:block; }
@@ -45,26 +45,26 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="46.92" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="main" data-start="0" data-duration="49.52" data-width="1080" data-height="1920">
       <div id="fundo"></div>
-      <h1 id="t0" class="titulo clip" data-start="0.00" data-duration="6.00" data-track-index="1"><span class="passo">Calculadora do 13º</span>Onde fica? <em>No link da bio.</em></h1>
-      <h1 id="t1" class="titulo clip" data-start="6.00" data-duration="4.85" data-track-index="1"><span class="passo">Passo 1</span>Na página da bio, desça até <em>Ferramentas gratuitas</em></h1>
-      <h1 id="t2" class="titulo clip" data-start="10.85" data-duration="3.15" data-track-index="1"><span class="passo">Passo 2</span>Abra a <em>Calculadora do 13º</em></h1>
-      <h1 id="t3" class="titulo clip" data-start="14.00" data-duration="2.38" data-track-index="1"><span class="passo">Passo 3</span>Digite o <em>salário bruto</em> do holerite</h1>
-      <h1 id="t4" class="titulo clip" data-start="16.38" data-duration="2.67" data-track-index="1"><span class="passo">Passo 4</span>Escolha a sua <em>situação</em> no emprego</h1>
-      <h1 id="t5" class="titulo clip" data-start="19.05" data-duration="1.66" data-track-index="1"><span class="passo">Passo 5</span>Recebe <em>comissão</em>? Coloque a média do mês</h1>
-      <h1 id="t6" class="titulo clip" data-start="20.71" data-duration="2.29" data-track-index="1"><span class="passo">Passo 6</span><em>Horas extras</em> e noturno também entram</h1>
-      <h1 id="t7" class="titulo clip" data-start="23.00" data-duration="1.67" data-track-index="1"><span class="passo">Passo 7</span>Abra as <em>informações extras</em></h1>
-      <h1 id="t8" class="titulo clip" data-start="24.67" data-duration="2.18" data-track-index="1"><span class="passo">Passo 8</span>Tem filhos? Informe os <em>dependentes</em> do IR</h1>
-      <h1 id="t9" class="titulo clip" data-start="26.85" data-duration="1.38" data-track-index="1"><span class="passo">Passo 9</span>Toque em <em>Calcular meu 13º</em></h1>
-      <h1 id="t10" class="titulo clip" data-start="28.23" data-duration="8.29" data-track-index="1"><span class="passo">Passo 10</span>Nome, WhatsApp e e-mail para <em>ver o resultado</em></h1>
-      <h1 id="t11" class="titulo clip" data-start="36.52" data-duration="2.40" data-track-index="1"><span class="passo">Resultado</span>Cada parcela, já com <em>INSS e Imposto de Renda</em></h1>
-      <h1 id="t12" class="titulo clip" data-start="38.92" data-duration="3.00" data-track-index="1"><span class="passo">No exemplo</span>Salário de R$ 4.500 + comissão e extras: <em>R$ 4.829,38</em></h1>
+      <h1 id="t0" class="titulo clip" data-start="0.00" data-duration="8.60" data-track-index="1"><span class="passo">Calculadora do 13º</span>Onde fica? <em>No link da bio.</em></h1>
+      <h1 id="t1" class="titulo clip" data-start="8.60" data-duration="4.85" data-track-index="1"><span class="passo">Passo 1</span>Na página da bio, desça até <em>Ferramentas gratuitas</em></h1>
+      <h1 id="t2" class="titulo clip" data-start="13.45" data-duration="3.15" data-track-index="1"><span class="passo">Passo 2</span>Abra a <em>Calculadora do 13º</em></h1>
+      <h1 id="t3" class="titulo clip" data-start="16.60" data-duration="2.38" data-track-index="1"><span class="passo">Passo 3</span>Digite o <em>salário bruto</em> do holerite</h1>
+      <h1 id="t4" class="titulo clip" data-start="18.98" data-duration="2.67" data-track-index="1"><span class="passo">Passo 4</span>Escolha a sua <em>situação</em> no emprego</h1>
+      <h1 id="t5" class="titulo clip" data-start="21.65" data-duration="1.66" data-track-index="1"><span class="passo">Passo 5</span>Recebe <em>comissão</em>? Coloque a média do mês</h1>
+      <h1 id="t6" class="titulo clip" data-start="23.31" data-duration="2.29" data-track-index="1"><span class="passo">Passo 6</span><em>Horas extras</em> e noturno também entram</h1>
+      <h1 id="t7" class="titulo clip" data-start="25.60" data-duration="1.67" data-track-index="1"><span class="passo">Passo 7</span>Abra as <em>informações extras</em></h1>
+      <h1 id="t8" class="titulo clip" data-start="27.27" data-duration="2.18" data-track-index="1"><span class="passo">Passo 8</span>Tem filhos? Informe os <em>dependentes</em> do IR</h1>
+      <h1 id="t9" class="titulo clip" data-start="29.45" data-duration="1.38" data-track-index="1"><span class="passo">Passo 9</span>Toque em <em>Calcular meu 13º</em></h1>
+      <h1 id="t10" class="titulo clip" data-start="30.83" data-duration="8.29" data-track-index="1"><span class="passo">Passo 10</span>Nome, WhatsApp e e-mail para <em>ver o resultado</em></h1>
+      <h1 id="t11" class="titulo clip" data-start="39.12" data-duration="2.40" data-track-index="1"><span class="passo">Resultado</span>Cada parcela, já com <em>INSS e Imposto de Renda</em></h1>
+      <h1 id="t12" class="titulo clip" data-start="41.52" data-duration="3.00" data-track-index="1"><span class="passo">No exemplo</span>Salário de R$ 4.500 + comissão e extras: <em>R$ 4.829,38</em></h1>
 
       <div id="celular"></div>
       <div id="tela">
-        <video id="gravacao" class="clip" src="assets/tela.mp4" muted playsinline data-start="6.0" data-duration="35.92" data-track-index="2"></video>
-        <div id="perfil" class="clip" data-start="0" data-duration="6.0" data-track-index="3">
+        <video id="gravacao" class="clip" src="assets/tela.mp4" muted playsinline data-start="8.6" data-duration="35.92" data-track-index="2"></video>
+        <div id="perfil" class="clip" data-start="0" data-duration="8.6" data-track-index="3">
           <div id="perfil-rola">
             <div class="p-top">adv.leticiabarros2</div>
             <div class="p-head"><img src="assets/feed/avatar.jpg" alt="" />
@@ -72,32 +72,35 @@
             <div class="p-nome">Advogada | Direito Trabalhista, Direito das Gravidas e Famílias</div>
             <div class="p-bio">Atendimento humano, exclusivo e personalizado<br>📲 Fale comigo ⬇</div>
             <span id="p-link">advogadaleticiabarros.com.br/bio</span>
-            <div class="p-btns"><div>Seguir</div><div>Mensagem</div></div>
+            <div class="p-btns"><div id="seguir"><span id="seg-a">Seguir</span><span id="seg-b">Seguindo ✓</span></div><div>Mensagem</div></div>
             <div class="p-grid"><div class="post"><img src="assets/feed/post00.jpg" alt=""></div><div class="post"><img src="assets/feed/post01.jpg" alt=""></div><div class="post"><img src="assets/feed/post02.jpg" alt=""></div><div class="post"><img src="assets/feed/post03.jpg" alt=""></div><div class="post"><img src="assets/feed/post04.jpg" alt=""></div><div class="post"><img src="assets/feed/post05.jpg" alt=""></div><div class="post"><img src="assets/feed/post06.jpg" alt=""></div><div class="post"><img src="assets/feed/post07.jpg" alt=""></div><div class="post"><img src="assets/feed/post08.jpg" alt=""></div><div class="post"><img src="assets/feed/post09.jpg" alt=""></div><div class="post"><img src="assets/feed/post10.jpg" alt=""></div><div class="post"><img src="assets/feed/post11.jpg" alt=""></div></div>
           </div>
         </div>
       </div>
 
-      <div id="toque" class="toque clip" data-start="0" data-duration="41.92" data-track-index="4"></div>
-      <div id="onda" class="onda clip" data-start="0" data-duration="41.92" data-track-index="4"></div>
+      <div id="toque" class="toque clip" data-start="0" data-duration="44.52" data-track-index="4"></div>
+      <div id="onda" class="onda clip" data-start="0" data-duration="44.52" data-track-index="4"></div>
 
-      <audio id="som0" class="clip" src="assets/toque.wav" data-start="4.60" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som1" class="clip" src="assets/toque.wav" data-start="10.75" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som2" class="clip" src="assets/toque.wav" data-start="14.95" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som3" class="clip" src="assets/toque.wav" data-start="17.23" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som4" class="clip" src="assets/toque.wav" data-start="19.50" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som5" class="clip" src="assets/toque.wav" data-start="21.16" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som6" class="clip" src="assets/toque.wav" data-start="23.45" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som7" class="clip" src="assets/toque.wav" data-start="25.12" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som8" class="clip" src="assets/toque.wav" data-start="27.30" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som9" class="clip" src="assets/toque.wav" data-start="28.68" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som10" class="clip" src="assets/toque.wav" data-start="30.45" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som11" class="clip" src="assets/toque.wav" data-start="32.22" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som12" class="clip" src="assets/toque.wav" data-start="34.12" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som13" class="clip" src="assets/toque.wav" data-start="35.42" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
-      <audio id="som-total" class="clip" src="assets/resultado.wav" data-start="38.92" data-duration="1.2" data-track-index="6" data-volume="0.6"></audio>
+      <audio id="som0" class="clip" src="assets/toque.wav" data-start="4.70" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som1" class="clip" src="assets/toque.wav" data-start="7.60" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som2" class="clip" src="assets/toque.wav" data-start="13.35" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som3" class="clip" src="assets/toque.wav" data-start="17.55" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som4" class="clip" src="assets/toque.wav" data-start="19.83" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som5" class="clip" src="assets/toque.wav" data-start="22.10" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som6" class="clip" src="assets/toque.wav" data-start="23.76" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som7" class="clip" src="assets/toque.wav" data-start="26.05" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som8" class="clip" src="assets/toque.wav" data-start="27.72" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som9" class="clip" src="assets/toque.wav" data-start="29.90" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som10" class="clip" src="assets/toque.wav" data-start="31.28" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som11" class="clip" src="assets/toque.wav" data-start="33.05" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som12" class="clip" src="assets/toque.wav" data-start="34.82" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som13" class="clip" src="assets/toque.wav" data-start="36.72" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som14" class="clip" src="assets/toque.wav" data-start="38.02" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>
+      <audio id="som-total" class="clip" src="assets/moedas.wav" data-start="39.42" data-duration="1.6" data-track-index="6" data-volume="0.9"></audio>
 
-      <div id="final" class="clip" data-start="41.92" data-duration="5.0" data-track-index="7">
+      <audio id="som-sino" class="clip" src="assets/resultado.wav" data-start="41.52" data-duration="1.2" data-track-index="7" data-volume="0.6"></audio>
+
+      <div id="final" class="clip" data-start="44.52" data-duration="5.0" data-track-index="7">
         <div id="cta-sub">Calcule o seu 13º de 2026</div>
         <div class="linha"></div>
         <div id="cta" data-var-text="cta">Clique no link da bio e faça o seu cálculo</div>
@@ -109,22 +112,28 @@
     <script>
       const tl = gsap.timeline({ paused: true });
       const E = "power3.out";
-      tl.fromTo("#t1",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},6.02);
-      tl.fromTo("#t2",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},10.87);
-      tl.fromTo("#t3",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},14.02);
-      tl.fromTo("#t4",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},16.40);
-      tl.fromTo("#t5",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},19.07);
-      tl.fromTo("#t6",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},20.73);
-      tl.fromTo("#t7",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},23.02);
-      tl.fromTo("#t8",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},24.69);
-      tl.fromTo("#t9",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},26.87);
-      tl.fromTo("#t10",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},28.25);
-      tl.fromTo("#t11",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},36.54);
-      tl.fromTo("#t12",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},38.94);
+      tl.fromTo("#t1",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},8.62);
+      tl.fromTo("#t2",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},13.47);
+      tl.fromTo("#t3",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},16.62);
+      tl.fromTo("#t4",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},19.00);
+      tl.fromTo("#t5",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},21.67);
+      tl.fromTo("#t6",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},23.33);
+      tl.fromTo("#t7",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},25.62);
+      tl.fromTo("#t8",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},27.29);
+      tl.fromTo("#t9",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},29.47);
+      tl.fromTo("#t10",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},30.85);
+      tl.fromTo("#t11",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},39.14);
+      tl.fromTo("#t12",{opacity:0,y:20},{opacity:1,y:0,duration:.35,ease:E},41.54);
       // abertura: o feed desce um pouco, volta, e o link acende
       tl.fromTo("#perfil-rola", { y: 0 }, { y: -420, duration: 1.5, ease: "power2.inOut" }, 0.6);
       tl.to("#perfil-rola", { y: 0, duration: 1.2, ease: "power2.inOut" }, 2.3);
-      tl.fromTo("#p-link", { backgroundColor: "rgba(212,180,131,0)" }, { backgroundColor: "rgba(212,180,131,.5)", duration: .35, yoyo: true, repeat: 1 }, 3.5);
+      // zoom no Seguir, toca, vira Seguindo e volta
+      tl.fromTo("#perfil", { scale: 1, transformOrigin: "166px 482px" }, { scale: 2.1, duration: .8, ease: "power2.inOut" }, 3.6);
+      tl.to("#seguir", { backgroundColor: "#EFEFEF", duration: .2 }, 4.72);
+      tl.to("#seg-a", { opacity: 0, duration: .15 }, 4.72);
+      tl.to("#seg-b", { opacity: 1, duration: .2 }, 4.75);
+      tl.to("#perfil", { scale: 1, duration: .8, ease: "power2.inOut" }, 5.7);
+      tl.fromTo("#p-link", { backgroundColor: "rgba(212,180,131,0)" }, { backgroundColor: "rgba(212,180,131,.5)", duration: .35, yoyo: true, repeat: 1 }, 6.7);
       function tocar(t, x, y) {
         tl.set("#toque", { x: x, y: y }, t - .4);
         tl.fromTo("#toque", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: .25, ease: E }, t - .4);
@@ -133,22 +142,23 @@
         tl.set("#onda", { x: x, y: y }, t);
         tl.fromTo("#onda", { opacity: .9, scale: .6 }, { opacity: 0, scale: 2.3, duration: .5, ease: "power2.out" }, t);
       }
-      tocar(4.60,430,815);
-      tocar(10.75,540,1132);
-      tocar(14.95,540,1036);
-      tocar(17.23,540,1186);
-      tocar(19.50,540,968);
-      tocar(21.16,540,1118);
-      tocar(23.45,540,1046);
-      tocar(25.12,540,1036);
-      tocar(27.30,540,1175);
-      tocar(28.68,540,901);
-      tocar(30.45,540,1051);
-      tocar(32.22,540,1201);
-      tocar(34.12,294,1282);
-      tocar(35.42,540,1175);
-      tl.fromTo("#final", { opacity: 0 }, { opacity: 1, duration: .4 }, 41.92);
-      tl.fromTo("#cta", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .6, ease: E }, 42.22);
+      tocar(4.70,396,876);
+      tocar(7.60,430,815);
+      tocar(13.35,540,1132);
+      tocar(17.55,540,1036);
+      tocar(19.83,540,1186);
+      tocar(22.10,540,968);
+      tocar(23.76,540,1118);
+      tocar(26.05,540,1046);
+      tocar(27.72,540,1036);
+      tocar(29.90,540,1175);
+      tocar(31.28,540,901);
+      tocar(33.05,540,1051);
+      tocar(34.82,540,1201);
+      tocar(36.72,294,1282);
+      tocar(38.02,540,1175);
+      tl.fromTo("#final", { opacity: 0 }, { opacity: 1, duration: .4 }, 44.52);
+      tl.fromTo("#cta", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .6, ease: E }, 44.82);
       window.__timelines["main"] = tl;
       tl.seek(0);
     </script>

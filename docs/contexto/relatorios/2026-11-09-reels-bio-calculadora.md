@@ -14,3 +14,8 @@
 - Navegação real gravada quadro a quadro (`gravar.py`): salário R$ 4.500, comissão R$ 800, horas extras R$ 300, 1 dependente → total R$ 4.829,38 (INSS R$ 585,51, IR R$ 185,11). Rede bloqueada, nenhum lead criado.
 - Composição gerada por `montar.py`; legenda nova em `legenda-v2.md`.
 - Página de aprovação atualizada: https://claude.ai/artifact/9AwWip5MJtxiWnNa1pMXMW (registro em `aprovacoes/reels-bio-calculadora-13-v2`).
+
+## Versão 3 (09/11/2026)
+
+- `reels-bio-calculadora-13-v3.mp4` (50 s): igual à v2, mais zoom no Seguir → "Seguindo ✓" → volta e toque no link; som de moedas quando o resultado aparece (sino mantido no total). v1 e v2 guardadas.
+- Página de aprovação atualizada (registro em `aprovacoes/reels-bio-calculadora-13-v3`).

@@ -4,7 +4,7 @@ AQUI = pathlib.Path(__file__).parent
 rot = json.load(open(AQUI / "rec/roteiro.json", encoding="utf-8"))
 perfil = json.load(open(AQUI / "feed/perfil.json", encoding="utf-8"))["perfil"]
 
-INTRO = 6.0                      # abertura no perfil
+INTRO = 8.6                      # abertura no perfil
 TELA = rot["duracao"]            # gravação real
 FIM = 5.0                        # CTA
 TOTAL = round(INTRO + TELA + FIM, 2)
@@ -29,6 +29,7 @@ TITULOS = {
 marcos = rot["marcos"]
 titulos_html, titulos_js = [], []
 abertura = ("Calculadora do 13º", "Onde fica? <em>No link da bio.</em>")
+SEGUIR = ("Antes de tudo", "Siga a Dra. para <em>não perder seus direitos</em>")
 lista = [(0.0, INTRO, abertura)]
 for i, m in enumerate(marcos):
     ini = INTRO + m["t"]
@@ -40,12 +41,12 @@ for i, (ini, dur, (olho, txt)) in enumerate(lista):
     if i:
         titulos_js.append(f'tl.fromTo("#t{i}",{{opacity:0,y:20}},{{opacity:1,y:0,duration:.35,ease:E}},{ini + .02:.2f});')
 
-toques = [(4.6, 430, 815)] + [(INTRO + q["t"], TX + q["x"] * S, TY + q["y"] * S) for q in rot["toques"]]
+toques = [(4.7, 396, 876), (7.6, 430, 815)] + [(INTRO + q["t"], TX + q["x"] * S, TY + q["y"] * S) for q in rot["toques"]]
 toques_js = "\n".join(f"tocar({t:.2f},{x:.0f},{y:.0f});" for t, x, y in toques)
 sons = "\n      ".join(
     f'<audio id="som{i}" class="clip" src="assets/toque.wav" data-start="{t:.2f}" data-duration="0.2" data-track-index="5" data-volume="0.8"></audio>'
     for i, (t, x, y) in enumerate(toques))
-t_total = INTRO + next(m["t"] for m in marcos if m["nome"] == "total")
+t_total = INTRO + next(m["t"] for m in marcos if m["nome"] == "resultado") + 0.3
 
 posts = "".join(f'<div class="post"><img src="assets/feed/post{i:02d}.jpg" alt=""></div>' for i in range(12))
 bio_txt = perfil["biography"].replace("\n", "<br>")
@@ -82,7 +83,7 @@ html = f"""<!doctype html>
       #p-link {{ display:inline-block; margin:6px 0 0 20px; padding:2px 6px; border-radius:8px; color:#00376B; font-weight:600; font-size:21px; }}
       .p-btns {{ display:flex; gap:8px; padding:18px 26px; }}
       .p-btns div {{ flex:1; background:#EFEFEF; border-radius:10px; text-align:center; padding:12px 0; font-weight:600; font-size:20px; }}
-      .p-btns div:first-child {{ background:#0095F6; color:#fff; }}
+      #seguir {{ position:relative; background:#0095F6; color:#fff; }} #seg-b {{ position:absolute; inset:0; display:grid; place-items:center; color:#111; opacity:0; }}
       .p-grid {{ display:grid; grid-template-columns:repeat(3,1fr); gap:3px; border-top:1px solid #eee; padding-top:3px; }}
       .post {{ aspect-ratio:3/4; overflow:hidden; background:#ddd; }}
       .post img {{ width:100%; height:100%; object-fit:cover; display:block; }}
@@ -112,7 +113,7 @@ html = f"""<!doctype html>
             <div class="p-nome">{perfil["name"]}</div>
             <div class="p-bio">{bio_txt}</div>
             <span id="p-link">advogadaleticiabarros.com.br/bio</span>
-            <div class="p-btns"><div>Seguir</div><div>Mensagem</div></div>
+            <div class="p-btns"><div id="seguir"><span id="seg-a">Seguir</span><span id="seg-b">Seguindo ✓</span></div><div>Mensagem</div></div>
             <div class="p-grid">{posts}</div>
           </div>
         </div>
@@ -122,7 +123,9 @@ html = f"""<!doctype html>
       <div id="onda" class="onda clip" data-start="0" data-duration="{INTRO + TELA}" data-track-index="4"></div>
 
       {sons}
-      <audio id="som-total" class="clip" src="assets/resultado.wav" data-start="{t_total:.2f}" data-duration="1.2" data-track-index="6" data-volume="0.6"></audio>
+      <audio id="som-total" class="clip" src="assets/moedas.wav" data-start="{t_total:.2f}" data-duration="1.6" data-track-index="6" data-volume="0.9"></audio>
+
+      <audio id="som-sino" class="clip" src="assets/resultado.wav" data-start="{INTRO + next(m["t"] for m in marcos if m["nome"] == "total"):.2f}" data-duration="1.2" data-track-index="7" data-volume="0.6"></audio>
 
       <div id="final" class="clip" data-start="{INTRO + TELA}" data-duration="{FIM}" data-track-index="7">
         <div id="cta-sub">Calcule o seu 13º de 2026</div>
@@ -140,7 +143,13 @@ html = f"""<!doctype html>
       // abertura: o feed desce um pouco, volta, e o link acende
       tl.fromTo("#perfil-rola", {{ y: 0 }}, {{ y: -420, duration: 1.5, ease: "power2.inOut" }}, 0.6);
       tl.to("#perfil-rola", {{ y: 0, duration: 1.2, ease: "power2.inOut" }}, 2.3);
-      tl.fromTo("#p-link", {{ backgroundColor: "rgba(212,180,131,0)" }}, {{ backgroundColor: "rgba(212,180,131,.5)", duration: .35, yoyo: true, repeat: 1 }}, 3.5);
+      // zoom no Seguir, toca, vira Seguindo e volta
+      tl.fromTo("#perfil", {{ scale: 1, transformOrigin: "166px 482px" }}, {{ scale: 2.1, duration: .8, ease: "power2.inOut" }}, 3.6);
+      tl.to("#seguir", {{ backgroundColor: "#EFEFEF", duration: .2 }}, 4.72);
+      tl.to("#seg-a", {{ opacity: 0, duration: .15 }}, 4.72);
+      tl.to("#seg-b", {{ opacity: 1, duration: .2 }}, 4.75);
+      tl.to("#perfil", {{ scale: 1, duration: .8, ease: "power2.inOut" }}, 5.7);
+      tl.fromTo("#p-link", {{ backgroundColor: "rgba(212,180,131,0)" }}, {{ backgroundColor: "rgba(212,180,131,.5)", duration: .35, yoyo: true, repeat: 1 }}, 6.7);
       function tocar(t, x, y) {{
         tl.set("#toque", {{ x: x, y: y }}, t - .4);
         tl.fromTo("#toque", {{ opacity: 0, scale: 1.4 }}, {{ opacity: 1, scale: 1, duration: .25, ease: E }}, t - .4);
