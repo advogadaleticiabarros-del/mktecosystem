@@ -61,5 +61,8 @@ comissão e adicionais já visíveis e botão de "adicionar mais" evidente. Feit
   título da calculadora vira "Calculadora do 13º salário" (palavra-chave num h2); link da LP para o artigo do 13º da
   gestante e link do artigo para a LP (com UTM `utm_source=blog`). Bing avisado pela API (200); IndexNow devolveu 403
   mesmo com o arquivo de chave no ar (problema antigo do lado deles, não desta página).
-- **Pendente (Jessica):** pedir a indexação no Google Search Console (Inspeção de URL → Solicitar indexação), que não
-  tem API para páginas comuns.
+- **Google avisado pela API** (`avisar_google.py`, conta conectada no Orbit, escopo webmasters): sitemap reenviado
+  no Search Console em 09/11 15:32 (pendente de leitura). Inspeção de URL: a calculadora ainda "O Google não reconhece
+  o URL" (normal, recém-publicada); o artigo do 13º da gestante está "Detectada, mas não indexada". O botão "Solicitar
+  indexação" não existe na API; se quiser acelerar mais, a Jessica pode apertá-lo no painel. Rodar o script de novo
+  em alguns dias mostra se as duas entraram.
