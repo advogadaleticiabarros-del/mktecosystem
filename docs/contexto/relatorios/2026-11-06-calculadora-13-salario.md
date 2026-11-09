@@ -30,6 +30,7 @@ Playwright em 390 px e 1280 px com o envio ao CRM simulado (nenhum lead falso cr
 depois do contato, sem erro de JS, sem rolagem lateral; conta conferida à mão.
 
 ## Pendente
-- **Publicar** (espera o ok da Jessica): subir `lp/calculadora-13-salario.html` e `lp/js/calculo-13.js` por SFTP,
-  como em `producao/campanhas/2026-10-assedio-eleitoral/blog-lp/publicar_lp_v2.py`.
+- ~~Publicar~~ **feito em 09/11** com o ok da Jessica: `producao/campanhas/2026-11-calculadora-13/publicar_calculadora.py`
+  (roda no container `vps-api-1`, backup em `/tmp/bkp_calc13/` se já houver versão). Conferido no ar: 200 nos dois
+  arquivos e fluxo completo em 390 px e 1280 px, com o envio ao CRM interceptado (nenhum lead de teste criado).
 - Divulgação: link na bio, Stories, 1º comentário dos 4 Reels do 13º (10, 13, 17 e 20/11), Google Business.
