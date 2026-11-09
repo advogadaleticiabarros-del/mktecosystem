@@ -10,7 +10,7 @@ from pathlib import Path
 
 from PIL import Image, ImageOps
 
-FONTES = {"EB Garamond", "Inter"}  # Cormorant reprovada pela Dra.; ver docs/PASSAGEM_DE_CONTEXTO.md
+FONTES = {"EB Garamond", "Inter", "Playfair Display"}  # Cormorant reprovada pela Dra.; ver docs/PASSAGEM_DE_CONTEXTO.md
 TAMANHO_MINIMO = 22  # docs/MANUAL_CONTEUDO_REDES.md: nada abaixo de 22 px
 LADO_MAXIMO_FOTO = 2400
 _NOME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$")
@@ -30,7 +30,7 @@ def _validar(doc):
             raise PecaInvalida(f"Elemento desconhecido: {tipo}.")
         if tipo == "texto":
             if e.get("fonte") not in FONTES:
-                raise PecaInvalida("Use EB Garamond ou Inter.")
+                raise PecaInvalida("Use EB Garamond, Playfair Display ou Inter.")
             if not isinstance(e.get("tamanho"), (int, float)) or e["tamanho"] < TAMANHO_MINIMO:
                 raise PecaInvalida(f"Nenhum texto pode ficar abaixo de {TAMANHO_MINIMO} px.")
         if tipo == "imagem" and not _FOTO.match(str(e.get("arquivo", ""))):

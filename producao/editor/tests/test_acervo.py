@@ -105,3 +105,8 @@ def test_saida_nunca_sobrescreve_arquivo_anterior(acervo):
     b = acervo.guardar_saida("arte", b"dois")
     assert a != b
     assert a.read_bytes() == b"um" and b.read_bytes() == b"dois"
+
+
+def test_playfair_display_e_aceita_para_o_estilo_manchete(acervo):
+    acervo.criar("arte", doc(texto(fonte="Playfair Display")))
+    assert acervo.abrir("arte")["elementos"][0]["fonte"] == "Playfair Display"

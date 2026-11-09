@@ -156,3 +156,9 @@ def test_nova_versao_nao_muda_a_peca_de_origem_e_original_pode_voltar(ambiente):
     pagina.get_by_role("button", name="Voltar ao original").click()
     expect(el(pagina, "nome")).to_be_visible()
     assert any(e["id"] == "nome" for e in acervo.abrir("arte-v2")["elementos"])
+
+
+def test_negrito_e_sobrescrito_sobrevivem_e_estilo_estranho_some(ambiente):
+    pagina, _, _ = ambiente
+    limpo = pagina.evaluate("limparTexto('<sup>1.</sup> <b>A</b> <span style=\"color:red\">x</span><script>y</script>')")
+    assert limpo == "<sup>1.</sup> <b>A</b> x"

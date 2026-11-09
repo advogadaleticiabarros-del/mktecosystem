@@ -1,0 +1,82 @@
+{
+ "largura": 1080,
+ "altura": 1440,
+ "fundo": "#231E1A",
+ "elementos": [
+  {
+   "id": "fundo",
+   "nome": "Fundo (foto e acabamento)",
+   "tipo": "imagem",
+   "x": 0,
+   "y": 0,
+   "largura": 1080,
+   "altura": 1440,
+   "arquivo": "fundo.jpg",
+   "pb": false
+  },
+  {
+   "id": "texto-1",
+   "nome": "@adv.leticiabarros2",
+   "tipo": "texto",
+   "x": 425.27,
+   "y": 57,
+   "html": "@adv.leticiabarros2",
+   "fonte": "Inter",
+   "tamanho": 24,
+   "cor": "#EFE6D9",
+   "peso": 500,
+   "entrelinha": "normal",
+   "espacamento": 0,
+   "alinhamento": "center",
+   "largura": 230
+  },
+  {
+   "id": "texto-2",
+   "nome": "o amigo secreto da firma é",
+   "tipo": "texto",
+   "x": 0,
+   "y": 138,
+   "html": "o amigo secreto da firma é",
+   "fonte": "Inter",
+   "tamanho": 66,
+   "cor": "#FFFFFF",
+   "peso": 300,
+   "entrelinha": "normal",
+   "espacamento": -0.015,
+   "alinhamento": "center",
+   "largura": 1081
+  },
+  {
+   "id": "texto-3",
+   "nome": "A empresa pode convidar. Obrig",
+   "tipo": "texto",
+   "x": 110,
+   "y": 1190,
+   "html": "A empresa pode convidar. Obrigar a participar e descontar do salário é outra história.",
+   "fonte": "Inter",
+   "tamanho": 36,
+   "cor": "#FFFFFF",
+   "peso": 300,
+   "entrelinha": 1.38,
+   "espacamento": 0,
+   "alinhamento": "center",
+   "largura": 861
+  },
+  {
+   "id": "texto-4",
+   "nome": "LEIA A LEGENDA",
+   "tipo": "texto",
+   "x": 0,
+   "y": 1349,
+   "html": "LEIA A LEGENDA",
+   "fonte": "Inter",
+   "tamanho": 24,
+   "cor": "#EFE6D9",
+   "peso": 500,
+   "entrelinha": "normal",
+   "espacamento": 0.08,
+   "alinhamento": "center",
+   "largura": 1081
+  }
+ ]
+}

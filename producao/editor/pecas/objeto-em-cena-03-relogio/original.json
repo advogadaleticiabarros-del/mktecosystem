@@ -1,0 +1,82 @@
+{
+ "largura": 1080,
+ "altura": 1440,
+ "fundo": "#231E1A",
+ "elementos": [
+  {
+   "id": "fundo",
+   "nome": "Fundo (foto e acabamento)",
+   "tipo": "imagem",
+   "x": 0,
+   "y": 0,
+   "largura": 1080,
+   "altura": 1440,
+   "arquivo": "fundo.jpg",
+   "pb": false
+  },
+  {
+   "id": "texto-1",
+   "nome": "@adv.leticiabarros2",
+   "tipo": "texto",
+   "x": 425.27,
+   "y": 74,
+   "html": "@adv.leticiabarros2",
+   "fonte": "Inter",
+   "tamanho": 24,
+   "cor": "#EFE6D9",
+   "peso": 500,
+   "entrelinha": "normal",
+   "espacamento": 0,
+   "alinhamento": "left"
+  },
+  {
+   "id": "texto-2",
+   "nome": "Ficar depois da hora não é fav",
+   "tipo": "texto",
+   "x": 0,
+   "y": 215,
+   "html": "Ficar depois da hora<br><i>não é favor,</i> é hora extra.",
+   "fonte": "EB Garamond",
+   "tamanho": 88,
+   "cor": "#EFE6D9",
+   "peso": 500,
+   "entrelinha": 1.2,
+   "espacamento": -0.015,
+   "alinhamento": "center",
+   "largura": 1081,
+   "peso_destaque": 400
+  },
+  {
+   "id": "texto-3",
+   "nome": "Letícia Barros · OAB/ES 39.948",
+   "tipo": "texto",
+   "x": 136,
+   "y": 1310.5,
+   "html": "Letícia Barros · OAB/ES 39.948",
+   "fonte": "Inter",
+   "tamanho": 24,
+   "cor": "#EFE6D9",
+   "peso": 500,
+   "entrelinha": "normal",
+   "espacamento": 0,
+   "alinhamento": "left",
+   "largura": 420
+  },
+  {
+   "id": "texto-4",
+   "nome": "leia a legenda",
+   "tipo": "texto",
+   "x": 822.47,
+   "y": 1316,
+   "html": "leia a legenda",
+   "fonte": "Inter",
+   "tamanho": 24,
+   "cor": "#1E1814",
+   "peso": 600,
+   "entrelinha": "normal",
+   "espacamento": 0,
+   "alinhamento": "left",
+   "largura": 201
+  }
+ ]
+}

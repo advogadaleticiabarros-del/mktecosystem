@@ -1,0 +1,65 @@
+{
+ "largura": 1080,
+ "altura": 1440,
+ "fundo": "#231E1A",
+ "elementos": [
+  {
+   "id": "fundo",
+   "nome": "Fundo (foto e acabamento)",
+   "tipo": "imagem",
+   "x": 0,
+   "y": 0,
+   "largura": 1080,
+   "altura": 1440,
+   "arquivo": "fundo.jpg",
+   "pb": false
+  },
+  {
+   "id": "texto-1",
+   "nome": "ANTES",
+   "tipo": "texto",
+   "x": 92,
+   "y": 950,
+   "html": "ANTES",
+   "fonte": "EB Garamond",
+   "tamanho": 226,
+   "cor": "ouro-brilho",
+   "peso": 500,
+   "entrelinha": 1,
+   "espacamento": 0.005,
+   "alinhamento": "left"
+  },
+  {
+   "id": "texto-2",
+   "nome": "de nascer.",
+   "tipo": "texto",
+   "x": 92,
+   "y": 1192,
+   "html": "de <i>nascer.</i>",
+   "fonte": "EB Garamond",
+   "tamanho": 74,
+   "cor": "#EFE6D9",
+   "peso": 500,
+   "entrelinha": 1.08,
+   "espacamento": -0.015,
+   "alinhamento": "left",
+   "peso_destaque": 400
+  },
+  {
+   "id": "texto-3",
+   "nome": "A pensão pode ser pedida duran",
+   "tipo": "texto",
+   "x": 96,
+   "y": 1280,
+   "html": "A pensão pode ser pedida durante a gestação. Lei 11.804/2008.<br>Letícia Barros · OAB/ES 39.948",
+   "fonte": "Inter",
+   "tamanho": 24,
+   "cor": "#EFE6D9",
+   "peso": 500,
+   "entrelinha": 1.45,
+   "espacamento": 0,
+   "alinhamento": "left",
+   "largura": 889
+  }
+ ]
+}

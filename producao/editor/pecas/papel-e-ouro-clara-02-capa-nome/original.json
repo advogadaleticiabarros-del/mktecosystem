@@ -1,0 +1,81 @@
+{
+ "largura": 1080,
+ "altura": 1440,
+ "fundo": "#231E1A",
+ "elementos": [
+  {
+   "id": "fundo",
+   "nome": "Fundo (foto e acabamento)",
+   "tipo": "imagem",
+   "x": 0,
+   "y": 0,
+   "largura": 1080,
+   "altura": 1440,
+   "arquivo": "fundo.jpg",
+   "pb": false
+  },
+  {
+   "id": "texto-1",
+   "nome": "QUEM É",
+   "tipo": "texto",
+   "x": 96,
+   "y": 103,
+   "html": "QUEM É",
+   "fonte": "Inter",
+   "tamanho": 24,
+   "cor": "#1E1814",
+   "peso": 600,
+   "entrelinha": "normal",
+   "espacamento": 0.12,
+   "alinhamento": "left",
+   "largura": 112
+  },
+  {
+   "id": "texto-2",
+   "nome": "OAB/ES 39.948",
+   "tipo": "texto",
+   "x": 805.89,
+   "y": 103,
+   "html": "OAB/ES 39.948",
+   "fonte": "Inter",
+   "tamanho": 24,
+   "cor": "#1E1814",
+   "peso": 500,
+   "entrelinha": "normal",
+   "espacamento": 0,
+   "alinhamento": "left",
+   "largura": 179
+  },
+  {
+   "id": "texto-3",
+   "nome": "Letícia Barros",
+   "tipo": "texto",
+   "x": 93,
+   "y": 176,
+   "html": "Letícia Barros",
+   "fonte": "EB Garamond",
+   "tamanho": 136,
+   "cor": "#1E1814",
+   "peso": 500,
+   "entrelinha": 1,
+   "espacamento": -0.015,
+   "alinhamento": "left"
+  },
+  {
+   "id": "texto-4",
+   "nome": "a advogada da mulher que traba",
+   "tipo": "texto",
+   "x": 97,
+   "y": 330,
+   "html": "<i>a advogada da mulher que trabalha</i>",
+   "fonte": "EB Garamond",
+   "tamanho": 50,
+   "cor": "#1E1814",
+   "peso": 500,
+   "entrelinha": 1.2,
+   "espacamento": -0.015,
+   "alinhamento": "left",
+   "peso_destaque": 400
+  }
+ ]
+}

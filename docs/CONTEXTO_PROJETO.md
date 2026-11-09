@@ -1183,25 +1183,13 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   em `docs/superpowers/specs/` e `docs/superpowers/plans/` — vale checar antes de
   redesenhar algo já decidido.
 
-## Editor de artes manual (05/11/2026)
+## Editor de artes manual (05/11/2026; peças da semana em 09/11)
 
 A Jessica ajusta artes à mão em `producao/editor/` (atalho "Editor de artes" na Área de Trabalho, ou `Abrir editor.bat`).
-Local e gratuito, sem conta. Salva em `pecas/<nome>/peca.json`, e a versão dela vale mais que o script de origem: leia esse
-arquivo antes de continuar uma peça. As fotos e as imagens baixadas (`saidas/`) não vão para o git. Por enquanto só
-`grito-D-editorial` (versão dela) e `grito-D-luz` (com mais luz e ouro) estão no editor; peça de outro estilo entra por
-importador (modelo: `importar_grito_d.py`). Detalhes em
-`docs/contexto/relatorios/2026-11-05-editor-de-artes.md`.
-
-## Reels 23h47 e artigo do WhatsApp fora do horário (06/11/2026)
-
-Artigo `blog/chefe-manda-mensagem-no-whatsapp-fora-do-horario-preciso-responder.html` no ar (FAQ no schema, link
-para o artigo de assédio moral digital). Reels motion 23h47 (Papel e Ouro) agendado 06/11 21h no Orbit, link do
-artigo no 1º comentário. Os 4 Reels do 13º desceram uma vaga (10, 13, 17 e 20/11). Scripts e textos em
-`producao/estilos/papel-e-ouro/motion-23h47/`; relatório `docs/contexto/relatorios/2026-11-06-reels-23h47-whatsapp-e-artigo.md`.
-
-## Reels do 13º versão 2 (06–07/11/2026)
-
-Os 4 Reels do 13º (10, 13, 17 e 20/11) foram refeitos: tudo centralizado no eixo da legenda, fotos com rosto desfocadas, efeitos sonoros v2 (`som2.py`), gancho do 2/3 "Entrou no meio do ano?" e sobras de corte retiradas. Aprovado pela Jessica ("ritmo maravilhoso"): usar `v2base.py` como padrão de layout nos próximos motion. Relatório `docs/contexto/relatorios/2026-11-06-reels-13-efeitos-sonoros-v2.md`.
+Local e gratuito. Salva em `pecas/<nome>/peca.json`, e a versão dela vale mais que o script de origem: leia esse arquivo
+antes de continuar uma peça. Fotos e `saidas/` não vão para o git. Desde 09/11 estão lá as 37 peças estáticas dos estilos
+(Palavra de Ouro, Verbete, Papel e Ouro, Objeto em Cena, Manchete), trazidas por `importar_estilos.py`: textos editáveis e
+fundo fixo. Detalhes em `docs/contexto/relatorios/2026-11-05-editor-de-artes.md` e `2026-11-09-pecas-da-semana-no-editor.md`.
 
 ## Como continuar uma sessão neste projeto
 

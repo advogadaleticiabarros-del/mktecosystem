@@ -7,7 +7,7 @@ const GRAO = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
   + "%3CfeColorMatrix values='0 0 0 0 .9 0 0 0 0 .9 0 0 0 0 .9 0 0 0 .9 0'/%3E%3C/filter%3E"
   + "%3Crect width='900' height='900' filter='url(%23n)'/%3E%3C/svg%3E";
 
-// Só <i> e <br> sobrevivem: colar texto de outro lugar não traz estilo nem código junto.
+// Só <i>, <b>, <sup> e <br> sobrevivem: colar texto de outro lugar não traz estilo nem código junto.
 function limparTexto(html) {
   const saida = document.createElement("div");
   const copiar = (origem, destino) => {
@@ -15,8 +15,11 @@ function limparTexto(html) {
       if (no.nodeType === Node.TEXT_NODE) destino.append(no.textContent);
       else if (no.nodeType === Node.ELEMENT_NODE) {
         const tag = no.tagName;
+        if (tag === "SCRIPT" || tag === "STYLE") continue;
         if (tag === "BR") destino.append(document.createElement("br"));
         else if (tag === "I" || tag === "EM") copiar(no, destino.appendChild(document.createElement("i")));
+        else if (tag === "B" || tag === "STRONG") copiar(no, destino.appendChild(document.createElement("b")));
+        else if (tag === "SUP") copiar(no, destino.appendChild(document.createElement("sup")));
         else {
           // Enter no campo de texto vira <div>: cada um é uma linha nova.
           if ((tag === "DIV" || tag === "P") && destino.childNodes.length) destino.append(document.createElement("br"));
@@ -50,6 +53,8 @@ function montarTexto(n, e) {
   } else {
     n.style.color = e.cor;
   }
+  // Sobrescrito pequeno sem empurrar a linha: o "1." do Verbete.
+  for (const s of n.querySelectorAll("sup")) Object.assign(s.style, { fontSize: ".4em", lineHeight: "0", verticalAlign: ".9em" });
   for (const i of n.querySelectorAll("i")) {
     i.style.fontWeight = e.peso_destaque ?? 400;
     if (e.cor_destaque === OURO_BRILHO) {

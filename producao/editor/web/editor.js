@@ -417,7 +417,7 @@ function painelTexto(e) {
     numero("Largura da caixa", e.largura, muda("largura"), { min: 40, vazio: true }),
   );
   p.append(dois);
-  p.append(escolha("Fonte", e.fonte, [["EB Garamond (títulos)", "EB Garamond"], ["Inter (textos)", "Inter"]], muda("fonte")));
+  p.append(escolha("Fonte", e.fonte, [["EB Garamond (títulos)", "EB Garamond"], ["Playfair Display (títulos)", "Playfair Display"], ["Inter (textos)", "Inter"]], muda("fonte")));
   p.append(escolha("Peso", e.peso ?? 400, [["Normal", 400], ["Médio", 500], ["Forte", 600]], (v) => muda("peso")(+v)));
   p.append(seletorCor("Cor do texto", e.cor, CORES, muda("cor")));
   p.append(seletorCor("Cor do destaque (itálico)", e.cor_destaque, CORES.map(([nome, ...resto]) => [`${nome} no destaque`, ...resto]), muda("cor_destaque")));
