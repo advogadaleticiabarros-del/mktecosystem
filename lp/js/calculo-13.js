@@ -114,13 +114,13 @@
         res.parcelas.push({ nome: 'Já recebido (1ª parcela)', valor: r2(bruto / 2) });
         res.parcelas.push({ nome: 'A receber na rescisão', valor: r2(liquido - bruto / 2) });
       } else {
-        res.parcelas.push({ nome: 'Na rescisão (até 10 dias após a saída)', valor: liquido });
+        res.parcelas.push({ nome: 'Na rescisão, em até 10 dias', valor: liquido });
       }
       return res;
     }
     var primeira = r2(bruto / 2);
-    res.parcelas.push({ nome: e.primeiraJaRecebida ? '1ª parcela (já recebida, ex.: nas férias)' : '1ª parcela, até 30/11/' + ano, valor: primeira, semDesconto: true });
-    res.parcelas.push({ nome: '2ª parcela, até 18/12/' + ano + ' (dia 20 cai num domingo)', valor: r2(liquido - primeira) });
+    res.parcelas.push({ nome: e.primeiraJaRecebida ? '1ª parcela (já recebida)' : '1ª parcela, até 30/11', valor: primeira, semDesconto: true });
+    res.parcelas.push({ nome: '2ª parcela, até 18/12', valor: r2(liquido - primeira) });
     return res;
   }
 

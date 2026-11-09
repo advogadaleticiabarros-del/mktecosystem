@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F7F2EA">
   <title>Calculadora do 13º salário 2026: valor, parcelas e descontos | Letícia Barros Advocacia</title>
   <meta name="description" content="Calcule o seu 13º salário de 2026: 1ª parcela até 30/11, 2ª parcela, desconto do INSS e do Imposto de Renda com a isenção até R$ 5 mil, 13º proporcional, demissão, aviso prévio, horas extras e afastamento.">
   <link rel="canonical" href="https://advogadaleticiabarros.com.br/lp/calculadora-13-salario.html">
@@ -12,7 +13,7 @@
   <meta property="og:url" content="https://advogadaleticiabarros.com.br/lp/calculadora-13-salario.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 
   <script type="application/ld+json">
   {
@@ -49,211 +50,302 @@
   <!-- End Meta Pixel Code -->
 
   <style>
-    :root{--fundo-escuro:#231E1A;--fundo-alt:#2E2720;--fundo-card:#352E26;--fundo-light:#3A3228;--dourado:#C9A962;--dourado-light:#D4BC7D;--areia:#E8DED1;--branco:#FAF6F0;--glow:rgba(201,169,98,.15);--glow-md:rgba(201,169,98,.25);--grad:linear-gradient(135deg,var(--dourado),var(--dourado-light));--r-sm:8px;--r-lg:20px;--tr:all .3s ease}
-    *{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{font-family:'Inter',sans-serif;background:var(--fundo-escuro);color:var(--areia);line-height:1.65}
-    .topo{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;max-width:1080px;margin:0 auto}
-    .marca{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:var(--dourado);text-decoration:none}
-    .topo a.mini{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--areia);text-decoration:none;border:1px solid var(--glow-md);padding:9px 14px;border-radius:var(--r-sm)}
-    .hero{max-width:760px;margin:0 auto;padding:30px 24px 8px;text-align:center}
-    .badge{display:inline-flex;gap:8px;background:rgba(201,169,98,.14);border:1px solid rgba(201,169,98,.4);color:var(--dourado-light);font-size:12px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;padding:8px 14px;border-radius:999px;margin-bottom:18px}
-    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(30px,4.6vw,48px);font-weight:600;color:var(--branco);line-height:1.15}
-    .hero h1 em{font-style:italic;color:var(--dourado-light)}
-    .hero .sub{margin:16px auto 0;font-size:16.5px;font-weight:300;max-width:580px}
-    .datas{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:520px;margin:24px auto 0}
-    .datas div{background:var(--fundo-alt);border:1px solid var(--glow-md);border-radius:var(--r-sm);padding:12px}
-    .datas b{display:block;font-family:'Playfair Display',serif;font-size:24px;color:var(--dourado-light)}
-    .datas span{font-size:13px;opacity:.85}
-    .calc{max-width:640px;margin:28px auto 0;padding:0 16px}
-    .card{background:var(--fundo-card);border:1px solid rgba(201,169,98,.28);border-radius:var(--r-lg);padding:28px 24px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
-    .passos{display:flex;gap:8px;margin-bottom:18px}
-    .passos span{flex:1;height:4px;border-radius:2px;background:var(--fundo-light)}
-    .passos span.on{background:var(--grad)}
-    .card h2{font-family:'Playfair Display',serif;font-size:23px;color:var(--branco);font-weight:600}
-    .card .fs{font-size:13.5px;opacity:.75;font-weight:300;margin-top:2px}
-    label{display:block;font-size:11.5px;font-weight:600;letter-spacing:1.3px;text-transform:uppercase;color:var(--dourado);margin:16px 0 7px}
-    .dica{display:block;text-transform:none;letter-spacing:0;font-weight:300;color:var(--areia);opacity:.7;font-size:12.5px;margin-top:3px}
-    input,select{width:100%;padding:13px 14px;border:1px solid rgba(201,169,98,.25);border-radius:var(--r-sm);font:400 16px 'Inter',sans-serif;background:var(--fundo-light);color:var(--branco)}
-    input:focus,select:focus{outline:none;border-color:var(--dourado);box-shadow:0 0 0 3px var(--glow)}
-    .campo-erro{border-color:#e0897f!important}
-    .linha{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .check{display:flex;gap:10px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px;color:var(--areia);cursor:pointer}
-    .check input{width:18px;height:18px;margin-top:3px;flex-shrink:0;accent-color:var(--dourado)}
-    details.extra{margin-top:18px;border:1px dashed rgba(201,169,98,.35);border-radius:var(--r-sm);padding:12px 14px}
-    details.extra summary{cursor:pointer;font-weight:600;color:var(--dourado-light);font-size:14.5px}
-    .oculto{display:none}
-    button.enviar{width:100%;margin-top:22px;padding:17px;border:none;border-radius:var(--r-sm);background:var(--grad);color:var(--fundo-escuro);font:700 14.5px 'Inter',sans-serif;letter-spacing:1.3px;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 30px var(--glow)}
-    button.enviar:disabled{opacity:.6;cursor:wait}
-    .voltar{background:none;border:none;color:var(--areia);opacity:.7;font:400 13px 'Inter',sans-serif;margin-top:12px;cursor:pointer;text-decoration:underline;width:100%}
-    .nota{font-size:12px;opacity:.65;text-align:center;margin-top:12px;font-weight:300}
-    .err{display:none;color:#e0897f;font-size:13.5px;margin-top:12px;text-align:center}
-    .hp{position:absolute;left:-9999px;opacity:0}
-    .total{text-align:center;margin:18px 0 8px}
-    .total small{display:block;font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:var(--dourado)}
-    .total b{font-family:'Playfair Display',serif;font-size:44px;color:var(--branco);font-weight:600}
-    table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14.5px}
-    td{padding:10px 4px;border-bottom:1px solid rgba(201,169,98,.15)}
-    td:last-child{text-align:right;white-space:nowrap;font-weight:600;color:var(--branco)}
-    tr.dest td{color:var(--dourado-light);font-weight:700}
-    .alertas{margin-top:18px;display:grid;gap:10px}
-    .alertas p{background:rgba(201,169,98,.08);border-left:3px solid var(--dourado);padding:12px 14px;border-radius:0 var(--r-sm) var(--r-sm) 0;font-size:14px;font-weight:300}
-    .cta-wa{display:block;text-align:center;margin-top:20px;background:var(--grad);color:var(--fundo-escuro);font:700 14px 'Inter',sans-serif;letter-spacing:1.2px;text-transform:uppercase;padding:16px;border-radius:var(--r-sm);text-decoration:none}
-    section{max-width:760px;margin:0 auto;padding:56px 24px 0}
-    section h2{font-family:'Playfair Display',serif;font-size:clamp(23px,3vw,30px);color:var(--branco);font-weight:600;text-align:center;line-height:1.25}
-    section h2 em{font-style:italic;color:var(--dourado-light)}
-    .regras{display:grid;gap:12px;margin-top:22px}
-    .regras div{background:var(--fundo-alt);border-left:3px solid var(--dourado);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:14px 16px;font-size:14.5px;font-weight:300}
-    .regras strong{color:var(--dourado-light);font-weight:600}
-    .faq{margin-top:20px}
-    .faq details{border-bottom:1px solid rgba(201,169,98,.2)}
-    .faq summary{padding:16px 4px;font-size:16px;font-weight:600;color:var(--branco);cursor:pointer}
-    .faq p{padding:0 4px 16px;font-size:14.5px;font-weight:300;opacity:.88}
-    .aviso-etica{max-width:760px;margin:48px auto 0;padding:0 24px;text-align:center;font-size:12.5px;opacity:.6;font-weight:300}
-    footer{text-align:center;padding:30px 24px 90px;font-size:12px;opacity:.55}
-    footer a{color:var(--dourado)}
-    .wa-float{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,.35)}
-    @media (max-width:560px){
-      .topo{padding:14px 16px}.marca{font-size:14px;letter-spacing:1.5px}.topo a.mini{font-size:11px;padding:8px 10px}
-      .hero{padding:22px 16px 4px}.hero h1{font-size:30px}.hero .sub{font-size:15px}
-      .card{padding:22px 16px}.linha{grid-template-columns:1fr;gap:0}
-      section{padding:44px 16px 0}.total b{font-size:38px}
+    :root{
+      --papel:#F7F2EA;--papel-2:#EFE7DA;--branco:#FFFDF9;
+      --cafe:#2B231D;--cafe-2:#5A4C40;--cafe-3:#6E6052;
+      --linha:#DDD2C2;--linha-forte:#C9BBA6;
+      --ouro:#B4914F;--ouro-claro:#E9D9B4;--ouro-fundo:#F3EAD6;
+      --erro:#A4402F;--wa:#17773F;
+      --r:6px;--sombra:0 1px 2px rgba(43,35,29,.06),0 8px 24px -8px rgba(43,35,29,.14);
+      --serif:'EB Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;
     }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{font-family:var(--sans);background:var(--papel);color:var(--cafe);line-height:1.6;font-size:16px;caret-color:var(--ouro)}
+    ::selection{background:var(--ouro-claro);color:var(--cafe)}
+    a{color:inherit;text-underline-offset:3px;text-decoration-color:var(--ouro)}
+    :focus-visible{outline:2px solid var(--ouro);outline-offset:2px}
+
+    .topo{border-top:4px solid var(--ouro);background:var(--papel)}
+    .topo .in{max-width:1120px;margin:0 auto;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--linha)}
+    .marca{font-family:var(--serif);font-size:21px;font-weight:500;color:var(--cafe);text-decoration:none;letter-spacing:-.01em}
+    .marca small{display:block;font-family:var(--sans);font-size:12px;letter-spacing:.02em;color:var(--cafe-3);font-weight:400}
+    .topo a.wa-link{font-size:14px;font-weight:500;color:var(--cafe);text-decoration:none;display:flex;gap:8px;align-items:center}
+    .topo a.wa-link svg{fill:var(--wa)}
+
+    .grade{max-width:1120px;margin:0 auto;padding:48px 24px 0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,520px);gap:64px;align-items:start}
+    .intro h1{font-family:var(--serif);font-weight:500;font-size:clamp(38px,5vw,60px);line-height:1.04;letter-spacing:-.015em;text-wrap:balance}
+    .intro h1 i{font-weight:400}
+    .intro .sub{margin-top:20px;font-size:17px;color:var(--cafe-2);max-width:46ch}
+    .prazos{margin-top:32px;border-top:3px double var(--ouro);max-width:440px}
+    .prazos div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid var(--linha)}
+    .prazos dt{font-size:15px;color:var(--cafe-2)}
+    .prazos dd{font-family:var(--serif);font-size:24px;font-weight:500;font-variant-numeric:lining-nums}
+    .prazos .obs{display:block;font-family:var(--sans);font-size:12.5px;color:var(--cafe-3);text-align:right}
+    .assina{margin-top:28px;font-size:14px;color:var(--cafe-3)}
+    .assina b{color:var(--cafe);font-weight:500}
+
+    .calc{background:var(--branco);border:1px solid var(--linha);border-radius:var(--r);box-shadow:var(--sombra);padding:32px 28px;scroll-margin-top:16px}
+    .etapas{display:flex;gap:6px;font-size:12.5px;color:var(--cafe-3);margin-bottom:22px}
+    .etapas span{flex:1;padding-top:8px;border-top:2px solid var(--linha)}
+    .etapas span.on{border-color:var(--ouro);color:var(--cafe);font-weight:500}
+    .calc h2{font-family:var(--serif);font-weight:500;font-size:27px;line-height:1.15;letter-spacing:-.01em}
+    .calc .fs{font-size:14.5px;color:var(--cafe-2);margin-top:4px}
+
+    .campo{margin-top:18px}
+    label,.rotulo{display:block;font-size:14px;font-weight:500;color:var(--cafe);margin-bottom:6px}
+    .dica{font-weight:400;color:var(--cafe-3);font-size:13px}
+    input,select{width:100%;height:48px;padding:0 14px;border:1px solid var(--linha-forte);border-radius:var(--r);font:400 16px var(--sans);background:var(--branco);color:var(--cafe);transition:border-color .15s,box-shadow .15s}
+    select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%235A4C40' stroke-width='1.6'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
+    input::placeholder{color:#76675A}
+    input:focus,select:focus{outline:none;border-color:var(--ouro);box-shadow:0 0 0 3px var(--ouro-fundo)}
+    .moeda{position:relative}
+    .moeda span{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--cafe-3);font-size:15px;pointer-events:none}
+    .moeda input{padding-left:42px;font-variant-numeric:tabular-nums}
+    .campo-erro{border-color:var(--erro)!important}
+    .linha2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:end}
+
+    .opcoes{display:flex;gap:8px;flex-wrap:wrap}
+    .opcoes label{flex:1;min-width:136px;white-space:nowrap;margin:0;display:flex;align-items:center;gap:10px;height:48px;padding:0 14px;border:1px solid var(--linha-forte);border-radius:var(--r);cursor:pointer;font-weight:400;font-size:15px}
+    .opcoes input{width:16px;height:16px;accent-color:var(--cafe);flex-shrink:0}
+    .opcoes label:has(input:checked){border-color:var(--cafe);background:var(--papel)}
+    .check{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:14.5px;cursor:pointer;margin-top:16px}
+    .check input{width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:var(--cafe)}
+
+    .bt-mais{margin-top:22px;width:100%;display:flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:10px 16px;text-align:left;border:1.5px dashed var(--ouro);border-radius:var(--r);background:var(--ouro-fundo);color:var(--cafe);font:500 15px var(--sans);cursor:pointer;transition:background .15s}
+    .bt-mais:hover{background:var(--ouro-claro)}
+    .bt-mais svg{width:18px;height:18px;stroke:var(--cafe);transition:transform .2s}
+    .bt-mais[aria-expanded=true] svg{transform:rotate(45deg)}
+    .mais{border:1px solid var(--linha);border-top:0;border-radius:0 0 var(--r) var(--r);padding:4px 16px 18px;margin-top:-4px}
+    .oculto{display:none!important}
+
+    button.enviar{width:100%;margin-top:24px;height:54px;border:none;border-radius:var(--r);background:var(--cafe);color:var(--papel);font:500 16px var(--sans);cursor:pointer;transition:background .15s;box-shadow:0 2px 0 var(--ouro)}
+    button.enviar:hover{background:#3D3229}
+    button.enviar:disabled{opacity:.65;cursor:progress}
+    .voltar{display:block;margin:14px auto 0;background:none;border:none;color:var(--cafe-2);font:400 14px var(--sans);cursor:pointer;text-decoration:underline;text-decoration-color:var(--linha-forte);text-underline-offset:3px}
+    .nota{font-size:13px;color:var(--cafe-3);text-align:center;margin-top:12px}
+    .nota svg{vertical-align:-2px;margin-right:4px;stroke:var(--cafe-3)}
+    .err{display:none;color:var(--erro);font-size:14px;margin-top:12px;text-align:center}
+    .hp{position:absolute;left:-9999px;opacity:0}
+
+    .recibo{margin-top:20px;background:var(--papel);border:1px solid var(--linha);padding:22px 20px 18px;font-variant-numeric:tabular-nums;position:relative}
+    .recibo::before{content:"";position:absolute;left:0;right:0;top:0;border-top:3px double var(--ouro)}
+    .recibo .cab{display:flex;justify-content:space-between;font-size:12.5px;color:var(--cafe-3);letter-spacing:.04em;padding-bottom:12px;border-bottom:1px dashed var(--linha-forte)}
+    .recibo table{width:100%;border-collapse:collapse;font-size:15px;margin-top:6px}
+    .recibo td{padding:9px 0;vertical-align:bottom}
+    .recibo td:first-child{color:var(--cafe-2)}
+    .recibo td:last-child{text-align:right;white-space:nowrap;padding-left:12px}
+    .recibo tr.sep td{border-top:1px dashed var(--linha-forte)}
+    .recibo tr.parcela td{color:var(--cafe);font-weight:500}
+    .recibo .total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:10px;padding-top:14px;border-top:1px solid var(--cafe)}
+    .recibo .total span{font-size:15px;font-weight:500}
+    .recibo .total b{font-family:var(--serif);font-size:40px;font-weight:500;line-height:1;letter-spacing:-.01em;background:linear-gradient(transparent 62%,var(--ouro-claro) 62%);padding:0 2px}
+    .obs-lista{margin-top:18px;list-style:none;display:grid;gap:10px}
+    .obs-lista li{font-size:14.5px;color:var(--cafe-2);padding-left:18px;position:relative}
+    .obs-lista li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:1px;background:var(--ouro)}
+    .cta-wa{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:22px;height:54px;border-radius:var(--r);background:var(--wa);color:#fff;font:500 16px var(--sans);text-decoration:none}
+    .cta-wa svg{fill:#fff}
+
+    .faixa{margin-top:88px;border-top:1px solid var(--linha);background:var(--papel-2)}
+    section{max-width:1120px;margin:0 auto;padding:64px 24px}
+    section h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,3.4vw,38px);letter-spacing:-.01em;line-height:1.1;max-width:20ch}
+    .regras{margin-top:32px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:56px}
+    .regras div{padding:18px 0;border-top:1px solid var(--linha-forte)}
+    .regras dt{font-family:var(--serif);font-size:21px;font-weight:500}
+    .regras dd{margin-top:4px;font-size:15.5px;color:var(--cafe-2);max-width:56ch}
+    .faq{margin-top:28px;max-width:760px;border-top:3px double var(--ouro)}
+    .faq details{border-bottom:1px solid var(--linha-forte)}
+    .faq summary{list-style:none;padding:18px 36px 18px 0;font-size:17px;font-weight:500;cursor:pointer;position:relative}
+    .faq summary::-webkit-details-marker{display:none}
+    .faq summary::after{content:"";position:absolute;right:6px;top:50%;width:10px;height:10px;border-right:1.5px solid var(--cafe-2);border-bottom:1.5px solid var(--cafe-2);transform:translateY(-70%) rotate(45deg);transition:transform .2s}
+    .faq details[open] summary::after{transform:translateY(-30%) rotate(-135deg)}
+    .faq p{padding:0 0 18px;font-size:15.5px;color:var(--cafe-2);max-width:65ch}
+
+    footer{border-top:4px solid var(--ouro);background:var(--cafe);color:#D9CDBD;font-size:13px}
+    footer .in{max-width:1120px;margin:0 auto;padding:28px 24px 96px;display:grid;gap:8px}
+    footer a{color:var(--ouro-claro)}
+    .wa-float{transition:opacity .2s;position:fixed;right:18px;bottom:18px;width:54px;height:54px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(43,35,29,.25);z-index:5}
+
+    @media (max-width:900px){
+      .grade{grid-template-columns:1fr;gap:32px;padding-top:32px}
+      .regras{grid-template-columns:1fr}
+    }
+    @media (max-width:560px){
+      .topo .in{padding:14px 16px}.marca{font-size:19px}.topo a.wa-link span{display:none}
+      .grade{padding:24px 16px 0}.intro h1{font-size:36px}.intro .sub{font-size:16px}
+      .calc{padding:24px 18px;margin:0 -4px}.linha2{grid-template-columns:1fr;gap:0}
+      section{padding:48px 16px}.faixa{margin-top:56px}
+      .recibo{padding:18px 14px 14px}.recibo .total{flex-direction:column;align-items:flex-start;gap:6px}.recibo .total b{font-size:36px}
+    }
+    body.calc-na-tela .wa-float{opacity:0;pointer-events:none}
+    @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
   </style>
 </head>
 <body>
-  <header class="topo">
-    <a class="marca" href="https://advogadaleticiabarros.com.br/">Letícia Barros</a>
-    <a class="mini" href="#calcular">Calcular</a>
-  </header>
+  <header class="topo"><div class="in">
+    <a class="marca" href="https://advogadaleticiabarros.com.br/">Letícia Barros<small>Advocacia &amp; Consultoria · OAB/ES 39.948</small></a>
+    <a class="wa-link" href="https://wa.me/5527995151402" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2A10 10 0 0 0 2 12a9.9 9.9 0 0 0 1.5 5.3L2 22l4.9-1.4A10 10 0 1 0 12 2m0 1.8a8.2 8.2 0 1 1-4.2 15.3l-.3-.2-2.9.8.8-2.8-.2-.3A8.2 8.2 0 0 1 12 3.8"/></svg><span>Falar no WhatsApp</span></a>
+  </div></header>
 
-  <div class="hero">
-    <span class="badge">Atualizada com as tabelas de 2026</span>
-    <h1>Calculadora do <em>13º salário</em> 2026</h1>
-    <p class="sub">Veja quanto cai em cada parcela, já com o desconto do INSS e do Imposto de Renda de 2026 (isenção até R$ 5 mil). Vale para quem está trabalhando, foi demitido, entrou no meio do ano ou ficou afastado.</p>
-    <div class="datas">
-      <div><b>30/11</b><span>prazo da 1ª parcela</span></div>
-      <div><b>18/12</b><span>prazo da 2ª parcela (20/12 é domingo)</span></div>
+  <main class="grade">
+    <div class="intro">
+      <h1>Quanto você vai receber de <i>13º salário</i> em 2026</h1>
+      <p class="sub">Informe o salário e o que mais você recebe. A conta sai por parcela, já com o desconto do INSS e do Imposto de Renda deste ano.</p>
+      <dl class="prazos">
+        <div><dt>1ª parcela, sem desconto</dt><dd>até 30/11</dd></div>
+        <div><dt>2ª parcela, com INSS e IR</dt><dd>até 18/12<span class="obs">o dia 20 cai num domingo</span></dd></div>
+        <div><dt>Quem ganha até R$ 5 mil</dt><dd>sem IR</dd></div>
+      </dl>
+      <p class="assina">Calculadora preparada pela equipe da <b>Dra. Letícia Barros</b>, advogada trabalhista em Vitória/ES.</p>
     </div>
-  </div>
 
-  <div class="calc" id="calcular">
-    <div class="card">
-      <div class="passos"><span class="on" id="p1"></span><span id="p2"></span><span id="p3"></span></div>
+    <div class="calc" id="calcular">
+      <div class="etapas" aria-hidden="true"><span class="on" id="p1">1. Dados</span><span id="p2">2. Contato</span><span id="p3">3. Resultado</span></div>
 
-      <!-- Etapa 1: dados do cálculo -->
       <form id="etapa1" novalidate>
-        <h2>1. Seus dados de trabalho</h2>
-        <p class="fs">Leva menos de 1 minuto. Os campos com * são obrigatórios.</p>
+        <h2>Faça o cálculo</h2>
+        <p class="fs">Use os valores do seu holerite, antes dos descontos.</p>
 
-        <label for="c-salario">Salário bruto mensal (R$) *<span class="dica">O valor da carteira, antes dos descontos.</span></label>
-        <input id="c-salario" inputmode="decimal" placeholder="2.500,00" required>
+        <div class="campo">
+          <label for="c-salario">Salário bruto por mês</label>
+          <div class="moeda"><span>R$</span><input id="c-salario" inputmode="decimal" placeholder="2.500,00" autocomplete="off" required></div>
+        </div>
 
-        <label for="c-situacao">Sua situação hoje *</label>
-        <select id="c-situacao" required>
-          <option value="trabalhando">Estou trabalhando na empresa</option>
-          <option value="sem_justa_causa">Fui demitido(a) sem justa causa em 2026</option>
-          <option value="pediu_demissao">Pedi demissão em 2026</option>
-          <option value="acordo">Saí por acordo com a empresa em 2026</option>
-          <option value="justa_causa">Fui demitido(a) por justa causa em 2026</option>
-        </select>
+        <div class="campo">
+          <label for="c-situacao">Situação</label>
+          <select id="c-situacao">
+            <option value="trabalhando">Estou trabalhando</option>
+            <option value="sem_justa_causa">Fui demitido(a) sem justa causa</option>
+            <option value="pediu_demissao">Pedi demissão</option>
+            <option value="acordo">Saí por acordo</option>
+            <option value="justa_causa">Fui demitido(a) por justa causa</option>
+          </select>
+        </div>
 
-        <div class="linha">
-          <div>
-            <label for="c-admissao">Data de admissão<span class="dica">Deixe em branco se entrou antes de 2026.</span></label>
+        <div class="campo" id="bloco-inicio">
+          <span class="rotulo">Desde quando trabalha na empresa?</span>
+          <div class="opcoes">
+            <label><input type="radio" name="inicio" value="antes" checked> Antes de 2026</label>
+            <label><input type="radio" name="inicio" value="2026"> Entrei em 2026</label>
+          </div>
+        </div>
+
+        <div class="linha2">
+          <div class="campo oculto" id="bloco-admissao">
+            <label for="c-admissao">Data de admissão</label>
             <input id="c-admissao" type="date" min="1970-01-01" max="2026-12-31">
           </div>
-          <div id="bloco-saida" class="oculto">
-            <label for="c-saida">Último dia de trabalho *<span class="dica">Data da saída.</span></label>
+          <div class="campo oculto" id="bloco-saida">
+            <label for="c-saida">Último dia de trabalho</label>
             <input id="c-saida" type="date" min="2026-01-01" max="2026-12-31">
           </div>
         </div>
-        <div id="bloco-aviso" class="oculto">
-          <label class="check" style="margin-top:14px"><input type="checkbox" id="c-aviso"> O aviso prévio foi indenizado (não trabalhei o aviso)</label>
-          <p class="nota" style="text-align:left">Se não souber a data de admissão exata, informe a aproximada: ela define os dias de aviso.</p>
+        <label class="check oculto" id="bloco-aviso"><input type="checkbox" id="c-aviso"> Não trabalhei o aviso prévio (foi indenizado)</label>
+
+        <div class="linha2">
+          <div class="campo">
+            <label for="c-comissoes">Comissões <span class="dica">média/mês</span></label>
+            <div class="moeda"><span>R$</span><input id="c-comissoes" inputmode="decimal" placeholder="0,00" autocomplete="off"></div>
+          </div>
+          <div class="campo">
+            <label for="c-extras">Horas extras e noturno <span class="dica">média/mês</span></label>
+            <div class="moeda"><span>R$</span><input id="c-extras" inputmode="decimal" placeholder="0,00" autocomplete="off"></div>
+          </div>
+        </div>
+        <div class="campo">
+          <label for="c-adicional">Adicional de insalubridade ou periculosidade</label>
+          <select id="c-adicional">
+            <option value="">Não recebo</option>
+            <option value="i10">Insalubridade, grau mínimo (10% do mínimo)</option>
+            <option value="i20">Insalubridade, grau médio (20% do mínimo)</option>
+            <option value="i40">Insalubridade, grau máximo (40% do mínimo)</option>
+            <option value="p30">Periculosidade (30% do salário)</option>
+          </select>
         </div>
 
-        <details class="extra">
-          <summary>Tem adicionais, horas extras ou afastamento? (opcional)</summary>
-          <label for="c-variaveis">Média mensal de horas extras, comissões e adicional noturno (R$)</label>
-          <input id="c-variaveis" inputmode="decimal" placeholder="0,00">
-          <div class="linha">
-            <div>
-              <label for="c-insal">Insalubridade</label>
-              <select id="c-insal"><option value="0">Não recebo</option><option value="10">Grau mínimo (10%)</option><option value="20">Grau médio (20%)</option><option value="40">Grau máximo (40%)</option></select>
+        <button type="button" class="bt-mais" id="bt-mais" aria-expanded="false" aria-controls="mais">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <span>Adicionar afastamento, faltas ou dependentes</span>
+        </button>
+        <div class="mais oculto" id="mais">
+          <div class="linha2">
+            <div class="campo">
+              <label for="c-inss">Meses afastado pelo INSS</label>
+              <input id="c-inss" type="number" min="0" max="12" value="0" inputmode="numeric">
             </div>
-            <div>
-              <label for="c-peric">Periculosidade (30%)</label>
-              <select id="c-peric"><option value="0">Não recebo</option><option value="1">Recebo</option></select>
-            </div>
-          </div>
-          <div class="linha">
-            <div>
-              <label for="c-inss">Meses afastado pelo INSS em 2026</label>
-              <input id="c-inss" type="number" min="0" max="12" value="0">
-            </div>
-            <div>
-              <label for="c-faltas">Meses com mais de 15 faltas sem justificativa</label>
-              <input id="c-faltas" type="number" min="0" max="12" value="0">
+            <div class="campo">
+              <label for="c-faltas">Meses com mais de 15 faltas <span class="dica">sem atestado</span></label>
+              <input id="c-faltas" type="number" min="0" max="12" value="0" inputmode="numeric">
             </div>
           </div>
-          <label for="c-dep">Dependentes no Imposto de Renda</label>
-          <input id="c-dep" type="number" min="0" max="15" value="0">
-          <label class="check" style="margin-top:14px"><input type="checkbox" id="c-adiant"> Já recebi a 1ª parcela (por exemplo, junto com as férias)</label>
-        </details>
+          <div class="campo">
+            <label for="c-dep">Dependentes no Imposto de Renda</label>
+            <input id="c-dep" type="number" min="0" max="15" value="0" inputmode="numeric">
+          </div>
+          <label class="check"><input type="checkbox" id="c-adiant"> Já recebi a 1ª parcela (por exemplo, junto com as férias)</label>
+        </div>
 
-        <button type="submit" class="enviar">Continuar</button>
-        <div class="err"></div>
+        <button type="submit" class="enviar">Calcular meu 13º</button>
+        <div class="err" role="alert"></div>
       </form>
 
-      <!-- Etapa 2: contato (libera o resultado) -->
       <form id="etapa2" class="oculto" novalidate>
-        <h2>2. Para onde enviamos o resultado?</h2>
-        <p class="fs">O cálculo está pronto. Informe seus dados para ver o valor de cada parcela.</p>
-        <label for="l-nome">Nome *</label>
-        <input id="l-nome" name="name" autocomplete="name" required>
-        <label for="l-tel">WhatsApp com DDD *</label>
-        <input id="l-tel" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(27) 99999-9999" required>
-        <label for="l-email">E-mail *</label>
-        <input id="l-email" name="email" type="email" autocomplete="email" required>
+        <h2>Seu cálculo está pronto</h2>
+        <p class="fs">Diga para quem é o resultado. Ele aparece aqui na tela assim que você enviar.</p>
+        <div class="campo">
+          <label for="l-nome">Nome</label>
+          <input id="l-nome" name="name" autocomplete="name" required>
+        </div>
+        <div class="campo">
+          <label for="l-tel">WhatsApp com DDD</label>
+          <input id="l-tel" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(27) 99999-9999" required>
+        </div>
+        <div class="campo">
+          <label for="l-email">E-mail</label>
+          <input id="l-email" name="email" type="email" autocomplete="email" required>
+        </div>
         <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <label class="check" style="margin-top:18px">
+        <label class="check">
           <input type="checkbox" name="ciente" required>
-          <span>Concordo que meus dados sejam usados só para enviar este resultado e para o retorno do escritório, e posso pedir a remoção quando quiser.</span>
+          <span>Concordo que meus dados sejam usados só para este resultado e para o retorno do escritório. Posso pedir a remoção quando quiser.</span>
         </label>
-        <button type="submit" class="enviar">Ver meu 13º</button>
-        <div class="err"></div>
-        <p class="nota">Conexão segura. Seus dados ficam em sigilo e não são compartilhados (LGPD).</p>
+        <button type="submit" class="enviar">Ver meu resultado</button>
+        <div class="err" role="alert"></div>
+        <p class="nota"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Envio protegido. Seus dados não são compartilhados (LGPD).</p>
         <button type="button" class="voltar" id="voltar">Voltar e corrigir os dados</button>
       </form>
 
-      <!-- Etapa 3: resultado -->
       <div id="etapa3" class="oculto" aria-live="polite">
-        <h2 id="r-titulo">3. Seu 13º salário em 2026</h2>
-        <div class="total"><small id="r-rotulo">Total líquido estimado</small><b id="r-liquido"></b></div>
-        <table id="r-tabela"></table>
-        <div class="alertas" id="r-alertas"></div>
-        <a class="cta-wa" id="r-wa" href="https://wa.me/5527995151402" target="_blank" rel="noopener">O valor não bate? Fale com a equipe</a>
-        <p class="nota">Estimativa com as regras gerais de 2026. Convenção coletiva, pensão alimentícia e outros descontos podem mudar o valor.</p>
+        <h2 id="r-titulo">Seu 13º em 2026</h2>
+        <div class="recibo">
+          <div class="cab"><span>Demonstrativo do 13º</span><span id="r-avos"></span></div>
+          <table id="r-tabela"></table>
+          <div class="total"><span id="r-rotulo">Você recebe, no total</span><b id="r-liquido"></b></div>
+        </div>
+        <ul class="obs-lista" id="r-alertas"></ul>
+        <a class="cta-wa" id="r-wa" href="https://wa.me/5527995151402" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2A10 10 0 0 0 2 12a9.9 9.9 0 0 0 1.5 5.3L2 22l4.9-1.4A10 10 0 1 0 12 2m0 1.8a8.2 8.2 0 1 1-4.2 15.3l-.3-.2-2.9.8.8-2.8-.2-.3A8.2 8.2 0 0 1 12 3.8"/></svg>Conferir meu caso com a equipe</a>
+        <p class="nota">Estimativa pelas regras gerais de 2026. Convenção coletiva, pensão alimentícia e outros descontos podem mudar o valor.</p>
         <button type="button" class="voltar" id="refazer">Fazer outro cálculo</button>
       </div>
     </div>
+  </main>
+
+  <div class="faixa">
+    <section>
+      <h2>Como o 13º é calculado</h2>
+      <dl class="regras">
+        <div><dt>A conta</dt><dd>Remuneração dividida por 12, vezes os meses trabalhados no ano. O mês com 15 dias ou mais de trabalho conta inteiro.</dd></div>
+        <div><dt>O que entra</dt><dd>Salário, insalubridade, periculosidade e a média do ano de comissões, horas extras e adicional noturno.</dd></div>
+        <div><dt>1ª parcela</dt><dd>Metade do valor, sem nenhum desconto, até 30 de novembro.</dd></div>
+        <div><dt>2ª parcela</dt><dd>O restante, com INSS e Imposto de Renda sobre o 13º inteiro. Em 2026, quem ganha até R$ 5 mil não paga IR no 13º (Lei 15.270/2025).</dd></div>
+        <div><dt>Quem saiu da empresa</dt><dd>O proporcional vem na rescisão, em até 10 dias. O aviso prévio indenizado soma tempo. Na justa causa, o proporcional do ano não é devido.</dd></div>
+        <div><dt>Afastamento e licença</dt><dd>O INSS paga os meses de benefício pelo abono anual. Férias, licença-maternidade e faltas com atestado não reduzem o 13º.</dd></div>
+      </dl>
+    </section>
   </div>
 
   <section>
-    <h2>Como o 13º é <em>calculado</em></h2>
-    <div class="regras">
-      <div><strong>Conta básica:</strong> remuneração ÷ 12 × meses trabalhados no ano. O mês em que você trabalhou 15 dias ou mais conta inteiro.</div>
-      <div><strong>O que entra na remuneração:</strong> salário, insalubridade, periculosidade e a média de horas extras, comissões e adicional noturno do ano.</div>
-      <div><strong>1ª parcela:</strong> metade do valor, sem nenhum desconto, até 30 de novembro.</div>
-      <div><strong>2ª parcela:</strong> o restante, já com o desconto do INSS e do Imposto de Renda sobre o 13º inteiro. Em 2026, quem ganha até R$ 5 mil não paga IR no 13º (Lei 15.270/2025).</div>
-      <div><strong>Demissão:</strong> o 13º proporcional é pago na rescisão, em até 10 dias. O aviso prévio indenizado soma tempo. Na justa causa, o proporcional do ano não é devido.</div>
-      <div><strong>Afastamento:</strong> o INSS paga o abono anual dos meses de benefício. Férias, licença-maternidade e faltas com atestado não reduzem o 13º.</div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Perguntas <em>frequentes</em></h2>
+    <h2>Perguntas frequentes</h2>
     <div class="faq">
       <details><summary>Quando cai o 13º salário em 2026?</summary><p>A 1ª parcela até 30 de novembro (segunda-feira). A 2ª vence em 20 de dezembro, que é domingo, então deve sair até sexta, 18 de dezembro.</p></details>
       <details><summary>A 1ª parcela tem desconto?</summary><p>Não. Os descontos de INSS e Imposto de Renda saem todos na 2ª parcela, calculados sobre o 13º inteiro. Por isso a 2ª parcela costuma ser menor.</p></details>
@@ -264,20 +356,17 @@
     </div>
   </section>
 
-  <div class="aviso-etica">
-    <p>Ferramenta informativa, que não substitui a análise individual do seu caso (Provimento 205/2021 da OAB). Tabelas usadas: INSS da Portaria Interministerial MPS/MF 13/2026 e Imposto de Renda com a redução da Lei 15.270/2025.</p>
-  </div>
+  <footer><div class="in">
+    <p>Letícia Barros Advocacia &amp; Consultoria · OAB/ES 39.948 · Vitória/ES</p>
+    <p>Ferramenta informativa, que não substitui a análise individual do seu caso (Provimento 205/2021 da OAB). Tabelas: INSS da Portaria Interministerial MPS/MF 13/2026 e Imposto de Renda com a redução da Lei 15.270/2025.</p>
+    <p><a href="https://www.advogadaleticiabarros.com.br/politica-privacidade.html">Política de Privacidade</a></p>
+  </div></footer>
 
-  <a class="wa-float" href="https://wa.me/5527995151402" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <a class="wa-float" href="https://wa.me/5527995151402" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M12 2A10 10 0 0 0 2 12a9.9 9.9 0 0 0 1.5 5.3L2 22l4.9-1.4A10 10 0 1 0 12 2m0 1.8a8.2 8.2 0 1 1-4.2 15.3l-.3-.2-2.9.8.8-2.8-.2-.3A8.2 8.2 0 0 1 12 3.8m-3 4.4c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.8 4.4 3.8 2.2.9 2.6.7 3.1.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.4-.2-1.5-.7c-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.1-.2 0-.4.1-.5l.5-.6c.1-.2.2-.3.1-.5l-.7-1.7c-.2-.5-.4-.4-.5-.4z"/></svg>
   </a>
 
-  <footer>
-    Letícia Barros Advocacia &amp; Consultoria · OAB/ES 39.948 · Conteúdo meramente informativo (Provimento 205/2021 OAB)<br>
-    <a href="https://www.advogadaleticiabarros.com.br/politica-privacidade.html">Política de Privacidade</a>
-  </footer>
-
-  <script src="/lp/js/calculo-13.js?v=20261106"></script>
+  <script src="/lp/js/calculo-13.js?v=20261109b"></script>
   <script>
     (function () {
       var params = new URLSearchParams(window.location.search);
@@ -294,46 +383,69 @@
       function etapa(n) {
         [f1, f2, f3].forEach(function (el, i) { el.classList.toggle('oculto', i !== n - 1); });
         ['p1', 'p2', 'p3'].forEach(function (id, i) { $(id).classList.toggle('on', i < n); });
-        $('calcular').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (window.innerWidth < 900 || n > 1) $('calcular').scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
       function erro(form, el, msg) { var err = form.querySelector('.err'); if (el) { el.classList.add('campo-erro'); el.focus(); } err.textContent = msg; err.style.display = 'block'; }
       function limpar(form) { form.querySelector('.err').style.display = 'none'; form.querySelectorAll('.campo-erro').forEach(function (el) { el.classList.remove('campo-erro'); }); }
+      function inicio() { return document.querySelector('[name=inicio]:checked').value; }
 
-      $('c-situacao').addEventListener('change', function () {
-        var s = this.value;
-        $('bloco-saida').classList.toggle('oculto', s === 'trabalhando');
+      function atualizarCampos() {
+        var s = $('c-situacao').value, saiu = s !== 'trabalhando';
+        $('bloco-inicio').classList.toggle('oculto', saiu);
+        $('bloco-admissao').classList.toggle('oculto', !(saiu || inicio() === '2026'));
+        $('bloco-saida').classList.toggle('oculto', !saiu || s === 'justa_causa');
         $('bloco-aviso').classList.toggle('oculto', s !== 'sem_justa_causa' && s !== 'acordo');
+      }
+      $('c-situacao').addEventListener('change', atualizarCampos);
+      document.querySelectorAll('[name=inicio]').forEach(function (r) { r.addEventListener('change', atualizarCampos); });
+      $('bt-mais').addEventListener('click', function () {
+        var aberto = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!aberto));
+        $('mais').classList.toggle('oculto', aberto);
+        this.style.borderRadius = aberto ? '' : 'var(--r) var(--r) 0 0';
+        this.querySelector('span').textContent = aberto ? 'Adicionar afastamento, faltas ou dependentes' : 'Fechar informações extras';
       });
+
+      if ('IntersectionObserver' in window && window.innerWidth < 900) {
+        new IntersectionObserver(function (it) { document.body.classList.toggle('calc-na-tela', it[0].isIntersecting); }).observe($('calcular'));
+      }
 
       f1.addEventListener('submit', function (e) {
         e.preventDefault(); limpar(f1);
-        var salario = numero($('c-salario').value), situacao = $('c-situacao').value;
-        if (salario < 100) return erro(f1, $('c-salario'), 'Informe o salário bruto mensal.');
-        if (situacao !== 'trabalhando' && situacao !== 'justa_causa' && !$('c-saida').value) return erro(f1, $('c-saida'), 'Informe a data da saída.');
+        var salario = numero($('c-salario').value), situacao = $('c-situacao').value, saiu = situacao !== 'trabalhando';
+        if (salario < 100) return erro(f1, $('c-salario'), 'Informe o salário bruto por mês.');
+        if ((saiu || inicio() === '2026') && situacao !== 'justa_causa' && !$('c-admissao').value) return erro(f1, $('c-admissao'), 'Informe a data de admissão (pode ser aproximada).');
+        if (saiu && situacao !== 'justa_causa' && !$('c-saida').value) return erro(f1, $('c-saida'), 'Informe o último dia de trabalho.');
         if ($('c-admissao').value && $('c-saida').value && $('c-saida').value < $('c-admissao').value) return erro(f1, $('c-saida'), 'A saída não pode ser antes da admissão.');
+        var adic = $('c-adicional').value;
         entrada = {
           ano: 2026, salario: salario, situacao: situacao,
-          admissao: $('c-admissao').value || null, saida: $('c-saida').value || null, avisoIndenizado: $('c-aviso').checked,
-          mediaVariaveis: numero($('c-variaveis').value), insalubridade: +$('c-insal').value, periculosidade: $('c-peric').value === '1',
+          admissao: (saiu || inicio() === '2026') ? $('c-admissao').value || null : null,
+          saida: saiu ? $('c-saida').value || null : null, avisoIndenizado: $('c-aviso').checked,
+          comissoes: numero($('c-comissoes').value), extras: numero($('c-extras').value),
+          insalubridade: adic.charAt(0) === 'i' ? +adic.slice(1) : 0, periculosidade: adic === 'p30',
           mesesAfastadoInss: +$('c-inss').value || 0, mesesFaltas: +$('c-faltas').value || 0,
           dependentes: +$('c-dep').value || 0, primeiraJaRecebida: $('c-adiant').checked
         };
+        entrada.mediaVariaveis = entrada.comissoes + entrada.extras;
         resultado = window.Calculo13.calcular13(entrada);
         etapa(2);
+        $('l-nome').focus({ preventScroll: true });
       });
       $('voltar').addEventListener('click', function () { etapa(1); });
       $('refazer').addEventListener('click', function () { etapa(1); });
 
+      function linha(rotulo, valor, classe) { return '<tr' + (classe ? ' class="' + classe + '"' : '') + '><td>' + rotulo + '</td><td>' + valor + '</td></tr>'; }
       function mostrar(r) {
-        var linhas = [['Meses que contam (avos)', r.avos + '/12'], ['Remuneração considerada', reais(r.remuneracao)], ['13º bruto', reais(r.bruto)],
-          ['Desconto do INSS', '− ' + reais(r.inss)], ['Desconto do Imposto de Renda', r.irrf ? '− ' + reais(r.irrf) : 'isento']];
-        var html = linhas.map(function (l) { return '<tr><td>' + l[0] + '</td><td>' + l[1] + '</td></tr>'; }).join('');
-        html += r.parcelas.map(function (p) { return '<tr class="dest"><td>' + p.nome + (p.semDesconto ? ' (sem desconto)' : '') + '</td><td>' + reais(p.valor) + '</td></tr>'; }).join('');
+        var html = linha('Remuneração considerada', reais(r.remuneracao)) + linha('13º bruto', reais(r.bruto)) +
+          linha('INSS', r.inss ? '− ' + reais(r.inss) : 'R$ 0,00') + linha('Imposto de Renda', r.irrf ? '− ' + reais(r.irrf) : 'isento');
+        html += r.parcelas.map(function (p, i) { return linha(p.nome + (p.semDesconto ? ', sem desconto' : ''), reais(p.valor), 'parcela' + (i === 0 ? ' sep' : '')); }).join('');
         $('r-tabela').innerHTML = html;
+        $('r-avos').textContent = r.avos + '/12 avos';
         $('r-liquido').textContent = reais(r.liquido);
-        $('r-alertas').innerHTML = r.avisos.map(function (a) { return '<p>' + a + '</p>'; }).join('');
+        $('r-alertas').innerHTML = r.avisos.map(function (a) { return '<li>' + a + '</li>'; }).join('');
         var nome = $('l-nome').value.trim().split(' ')[0];
-        $('r-titulo').textContent = '3. ' + nome + ', este é o seu 13º em 2026';
+        $('r-titulo').textContent = nome + ', este é o seu 13º em 2026';
         $('r-wa').href = 'https://wa.me/5527995151402?text=' + encodeURIComponent('Olá! Fiz a calculadora do 13º no site e quero conferir o meu caso. Resultado: ' + reais(r.liquido) + ' líquido.');
       }
 
@@ -341,19 +453,22 @@
         e.preventDefault(); limpar(f2);
         var nomeEl = $('l-nome'), telEl = $('l-tel'), emailEl = $('l-email');
         if (nomeEl.value.trim().length < 3) return erro(f2, nomeEl, 'Informe o seu nome.');
-        if (telEl.value.replace(/\D/g, '').length < 10) return erro(f2, telEl, 'Informe um WhatsApp válido com DDD.');
+        if (telEl.value.replace(/\D/g, '').length < 10) return erro(f2, telEl, 'Informe um WhatsApp válido, com DDD.');
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailEl.value.trim())) return erro(f2, emailEl, 'Informe um e-mail válido.');
-        if (!f2.querySelector('[name=ciente]').checked) return erro(f2, null, 'Confirme o uso dos seus dados para ver o resultado.');
+        if (!f2.querySelector('[name=ciente]').checked) return erro(f2, null, 'Marque a concordância com o uso dos dados para ver o resultado.');
         var btn = f2.querySelector('button.enviar');
-        btn.disabled = true; btn.textContent = 'Calculando…';
+        btn.disabled = true; btn.textContent = 'Enviando…';
         var r = resultado;
         var corpo = {
           name: nomeEl.value.trim(), phone: telEl.value, email: emailEl.value.trim(), area: 'trabalhista',
           message: '[LP calculadora-13]' + origem + ' [Situação: ' + SITUACAO[entrada.situacao] + ']' +
             ' [Salário: ' + reais(entrada.salario) + ']' + (entrada.saida ? ' [Saída: ' + entrada.saida + ']' : '') +
             ' [Resultado: ' + r.avos + '/12, bruto ' + reais(r.bruto) + ', líquido ' + reais(r.liquido) + ']' +
-            (entrada.mesesAfastadoInss ? ' [Afastado INSS: ' + entrada.mesesAfastadoInss + ' meses]' : '') +
-            (entrada.mediaVariaveis ? ' [Média de variáveis: ' + reais(entrada.mediaVariaveis) + ']' : ''),
+            (entrada.comissoes ? ' [Comissões: ' + reais(entrada.comissoes) + ']' : '') +
+            (entrada.extras ? ' [Horas extras/noturno: ' + reais(entrada.extras) + ']' : '') +
+            (entrada.insalubridade ? ' [Insalubridade: ' + entrada.insalubridade + '%]' : '') +
+            (entrada.periculosidade ? ' [Periculosidade]' : '') +
+            (entrada.mesesAfastadoInss ? ' [Afastado INSS: ' + entrada.mesesAfastadoInss + ' meses]' : ''),
           landing_page: window.location.href,
           website: f2.querySelector('[name=website]').value
         };
@@ -370,7 +485,7 @@
         } catch (ex) {
           erro(f2, null, ex.message);
         }
-        btn.disabled = false; btn.textContent = 'Ver meu 13º';
+        btn.disabled = false; btn.textContent = 'Ver meu resultado';
       });
     })();
   </script>

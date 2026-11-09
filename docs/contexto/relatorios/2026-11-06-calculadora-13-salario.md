@@ -34,3 +34,21 @@ depois do contato, sem erro de JS, sem rolagem lateral; conta conferida à mão.
   (roda no container `vps-api-1`, backup em `/tmp/bkp_calc13/` se já houver versão). Conferido no ar: 200 nos dois
   arquivos e fluxo completo em 390 px e 1280 px, com o envio ao CRM interceptado (nenhum lead de teste criado).
 - Divulgação: link na bio, Stories, 1º comentário dos 4 Reels do 13º (10, 13, 17 e 20/11), Google Business.
+
+## v2 clara (09/11/2026)
+Pedido: página mais clara, cor suave e profissional dentro do design system, sem "cara de IA", cálculo mais fácil,
+comissão e adicionais já visíveis e botão de "adicionar mais" evidente. Feito com a skill `impeccable` (skills.sh).
+- Base no estilo **Papel e Ouro** (`docs/ESTILO_PAPEL_E_OURO.md`): papel `#F7F2EA`, café `#2B231D`, ouro `#B4914F` só
+  em fios, faixas e marca-texto (nunca em letra sobre papel); títulos EB Garamond 500, texto Inter.
+- Saíram: selo acima do título, botão em degradê, brilhos, cartões com faixa lateral, ✓ em texto.
+- Layout em 2 colunas no computador (título e prazos à esquerda, calculadora à direita); resultado em forma de
+  **recibo** (como a peça "Recibo do 13º"), com total em marca-texto dourado.
+- Formulário: comissões, horas extras/noturno e adicional (insalubridade ou periculosidade num só campo) à vista;
+  "Antes de 2026 / Entrei em 2026" no lugar da data obrigatória; botão tracejado dourado com ícone para afastamento,
+  faltas, dependentes e 1ª parcela já recebida. Comissões e horas extras vão separadas para o CRM.
+- Rótulos das parcelas encurtados em `calculo-13.js` (cálculo igual; 11 testes passam).
+- Teste Playwright 390 e 1366 px: R$ 3.924,20 bruto → R$ 3.564,70 líquido conferido à mão; sem erro, sem rolagem lateral.
+- Detector da skill: contraste do placeholder e do verde do WhatsApp corrigidos; avisos de Inter e fundo creme
+  mantidos de propósito (são da marca).
+- **Publicação da v2: pendente**, a trava de deploy pediu o ok da Jessica. Script pronto
+  (`publicar_calculadora.py`, backup da v1 em `/tmp/bkp_calc13_v1/` no container).
