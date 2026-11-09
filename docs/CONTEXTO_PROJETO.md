@@ -1216,7 +1216,9 @@ da Mixkit (`work/som3.py`), que agora são o padrão de som para os próximos Re
 27/11, 01/12 e 11/12) apontam para `<nome>-v2.mp4`, e as versões antigas ficam guardadas. Relatório:
 `docs/contexto/relatorios/2026-11-07-reels-gestante-pensao-v2.md`.
 
-## Reels motion diários (09/11/2026)
+## Reels motion diários · Estilo Flagrante (09/11/2026)
+
+Nome do estilo: **Flagrante** (`docs/ESTILO_FLAGRANTE.md`). Os 13 foram aprovados pela Jessica em 09/11.
 
 Pedido da Jessica: "pelo menos 1 motion original desse [23:47] por dia, com variados assuntos". Motor comum em
 `producao/estilos/papel-e-ouro/motion-diario/motor.py` (fundo café, fios de ouro, marca-texto, fechamento, área segura,

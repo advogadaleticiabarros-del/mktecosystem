@@ -38,3 +38,6 @@ quer ficar por dentro dos seus direitos, clique em seguir e compartilhe com quem
 - Volume entre -14,6 e -16,7 LUFS (só efeitos, sem voz). Área segura ok em todos.
 - Ritmo: pelo menos 2 por semana. Ainda não agendado: falta a aprovação da Dra. e conferir as vagas de terça e sexta
   21h, que já têm Reels do 13º e de gestante até 11/12.
+
+## Aprovação e nome (09/11/2026)
+"Todos aprovados": os 13. O estilo passou a se chamar **Flagrante**, documentado em `docs/ESTILO_FLAGRANTE.md`.
