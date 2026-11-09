@@ -5,6 +5,7 @@ lê cada bloco de texto (posição, fonte, cor) e o esconde; a foto sem os texto
 vira o fundo. Nada é gravado em producao/estilos: as peças prontas continuam como estão.
 Uso: python importar_estilos.py [estilo ...]   (peça que já existe no editor é pulada, nunca sobrescrita)"""
 import io
+import os
 import runpy
 import sys
 from pathlib import Path
@@ -16,6 +17,9 @@ from acervo import Acervo, PecaInvalida
 
 AQUI = Path(__file__).resolve().parent
 ESTILOS = AQUI.parent / "estilos"
+# Lotes que não são o gerar.py do estilo: nome → (pasta do estilo, script, argumentos).
+LOTES = {"manchete-dez": ("manchete", "conteudo_planejado.py", ["dez"]),
+         "manchete-nov": ("manchete", "conteudo_planejado.py", ["nov", "nov-11-1", "nov-11-2", "nov-11-3", "nov-12"])}
 GERADORES = {"palavra-de-ouro": "gerar.py", "verbete": "gerar.py", "papel-e-ouro": "gerar.py", "objeto-em-cena": "gerar.py", "manchete": "gerar.py"}
 NAO_IMPORTAR = {"palavra-de-ouro-grito-D-editorial"}  # já está no editor, com os ajustes da Jessica
 
@@ -137,22 +141,25 @@ def importar(estilo, acervo, so=()):
             capturas[caminho.stem] = (pendente.pop(), img.copy())
         # o resto (grade, tira) não é gravado: nada em producao/estilos muda
 
-    pasta = ESTILOS / estilo
+    pasta_estilo, script, args = LOTES.get(estilo, (estilo, GERADORES.get(estilo), []))
+    pasta = ESTILOS / pasta_estilo
     Page.screenshot, Image.Image.save = foto_sem_texto, interceptar
     argv, cwd = sys.argv, Path.cwd()
+    os.environ["EDITOR_IMPORTA"] = "1"  # o lote pula peça já gravada; aqui ela precisa ser refeita para a captura
     try:
-        sys.argv = [str(pasta / GERADORES[estilo]), *so]
+        sys.argv = [str(pasta / script), *(args or []), *so]
         sys.path.insert(0, str(pasta))
-        runpy.run_path(str(pasta / GERADORES[estilo]), run_name="__main__")
+        runpy.run_path(str(pasta / script), run_name="__main__")
     finally:
         Page.screenshot, Image.Image.save = tirar_foto, gravar
+        os.environ.pop("EDITOR_IMPORTA", None)
         sys.argv = argv
         sys.path.remove(str(pasta))
         for m in ("base",):
             sys.modules.pop(m, None)
     feitos = []
     for nome, (textos, fundo) in capturas.items():
-        peca = nome if nome.startswith(estilo) else f"{estilo}-{nome}"
+        peca = nome if nome.startswith(pasta_estilo) else f"{pasta_estilo}-{nome}"
         if peca in NAO_IMPORTAR or peca in acervo.nomes():
             continue
         b = io.BytesIO()
@@ -169,6 +176,6 @@ def importar(estilo, acervo, so=()):
 
 if __name__ == "__main__":
     acervo = Acervo(AQUI)
-    for estilo in sys.argv[1:] or GERADORES:
+    for estilo in sys.argv[1:] or [*GERADORES, *LOTES]:
         for peca, n, pequenos in importar(estilo, acervo):
             print(f"{peca}: {n} textos" + (f", {pequenos} abaixo de 22 px ajustados" if pequenos else ""))
