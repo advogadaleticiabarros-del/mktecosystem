@@ -18,7 +18,7 @@ Jessica: "mude todos os reels para no maximo as 19h00, as 21h00 nao estou conseg
   aprovado novo sem hora combinada ainda é agendado às 21:00 pela versão antiga. Deploy:
   `cd /home/orbit-src && git pull --ff-only && cd deploy/vps && docker compose up -d --build api` (com backup antes).
 - O Reels de hoje (10/11, "Flagrante: 13º salário") foi trocado às 19h08, já depois das 19h: o publicador o pega na
-  rodada seguinte (a cada 5 min), então sai por volta das 19h10.
+  rodada seguinte (a cada 5 min). Conferido: ficou "publicado" às 19h10.
 - O teste `test_reels_com_data_combinada_fora_de_terca_ou_sexta_vai_para_a_proxima` falha por usar data fixa no passado
   (30/10/2026); já falhava antes desta mudança.
 - TikTok tem grade própria (`GRADE_TIKTOK`) e não foi mexido.
