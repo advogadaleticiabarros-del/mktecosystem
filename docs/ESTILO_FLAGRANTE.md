@@ -42,3 +42,16 @@ Capa própria em vez do quadro do vídeo. Padrão escolhido pela Jessica: **text
 - Gerar: `python producao/estilos/papel-e-ouro/motion-diario/capas.py [prefixo ...]`, que grava `<episódio>/capa-textura.jpg`. As outras variações (`--clara`, `--cafe`, `--dividida`, `--cena`) ficam disponíveis.
 - Conteúdo dentro do recorte 3:4 da grade (y 240 a 1680): faixas douradas, tema curto (`TEMAS`), fala do conflito e pergunta em marca-texto, rodapé com assinatura e "Assista", tudo na margem de 96 px.
 - Publicação: o Orbit ainda usa `thumb_offset` (quadro do vídeo). Usar a capa exige `cover_url` no publicador e deploy, com aprovação.
+
+## Série Mito ou Lei em Reels (10/11/2026)
+A série Mito ou Lei deixou de ser estático: virou Reels no estilo Flagrante, **segunda, quarta e sábado às 19h**
+(dias sem os outros Reels, pedido da Jessica). Gerador único: `producao/estilos/papel-e-ouro/motion-diario/mito_lei.py`
+(dados de tela em `TELA`; texto jurídico de `conteudo_{nov,dez}.py`). Saída `mito-lei/<MM-DD>-<slug>/...-v3.mp4`.
+- Gancho: afirmação na tela desde 0,1 s, desafio "⏱ Responda antes da roleta parar" em 1,25 s.
+- Meia roleta saindo do rodapé (centro na faixa dourada inferior), cliques de lingueta desacelerando (2,4 a 7,6 s).
+- Carimbo: vento subindo, queda acelerada, batida seca sintetizada; MITO vermelho vivo, LEI dourado brilhante;
+  clarão, onda, respingos e tremor.
+- Resposta: destaque grande, linha de apoio, selo opcional, cartão curto de explicação e 📚 base legal. Detalhes na legenda.
+- Fechamento padrão + cartão "Dra. Letícia Barros · @adv.leticiabarros2" com botão Seguir tocado (vira "Seguindo ✓").
+- Sons sintetizados no `motor.py`: `batida`, `vento`, `clique`.
+- Grade e página: `gerar_pagina_mito.py`; troca no Orbit: `apps/api/_saida_producao_1510/mito_reels.py` (peça reels nova, estático vai para a reserva).

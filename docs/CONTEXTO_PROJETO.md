@@ -606,6 +606,11 @@ Teste seco: container criado com `pergunta-pet.jpg` → FINISHED (sem publicar).
   fontes carregarem. 13 perguntas agendadas às 12h de 09/10 a 02/11. Resto do lote
   15/10–02/11 continua rascunho por pedido dela. Ver `docs/PASSAGEM_DE_CONTEXTO.md`.
 
+### Mito ou Lei virou Reels (10/11/2026)
+Desde 10/11/2026 a série Mito ou Lei sai como **Reels no estilo Flagrante, segunda, quarta e sábado às 19h** (os
+outros Reels continuam terça e sexta 21h). Gerador `producao/estilos/papel-e-ouro/motion-diario/mito_lei.py`, detalhes
+em `docs/ESTILO_FLAGRANTE.md`. 27 agendados de 11/11/2026 a 11/01/2027; o estático v3 abaixo ficou só como histórico.
+
 ### Mito ou Lei v3 = padrão oficial (09/10/2026)
 
 - Aprovado pela Letícia: selo encaixado no topo do cartão de vidro (afirmação + explicação

@@ -75,6 +75,48 @@ def vibracao(dur=.16):
     return np.stack([z, z], 1)
 
 
+def batida():
+    """Batida seca de carimbo (10/11/2026): grave com queda de afinação + estalo curto do papel."""
+    t = np.arange(int(SR * .5)) / SR
+    f = 45 + 95 * np.exp(-t * 28)
+    grave = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 9)
+    rng = np.random.default_rng(7)
+    ruido = rng.standard_normal(len(t))
+    ruido = np.convolve(ruido, np.ones(6) / 6, "same") * np.exp(-t * 90)
+    z = .9 * grave + .55 * ruido
+    z = np.tanh(z * 1.8) / np.tanh(1.8)
+    return np.stack([z, z], 1) * .95
+
+
+def vento(dur=.72):
+    """Deslocamento de ar que cresce até a batida (10/11/2026): ruído filtrado com corte e volume subindo."""
+    n = int(SR * dur)
+    t = np.arange(n) / SR
+    rng = np.random.default_rng(3)
+    r = rng.standard_normal((n, 2))
+    corte = 300 + 5200 * (t / dur) ** 2
+    a = 1 - np.exp(-2 * np.pi * corte / SR)
+    y = np.zeros_like(r)
+    acc = np.zeros(2)
+    for i in range(n):
+        acc += a[i] * (r[i] - acc)
+        y[i] = acc
+    env = (t / dur) ** 2.2
+    env[-int(SR * .015):] *= np.linspace(1, 0, int(SR * .015))
+    y = y * env[:, None]
+    return y / (np.abs(y).max() + 1e-9) * .6
+
+
+def clique():
+    """Clique da lingueta da roleta (10/11/2026): estalo curto de plástico com um 'tic' agudo."""
+    t = np.arange(int(SR * .06)) / SR
+    rng = np.random.default_rng(11)
+    z = (.7 * rng.standard_normal(len(t)) * np.exp(-t * 400) + .6 * np.sin(2 * np.pi * 2300 * t) * np.exp(-t * 160)
+         + .4 * np.sin(2 * np.pi * 900 * t) * np.exp(-t * 90))
+    z = z / (np.abs(z).max() + 1e-9) * .5
+    return np.stack([z, z], 1)
+
+
 def mixar(eventos, dur, arq):
     """eventos: lista de (tempo, nome[, ganho extra]). Grava wav e normaliza a -14 LUFS."""
     s = np.zeros((int(SR * dur), 2))
@@ -83,7 +125,7 @@ def mixar(eventos, dur, arq):
         t, nome = ev[0], ev[1]
         g = ev[2] if len(ev) > 2 else 1.0
         if nome not in cache:
-            cache[nome] = vibracao() if nome == "vibra" else amostra(nome)
+            cache[nome] = vibracao() if nome == "vibra" else batida() if nome == "batida" else vento() if nome == "vento" else clique() if nome == "clique" else amostra(nome)
         x = cache[nome] * g
         i0 = int(t * SR)
         n = min(len(x), len(s) - i0)
