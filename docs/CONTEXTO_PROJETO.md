@@ -1234,6 +1234,11 @@ citações. Detalhes em `docs/ESTILO_MANCHETE.md` e `docs/ESTILO_FLAGRANTE.md`.
 reserva (regra de 1 post por dia). Vagas de 25/11 e 09/12: `agendar_vagas.py`, esperando ok. Editorial pronto até 31/12;
 não há plano de janeiro.
 
+**Reels de terça e sexta viraram Flagrante (10/11/2026, aplicado):** os 13 Reels antigos das 21h foram trocados pelos
+Flagrante com capa textura (`reels_flagrante.py`; antigos em `corpo.reserva`; backup
+`/root/orbit-backups/antes-reels-flagrante-20261110.sql.gz`). A API na VPS manda `cover_url` (`corpo.capa`). Dockerfile da
+API instala `libatomic1` (sem ela o build quebra no playwright). Mito ou Lei: 27 Reels às 19h, segunda, quarta e sábado.
+
 ## Reels motion diários · Estilo Flagrante (09/11/2026)
 
 Nome do estilo: **Flagrante** (`docs/ESTILO_FLAGRANTE.md`). Os 13 foram aprovados pela Jessica em 09/11.
