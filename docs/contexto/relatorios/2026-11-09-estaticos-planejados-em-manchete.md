@@ -53,5 +53,5 @@ A Jessica liberou o acesso ("Está permitido troque agora e programe corretament
 - Programação: o publicador usa `corpo.imagem` na hora de publicar (`midia_instagram.py`), então as peças agendadas já saem com a arte Manchete. Nenhuma data, horário ou status foi mudado.
 - Calendário (`calendario.py`, só leitura): o feed tem 1 post por dia até 31/12. 18 das 72 peças estão agendadas: 12 Mito ou Lei, 5 frases e 1 pergunta. As outras 54 (34 perguntas, 27 frases e 25 estáticos aprovados ao todo sem agendamento) não cabem pela regra de 1 por dia e ficam como reserva.
 - Dias sem post no feed: só 25/11 e 09/12. `agendar_vagas.py` põe ali as perguntas "aposentadoria da mulher 2026" e "assédio moral" às 14h. **Não aplicado**: a permissão automática bloqueou porque cria agendamento novo, além da troca aprovada. Falta o ok da Jessica.
-- Observado e não mexido: em 7 dias de Reels também há post de feed às 14h (17/11, 20/11, 08/12, 11/12, 15/12, 18/12, 22/12 e 29/12), contra a regra "em dia de Reels, só o Reels". Esses agendamentos já existiam.
+- Observado e não mexido: em 8 dias de Reels também há post de feed às 14h (17/11, 20/11, 08/12, 11/12, 15/12, 18/12, 22/12 e 29/12), contra a regra "em dia de Reels, só o Reels". Esses agendamentos já existiam.
 - Para voltar a arte antiga: `corpo.imagem_anterior` de cada peça, ou o backup acima.
