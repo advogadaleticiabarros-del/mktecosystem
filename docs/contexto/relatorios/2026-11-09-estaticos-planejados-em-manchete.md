@@ -41,4 +41,17 @@ Com aprovação e acesso: backup do banco, subir os JPG para `/media` e trocar `
 - `apps/api/_saida_producao_1510/trocar_arte_manchete.py` (commit 64692bd), roda no container. Troca só `corpo.imagem` das perguntas, frases e Mito ou Lei de 10/11 em diante, guarda a URL antiga em `corpo.imagem_anterior` e pula peça publicada ou ambígua. Sem `--aplicar`, só simula.
 - Os 72 JPG estão prontos em `producao/estilos/manchete/envio/` com o prefixo `manchete-` (fora do git).
 - Não aplicado: o SSH para a VPS foi negado duas vezes pela permissão automática. Falta a Jessica liberar `Bash(ssh -i ~/.ssh/orbit_vps:*)` e `Bash(scp -i ~/.ssh/orbit_vps:*)`.
-- Passos quando liberar: backup do banco (`pg_dumpall`, conferir tamanho), scp dos JPG e de `conteudo_nov.py`, `conteudo_dez.py` e `trocar_arte_manchete.py` para `/tmp/manchete`, `docker compose cp` dos JPG para `api:/app/media`, rodar sem `--aplicar`, conferir e rodar com `--aplicar`, abrir 2 URLs públicas.
+- (Histórico) Passos quando liberar: backup do banco (`pg_dumpall`, conferir tamanho), scp dos JPG e de `conteudo_nov.py`, `conteudo_dez.py` e `trocar_arte_manchete.py` para `/tmp/manchete`, `docker compose cp` dos JPG para `api:/app/media`, rodar sem `--aplicar`, conferir e rodar com `--aplicar`, abrir 2 URLs públicas.
+
+## Troca aplicada no Orbit (09/11/2026, noite)
+
+A Jessica liberou o acesso ("Está permitido troque agora e programe corretamente").
+
+- Backup antes: `/root/orbit-backups/antes-manchete-20261109.sql.gz` (1,2 MB).
+- 72 JPG copiados para `api:/app/media`. A simulação encontrou as 72 peças, todas `aprovado`, sem aviso. `--aplicar` trocou 72, e uma segunda simulação trocaria 0.
+- Conferido no ar (HTTP 200, image/jpeg): mito de 20/11, frase de 21/11, pergunta de 24/12, mito de 30/12.
+- Programação: o publicador usa `corpo.imagem` na hora de publicar (`midia_instagram.py`), então as peças agendadas já saem com a arte Manchete. Nenhuma data, horário ou status foi mudado.
+- Calendário (`calendario.py`, só leitura): o feed tem 1 post por dia até 31/12. 18 das 72 peças estão agendadas: 12 Mito ou Lei, 5 frases e 1 pergunta. As outras 54 (34 perguntas, 27 frases e 25 estáticos aprovados ao todo sem agendamento) não cabem pela regra de 1 por dia e ficam como reserva.
+- Dias sem post no feed: só 25/11 e 09/12. `agendar_vagas.py` põe ali as perguntas "aposentadoria da mulher 2026" e "assédio moral" às 14h. **Não aplicado**: a permissão automática bloqueou porque cria agendamento novo, além da troca aprovada. Falta o ok da Jessica.
+- Observado e não mexido: em 7 dias de Reels também há post de feed às 14h (17/11, 20/11, 08/12, 11/12, 15/12, 18/12, 22/12 e 29/12), contra a regra "em dia de Reels, só o Reels". Esses agendamentos já existiam.
+- Para voltar a arte antiga: `corpo.imagem_anterior` de cada peça, ou o backup acima.

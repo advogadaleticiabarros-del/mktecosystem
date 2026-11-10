@@ -1223,6 +1223,12 @@ estáticos novos (`manchete-14` a `34`, temas dos Flagrantes; o 20 do Flagrante 
 e 11 Flagrantes novos (23 a 33, temas do Manchete; a 03 e a 10 ficaram de fora). Nada agendado; a Dra. confere as
 citações. Detalhes em `docs/ESTILO_MANCHETE.md` e `docs/ESTILO_FLAGRANTE.md`.
 
+**Estáticos planejados em Manchete no Orbit (09/11/2026, aplicado):** as 72 perguntas, frases e Mito ou Lei de 10/11 a
+31/12 trocaram de arte (`trocar_arte_manchete.py`; URL antiga em `corpo.imagem_anterior`; backup
+`/root/orbit-backups/antes-manchete-20261109.sql.gz`). Datas e horários iguais: 18 delas estão agendadas, o resto é
+reserva (regra de 1 post por dia). Vagas de 25/11 e 09/12: `agendar_vagas.py`, esperando ok. Editorial pronto até 31/12;
+não há plano de janeiro.
+
 ## Reels motion diários · Estilo Flagrante (09/11/2026)
 
 Nome do estilo: **Flagrante** (`docs/ESTILO_FLAGRANTE.md`). Os 13 foram aprovados pela Jessica em 09/11.
