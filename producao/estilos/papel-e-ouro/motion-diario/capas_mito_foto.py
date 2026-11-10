@@ -1,13 +1,15 @@
-"""Capa dos Reels Mito ou Lei com foto do tema saindo da moldura (10/11/2026). A Jessica mandou uma referência de foto
+"""Estilo MOLDURA VIVA (nome dado em 10/11/2026; docs/ESTILO_MOLDURA_VIVA.md): capa padrão dos Reels Mito ou Lei.
+Foto do tema saindo da moldura (10/11/2026). A Jessica mandou uma referência de foto
 emoldurada em papel, com a pessoa saindo do quadro, e disse: "poderíamos fazer as capas com fotos que seguem o tema".
 
 Nossa identidade: papel claro com fibra, faixas e fio em dourado metálico, "Mito ou Lei?" em EB Garamond com Lei em
 ouro, afirmação do vídeo em itálico, MITO / LEI sem revelar o veredito. A foto é a do tema (banco Pexels das
-perguntas). O recorte (rembg, isnet) acha o topo da pessoa ou do objeto, e a foto é posicionada para esse topo passar
+perguntas). Cada capa tem foto própria (FOTOS, abaixo): nunca a mesma de outro post, nem de pergunta ou carrossel do mesmo
+tema (pedido da Jessica, 10/11/2026). O recorte (rembg, isnet) acha o topo da pessoa ou do objeto, e a foto é posicionada para esse topo passar
 por cima da borda de cima da moldura. Se a pessoa já está cortada no alto da foto, fica só a moldura, sem sair.
 Tudo o que importa fica no recorte da grade (y 240 a 1680).
 
-Uso: python capas_mito_foto.py [MM-DD ...]  → mito-lei/<MM-DD>-<slug>/capa-foto.jpg (arquivo novo; recortes em _recortes/)."""
+Uso: python capas_mito_foto.py [MM-DD ...]  → mito-lei/<MM-DD>-<slug>/capa-moldura-viva.jpg (arquivo novo; recortes em _recortes/)."""
 import asyncio
 import base64
 import html
@@ -32,6 +34,14 @@ EIXO = 96
 FX, FY, FW, FH = 150, 610, 780, 560  # janela da moldura
 SAIDA = 120  # quanto a pessoa passa acima da borda de cima
 _SESSAO = None
+# foto Pexels de cada Mito ou Lei, escolhida pela afirmação; todas inéditas no banco e diferentes entre si
+FOTOS = {"11-08": 7550933, "11-10": 7485259, "11-12": 7622513, "11-14": 7993402, "11-16": 6392894, "11-18": 18703556,
+         "11-20": 5668881, "11-22": 3763583, "11-24": 18225736, "11-26": 7156512, "11-28": 8871515, "11-30": 5900158,
+         "12-02": 39999216, "12-04": 12903128, "12-06": 4063537, "12-08": 4491431, "12-10": 6690448, "12-12": 6632528,
+         "12-14": 7845468, "12-16": 35985680, "12-18": 6969756, "12-20": 34654342, "12-22": 15422833, "12-24": 8786851,
+         "12-26": 19773937, "12-28": 8730366, "12-30": 18088839}
+CENTRO = {4063537}  # fotos em que o recorte pega objeto solto no alto (luminária): enquadrar pelo centro
+assert len(set(FOTOS.values())) == len(FOTOS), "foto repetida entre capas"
 
 
 def fotos_por_tema():
@@ -50,6 +60,7 @@ def foto_e_recorte(foto_id):
     RECORTES.mkdir(exist_ok=True)
     im = Image.open(BANCO / f"{foto_id}.jpg").convert("RGB")
     im.thumbnail((1400, 1400))
+    im.foto_id = foto_id
     cache = RECORTES / f"{foto_id}.png"
     if not cache.exists():
         from rembg import new_session, remove
@@ -72,7 +83,10 @@ def geometria(im, bbox, alfa):
     topo = bbox[1] if sai else 0
     s = max(FW / w, (FH + (SAIDA if sai else 0)) / (h - topo))
     y = FY - (SAIDA if sai else 0) - topo * s
-    y = min(y, FY)
+    if not sai and bbox:  # sem sair da moldura: centraliza a pessoa na janela
+        alta = (bbox[3] - bbox[1]) * s > FH - 60 and getattr(im, 'foto_id', None) not in CENTRO  # pessoa maior que a janela: mostra a cabeça, com folga em cima
+        y = FY + 30 - bbox[1] * s if alta else FY + FH / 2 - (bbox[1] + bbox[3]) / 2 * s
+    y = max(min(y, FY), FY + FH - h * s)
     cx = ((bbox[0] + bbox[2]) / 2 if bbox else w / 2) * s
     x = min(FX, max(FX + FW - w * s, FX + FW / 2 - cx))
     return sai, s, x, y, w * s, h * s
@@ -132,7 +146,6 @@ def pagina(md, im, rec, alfa):
 
 async def main():
     so = sys.argv[1:]
-    fotos = fotos_por_tema()
     async with async_playwright() as p:
         b = await p.chromium.launch()
         pg = await b.new_page(viewport={"width": 1080, "height": 1920})
@@ -140,14 +153,13 @@ async def main():
             if so and md not in so:
                 continue
             pasta = AQUI / "mito-lei" / f"{md}-{m[1]}"
-            destino = pasta / "capa-foto.jpg"
+            destino = pasta / "capa-moldura-viva.jpg"
             if not pasta.exists() or destino.exists():  # capa pronta nunca é sobrescrita
                 continue
-            perg = fotos.get(m[1], {})
-            if not perg.get("foto"):
-                print(md, "sem foto do tema")
+            if md not in FOTOS:
+                print(md, "sem foto escolhida em FOTOS")
                 continue
-            im, rec, alfa = foto_e_recorte(perg["foto"])
+            im, rec, alfa = foto_e_recorte(FOTOS[md])
             await pg.set_content(pagina(md, im, rec, alfa), wait_until="networkidle")
             await pg.wait_for_selector("body[data-ok]", state="attached")
             await pg.screenshot(path=str(destino), type="jpeg", quality=92)

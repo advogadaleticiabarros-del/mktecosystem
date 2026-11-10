@@ -1239,6 +1239,10 @@ Flagrante com capa textura (`reels_flagrante.py`; antigos em `corpo.reserva`; ba
 `/root/orbit-backups/antes-reels-flagrante-20261110.sql.gz`). A API na VPS manda `cover_url` (`corpo.capa`). Dockerfile da
 API instala `libatomic1` (sem ela o build quebra no playwright). Mito ou Lei: 27 Reels às 19h, segunda, quarta e sábado.
 
+**Estilo Moldura Viva (10/11/2026, aplicado):** é a capa padrão dos Reels Mito ou Lei, com papel claro e foto saindo da
+moldura dourada (`docs/ESTILO_MOLDURA_VIVA.md`, `capas_mito_foto.py`). As 27 capas estão no Orbit em `corpo.capa`. Regra: a mesma
+imagem nunca vai em dois posts, mesmo do mesmo tema.
+
 ## Reels motion diários · Estilo Flagrante (09/11/2026)
 
 Nome do estilo: **Flagrante** (`docs/ESTILO_FLAGRANTE.md`). Os 13 foram aprovados pela Jessica em 09/11.
