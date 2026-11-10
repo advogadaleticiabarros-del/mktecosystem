@@ -28,3 +28,7 @@ outras peças depois. Nasceu de uma referência que ela mandou: foto emoldurada 
   - A saída é `mito-lei/<MM-DD>-<slug>/capa-moldura-viva.jpg`, e o recorte fica guardado em `mito-lei/_recortes/`.
 - No Orbit: `apps/api/_saida_producao_1510/capa_mito_reels.py` grava `corpo.capa`, e o publicador manda essa URL como `cover_url`.
 - Para outra peça no mesmo estilo, reaproveite `pagina()` e `geometria()`, trocando o texto e o tamanho da moldura.
+
+## Regra (10/11/2026)
+As 27 capas foram aprovadas ("todos aprovados"). Todo Reels Mito ou Lei novo já sai com a sua capa Moldura Viva:
+`mito_lei.py video` gera o vídeo e chama `capas_mito_foto.py` em seguida. Ver `docs/ESTILO_FLAGRANTE.md`.

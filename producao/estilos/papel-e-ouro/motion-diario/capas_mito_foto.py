@@ -146,6 +146,9 @@ def pagina(md, im, rec, alfa):
 
 async def main():
     so = sys.argv[1:]
+    repetidas = [f for f in set(FOTOS.values()) if list(FOTOS.values()).count(f) > 1]
+    if repetidas:  # nunca a mesma foto em dois posts (10/11/2026)
+        sys.exit(f"foto repetida em FOTOS: {repetidas}")
     async with async_playwright() as p:
         b = await p.chromium.launch()
         pg = await b.new_page(viewport={"width": 1080, "height": 1920})

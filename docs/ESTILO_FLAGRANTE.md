@@ -55,3 +55,10 @@ A série Mito ou Lei deixou de ser estático: virou Reels no estilo Flagrante, *
 - Fechamento padrão + cartão "Dra. Letícia Barros · @adv.leticiabarros2" com botão Seguir tocado (vira "Seguindo ✓").
 - Sons sintetizados no `motor.py`: `batida`, `vento`, `clique`.
 - Grade e página: `gerar_pagina_mito.py`; troca no Orbit: `apps/api/_saida_producao_1510/mito_reels.py` (peça reels nova, estático vai para a reserva).
+
+### Regra: Reels Mito ou Lei sempre com capa (10/11/2026)
+Pedido da Jessica ao aprovar as 27 capas: "ao produzir um reels mito ou lei já produza a capa". Todo Reels Mito ou Lei
+sai junto com a capa **Moldura Viva** (`docs/ESTILO_MOLDURA_VIVA.md`). `python mito_lei.py video [MM-DD ...]` já chama
+`capas_mito_foto.py` no fim e grava `capa-moldura-viva.jpg` na pasta do tema. Antes, escolher uma foto Pexels inédita
+para o tema em `FOTOS` (o script recusa foto repetida). Capa pronta nunca é sobrescrita. A capa vai para o Orbit junto
+com o vídeo (`corpo.capa`).

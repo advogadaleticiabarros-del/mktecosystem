@@ -34,3 +34,4 @@
 - Páginas: aprovação https://claude.ai/artifact/TwkcA9cXu5wJvhGNKwSKV2 · calendário do feed https://claude.ai/artifact/MFQHA4vTwbS28VMho92LpZ
 - Atenção: 02/01 tem um Reels de acervo pausado às 21h; se for reativado, o dia terá 2 Reels.
 - 10/11/2026: página de conferência das 27 capas Moldura Viva (mito-lei/capas.html), com número, data e afirmação de cada Reels: https://claude.ai/artifact/KqwCxgF8tqqcTSBjmrtBif
+- 10/11/2026: Jessica aprovou as 27 capas ("todos aprovados") e fixou a regra: Reels Mito ou Lei sempre sai com a capa. `mito_lei.py video` agora chama `capas_mito_foto.py`; este recusa foto repetida em FOTOS. Regra em docs/ESTILO_FLAGRANTE.md e docs/ESTILO_MOLDURA_VIVA.md e na memória.

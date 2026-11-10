@@ -217,3 +217,8 @@ if __name__ == "__main__":
             continue
         print("==", md, m[1], flush=True)
         motor.rodar(episodio(md, m), str(raiz / "x.py"))
+    if modo == "video":
+        # Regra (10/11/2026, Jessica): todo Reels Mito ou Lei sai com a capa Moldura Viva junto.
+        # A capa pronta nunca é sobrescrita; tema sem foto inédita em FOTOS (capas_mito_foto.py) é avisado.
+        import subprocess
+        subprocess.run([sys.executable, str(AQUI / "capas_mito_foto.py"), *datas], check=True)
