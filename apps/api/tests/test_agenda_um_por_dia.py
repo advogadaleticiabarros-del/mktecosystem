@@ -1,5 +1,5 @@
 """Instagram: 1 publicação por dia (pedido da Letícia, 16/10/2026). Em dia de Reels, só o Reels, à noite.
-Horários pelo alcance real do perfil: Reels 21h; feed 14h de segunda a sexta e 11h no sábado e no domingo."""
+Horários pelo alcance real do perfil: Reels 19h (no máximo); feed 14h de segunda a sexta e 11h no sábado e no domingo."""
 from datetime import date, timedelta
 
 import pytest
@@ -35,7 +35,7 @@ async def _aprovar(db, tenant, tipo, titulo="Gestante", corpo=None):
 
 def test_horarios_reels_a_noite_feed_14h_na_semana_e_11h_no_fim_de_semana():
     sexta, sabado, domingo = date(2026, 10, 16), date(2026, 10, 17), date(2026, 10, 18)
-    assert horario_instagram("reels", sexta) == horario_instagram("reels", domingo) == "21:00"
+    assert horario_instagram("reels", sexta) == horario_instagram("reels", domingo) == "19:00"
     assert horario_instagram("carrossel", sexta) == "14:00"
     assert horario_instagram("frase", sabado) == horario_instagram("estatico", domingo) == "11:00"
 
@@ -76,7 +76,7 @@ async def test_reels_so_terca_e_sexta_e_o_feed_nos_outros_dias(db_session):
     dias = [r.data_agendada for r in (r1, r2, r3)]
     assert all(d.weekday() in (1, 4) for d in dias) and len(set(dias)) == 3
     assert dias[0] == _proximo(AMANHA, {1, 4}) and dias == sorted(dias)
-    assert {r.horario for r in (r1, r2, r3)} == {"21:00"} and r1.formato == "reels"
+    assert {r.horario for r in (r1, r2, r3)} == {"19:00"} and r1.formato == "reels"
     assert estatico.data_agendada.weekday() not in (1, 4)
     assert estatico.data_agendada == _proximo(AMANHA, {0, 2, 3, 5, 6})
 
@@ -86,7 +86,7 @@ async def test_reels_com_data_combinada_fora_de_terca_ou_sexta_vai_para_a_proxim
     tenant = await _tenant(db_session)
     quarta = date(2026, 10, 28)
     a = await _aprovar(db_session, tenant, "reels", corpo={"programacao": {"data": quarta.isoformat(), "hora": "21:00"}})
-    assert (a.data_agendada, a.horario) == (date(2026, 10, 30), "21:00")
+    assert (a.data_agendada, a.horario) == (date(2026, 10, 30), "19:00")
 
 
 @pytest.mark.anyio
@@ -108,7 +108,7 @@ async def test_pula_o_dia_que_ja_tem_post_e_ignora_blog_e_stories(db_session):
 async def test_programacao_combinada_continua_valendo(db_session):
     tenant = await _tenant(db_session)
     a = await _aprovar(db_session, tenant, "reels", corpo={"programacao": {"data": "2026-10-23", "hora": "21:00"}})
-    assert (a.data_agendada, a.horario) == (date(2026, 10, 23), "21:00")
+    assert (a.data_agendada, a.horario) == (date(2026, 10, 23), "19:00")
 
 
 @pytest.mark.anyio
@@ -128,3 +128,10 @@ async def test_trial_reels_nao_ocupa_o_dia_dos_seguidores(db_session):
     await db_session.flush()
     carrossel = await _aprovar(db_session, tenant, "carrossel")
     assert carrossel.data_agendada == dia
+
+
+def test_reels_nunca_depois_das_19h():
+    from app.services.agenda import limitar_horario_reels
+    assert limitar_horario_reels("21:00") == "19:00"
+    assert limitar_horario_reels("19:00") == "19:00"
+    assert limitar_horario_reels("15:00") == "15:00"

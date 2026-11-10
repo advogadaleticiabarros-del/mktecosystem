@@ -6,8 +6,8 @@ contam: o Orbit não publica Stories). Em dia de Reels, só o Reels.
 Reels só 2 vezes por semana, na terça e na sexta (pedido de 23/10/2026: cada Reels precisa de tempo para se
 destacar); o resto do feed vai para os outros cinco dias. Reels com data combinada fora de terça ou sexta vai para a
 próxima terça ou sexta livre.
-Horários pelo alcance real do perfil nos últimos 12 meses (análise do Instagram no Orbit): Reels 21:00 (melhor
-horário), feed 14:00 de segunda a sexta e 11:00 no sábado e no domingo.
+Horários: Reels no máximo às 19:00 (pedido de 10/11/2026: às 21h os Reels não tinham visualizações nem curtidas;
+nenhum Reels passa das 19:00, nem com hora combinada), feed 14:00 de segunda a sexta e 11:00 no sábado e no domingo.
 Peça com `corpo.programacao` (data e hora combinadas na produção) vai para essa data e hora.
 
 O resto (artigo, jornal, legenda solta, stories) segue o playbook antigo: 2 vagas por dia (11:00 e 17:00).
@@ -26,7 +26,8 @@ from app.services.agendamento_horario import hoje_brasilia
 
 HORARIOS_PLAYBOOK = ["11:00", "17:00"]
 TIPOS_DO_FEED = {"carrossel", "carousel", "estatico", "frase", "pergunta", "reels"}
-HORARIO_REELS, HORARIO_FEED_SEMANA, HORARIO_FEED_FIM_DE_SEMANA = "21:00", "14:00", "11:00"
+HORARIO_REELS, HORARIO_FEED_SEMANA, HORARIO_FEED_FIM_DE_SEMANA = "19:00", "14:00", "11:00"
+HORARIO_MAXIMO_REELS = "19:00"  # pedido de 10/11/2026: Reels nunca depois das 19h
 DIAS_REELS = {1, 4}  # terça e sexta: 2 Reels por semana (pedido de 23/10/2026)
 
 FORMATO_POR_TIPO = {
@@ -45,6 +46,11 @@ FORMATO_POR_TIPO = {
 }
 
 CANAL_POR_TIPO = {"artigo": "blog", "jornal": "blog"}
+
+
+def limitar_horario_reels(horario: str) -> str:
+    """Reels nunca depois das 19:00 (pedido de 10/11/2026)."""
+    return min(horario, HORARIO_MAXIMO_REELS) if horario else HORARIO_REELS
 
 
 def horario_instagram(tipo: str, dia: date) -> str:
@@ -140,6 +146,8 @@ async def agendar_conteudo_aprovado(
         horario = HORARIO_REELS
     elif programacao:
         dia, horario = programacao
+        if piece.tipo == "reels":
+            horario = limitar_horario_reels(horario)
     elif piece.tipo in TIPOS_DO_FEED:
         dia = await dia_livre_no_instagram(db, piece.tenant_id, piece.tipo)
         horario = horario_instagram(piece.tipo, dia)
