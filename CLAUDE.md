@@ -31,7 +31,7 @@ LinkedIn (B2B, PMEs): `docs/ESTRATEGIA_LINKEDIN_PME.md` vale até 31/01/2027 (pe
 estratégia até janeiro"): fila terça e quinta 8h, funil LP de empresas + Checklist 2027, página da empresa, nada de
 abordagem direta. Qualquer assunto de LinkedIn: skill `leticia-linkedin`, com `conferir_post.py` (pedido de 05/11/2026;
 acionada por `gatilho.py`, gancho em `.claude/settings.local.json`, fora do git).
-Instagram: **Reels só 2 vezes por semana, terça e sexta 21h** (pedido de 23/10/2026; `agenda.py` já aplica).
+Instagram: **Reels só 2 vezes por semana, terça e sexta, no máximo às 19h** (pedido de 23/10/2026; horário trocado de 21h para 19h em 10/11/2026 por falta de visualizações; `agenda.py` já aplica).
 TikTok: **agenda e editorial próprios** (pedido de 23/10/2026): `docs/ESTRATEGIA_TIKTOK.md` (5 vídeos por semana na
 `GRADE_TIKTOK`, som comercial "Em alta" a 10-15% sob a voz, séries em dias seguidos, resposta a comentário, revisão
 dos horários em 20/11/2026).

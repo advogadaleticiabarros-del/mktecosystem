@@ -815,7 +815,7 @@ em `docs/ESTILO_FLAGRANTE.md`. 27 agendados de 11/11/2026 a 11/01/2027; o estát
 - **LP de empresas** regerada (EC 141 promulgada em 16/10, seção e formulário do Checklist 2027) e **Checklist 2027**
   (`lp/checklist-2027-empresas.pdf`, gerador `lp/_gerar_pdf_checklist_empresas.py`): esperando a aprovação para
   subir (LP em `lp/`, PDF em `assets/downloads/`).
-- **Reels: 2 por semana, terça e sexta 21h** (`DIAS_REELS` em `agenda.py`; feed nos outros cinco dias; Reels com
+- **Reels: 2 por semana, terça e sexta 19h** (no máximo 19h desde 10/11/2026; antes 21h) (`DIAS_REELS` em `agenda.py`; feed nos outros cinco dias; Reels com
   data combinada fora desses dias vai para a próxima terça ou sexta). Calendário existente remarcado em 23/10
   (log em `/root/orbit-backups/remarcacao_reels_2026-10-23.json` na VPS). Em dezembro alguns dias de Reels também
   têm o carrossel das 14h já marcado (datas temáticas não foram mexidas).

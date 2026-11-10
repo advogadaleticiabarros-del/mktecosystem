@@ -50,7 +50,7 @@ Nenhuma etapa oferece serviço (publicidade passiva, Provimento 205).
 
 ## Táticas para seguidores novos
 
-Reels com rosto: **2 Reels por semana, terça e sexta às 21h** (pedido de 23/10/2026: cada Reels precisa de tempo para se destacar; o Orbit já agenda assim); Trial Reels toda semana (2 ganchos do mesmo tema);
+Reels com rosto: **2 Reels por semana, terça e sexta às 19h (no máximo; era 21h até 10/11/2026)** (pedido de 23/10/2026: cada Reels precisa de tempo para se destacar; o Orbit já agenda assim); Trial Reels toda semana (2 ganchos do mesmo tema);
 história real sem identificar cliente; collab com não advogadas (psicóloga
 perinatal, doula, contadora, RH), sem pagamento; notícia com prazo em até 24 h
 (Radar de referências do Orbit); Reels de apresentação fixado; imprensa local;

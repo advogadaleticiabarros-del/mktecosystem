@@ -28,7 +28,7 @@ Ordem de prioridade quando houver conflito: **OAB > regras do TikTok > crescimen
 |---|---|---|
 | Quem vê primeiro | Seguidores | Desconhecidos com interesse no tema |
 | Sinal principal | Envio por direct, salvamento | Retenção (assistir até o fim), rever, compartilhar |
-| Frequência | 2 Reels por semana (terça e sexta 21h) | 5 vídeos por semana |
+| Frequência | 2 Reels por semana (terça e sexta 19h) | 5 vídeos por semana |
 | Busca | Fraca | Forte (fala, texto na tela e legenda) |
 | Vida útil do post | 1 a 2 dias | Dias ou semanas |
 
