@@ -55,3 +55,10 @@ A Jessica liberou o acesso ("Está permitido troque agora e programe corretament
 - Dias sem post no feed: só 25/11 e 09/12. `agendar_vagas.py` põe ali as perguntas "aposentadoria da mulher 2026" e "assédio moral" às 14h. **Não aplicado**: a permissão automática bloqueou porque cria agendamento novo, além da troca aprovada. Falta o ok da Jessica.
 - Observado e não mexido: em 8 dias de Reels também há post de feed às 14h (17/11, 20/11, 08/12, 11/12, 15/12, 18/12, 22/12 e 29/12), contra a regra "em dia de Reels, só o Reels". Esses agendamentos já existiam.
 - Para voltar a arte antiga: `corpo.imagem_anterior` de cada peça, ou o backup acima.
+
+## Grade visual do feed até 01/01/2027 (10/11/2026)
+
+- Pedido: "Coloque em um documento ... formato de grade Instagram com data e hora".
+- Página privada: https://claude.ai/artifact/ANhFGaQydP9XewYQoE59Kg. Mostra os 74 posts do feed de 25/10 a 31/12: 16 já publicados, 1 segurado e 58 agendados (26 carrosséis, 13 Reels e 19 estáticos). O mais novo fica no topo, cada quadro tem dia e hora, e dá para esconder os rótulos e os já publicados.
+- Dados lidos do Orbit, só leitura: `scheduled_posts` do Instagram sem Stories, com a primeira imagem de `corpo`. Reels aparecem como um quadro do próprio vídeo (1,2 s), recortado em 3:4.
+- Achado: 18/11 tem um Mito ou Lei com a arte antiga (pauta de 08/11 remarcada, fora da troca). 01/01/2027 não tem post. Em janeiro só há Reels em 05/01 e 08/01.
