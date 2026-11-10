@@ -33,3 +33,4 @@
 - Agenda conferida depois (`ver_calendario.py`): 27 Reels Mito ou Lei, 16 Reels, 26 carrosséis, 6 posts, 15 artigos; nenhum dia com mais de 2 no feed.
 - Páginas: aprovação https://claude.ai/artifact/TwkcA9cXu5wJvhGNKwSKV2 · calendário do feed https://claude.ai/artifact/MFQHA4vTwbS28VMho92LpZ
 - Atenção: 02/01 tem um Reels de acervo pausado às 21h; se for reativado, o dia terá 2 Reels.
+- 10/11/2026: página de conferência das 27 capas Moldura Viva (mito-lei/capas.html), com número, data e afirmação de cada Reels: https://claude.ai/artifact/KqwCxgF8tqqcTSBjmrtBif
