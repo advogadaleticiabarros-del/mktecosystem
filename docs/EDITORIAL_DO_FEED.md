@@ -1,6 +1,6 @@
-# Editorial do feed até 31/01/2027
+# Editorial do feed (até 28/02/2027)
 
-Organizado em 10/11/2026, a pedido da Jessica: 2 publicações por dia, post às 12h e Reels às 19h, Reels da Dra. no
+Organizado em 10/11/2026 (até janeiro) e estendido em 11/11/2026 até fevereiro ("pode fazer até o máximo que der"), a pedido da Jessica: 2 publicações por dia, post às 12h e Reels às 19h, Reels da Dra. no
 domingo, feed claro e harmônico, usando tudo o que já produzimos. Identidade, voz e estilos: `docs/CADERNO_DA_MARCA.md`.
 
 ## Regras da grade
@@ -30,6 +30,9 @@ domingo, feed claro e harmônico, usando tudo o que já produzimos. Identidade, 
   Black Friday (preço na prateleira), feriados.
 - **Dezembro**: Dezembro Vermelho (HIV no trabalho), burnout, assédio moral e sexual (festa da firma), 2ª parcela do 13º
   (até 18/12), temporários de fim de ano, Natal e Ano Novo (feriado, guarda, viagem com filhos), pensão em 2027.
+- **Fevereiro**: volta às aulas (lista de material, mensalidade), Carnaval (09/02/2027; não é feriado nacional),
+  gestante e pais (teste de gravidez, pré-natal, consultas), rescisão (FGTS, aviso prévio, seguro-desemprego),
+  holerite (vale-transporte, uniforme, hora extra), trabalho doméstico.
 - **Janeiro**: férias (o mês de quem viaja), atestado, holerite e ponto, contrato de experiência, folga, aviso prévio,
   salário por fora, e os Mito ou Lei de saúde da mulher, INSS, adoção, Maria da Penha, dívidas e casamento.
 
@@ -42,6 +45,22 @@ domingo, feed claro e harmônico, usando tudo o que já produzimos. Identidade, 
 - 9 Reels Flagrante prontos desde 09/11 e nunca publicados (04/12 e terças e sextas de janeiro).
 - 8 Reels Mito ou Lei novos para janeiro, com afirmações que a Dra. já tinha aprovado como estático.
 - 7 Reels gravados pela Dra. para os domingos até 27/12.
+
+## Fevereiro (estendido em 11/11/2026)
+
+- 12 Reels Mito ou Lei novos (`conteudo_fev.py`, textos **novos**: conferência jurídica da Dra. antes de 01/02).
+- 8 Reels Flagrante prontos da reserva (terças e sextas).
+- 12h: 13 perguntas já aprovadas refeitas em **papel claro** (a peça da reserva ganhou a arte clara; a café ficou em
+  `corpo.imagem_anterior`), 9 frases novas em papel claro e 6 acentos escuros (5 Palavras de Ouro e "Deu positivo").
+- Quintas e domingos de fevereiro têm só o post das 12h: falta material para a 2ª publicação (frase de quinta e
+  vídeo da Dra. no domingo).
+
+## Março (a produzir)
+
+Sobram na reserva 3 Flagrantes (guarda, pausa no banheiro, estacionamento) para 02, 05 e 09/03. O resto de março pede
+produção nova: 14 Mito ou Lei, 6 Flagrantes, cerca de 31 posts das 12h (carrosséis e Manchetes) e os vídeos de domingo da
+Dra. Temas sugeridos: Dia da Mulher (08/03), Dia do Consumidor (15/03), imposto de renda 2027, Páscoa (28/03),
+igualdade salarial entre homens e mulheres.
 
 ## O que ainda depende de alguém
 
@@ -58,7 +77,7 @@ domingo, feed claro e harmônico, usando tudo o que já produzimos. Identidade, 
 
 ## Dia a dia
 
-Lido da agenda do Orbit em 10/11/2026, depois de aplicado. (pausado) = só sai depois de aprovado.
+Lido da agenda do Orbit em 11/11/2026, depois de aplicado. (pausado) = só sai depois de aprovado.
 
 | Dia | Hora | Formato | Peça |
 | --- | --- | --- | --- |
@@ -217,3 +236,51 @@ Lido da agenda do Orbit em 10/11/2026, depois de aplicado. (pausado) = só sai d
 | sáb 30/01 | 12:00 | Estático | Errata: demitido também recebe 13º |
 | sáb 30/01 | 19:00 | Reels | Mito ou Lei: Depois dos 70, o casamento é sempre com separação de bens |
 | dom 31/01 | 12:00 | Estático | Hora extra se paga |
+| seg 01/02 | 12:00 | Pergunta | Amamentação no trabalho: 2 pausas de 30 minutos até 6 meses |
+| seg 01/02 | 19:00 | Reels | Mito ou Lei: A escola pode pedir papel higiênico na lista de material |
+| ter 02/02 | 12:00 | Frase | Frase: Bebê na UTI depois do parto? A licença começa na alta. |
+| ter 02/02 | 19:00 | Reels | Reels Flagrante: Sem carteira assinada |
+| qua 03/02 | 12:00 | Pergunta | Creche ou auxílio-creche: quando a empresa é obrigada |
+| qua 03/02 | 19:00 | Reels | Mito ou Lei: Com a mensalidade atrasada, a escola pode impedir a criança de fazer prova |
+| qui 04/02 | 12:00 | Frase | Frase: Pensão não acaba sozinha aos 18. Precisa de decisão do juiz. |
+| sex 05/02 | 12:00 | Frase | Frase: Perdeu alguém da família? São 2 dias sem desconto. |
+| sex 05/02 | 19:00 | Reels | Reels Flagrante: Pedido de demissão |
+| sáb 06/02 | 12:00 | Estático | Grávida não é motivo |
+| sáb 06/02 | 19:00 | Reels | Mito ou Lei: A empresa pode exigir teste de gravidez na contratação |
+| dom 07/02 | 12:00 | Frase | Frase: Vai casar? São 3 dias de folga sem desconto. |
+| seg 08/02 | 12:00 | Pergunta | Viagem de férias com os filhos: quando precisa de autorização |
+| seg 08/02 | 19:00 | Reels | Mito ou Lei: Carnaval é feriado nacional |
+| ter 09/02 | 12:00 | Pergunta | Racismo no trabalho: injúria racial e como reunir provas |
+| ter 09/02 | 19:00 | Reels | Reels Flagrante: Story como prova |
+| qua 10/02 | 12:00 | Pergunta | Alimentos gravídicos: pensão ao pai antes do bebê nascer |
+| qua 10/02 | 19:00 | Reels | Mito ou Lei: O pai pode faltar para acompanhar as consultas do pré-natal |
+| qui 11/02 | 12:00 | Frase | Frase: Grávida pode sair para o pré-natal. No mínimo 6 consultas, sem desconto. |
+| sex 12/02 | 12:00 | Estático | Salário tem data |
+| sex 12/02 | 19:00 | Reels | Reels Flagrante: FGTS |
+| sáb 13/02 | 12:00 | Pergunta | Grávida em local insalubre deve ser afastada |
+| sáb 13/02 | 19:00 | Reels | Mito ou Lei: Você pode faltar 1 dia por ano para levar o filho ao médico |
+| dom 14/02 | 12:00 | Frase | Frase: Adoeceu por causa do trabalho? Pode ter 12 meses de estabilidade. |
+| seg 15/02 | 12:00 | Estático | Assinar sem ler, não |
+| seg 15/02 | 19:00 | Reels | Mito ou Lei: Quem pede demissão saca o FGTS |
+| ter 16/02 | 12:00 | Pergunta | Direitos Humanos no trabalho: assédio moral, exemplos e como provar |
+| ter 16/02 | 19:00 | Reels | Reels Flagrante: Controle de banheiro |
+| qua 17/02 | 12:00 | Pergunta | Mãe dona de casa pode contribuir e se aposentar |
+| qua 17/02 | 19:00 | Reels | Mito ou Lei: O aviso prévio é sempre de 30 dias |
+| qui 18/02 | 12:00 | Frase | Frase: Pediu demissão? O seguro-desemprego não vem. |
+| sex 19/02 | 12:00 | Pergunta | Trabalho escravo hoje: jornada exaustiva, dívida e o caso das domésticas |
+| sex 19/02 | 19:00 | Reels | Reels Flagrante: Horário de almoço |
+| sáb 20/02 | 12:00 | Estático | Burnout tem nome |
+| sáb 20/02 | 19:00 | Reels | Mito ou Lei: Hora extra frequente aumenta o 13º e as férias |
+| dom 21/02 | 12:00 | Frase | Frase: Trabalha em casa de família? Hora extra também é paga. |
+| seg 22/02 | 12:00 | Pergunta | Dezembro Vermelho: HIV no trabalho (sigilo, demissão discriminatória, FGTS) |
+| seg 22/02 | 19:00 | Reels | Mito ou Lei: A empresa pode descontar o uniforme do salário |
+| ter 23/02 | 12:00 | Estático | Pensão antes de nascer |
+| ter 23/02 | 19:00 | Reels | Reels Flagrante: Exame preventivo |
+| qua 24/02 | 12:00 | Pergunta | Aposentadoria da mulher em 2027: 94 pontos e 60 anos |
+| qua 24/02 | 19:00 | Reels | Mito ou Lei: O desconto do vale-transporte pode chegar a 6% do salário |
+| qui 25/02 | 12:00 | Frase | Frase: O trabalho faz mal à gravidez? Ela pode mudar de função. |
+| sex 26/02 | 12:00 | Pergunta | Burnout é doença do trabalho: afastamento e 12 meses de estabilidade |
+| sex 26/02 | 19:00 | Reels | Reels Flagrante: Preço no caixa |
+| sáb 27/02 | 12:00 | Pergunta | Desempregada e grávida: salário-maternidade pelo INSS |
+| sáb 27/02 | 19:00 | Reels | Mito ou Lei: Empregada doméstica tem FGTS obrigatório |
+| dom 28/02 | 12:00 | Estático | Deu positivo: a estabilidade também |

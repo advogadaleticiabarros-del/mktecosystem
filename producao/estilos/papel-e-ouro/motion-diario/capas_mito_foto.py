@@ -42,13 +42,16 @@ FOTOS = {"11-08": 7550933, "11-10": 7485259, "11-12": 7622513, "11-14": 7993402,
          "12-26": 19773937, "12-28": 8730366, "12-30": 18088839,
          # janeiro de 2027 (10/11/2026)
          "01-13": 7552577, "01-16": 5711457, "01-18": 6798766, "01-20": 6303669, "01-23": 6190658, "01-25": 8524998,
-         "01-27": 6328951, "01-30": 30007526}
+         "01-27": 6328951, "01-30": 30007526,
+         # fevereiro de 2027 (11/11/2026)
+         "02-01": 33986944, "02-03": 6209553, "02-06": 5722886, "02-08": 18796675, "02-10": 39553101, "02-13": 6393366,
+         "02-15": 7581031, "02-17": 6170641, "02-20": 36814971, "02-22": 5778258, "02-24": 20267265, "02-27": 9462161}
 CENTRO = {4063537}  # fotos em que o recorte pega objeto solto no alto (luminária): enquadrar pelo centro
 assert len(set(FOTOS.values())) == len(FOTOS), "foto repetida entre capas"
 
 
 def fotos_por_tema():
-    return {t["chave"]: t.get("pergunta", {}) for d in (mito_lei.conteudo_nov, mito_lei.conteudo_dez, mito_lei.conteudo_jan) for t in d.TEMAS}
+    return {t["chave"]: t.get("pergunta", {}) for d in (mito_lei.conteudo_nov, mito_lei.conteudo_dez, mito_lei.conteudo_jan, mito_lei.conteudo_fev) for t in d.TEMAS}
 
 
 def data_uri(im, fmt):

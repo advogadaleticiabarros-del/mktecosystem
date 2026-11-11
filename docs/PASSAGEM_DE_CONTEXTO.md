@@ -23,7 +23,7 @@ de conteúdo citados abaixo. Tudo o que estava só na memória do perfil anterio
 ## Mapa atual da marca (10/11/2026)
 
 Comece por `docs/CADERNO_DA_MARCA.md` (identidade, voz, estilos, Reels, quadros, grade) e
-`docs/EDITORIAL_ATE_JAN_2027.md` (o feed dia a dia até 31/01/2027). O caderno também aparece no Orbit em `/caderno`.
+`docs/EDITORIAL_DO_FEED.md` (o feed dia a dia até 31/01/2027). O caderno também aparece no Orbit em `/caderno`.
 As seções abaixo são o histórico de outubro.
 
 ## Documentos que mandam (leia antes de produzir conteúdo)

@@ -72,3 +72,19 @@ e, sobre as capas de domingo: "não ficaram boas! Coloque em 3D alguma foto da D
 
 Conferir no Orbit (`ver_feed.py`) e na página do caderno; para janeiro, produzir carrosséis (skill `leticia-carrossel`,
 `docs/PROCESSO_PRODUCAO_CARROSSEL.md`) e editar as gravações novas da Dra. (skill `leticia-reels-premium`).
+
+## Continuação (11/11/2026): fevereiro
+
+- **Pedido:** "Pode fazer até ao máximo que der dá até fevereiro ou março?"
+- **Feito:** fevereiro inteiro no Orbit (48 ações: 35 peças novas e 13 perguntas da reserva com arte clara). Detalhes em
+  `docs/CONTEXTO_PROJETO.md` (seção Fevereiro de 2027) e `docs/EDITORIAL_DO_FEED.md` (novo nome do editorial).
+  Capas Moldura Viva com 12 fotos Pexels novas; Carnaval e doméstica trocadas depois de conferidas.
+- **Verificado:** simulação antes e depois (a segunda não mudaria nada); de 11/11 a 28/02 todo dia tem post às 12h e
+  nenhum dia passa de 2 no feed; página do caderno atualizada (versão 2). Em 6 vídeos de fevereiro a linha da base legal
+  passa 2 a 4 px do limite de área segura por alguns segundos (mantido).
+- **Disco C:** encheu duas vezes. Apaguei só o que eu tinha gerado: áudios intermediários `som.wav` de vídeos já prontos,
+  pastas de envio e o modelo isnet do rembg (baixa de novo sozinho). Restam ~130 MB livres: precisa de limpeza da Jessica
+  antes de qualquer render grande.
+- **Pendente:** conferência jurídica da Dra. dos textos novos de fevereiro (12 Mito ou Lei, 9 frases, 6 acentos);
+  quintas e domingos de fevereiro com 1 post; março (14 Mito ou Lei, 6 Flagrantes, posts das 12h, vídeos da Dra.);
+  deploy (ainda negado pela permissão automática).

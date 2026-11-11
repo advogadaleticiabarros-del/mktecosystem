@@ -74,8 +74,8 @@ Uma cena do dia a dia "pega no flagra" (mensagem do chefe, holerite, ponto), efe
 narração, 20 a 22 s, pergunta final em marca-texto e fechamento fixo ("Leia a legenda", seguir e compartilhar).
 O 23h47 foi o post de maior alcance do mês (840 contas). Capa própria **textura** (café com fibra).
 `docs/ESTILO_FLAGRANTE.md`, `producao/estilos/papel-e-ouro/motion-diario/NN_assunto.py`.
-Estoque em 10/11: 33 episódios prontos; 22 agendados até 29/01; 11 na reserva (demissão, almoço, sem carteira, FGTS,
-banheiro, guarda, pausa no banheiro, preço, estacionamento, exame, story).
+Estoque em 11/11: 33 episódios prontos; 30 agendados até 26/02; 3 na reserva (guarda, pausa no banheiro,
+estacionamento) para 02, 05 e 09/03.
 
 ### 5.2 Mito ou Lei (Reels Flagrante com roleta)
 Afirmação na tela no 1º segundo, "Responda antes da roleta parar", meia roleta com cliques, carimbo MITO (vermelho) ou
@@ -126,7 +126,7 @@ Carrossel ao meio-dia é o melhor horário de carrossel do perfil (412 contas de
 
 **Por semana:** 6 Reels (3 Mito ou Lei, 2 Flagrante, 1 da Dra.), 3 carrosséis ou estáticos de conteúdo, 3 Manchetes,
 2 frases. Total: 14 no feed. Blog: segunda e quinta 9h. LinkedIn: terça e quinta 8h.
-Editorial dia a dia até 31/01/2027: `docs/EDITORIAL_ATE_JAN_2027.md`.
+Editorial dia a dia (até 28/02/2027): `docs/EDITORIAL_DO_FEED.md`.
 
 ## 8. O que fizemos na semana (04 a 10/11/2026)
 

@@ -1,7 +1,7 @@
 """Monta o editorial do feed de 11/11/2026 a 31/01/2027 (pedido da Jessica em 10/11/2026) e gera editorial_jan.json
 para aplicar_editorial_jan.py (roda no container). Roda aqui no Windows.
 
-Grade semanal (docs/EDITORIAL_ATE_JAN_2027.md):
+Grade semanal (docs/EDITORIAL_DO_FEED.md):
   seg 12h carrossel/estático · 19h Reels Mito ou Lei     ter 12h Manchete · 19h Reels Flagrante
   qua 12h carrossel/estático · 19h Reels Mito ou Lei     qui 12h carrossel/Manchete · 19h frase (papel claro)
   sex 12h Manchete · 19h Reels Flagrante                  sáb 12h carrossel/Manchete · 19h Reels Mito ou Lei

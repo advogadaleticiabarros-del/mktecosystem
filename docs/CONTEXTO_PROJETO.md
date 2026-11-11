@@ -1284,7 +1284,7 @@ contexto no Orbit.
 - **Caderno**: `docs/CADERNO_DA_MARCA.md`; página no Orbit `/caderno` (`apps/web/app/(app)/caderno/page.tsx`, lê os docs no
   build com `apps/web/lib/markdown.ts`; teste `node --experimental-strip-types apps/web/lib/markdown.test.mts`).
   Página visual: https://claude.ai/artifact/P9qD3jR6JvvRoMj6kZGBWf (`_saida_producao_1510/pagina_caderno.py` + `.html`).
-- **Editorial**: `docs/EDITORIAL_ATE_JAN_2027.md`. Montado por `_saida_producao_1510/montar_editorial_jan.py` (decisões de
+- **Editorial**: `docs/EDITORIAL_DO_FEED.md`. Montado por `_saida_producao_1510/montar_editorial_jan.py` (decisões de
   cada vaga) e aplicado por `aplicar_editorial_jan.py` (container). Backup antes: `/root/orbit-backups/antes-editorial-jan-20261110.sql.gz`.
   Resultado: 11/11 a 31/01 com post às 12h todo dia (25/12 livre para o Natal) e Reels às 19h; 59 peças novas
   (34 Manchetes, 8 de marca, 9 Flagrante prontos, 8 Mito ou Lei de janeiro), 17 frases da reserva, carrosséis e frases
@@ -1294,3 +1294,13 @@ contexto no Orbit.
 - **Domingo com a Dra.**: 7 Reels gravados por ela em 15/11 a 27/12, 15h30, **pausados** até a versão no motor moderno ser
   aprovada; capa com retrato real dela sentada em quadro 3D (`producao/reels/capas_dra.py`). Janeiro: ela precisa gravar.
 - Horário de 15h30 no domingo: os dois Reels de domingo com mais alcance do perfil saíram entre 15h29 e 15h46.
+
+### Fevereiro de 2027 (11/11/2026)
+
+Pedido: "pode fazer até o máximo que der, até fevereiro ou março". Aplicado (backup
+`/root/orbit-backups/antes-editorial-fev-20261111.sql.gz`) por `montar_editorial_fev.py` + `aplicar_editorial_jan.py
+editorial_fev.json`: 12 Reels Mito ou Lei novos (`conteudo_fev.py`, textos novos, conferência da Dra. pendente), 8 Flagrantes
+da reserva, 13 perguntas da reserva com arte **clara** (`conteudo_planejado.py claras`, a café fica em
+`corpo.imagem_anterior`), 9 frases novas (`FRASES_EXTRA` em `conteudo_fev.py`) e 6 acentos escuros. Todo dia de fevereiro
+tem post às 12h; quintas e domingos ainda só têm 1 post. Março: só 3 Flagrantes na reserva, o resto é produção nova.
+O editorial foi renomeado para `docs/EDITORIAL_DO_FEED.md`.

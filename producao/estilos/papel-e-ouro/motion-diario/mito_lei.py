@@ -13,6 +13,7 @@ AQUI = Path(__file__).resolve().parent
 sys.path.insert(0, str(AQUI.parents[3] / "apps" / "api" / "_saida_producao_1510"))
 import conteudo_dez  # noqa: E402
 import conteudo_jan  # noqa: E402  (janeiro de 2027, pedido de 10/11/2026)
+import conteudo_fev  # noqa: E402  (fevereiro de 2027, pedido de 11/11/2026)
 import conteudo_nov  # noqa: E402
 
 # data: (frase na tela, número/destaque, linha de apoio, chip (título, texto) ou None, pergunta em marca-texto)
@@ -53,6 +54,19 @@ TELA = {
     "01-25": ("Mãe por adoção tem os mesmos 120 dias de licença.", "120 dias", "qualquer que seja a idade da criança", None, "Você sabia?"),
     "01-27": ("Salário nunca pode ser penhorado.", "Em parte", "em caso excepcional, decide o STJ", ("SEMPRE FICA", "o mínimo para viver"), "Achava que não?"),
     "01-30": ("Depois dos 70, o casamento é sempre com separação de bens.", "Escritura", "permite escolher outro regime", ("SEM ESCRITURA", "vale a separação"), "Conhece um casal?"),
+    # fevereiro de 2027 (conteudo_fev.py, textos novos de 11/11/2026: conferência jurídica da Dra. pendente)
+    "02-01": ("A escola pode pedir papel higiênico na lista.", "Proibido", "material de uso coletivo", ("JÁ ESTÁ", "no valor da mensalidade"), "Já te pediram?"),
+    "02-03": ("Mensalidade atrasada: a escola pode barrar a prova.", "Proibido", "suspender prova por atraso", ("A ESCOLA PODE", "cobrar a dívida"), "Você sabia?"),
+    "02-06": ("A empresa pode exigir teste de gravidez para contratar.", "Crime", "exigir teste de gravidez", ("TAMBÉM É", "discriminação"), "Já te pediram?"),
+    "02-08": ("Carnaval é feriado nacional.", "Não é", "feriado por lei federal", ("FOLGA SÓ COM", "lei local ou acordo"), "É feriado aí?"),
+    "02-10": ("O pai pode faltar para ir ao pré-natal.", "2 dias", "sem desconto no salário", ("CONSULTAS", "e exames da gestante"), "Ele foi junto?"),
+    "02-13": ("Dá para faltar 1 dia por ano para levar o filho ao médico.", "1 dia", "por ano, sem desconto", ("FILHO", "de até 6 anos"), "Já usou o seu?"),
+    "02-15": ("Quem pede demissão saca o FGTS.", "Fica", "o FGTS fica na conta", None, "Achava que sim?"),
+    "02-17": ("O aviso prévio é sempre de 30 dias.", "Até 90", "dias, conforme os anos de casa", ("+3 DIAS", "por ano completo"), "Quantos anos?"),
+    "02-20": ("Hora extra frequente aumenta o 13º e as férias.", "Entra", "na média do 13º e das férias", ("CONFIRA", "o holerite dessas parcelas"), "Você confere?"),
+    "02-22": ("A empresa pode descontar o uniforme do salário.", "Não pode", "uniforme exigido é custo dela", None, "Já descontaram?"),
+    "02-24": ("O vale-transporte pode descontar até 6% do salário.", "6%", "do salário básico, no máximo", ("PASSOU DISSO", "a empresa paga"), "Quanto é o seu?"),
+    "02-27": ("Empregada doméstica tem FGTS obrigatório.", "Desde 2015", "FGTS e indenização todo mês", ("PELO", "eSocial"), "Está em dia?"),
 }
 
 # gancho (10/11/2026): afirmação na tela já no 1º segundo + desafio "responda antes da roleta parar"; roleta de 2,4 a 7,6 s
@@ -149,7 +163,7 @@ function cena(t){
 
 
 def itens():
-    for mes, dados in (("nov", conteudo_nov), ("dez", conteudo_dez), ("jan", conteudo_jan)):
+    for mes, dados in (("nov", conteudo_nov), ("dez", conteudo_dez), ("jan", conteudo_jan), ("fev", conteudo_fev)):
         for m in dados.MITO_OU_LEI:
             md = m[0][5:]
             if md in TELA and TELA[md]:

@@ -1,4 +1,4 @@
-"""Página do Caderno da marca + feed planejado até 31/01/2027 (pedido da Jessica em 10/11/2026), para publicar como
+"""Página do Caderno da marca + feed planejado (até o último dia agendado em FIM) (pedido da Jessica em 10/11/2026), para publicar como
 Artifact. Lê a saída de ver_feed.py (TSV, rodado no container) e as peças de exemplo de cada estilo no repositório.
 
 Uso: python pagina_caderno.py <feed.tsv> <pasta_saida>   → <pasta_saida>/index.html + img/*.jpg (miniaturas)"""
@@ -17,7 +17,7 @@ RAIZ = Path(__file__).resolve().parents[3]
 EST = RAIZ / "producao" / "estilos"
 MOT = EST / "papel-e-ouro" / "motion-diario"
 DIAS = ["seg", "ter", "qua", "qui", "sex", "sáb", "dom"]
-FIM = date(2027, 1, 31)
+FIM = date(2027, 2, 28)
 
 ESTILOS = [
     ("Manchete", "O padrão do estático avulso desde 09/11. Título como manchete, faixa de ouro, objeto ou foto forte.",

@@ -23,6 +23,11 @@ AJUSTA = """<script>document.fonts.ready.then(()=>{document.querySelectorAll('[d
  let s=parseFloat(getComputedStyle(e).fontSize);const m=+e.dataset.max,min=+(e.dataset.min||40);
  while(e.offsetHeight>m&&s>min){s-=2;e.style.fontSize=s+'px'}});document.body.dataset.ajustado=1})</script>"""
 
+# temas atemporais que ganham a pergunta clara (11/11/2026)
+CLARAS = ["amamentacao-trabalho", "creche-empresa", "gestante-insalubre", "racismo-trabalho", "alimentos-gravidicos",
+          "desempregada-gravida-inss", "dona-de-casa-inss", "hiv-trabalho", "trabalho-escravo", "burnout-trabalho",
+          "assedio-moral", "viagem-com-filhos", "aposentadoria-2027"]
+
 AREAS = {"Trabalhista": "DIREITO TRABALHISTA", "Família": "DIREITO DE FAMÍLIA", "Previdenciário": "DIREITO PREVIDENCIÁRIO",
          "Consumidor": "DIREITO DO CONSUMIDOR"}
 
@@ -48,6 +53,25 @@ def pergunta(t, p):
   <div style="margin-top:40px;width:120px;height:4px;background:{FOIL}"></div>
 </div>
 {rodape(AREIA)}""")
+
+
+def pergunta_clara(t, p):
+    """Versão clara da pergunta (11/11/2026, pedido de feed "não escuro"): papel, foto do tema dissolvendo no papel à
+    direita, pergunta em café com fio dourado. Mesmo texto aprovado da pergunta café."""
+    contexto, perg = partes(p["html"])
+    pos = p.get("pos", "50% 50%")
+    return ("", f"""
+<div class=abs style="inset:0;background:linear-gradient(170deg,#fff 0,{PAPEL} 50%,{AREIA} 100%)"></div>
+<div class=abs style="left:520px;right:-40px;top:-40px;bottom:-40px;background:url({foto(BANCO / f'{p["foto"]}.jpg', 1500)}) {pos}/cover;-webkit-mask-image:linear-gradient(90deg,transparent,#000 30%);mask-image:linear-gradient(90deg,transparent,#000 30%)"></div>
+<div class=abs style="inset:0;background:linear-gradient(90deg,rgb(239 230 217/.98) 0,rgb(239 230 217/.92) 52%,rgb(239 230 217/0) 76%)"></div>
+{topo(CAFE)}
+<div class=abs style="left:72px;top:300px;width:560px;height:900px;display:flex;flex-direction:column;justify-content:center;color:{CAFE}">
+  <div style="font:600 24px Inter;letter-spacing:.16em;color:#8A6420">{AREAS.get(t["area"], t["area"].upper())}</div>
+  <div data-max=210 data-min=30 style="font:400 42px/1.3 Inter;margin-top:28px;color:#4a3f35">{contexto}</div>
+  <div class=p data-max=560 data-min=70 style="font-size:100px;line-height:1.06;font-style:italic;font-weight:500;margin-top:24px">{perg}</div>
+  <div style="margin-top:40px;width:140px;height:6px;background:{FOIL}"></div>
+</div>
+{rodape(CAFE)}""")
 
 
 def frase(t, f):
@@ -86,8 +110,17 @@ def mito(m):
 
 
 def pecas(mes):
+    if mes == "claras":  # perguntas claras dos temas atemporais de nov/dez (11/11/2026)
+        saida = {}
+        for m in ("nov", "dez"):
+            for t in __import__(f"conteudo_{m}").TEMAS:
+                if t["chave"] in CLARAS and t.get("pergunta", {}).get("foto"):
+                    saida[f"clara-pergunta-{t['chave']}"] = pergunta_clara(t, t["pergunta"])
+        return saida
     dados = __import__(f"conteudo_{mes}")
     saida = {}
+    for t in getattr(dados, "FRASES_EXTRA", []):  # frases avulsas (fevereiro de 2027 em diante)
+        saida[f"{mes}-{t['data'][5:]}-frase-{t['chave']}"] = frase(t, t["frase"])
     for t in dados.TEMAS:
         base = f"{mes}-{t['data'][5:]}"
         if t.get("pergunta", {}).get("foto"):

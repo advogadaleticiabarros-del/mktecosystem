@@ -11,7 +11,8 @@ Faz, nesta ordem:
 5. acao "nova": cria pauta + peça aprovada (estático ou Reels) e agenda.
 Idempotente: não duplica dia/hora ocupado nem arquivo já usado. Publicado nunca é tocado.
 
-Uso: docker compose exec -T -e PYTHONPATH=/app api python /tmp/editorial/aplicar_editorial_jan.py [--aplicar]"""
+Uso: docker compose exec -T -e PYTHONPATH=/app api python /tmp/editorial/aplicar_editorial_jan.py [editorial_fev.json] [--aplicar]
+Ação agendar com nova_imagem: a peça da reserva ganha a arte clara; a antiga fica em corpo.imagem_anterior."""
 import asyncio
 import json
 import sys
@@ -46,7 +47,8 @@ async def feed_do_dia(db, dia, reels):
 
 
 async def main(aplicar):
-    acoes = json.loads((AQUI / "editorial_jan.json").read_text(encoding="utf-8"))
+    nome = next((a for a in sys.argv[1:] if a.endswith(".json")), "editorial_jan.json")  # editorial_fev.json etc.
+    acoes = json.loads((AQUI / nome).read_text(encoding="utf-8"))
     async with SessionLocal() as db:
         tenant = (await db.execute(select(ScheduledPost.tenant_id).limit(1))).scalar_one()
         # 1. feed ao meio-dia
@@ -117,7 +119,13 @@ async def main(aplicar):
                     print("agendar: horário ocupado", a["dia"], a["hora"], ocup[0].titulo[:40])
                     continue
                 pa = await db.get(Pauta, p.pauta_id)
-                print(f"res  {a['dia']} {a['hora']} {p.tipo} {pa.titulo[:60]}")
+                if a.get("nova_imagem") and not (MIDIA / a["nova_imagem"]).exists():
+                    print("agendar: SEM ARQUIVO", a["nova_imagem"])
+                    continue
+                print(f"res  {a['dia']} {a['hora']} {p.tipo} {pa.titulo[:60]}" + (" (arte clara)" if a.get("nova_imagem") else ""))
+                if aplicar and a.get("nova_imagem"):  # arte clara no lugar da café; a antiga fica guardada
+                    p.corpo = {**p.corpo, "imagem_anterior": p.corpo.get("imagem"), "imagem": url(a["nova_imagem"])}
+                    flag_modified(p, "corpo")
                 if aplicar:
                     db.add(ScheduledPost(tenant_id=p.tenant_id, content_piece_id=p.id, titulo=pa.titulo, canal="instagram",
                                          formato=a["formato"], data_agendada=dia, horario=a["hora"], status=a["status"]))
