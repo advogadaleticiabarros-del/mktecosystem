@@ -41,7 +41,7 @@ e, sobre as capas de domingo: "não ficaram boas! Coloque em 3D alguma foto da D
 - Backup antes: `/root/orbit-backups/antes-editorial-jan-20261110.sql.gz` (1,27 MB).
 - Depois de aplicar: segunda simulação não mudaria nada; de 11/11 a 31/01 todo dia tem post às 12h (25/12 livre de
   propósito) e nenhum dia tem mais de 2 no feed. Links públicos (jpg e mp4) respondendo 206/200 com o tipo certo.
-- Não verificado: deploy da API e do web (ver Pendente se não constar abaixo), aparência no celular real, revisão
+- Não verificado: aparência no celular real, revisão
   jurídica das legendas novas.
 
 ## Decisões e porquês
@@ -56,6 +56,11 @@ e, sobre as capas de domingo: "não ficaram boas! Coloque em 3D alguma foto da D
   disponível.
 
 ## Pendente
+
+- **Deploy** (commit 2e47c9c): a permissão automática negou o deploy. A agenda no banco já está aplicada; o deploy
+  só muda o auto-agendamento novo (12h) e põe a página `/caderno` no Orbit. Comandos: API `cd /home/orbit-src && git pull
+  --ff-only && cd deploy/vps && docker compose up -d --build api`; web `cd apps/web && npm run build && cp -r out/*
+  /var/www/orbit-web/`.
 
 - Dra.: conferir citações legais das 34 Manchetes e das 8 legendas novas de marca.
 - Jessica: aprovar a versão moderna dos Reels da Dra. para despausar os domingos; Dra. gravar 5 vídeos para os domingos de
