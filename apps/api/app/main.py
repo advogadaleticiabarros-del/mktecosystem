@@ -14,6 +14,7 @@ from app.routers import (
     dashboard,
     desempenho,
     email,
+    ferramentas,
     integracoes,
     linkedin,
     tiktok,
@@ -68,6 +69,7 @@ app.include_router(presenca.router)
 app.include_router(linkedin.router)
 app.include_router(tiktok.router)
 app.include_router(desempenho.router)
+app.include_router(ferramentas.router)
 
 
 @app.get("/health")

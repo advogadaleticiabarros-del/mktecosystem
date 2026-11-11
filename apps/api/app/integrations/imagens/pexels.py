@@ -19,6 +19,8 @@ class FotoBanco:
     descricao: str
     largura: int
     altura: int
+    fonte: str = "pexels"
+    licenca: str = "Licença Pexels (uso comercial, sem atribuição)"
 
 
 class Pexels:

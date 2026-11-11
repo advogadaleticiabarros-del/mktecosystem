@@ -1304,3 +1304,29 @@ da reserva, 13 perguntas da reserva com arte **clara** (`conteudo_planejado.py c
 `corpo.imagem_anterior`), 9 frases novas (`FRASES_EXTRA` em `conteudo_fev.py`) e 6 acentos escuros. Todo dia de fevereiro
 tem post às 12h; quintas e domingos ainda só têm 1 post. Março: só 3 Flagrantes na reserva, o resto é produção nova.
 O editorial foi renomeado para `docs/EDITORIAL_DO_FEED.md`.
+
+## APIs públicas e tela "Ferramentas" (11/11/2026)
+
+Pedido da Jessica: usar APIs da lista `public-apis` no Orbit e nos outros projetos.
+- **Sem chave, já funcionando:**
+  - `app/integrations/brasil.py` (`DadosBrasil`): feriados nacionais (BrasilAPI, reserva Nager.Date), CEP (BrasilAPI,
+    reserva ViaCEP) e CNPJ (BrasilAPI, confere os dígitos antes de chamar).
+  - `services/datas_editoriais.py`: feriados + datas das áreas da Dra. (13º, aposentado, acidente de trabalho, Mães...).
+  - Openverse (fotos, só CC0/domínio público).
+  - Câmara dos Deputados como fonte do Jornalista, **só sob encomenda** (`pedido=True`), porque PL não é notícia do dia.
+  - Disify/Kickbox para conferir e-mail (descartável, sem caixa).
+- **Com chave, cadastrada em Configurações** (validadas em `chaves_api.py`):
+  - Pixabay (2º banco de fotos);
+  - NewsData (fonte diária do Jornalista quando houver `NEWSDATA_API_KEY` no servidor);
+  - Google (`GOOGLE_API_KEY`, que serve para PageSpeed e Safe Browsing);
+  - Bitly (link curto e cliques);
+  - remove.bg (recorte de fundo).
+- **Onde aparece:**
+  - `BancoDeFotos` (`integrations/imagens/banco.py`) junta Pexels + Pixabay + Openverse, intercala e pula imagem já
+    usada (`evitar`). Os scripts de produção podem trocar `Pexels(...)` por `criar_banco_de_fotos(...)`.
+  - Rotas em `routers/ferramentas.py` (`/ferramentas/...`) e tela `/ferramentas` no painel (menu "Ferramentas").
+  - Testes em `tests/test_apis_publicas.py`.
+- **Limites:**
+  - PageSpeed sem chave esbarra em 429.
+  - Safe Browsing v4 é para uso não comercial; se o Orbit virar SaaS pago, trocar pelo Web Risk.
+  - Unsplash ficou de fora (exige aprovação de app); o Openverse cobre parte.

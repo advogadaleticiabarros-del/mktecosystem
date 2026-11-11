@@ -29,6 +29,13 @@ class Settings(BaseSettings):
     TAVILY_API_KEY: str = ""
     OPENAI_API_KEY: str = ""
     OPENAI_RADAR_MODEL: str = "gpt-4.1-mini"
+    # APIs públicas (lista public-apis, 11/11/2026). Todas opcionais: sem chave, o recurso fica desligado.
+    PEXELS_API_KEY: str = ""
+    PIXABAY_API_KEY: str = ""
+    NEWSDATA_API_KEY: str = ""
+    GOOGLE_API_KEY: str = ""  # PageSpeed Insights e Safe Browsing (mesma chave do Google Cloud)
+    BITLY_TOKEN: str = ""
+    REMOVEBG_API_KEY: str = ""
     BLOG_SFTP_HOST: str = ""
     BLOG_SFTP_PORT: int = 22
     BLOG_SFTP_USER: str = ""

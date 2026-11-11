@@ -359,6 +359,15 @@ def criar_jornalista(openai_key: str | None = None, pedido: bool = False) -> tup
         from app.integrations.search.tavily_client import TavilyClient
 
         fontes.append(TavilyNoticias(TavilyClient(api_key=settings.TAVILY_API_KEY)))
+    if settings.NEWSDATA_API_KEY:
+        from app.integrations.noticias.newsdata import NewsData
+
+        fontes.append(NewsData(settings.NEWSDATA_API_KEY))
+    if pedido:
+        # Projetos de lei só nos pedidos sob encomenda: proposta em tramitação não é notícia do dia.
+        from app.integrations.noticias.camara import CamaraProposicoes
+
+        fontes.append(CamaraProposicoes())
     # A pesquisa web da OpenAI só entra nos pedidos sob encomenda (janela de 30
     # dias, busca por fonte oficial): na ronda diária ela trazia matéria antiga.
     openai_key = openai_key or settings.OPENAI_API_KEY

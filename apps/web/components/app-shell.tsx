@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   Sparkles,
   TrendingUp,
+  Wrench,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
@@ -42,6 +43,7 @@ const NAV_ITEMS = [
   { href: "/caderno", label: "Caderno da marca", icon: BookOpen },
   { href: "/criativos", label: "Estúdio de criativos", icon: ImageIcon },
   { href: "/emails", label: "E-mails", icon: Mail },
+  { href: "/ferramentas", label: "Ferramentas", icon: Wrench },
   { href: "/configuracoes", label: "Configurações", icon: Settings },
 ] as const;
 

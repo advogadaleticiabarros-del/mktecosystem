@@ -108,6 +108,42 @@ async def validar_linkedin(chave: str, transport: httpx.AsyncBaseTransport | Non
                             "\"Auth\" do aplicativo em linkedin.com/developers/apps.")
 
 
+def _validador_http(metodo: str, url: str, montar, recusado: set[int], mensagem: str):
+    """Valida uma chave fazendo uma chamada barata no próprio serviço. `montar(chave)` devolve os kwargs do pedido."""
+
+    async def validar(chave: str, transport: httpx.AsyncBaseTransport | None = None) -> None:
+        async with httpx.AsyncClient(transport=transport, timeout=30) as client:
+            resposta = await client.request(metodo, url, **montar(chave))
+        if resposta.status_code in recusado:
+            raise ChaveRecusada(mensagem)
+        resposta.raise_for_status()
+
+    return validar
+
+
+validar_pixabay = _validador_http(
+    "GET", "https://pixabay.com/api/", lambda k: {"params": {"key": k, "q": "office", "per_page": 3}}, {400, 401, 403},
+    "O Pixabay recusou essa chave. Ela fica em pixabay.com/api/docs, logada, no campo \"key\".")
+validar_newsdata = _validador_http(
+    "GET", "https://newsdata.io/api/1/latest", lambda k: {"params": {"apikey": k, "q": "trabalho", "language": "pt"}},
+    {401, 403}, "O NewsData recusou essa chave. Copie de novo em newsdata.io/api-key.")
+validar_google = _validador_http(
+    "POST", "https://safebrowsing.googleapis.com/v4/threatMatches:find",
+    lambda k: {"params": {"key": k}, "json": {
+        "client": {"clientId": "orbit", "clientVersion": "1.0"},
+        "threatInfo": {"threatTypes": ["MALWARE"], "platformTypes": ["ANY_PLATFORM"], "threatEntryTypes": ["URL"],
+                       "threatEntries": [{"url": "https://advogadaleticiabarros.com.br"}]}}},
+    {400, 401, 403},
+    "O Google recusou essa chave. No Google Cloud, ative \"PageSpeed Insights API\" e \"Safe Browsing API\" no "
+    "projeto da chave e confira se ela não está restrita a outro serviço.")
+validar_bitly = _validador_http(
+    "GET", "https://api-ssl.bitly.com/v4/user", lambda k: {"headers": {"Authorization": f"Bearer {k}"}}, {401, 403},
+    "O Bitly recusou esse token. Gere um novo em Settings → Developer settings → API.")
+validar_removebg = _validador_http(
+    "GET", "https://api.remove.bg/v1.0/account", lambda k: {"headers": {"X-Api-Key": k}}, {401, 403},
+    "O remove.bg recusou essa chave. Ela fica em remove.bg/dashboard#api-key.")
+
+
 PROVEDORES = {
     "openai": {
         "nome": "OpenAI",
@@ -140,6 +176,36 @@ PROVEDORES = {
         "uso": "Avisa o Bing (que alimenta o Copilot e o ChatGPT) a cada artigo publicado ou alterado no blog.",
         "variavel": "BING_WEBMASTER_API_KEY",
         "validar": validar_bing,
+    },
+    "pixabay": {
+        "nome": "Pixabay",
+        "uso": "Segundo banco de fotos, junto com o Pexels e o Openverse: mais opções e menos foto repetida.",
+        "variavel": "PIXABAY_API_KEY",
+        "validar": validar_pixabay,
+    },
+    "newsdata": {
+        "nome": "NewsData",
+        "uso": "Mais uma fonte de notícias em português para o Jornalista (veículos brasileiros, últimas 48 horas).",
+        "variavel": "NEWSDATA_API_KEY",
+        "validar": validar_newsdata,
+    },
+    "google": {
+        "nome": "Google (PageSpeed e Safe Browsing)",
+        "uso": "Nota de velocidade e SEO do site e conferência de links perigosos antes de enviar a newsletter.",
+        "variavel": "GOOGLE_API_KEY",
+        "validar": validar_google,
+    },
+    "bitly": {
+        "nome": "Bitly",
+        "uso": "Link curto com contagem de cliques para bio, stories, LinkedIn e newsletter.",
+        "variavel": "BITLY_TOKEN",
+        "validar": validar_bitly,
+    },
+    "removebg": {
+        "nome": "remove.bg",
+        "uso": "Recorta o fundo do retrato da Dra. para as capas em quadro 3D.",
+        "variavel": "REMOVEBG_API_KEY",
+        "validar": validar_removebg,
     },
 }
 
