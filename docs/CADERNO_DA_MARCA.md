@@ -116,16 +116,16 @@ Carrossel ao meio-dia é o melhor horário de carrossel do perfil (412 contas de
 
 | Dia | 12h | 19h |
 | --- | --- | --- |
-| seg | carrossel ou estático | Reels Mito ou Lei |
+| seg | carrossel | Reels Mito ou Lei |
 | ter | Manchete (par do Flagrante) | Reels Flagrante |
-| qua | carrossel ou estático | Reels Mito ou Lei |
-| qui | carrossel ou Manchete | frase (papel claro) |
-| sex | Manchete (par do Flagrante) | Reels Flagrante |
-| sáb | carrossel ou Manchete | Reels Mito ou Lei |
-| dom | frase ou estático | Reels da Dra. às 15h30 |
+| qua | carrossel | Reels Mito ou Lei |
+| qui | pergunta clara | frase (papel claro) |
+| sex | Manchete ou pergunta clara | Reels Flagrante |
+| sáb | peça de marca (Papel e Ouro, Verbete, Palavra de Ouro) | Reels Mito ou Lei |
+| dom | frase | Reels da Dra. às 15h30 |
 
-**Por semana:** 6 Reels (3 Mito ou Lei, 2 Flagrante, 1 da Dra.), 3 carrosséis ou estáticos de conteúdo, 3 Manchetes,
-2 frases. Total: 14 no feed. Blog: segunda e quinta 9h. LinkedIn: terça e quinta 8h.
+**Por semana (desde 04/01/2027):** 2 carrosséis, 1 a 2 Manchetes, 1 a 2 perguntas claras, 2 frases, 1 peça de marca,
+3 Mito ou Lei, 2 Flagrantes e o Reels da Dra. no domingo quando houver. Todos os formatos toda semana (11/11/2026). Blog: segunda e quinta 9h. LinkedIn: terça e quinta 8h.
 Editorial dia a dia (até 28/02/2027): `docs/EDITORIAL_DO_FEED.md`.
 
 ## 8. O que fizemos na semana (04 a 10/11/2026)

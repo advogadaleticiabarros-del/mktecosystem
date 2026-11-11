@@ -1,0 +1,707 @@
+[
+ {
+  "acao": "mover",
+  "dia": "2027-01-02",
+  "hora": "12:00",
+  "midia": "estatico-papel-e-ouro-clara-02"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-09",
+  "hora": "12:00",
+  "midia": "estatico-palavra-de-ouro-01-hora-extra"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-16",
+  "hora": "12:00",
+  "midia": "estatico-papel-e-ouro-clara-05"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-23",
+  "hora": "12:00",
+  "midia": "estatico-papel-e-ouro-clara-07"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-30",
+  "hora": "12:00",
+  "midia": "estatico-papel-e-ouro-fora-04"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-06",
+  "hora": "12:00",
+  "midia": "estatico-palavra-de-ouro-04-gravida"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-13",
+  "hora": "12:00",
+  "midia": "estatico-papel-e-ouro-clara-08"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-20",
+  "hora": "12:00",
+  "midia": "estatico-palavra-de-ouro-06-burnout"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-27",
+  "hora": "12:00",
+  "midia": "estatico-papel-e-ouro-clara-01"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-07",
+  "hora": "12:00",
+  "midia": "clara-pergunta-amamentacao-trabalho"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-14",
+  "hora": "12:00",
+  "midia": "clara-pergunta-creche-empresa"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-21",
+  "hora": "12:00",
+  "midia": "clara-pergunta-gestante-insalubre"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-28",
+  "hora": "12:00",
+  "midia": "clara-pergunta-racismo-trabalho"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-04",
+  "hora": "12:00",
+  "midia": "clara-pergunta-alimentos-gravidicos"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-11",
+  "hora": "12:00",
+  "midia": "clara-pergunta-desempregada-gravida-inss"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-18",
+  "hora": "12:00",
+  "midia": "clara-pergunta-dona-de-casa-inss"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-25",
+  "hora": "12:00",
+  "midia": "clara-pergunta-hiv-trabalho"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-02",
+  "hora": "12:00",
+  "midia": "estatico-manchete-19-"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-09",
+  "hora": "12:00",
+  "midia": "estatico-manchete-17-"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-16",
+  "hora": "12:00",
+  "midia": "estatico-manchete-24-"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-23",
+  "hora": "12:00",
+  "midia": "estatico-manchete-10-"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-05",
+  "hora": "12:00",
+  "midia": "clara-pergunta-viagem-com-filhos"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-12",
+  "hora": "12:00",
+  "midia": "clara-pergunta-assedio-moral"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-19",
+  "hora": "12:00",
+  "midia": "clara-pergunta-trabalho-escravo"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-26",
+  "hora": "12:00",
+  "midia": "clara-pergunta-aposentadoria-2027"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-03",
+  "hora": "12:00",
+  "midia": "frase-licenca-paternidade-2027"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-07",
+  "hora": "19:00",
+  "midia": "frase-temporaria-fim-de-ano"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-10",
+  "hora": "12:00",
+  "midia": "frase-aposentadoria-2027"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-14",
+  "hora": "19:00",
+  "midia": "frase-hiv-trabalho"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-17",
+  "hora": "12:00",
+  "midia": "frase-viagem-com-filhos"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-21",
+  "hora": "19:00",
+  "midia": "frase-assedio-moral"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-24",
+  "hora": "12:00",
+  "midia": "frase-dona-de-casa-inss"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-28",
+  "hora": "19:00",
+  "midia": "frase-desempregada-gravida-inss"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-01-31",
+  "hora": "12:00",
+  "midia": "frase-gestante-insalubre"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-04",
+  "hora": "19:00",
+  "midia": "frase-bebe-internado"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-07",
+  "hora": "12:00",
+  "midia": "frase-luto-2-dias"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-11",
+  "hora": "19:00",
+  "midia": "frase-pensao-18"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-14",
+  "hora": "12:00",
+  "midia": "frase-casamento-3-dias"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-18",
+  "hora": "19:00",
+  "midia": "frase-gestante-consultas"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-21",
+  "hora": "12:00",
+  "midia": "frase-doenca-ocupacional"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-25",
+  "hora": "19:00",
+  "midia": "frase-seguro-desemprego"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-02-28",
+  "hora": "12:00",
+  "midia": "frase-domestica-hora-extra"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-03-01",
+  "hora": "12:00",
+  "midia": "clara-pergunta-burnout-trabalho"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-03-02",
+  "hora": "12:00",
+  "midia": "estatico-manchete-11-"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-03-03",
+  "hora": "12:00",
+  "midia": "frase-amamentacao-trabalho"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-03-04",
+  "hora": "12:00",
+  "midia": "estatico-palavra-de-ouro-02-salario"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-03-05",
+  "hora": "12:00",
+  "midia": "estatico-manchete-07-"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-03-06",
+  "hora": "12:00",
+  "midia": "estatico-papel-e-ouro-fora-03"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-03-07",
+  "hora": "12:00",
+  "midia": "frase-racismo-trabalho"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-03-08",
+  "hora": "12:00",
+  "midia": "estatico-manchete-27-"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-03-09",
+  "hora": "12:00",
+  "midia": "estatico-palavra-de-ouro-03-assinar"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-03-10",
+  "hora": "12:00",
+  "midia": "frase-gestante-troca-funcao"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-03-11",
+  "hora": "12:00",
+  "midia": "estatico-manchete-29-"
+ },
+ {
+  "acao": "mover",
+  "dia": "2027-03-12",
+  "hora": "12:00",
+  "midia": "estatico-palavra-de-ouro-05-antes"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-01-04",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Férias: 5 regras que pouca gente conhece",
+  "area": "Trabalhista",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-ferias-regras-v5-1.jpg",
+   "carrossel-ferias-regras-v5-2.jpg",
+   "carrossel-ferias-regras-v5-3.jpg",
+   "carrossel-ferias-regras-v5-4.jpg",
+   "carrossel-ferias-regras-v5-5.jpg",
+   "carrossel-ferias-regras-v5-6.jpg",
+   "carrossel-ferias-regras-v5-7.jpg"
+  ],
+  "legenda": "Janeiro é mês de férias para muita gente. Arrasta pro lado e veja as 5 regras que mais geram dúvida. 🏖️\n\nFérias vêm depois de 12 meses de trabalho, com aviso de 30 dias, pagamento até 2 dias antes e 1/3 a mais. Podem ser divididas em até 3 partes, se você concordar.\n\n❓ As perguntas que mais chegam aqui:\n📌 Posso vender férias? Até 1/3, ou seja, 10 dias.\n📌 A empresa pode pagar depois? Não, o prazo é de 2 dias antes.\n📌 Hora extra entra? Sim, pela média.\n\n📚 Fontes: CLT, arts. 130, 134, 135 e 145; Constituição, art. 7º, XVII.\n\n🔖 Salva e manda pra quem vai sair de férias.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#Férias #DireitoTrabalhista #CLT #DireitosDoTrabalhador #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: CLT, arts. 130, 134, 135 e 145.\n💬 Suas férias foram pagas no prazo?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-01-06",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Rescisão: o que você recebe em cada tipo de saída",
+  "area": "Trabalhista",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-rescisao-tipos-v5-1.jpg",
+   "carrossel-rescisao-tipos-v5-2.jpg",
+   "carrossel-rescisao-tipos-v5-3.jpg",
+   "carrossel-rescisao-tipos-v5-4.jpg",
+   "carrossel-rescisao-tipos-v5-5.jpg",
+   "carrossel-rescisao-tipos-v5-6.jpg",
+   "carrossel-rescisao-tipos-v5-7.jpg"
+  ],
+  "legenda": "Antes de sair do emprego, vale saber o que muda em cada tipo de saída. Arrasta pro lado. 📋\n\nNa demissão sem justa causa você recebe mais; no pedido de demissão, perde a multa e o saque do FGTS; no acordo, recebe metade; e quando a empresa descumpre a lei, existe a rescisão indireta.\n\n❓ As perguntas que mais chegam aqui:\n📌 Quem pede demissão recebe férias? Sim, as proporcionais com 1/3.\n📌 Acordo dá seguro-desemprego? Não.\n📌 Qual o prazo para pagar? 10 dias.\n\n📚 Fontes: CLT, arts. 477, 483 e 484-A; Lei 8.036/1990; Súmula 261 do TST.\n\n🔖 Salva e manda pra quem está pensando em sair.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#Rescisão #PedidoDeDemissão #DireitoTrabalhista #FGTS #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: CLT, arts. 477, 483 e 484-A.\n💬 Você conferiu tudo na sua última rescisão?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-01-11",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Atestado médico: o que a empresa pode e não pode",
+  "area": "Trabalhista",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-atestado-medico-v5-1.jpg",
+   "carrossel-atestado-medico-v5-2.jpg",
+   "carrossel-atestado-medico-v5-3.jpg",
+   "carrossel-atestado-medico-v5-4.jpg",
+   "carrossel-atestado-medico-v5-5.jpg",
+   "carrossel-atestado-medico-v5-6.jpg",
+   "carrossel-atestado-medico-v5-7.jpg"
+  ],
+  "legenda": "Atestado recusado, desconto no salário, pedido de CID… Arrasta pro lado e veja o que a lei diz. 🩺\n\nFalta por doença comprovada não pode ser descontada. O atestado do SUS vale, o diagnóstico é sigiloso e, depois de 15 dias de afastamento, quem paga é o INSS.\n\n❓ As perguntas que mais chegam aqui:\n📌 A empresa pode recusar atestado do posto? Não sem motivo.\n📌 Preciso informar o CID? Não, só se você autorizar.\n📌 E se passar de 15 dias? O INSS paga.\n\n📚 Fontes: Lei 605/1949, art. 6º; Lei 8.213/1991, art. 60; Código de Ética Médica, art. 73.\n\n🔖 Salva e manda pra quem já teve atestado recusado.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#AtestadoMédico #DireitoTrabalhista #INSS #DireitosDoTrabalhador #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: Lei 605/1949, art. 6º; Lei 8.213/1991, art. 60.\n💬 Já recusaram um atestado seu?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-01-13",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Contrato de experiência: 5 verdades",
+  "area": "Trabalhista",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-contrato-experiencia-v5-1.jpg",
+   "carrossel-contrato-experiencia-v5-2.jpg",
+   "carrossel-contrato-experiencia-v5-3.jpg",
+   "carrossel-contrato-experiencia-v5-4.jpg",
+   "carrossel-contrato-experiencia-v5-5.jpg",
+   "carrossel-contrato-experiencia-v5-6.jpg",
+   "carrossel-contrato-experiencia-v5-7.jpg"
+  ],
+  "legenda": "Começou em emprego novo neste ano? Arrasta pro lado e veja o que vale no contrato de experiência. 📝\n\nO contrato de experiência dura no máximo 90 dias, só pode ser prorrogado uma vez e garante os direitos da CLT. E a gestante tem estabilidade também nele.\n\n❓ As perguntas que mais chegam aqui:\n📌 Pode prorrogar duas vezes? Não, vira contrato sem prazo.\n📌 Tem FGTS? Sim.\n📌 Grávida pode ser dispensada no fim? Não, tem estabilidade.\n\n📚 Fontes: CLT, arts. 443, 445 e 451; Súmula 244, III, do TST.\n\n🔖 Salva e manda pra quem começou em emprego novo.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#ContratoDeExperiência #DireitoTrabalhista #CLT #EmpregoNovo #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: CLT, arts. 445 e 451; Súmula 244, III, do TST.\n💬 Você está em experiência agora?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-01-18",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Salário-maternidade: quem tem direito",
+  "area": "Previdenciário",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-salario-maternidade-quem-v5-1.jpg",
+   "carrossel-salario-maternidade-quem-v5-2.jpg",
+   "carrossel-salario-maternidade-quem-v5-3.jpg",
+   "carrossel-salario-maternidade-quem-v5-4.jpg",
+   "carrossel-salario-maternidade-quem-v5-5.jpg",
+   "carrossel-salario-maternidade-quem-v5-6.jpg",
+   "carrossel-salario-maternidade-quem-v5-7.jpg"
+  ],
+  "legenda": "Salário-maternidade não é só para quem tem carteira assinada. Arrasta pro lado e veja quem tem direito. 🤱🏾\n\nEmpregada, desempregada no período de graça, MEI, autônoma e mãe por adoção podem receber os 120 dias, cada uma com suas regras.\n\n❓ As perguntas que mais chegam aqui:\n📌 Desempregada recebe? Sim, se ainda estiver no período de graça.\n📌 MEI recebe? Sim, com 10 meses de contribuição.\n📌 Onde peço? No Meu INSS ou pelo 135.\n\n📚 Fontes: Lei 8.213/1991, arts. 15, 25, 71, 71-A e 72.\n\n🔖 Salva e manda pra uma gestante.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#SalárioMaternidade #INSS #Gestante #DireitoPrevidenciário #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: Lei 8.213/1991, arts. 15, 25, 71 e 72.\n💬 Você sabia que a desempregada pode receber?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-01-20",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Pensão alimentícia: 5 dúvidas de começo de ano",
+  "area": "Família",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-pensao-duvidas-v5-1.jpg",
+   "carrossel-pensao-duvidas-v5-2.jpg",
+   "carrossel-pensao-duvidas-v5-3.jpg",
+   "carrossel-pensao-duvidas-v5-4.jpg",
+   "carrossel-pensao-duvidas-v5-5.jpg",
+   "carrossel-pensao-duvidas-v5-6.jpg",
+   "carrossel-pensao-duvidas-v5-7.jpg"
+  ],
+  "legenda": "Começo de ano é quando mais aparecem dúvidas sobre pensão. Arrasta pro lado. 👧🏽\n\nO valor não é fixo em 30%, pode ser revisto quando a vida muda, o atraso pode levar à prisão civil e os avós podem complementar.\n\n❓ As perguntas que mais chegam aqui:\n📌 A pensão é sempre 30%? Não.\n📌 Atrasou, o que faço? Dá para cobrar na Justiça.\n📌 Avó paga pensão? Pode complementar.\n\n📚 Fontes: Código Civil, arts. 1.694, 1.698 e 1.699; CPC, art. 528.\n\n🔖 Salva e manda pra uma mãe solo.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#PensãoAlimentícia #DireitoDeFamília #MãeSolo #Pensão #AdvogadaDeFamília",
+  "primeiro_comentario": "📚 Base legal: Código Civil, arts. 1.694, 1.698 e 1.699.\n💬 Qual é a sua maior dúvida sobre pensão?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-01-25",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "FGTS: quando você pode sacar",
+  "area": "Trabalhista",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-fgts-saque-v5-1.jpg",
+   "carrossel-fgts-saque-v5-2.jpg",
+   "carrossel-fgts-saque-v5-3.jpg",
+   "carrossel-fgts-saque-v5-4.jpg",
+   "carrossel-fgts-saque-v5-5.jpg",
+   "carrossel-fgts-saque-v5-6.jpg",
+   "carrossel-fgts-saque-v5-7.jpg"
+  ],
+  "legenda": "O FGTS é seu, mas só pode ser sacado em algumas situações. Arrasta pro lado. 💰\n\nA empresa deposita 8% do salário todo mês. Dá para sacar na demissão sem justa causa, na compra da casa própria, em doenças graves e no saque-aniversário.\n\n❓ As perguntas que mais chegam aqui:\n📌 Pedi demissão, saco? Não.\n📌 Saque-aniversário vale a pena? Depende: ele bloqueia o saque total na demissão.\n📌 Onde confiro? No app do FGTS.\n\n📚 Fontes: Lei 8.036/1990, arts. 15, 20 e 20-A.\n\n🔖 Salva e manda pra quem nunca olhou o extrato.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#FGTS #DireitoTrabalhista #SaqueAniversário #DireitosDoTrabalhador #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: Lei 8.036/1990, arts. 15 e 20.\n💬 Você confere o seu extrato?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-01-27",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Hora extra: como calcular e como provar",
+  "area": "Trabalhista",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-hora-extra-calculo-v5-1.jpg",
+   "carrossel-hora-extra-calculo-v5-2.jpg",
+   "carrossel-hora-extra-calculo-v5-3.jpg",
+   "carrossel-hora-extra-calculo-v5-4.jpg",
+   "carrossel-hora-extra-calculo-v5-5.jpg",
+   "carrossel-hora-extra-calculo-v5-6.jpg",
+   "carrossel-hora-extra-calculo-v5-7.jpg"
+  ],
+  "legenda": "Saiu mais tarde de novo? Arrasta pro lado e veja como calcular e provar a hora extra. ⏰\n\nA hora extra vale pelo menos 50% a mais, tem limite de 2 horas por dia, o banco de horas precisa de acordo e ela entra no 13º e nas férias.\n\n❓ As perguntas que mais chegam aqui:\n📌 Quanto vale a hora extra? No mínimo 50% a mais.\n📌 Banco de horas é obrigatório? Só com acordo.\n📌 Como provo sem ponto? Mensagens e testemunhas ajudam.\n\n📚 Fontes: Constituição, art. 7º, XVI; CLT, art. 59; Súmula 45 do TST.\n\n🔖 Salva e manda pra quem sai sempre tarde.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#HoraExtra #DireitoTrabalhista #BancoDeHoras #CLT #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: Constituição, art. 7º, XVI; CLT, art. 59.\n💬 Você faz hora extra todo mês?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-02-01",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Volta às aulas: o que a escola não pode cobrar",
+  "area": "Consumidor",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-volta-as-aulas-v5-1.jpg",
+   "carrossel-volta-as-aulas-v5-2.jpg",
+   "carrossel-volta-as-aulas-v5-3.jpg",
+   "carrossel-volta-as-aulas-v5-4.jpg",
+   "carrossel-volta-as-aulas-v5-5.jpg",
+   "carrossel-volta-as-aulas-v5-6.jpg",
+   "carrossel-volta-as-aulas-v5-7.jpg"
+  ],
+  "legenda": "Lista de material chegou? Arrasta pro lado e veja o que a escola não pode cobrar. 🎒\n\nMaterial de uso coletivo não entra na lista, a escola não pode exigir marca, o atraso não tira a prova da criança e a mensalidade tem reajuste anual.\n\n❓ As perguntas que mais chegam aqui:\n📌 Papel higiênico na lista pode? Não.\n📌 A escola pode exigir marca? Não.\n📌 Mensalidade atrasada impede a prova? Não.\n\n📚 Fontes: Lei 12.886/2013; Lei 9.870/1999, arts. 1º e 6º; Código de Defesa do Consumidor, art. 39, I.\n\n🔖 Salva e manda pra quem está montando a lista agora.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#VoltaÀsAulas #MaterialEscolar #DireitoDoConsumidor #Escola #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: Lei 12.886/2013; Lei 9.870/1999.\n💬 Que item estranho já pediram na lista?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-02-03",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Gestante no trabalho: 6 direitos",
+  "area": "Trabalhista",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-gestante-6-direitos-v5-1.jpg",
+   "carrossel-gestante-6-direitos-v5-2.jpg",
+   "carrossel-gestante-6-direitos-v5-3.jpg",
+   "carrossel-gestante-6-direitos-v5-4.jpg",
+   "carrossel-gestante-6-direitos-v5-5.jpg",
+   "carrossel-gestante-6-direitos-v5-6.jpg",
+   "carrossel-gestante-6-direitos-v5-7.jpg"
+  ],
+  "legenda": "Grávida e trabalhando? Arrasta pro lado e guarde os 6 direitos. 🤰🏾\n\nEstabilidade, consultas sem desconto, troca de função quando a saúde exige, afastamento da insalubridade, licença de 120 dias e pausas para amamentar.\n\n❓ As perguntas que mais chegam aqui:\n📌 A empresa precisa saber da gravidez? Não para a estabilidade valer.\n📌 Posso sair para o pré-natal? Sim, sem desconto.\n📌 Quanto tempo de pausa para amamentar? 2 de 30 minutos.\n\n📚 Fontes: ADCT, art. 10, II, b; CLT, arts. 392, 394-A e 396.\n\n🔖 Salva e manda pra uma gestante.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#Gestante #GestanteCLT #DireitoTrabalhista #DireitosDaMulher #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: ADCT, art. 10, II, b; CLT, arts. 392, 394-A e 396.\n💬 Qual desses direitos você não conhecia?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-02-08",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Carnaval e trabalho: 5 respostas",
+  "area": "Trabalhista",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-carnaval-trabalho-v5-1.jpg",
+   "carrossel-carnaval-trabalho-v5-2.jpg",
+   "carrossel-carnaval-trabalho-v5-3.jpg",
+   "carrossel-carnaval-trabalho-v5-4.jpg",
+   "carrossel-carnaval-trabalho-v5-5.jpg",
+   "carrossel-carnaval-trabalho-v5-6.jpg",
+   "carrossel-carnaval-trabalho-v5-7.jpg"
+  ],
+  "legenda": "Carnaval é feriado? Depende de onde você mora. Arrasta pro lado. 🎉\n\nNão existe lei federal que faça do Carnaval feriado. A folga depende de lei local, convenção ou costume. Onde é feriado, quem trabalha recebe em dobro ou tem folga.\n\n❓ As perguntas que mais chegam aqui:\n📌 Carnaval é feriado? Não por lei federal.\n📌 Posso faltar? Só se for folga na sua cidade ou combinado.\n📌 Trabalhei no feriado local, recebo? Em dobro ou folga.\n\n📚 Fontes: Lei 9.093/1995; Lei 605/1949, art. 9º; Súmula 146 do TST; CLT, art. 59.\n\n🔖 Salva e manda pra quem vai trabalhar no Carnaval.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#Carnaval #Feriado #DireitoTrabalhista #CLT #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: Lei 9.093/1995; Lei 605/1949, art. 9º.\n💬 Na sua cidade, Carnaval é feriado?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-02-10",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Pais também têm direitos no trabalho",
+  "area": "Trabalhista",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-direitos-dos-pais-v5-1.jpg",
+   "carrossel-direitos-dos-pais-v5-2.jpg",
+   "carrossel-direitos-dos-pais-v5-3.jpg",
+   "carrossel-direitos-dos-pais-v5-4.jpg",
+   "carrossel-direitos-dos-pais-v5-5.jpg",
+   "carrossel-direitos-dos-pais-v5-6.jpg",
+   "carrossel-direitos-dos-pais-v5-7.jpg"
+  ],
+  "legenda": "Pai também tem direitos no trabalho. Arrasta pro lado. 👨🏾‍🍼\n\nDesde janeiro de 2027 a licença-paternidade é de 10 dias. O pai pode faltar para o pré-natal, levar o filho pequeno ao médico e tem a licença também na adoção.\n\n❓ As perguntas que mais chegam aqui:\n📌 Quantos dias de licença? 10 dias em 2027.\n📌 Pai pode faltar para o pré-natal? Até 2 dias.\n📌 Vale para adoção? Sim.\n\n📚 Fontes: Lei 15.371/2026; CLT, art. 473, X e XI.\n\n🔖 Salva e manda pra um pai ou futuro pai.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#Paternidade #LicençaPaternidade #DireitoTrabalhista #PaiPresente #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: Lei 15.371/2026; CLT, art. 473, X e XI.\n💬 Marque um pai que precisa saber disso."
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-02-15",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Pedido de demissão: o que você perde e o que recebe",
+  "area": "Trabalhista",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-pedido-demissao-v5-1.jpg",
+   "carrossel-pedido-demissao-v5-2.jpg",
+   "carrossel-pedido-demissao-v5-3.jpg",
+   "carrossel-pedido-demissao-v5-4.jpg",
+   "carrossel-pedido-demissao-v5-5.jpg",
+   "carrossel-pedido-demissao-v5-6.jpg",
+   "carrossel-pedido-demissao-v5-7.jpg"
+  ],
+  "legenda": "Pensando em pedir as contas? Arrasta pro lado antes de decidir. 🧾\n\nNo pedido de demissão você recebe saldo, 13º e férias proporcionais, mas perde a multa de 40%, o saque do FGTS e o seguro-desemprego. Se a empresa descumpre a lei, pode caber a rescisão indireta.\n\n❓ As perguntas que mais chegam aqui:\n📌 Pedi demissão, recebo férias? Sim, as proporcionais.\n📌 Preciso cumprir o aviso? Sim, ou pode ser descontado.\n📌 Grávida pode pedir demissão? Sim, com assistência do sindicato.\n\n📚 Fontes: CLT, arts. 477, 483, 487 e 500; Lei 8.036/1990; Lei 7.998/1990; Súmula 261 do TST.\n\n🔖 Salva e manda pra quem está pensando em pedir as contas.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#PedidoDeDemissão #Rescisão #DireitoTrabalhista #FGTS #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: CLT, arts. 477, 483, 487 e 500.\n💬 Você já pediu demissão sem saber disso?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-02-17",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Holerite: 5 linhas que você precisa conferir",
+  "area": "Trabalhista",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-holerite-conferir-v5-1.jpg",
+   "carrossel-holerite-conferir-v5-2.jpg",
+   "carrossel-holerite-conferir-v5-3.jpg",
+   "carrossel-holerite-conferir-v5-4.jpg",
+   "carrossel-holerite-conferir-v5-5.jpg",
+   "carrossel-holerite-conferir-v5-6.jpg",
+   "carrossel-holerite-conferir-v5-7.jpg"
+  ],
+  "legenda": "Você confere o seu holerite? Arrasta pro lado e veja as 5 linhas que mais têm erro. 🔎\n\nINSS e imposto de renda, vale-transporte de até 6%, hora extra e adicional noturno, e o FGTS, que é depósito da empresa e não desconto.\n\n❓ As perguntas que mais chegam aqui:\n📌 FGTS é descontado do salário? Não.\n📌 Quanto pode descontar de vale-transporte? Até 6%.\n📌 Adicional noturno é quanto? Pelo menos 20%.\n\n📚 Fontes: Lei 8.212/1991; Lei 7.418/1985, art. 4º; Constituição, art. 7º, XVI; CLT, arts. 73 e 464; Lei 8.036/1990, art. 15.\n\n🔖 Salva e manda pra quem nunca conferiu o holerite.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#Holerite #Contracheque #DireitoTrabalhista #DireitosDoTrabalhador #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: Lei 7.418/1985, art. 4º; CLT, art. 73; Lei 8.036/1990, art. 15.\n💬 Já achou erro no seu holerite?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-02-22",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Trabalho doméstico: direitos de quem trabalha em casa de família",
+  "area": "Trabalhista",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-trabalho-domestico-v5-1.jpg",
+   "carrossel-trabalho-domestico-v5-2.jpg",
+   "carrossel-trabalho-domestico-v5-3.jpg",
+   "carrossel-trabalho-domestico-v5-4.jpg",
+   "carrossel-trabalho-domestico-v5-5.jpg",
+   "carrossel-trabalho-domestico-v5-6.jpg",
+   "carrossel-trabalho-domestico-v5-7.jpg"
+  ],
+  "legenda": "Quem trabalha em casa de família tem os direitos garantidos por lei desde 2015. Arrasta pro lado. 🏠\n\nMais de 2 dias por semana na mesma casa é vínculo de emprego, com carteira, jornada de 44 horas, hora extra, FGTS e férias de 30 dias com 1/3.\n\n❓ As perguntas que mais chegam aqui:\n📌 Diarista tem carteira? Até 2 dias por semana, não.\n📌 Doméstica tem FGTS? Sim, obrigatório.\n📌 Tem hora extra? Sim, acima de 8 horas por dia.\n\n📚 Fontes: Lei Complementar 150/2015, arts. 1º, 2º, 17, 21 e 22.\n\n🔖 Salva e manda pra quem trabalha em casa de família.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#TrabalhoDoméstico #Doméstica #DireitoTrabalhista #FGTS #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: Lei Complementar 150/2015.\n💬 Você conhece alguém que trabalha sem carteira?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-02-24",
+  "hora": "12:00",
+  "tipo": "carrossel",
+  "formato": "carrossel",
+  "titulo": "Aviso prévio: tudo o que você precisa saber",
+  "area": "Trabalhista",
+  "estilo": "carrossel-ouro-editorial",
+  "imagens": [
+   "carrossel-aviso-previo-tudo-v5-1.jpg",
+   "carrossel-aviso-previo-tudo-v5-2.jpg",
+   "carrossel-aviso-previo-tudo-v5-3.jpg",
+   "carrossel-aviso-previo-tudo-v5-4.jpg",
+   "carrossel-aviso-previo-tudo-v5-5.jpg",
+   "carrossel-aviso-previo-tudo-v5-6.jpg",
+   "carrossel-aviso-previo-tudo-v5-7.jpg"
+  ],
+  "legenda": "Recebeu aviso prévio? Arrasta pro lado e veja o que muda. 📅\n\nNa dispensa, o aviso vai de 30 a 90 dias conforme o tempo de casa. Trabalhado, tem redução de 2 horas por dia ou 7 dias corridos. Indenizado, conta como tempo de serviço. E a gestante tem estabilidade mesmo se descobrir a gravidez no aviso.\n\n❓ As perguntas que mais chegam aqui:\n📌 Aviso pode passar de 30 dias? Sim, até 90.\n📌 Posso sair mais cedo no aviso? Sim, 2 horas por dia ou 7 dias.\n📌 Descobri a gravidez no aviso, e agora? Tem estabilidade.\n\n📚 Fontes: Lei 12.506/2011; CLT, arts. 391-A, 487 e 488.\n\n🔖 Salva e manda pra quem está cumprindo aviso.\n\nCada caso tem detalhes. Se esse é o seu caso, procure uma advogada de confiança.\n\nDra. Letícia Barros · Advogada · Vitória/ES · OAB/ES 39.948\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre os seus direitos.\n\n#AvisoPrévio #Rescisão #DireitoTrabalhista #CLT #AdvogadaVitóriaES",
+  "primeiro_comentario": "📚 Base legal: Lei 12.506/2011; CLT, arts. 391-A, 487 e 488.\n💬 Quanto tempo de aviso você teve?"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-03-02",
+  "hora": "19:00",
+  "tipo": "reels",
+  "formato": "reels",
+  "titulo": "Reels Flagrante: Guarda compartilhada",
+  "area": "Trabalhista",
+  "video": "flagrante-16-guarda-v2.mp4",
+  "capa": "flagrante-16-guarda-capa-textura.jpg",
+  "estilo": "flagrante",
+  "episodio": "16-guarda",
+  "legenda": "Escola: mãe. Pediatra: mãe. Reunião de pais: mãe.\nUniforme, remédio de madrugada, lição de casa: mãe.\nGuarda: compartilhada.\n\nCompartilhada com quem?\n\nGuarda compartilhada quer dizer responsabilidade dos dois: decisões, cuidados e deveres com o filho são divididos entre pai e mãe (Código Civil, art. 1.583, §1º). O tempo de convivência também deve ser equilibrado, pensando no que é melhor para a criança.\n\nO que vale saber:\n📌 Guarda compartilhada não acaba com a pensão alimentícia\n📌 Os dois têm direito de saber da escola, da saúde e da rotina do filho\n📌 Se um dos dois não cumpre a parte dele, dá para pedir ajuste na Justiça\n📌 Anote quem fez o quê e guarde as mensagens\n\nO link do artigo completo está no primeiro comentário.\n\nComente se é assim na sua casa. E mande para uma mãe que faz tudo sozinha.\n\nQuer ficar por dentro dos seus direitos? Clique em seguir e compartilhe com quem precisa saber disso.\n\nCada caso tem detalhes. Procure uma advogada de confiança.\n\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra informação sobre os seus direitos e os do seu filho.\n\n#guardacompartilhada #direitodefamilia #pensaoalimenticia #maesolo #advogada",
+  "primeiro_comentario": "Artigo completo: https://advogadaleticiabarros.com.br/blog/guarda-compartilhada-como-funciona.html"
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-03-05",
+  "hora": "19:00",
+  "tipo": "reels",
+  "formato": "reels",
+  "titulo": "Reels Flagrante: Pausa no banheiro",
+  "area": "Trabalhista",
+  "video": "flagrante-20-pausa-banheiro-v2.mp4",
+  "capa": "flagrante-20-pausa-banheiro-capa-textura.jpg",
+  "estilo": "flagrante",
+  "episodio": "20-pausa-banheiro",
+  "legenda": "\"Já é a 3ª vez hoje.\"\n\"Agora só no intervalo.\"\n\"E seu nome vai pro quadro da equipe.\"\n\nPode proibir?\n\nIr ao banheiro é necessidade básica. A empresa pode organizar a rotina, mas proibir, controlar de forma exagerada ou expor quem vai ao banheiro fere a dignidade de quem trabalha (Constituição, art. 1º, III, e art. 5º, X). A Justiça do Trabalho tem condenado empresas a pagar indenização por dano moral nesses casos.\n\nO que vale saber:\n📌 Limite de idas, pedido de autorização humilhante ou lista com nomes podem ser abuso\n📌 Gestantes e pessoas com problema de saúde podem precisar de mais pausas\n📌 Guarde mensagens, fotos do quadro e nomes de quem viu\n📌 Leve a situação ao RH ou ao sindicato por escrito\n\nComente se já viu isso no trabalho. E mande para quem passa por isso.\n\nQuer ficar por dentro dos seus direitos? Clique em seguir e compartilhe com quem precisa saber disso.\n\nCada caso tem detalhes. Procure uma advogada de confiança.\n\nEsse é o perfil da Advogada Letícia Barros e aqui você encontra tudo sobre Direito Trabalhista.\n\n#direitotrabalhista #danomoral #assediomoral #direitosdotrabalhador #advogadatrabalhista",
+  "primeiro_comentario": ""
+ },
+ {
+  "acao": "nova",
+  "dia": "2027-03-09",
+  "hora": "19:00",
+  "tipo": "reels",
+  "formato": "reels",
+  "titulo": "Reels Flagrante: Furto no estacionamento",
+  "area": "Trabalhista",
+  "video": "flagrante-28-estacionamento-v2.mp4",
+  "capa": "flagrante-28-estacionamento-capa-textura.jpg",
+  "estilo": "flagrante",
+  "episodio": "28-estacionamento",
+  "legenda": "Furto no estacionamento: e aquela placa de \"não nos responsabilizamos\"?\n\nVocê voltou das compras e o carro não estava mais lá. Ou estava, sem o vidro. E apontam para a plaquinha na parede.\n\nEu explico, sem juridiquês:\n\n📌 O STJ tem súmula dizendo que a empresa responde por dano ou furto de veículo no estacionamento dela.\n📌 O aviso, sozinho, não resolve a questão.\n📂 Essa é a parte decisiva: guarde o ticket e o comprovante da compra, faça o boletim de ocorrência, avise o estabelecimento na hora e peça as imagens das câmeras.\n\n📚 Base legal: STJ, Súmula 130.\n\nQuer ficar por dentro dos seus direitos? Clique em seguir e compartilhe com quem precisa saber disso.\n\nCada caso tem detalhes. Procure uma advogada de confiança.\n\nLetícia Barros · OAB/ES 39.948\n\n#DireitoDoConsumidor #Estacionamento #FurtoDeVeiculo #Consumidor",
+  "primeiro_comentario": "💬 Você já tinha acreditado naquela plaquinha?"
+ }
+]

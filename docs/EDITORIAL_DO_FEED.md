@@ -12,7 +12,27 @@ domingo, feed claro e harmônico, usando tudo o que já produzimos. Identidade, 
 - Blog: segunda e quinta 9h. LinkedIn: terça e quinta 8h. TikTok: grade própria.
 - Datas fixas: 25/12 sem post (mensagem de Natal, se a Dra. quiser); 01/01 Verbete "Letícia Barros".
 
-## Por semana
+## Grade semanal balanceada (de 04/01 a 28/02/2027)
+
+Pedido de 11/11/2026: "está faltando carrossel, precisamos de postagens durante a semana de todos os formatos e estilos".
+
+| Dia | 12h | 19h |
+| --- | --- | --- |
+| seg | Carrossel | Reels Mito ou Lei |
+| ter | Manchete (jan: par do Flagrante) | Reels Flagrante |
+| qua | Carrossel | Reels Mito ou Lei |
+| qui | Pergunta clara | Frase em papel claro |
+| sex | Manchete (jan) ou pergunta clara (fev) | Reels Flagrante |
+| sáb | Peça de marca (Papel e Ouro, Verbete, Palavra de Ouro) | Reels Mito ou Lei |
+| dom | Frase em papel claro | Reels da Dra. 15h30 (quando houver) |
+
+Por semana: 2 carrosséis, 1 a 2 Manchetes, 1 a 2 perguntas, 2 frases, 1 peça de marca, 3 Mito ou Lei e 2 Flagrantes.
+Carrossel na segunda e na quarta porque são os melhores dias de carrossel do perfil (quarta 406 e segunda 237 contas de
+alcance médio; sábado 45). Os 16 carrosséis estão em `apps/api/_saida_producao_1510/carrosseis_jan_fev.py`
+(`DADOS=janfev python carrossel_v5.py`). Sobras dos estáticos foram para 01 a 12/03 às 12h, e os 3 últimos Flagrantes
+para 02, 05 e 09/03.
+
+## Por semana (novembro e dezembro)
 
 | Formato | Quantos | Quando |
 | --- | --- | --- |
@@ -77,7 +97,7 @@ igualdade salarial entre homens e mulheres.
 
 ## Dia a dia
 
-Lido da agenda do Orbit em 11/11/2026, depois de aplicado. (pausado) = só sai depois de aprovado.
+Lido da agenda do Orbit em 11/11/2026, depois do rebalanceamento. (pausado) = só sai depois de aprovado.
 
 | Dia | Hora | Formato | Peça |
 | --- | --- | --- | --- |
@@ -180,107 +200,126 @@ Lido da agenda do Orbit em 11/11/2026, depois de aplicado. (pausado) = só sai d
 | qua 30/12 | 19:00 | Reels | Mito ou Lei: Férias coletivas podem ser divididas em 3 partes |
 | qui 31/12 | 12:00 | Carrossel | 2027 começa com licença-paternidade de 10 dias |
 | sex 01/01 | 12:00 | Estático | Verbete: Letícia Barros |
-| sáb 02/01 | 12:00 | Estático | Manchete: Intervalo de almoço |
+| sáb 02/01 | 12:00 | Estático | Letícia Barros, a advogada da mulher que trabalha |
 | sáb 02/01 | 19:00 | Reels | Mito ou Lei: Gritar com funcionário na frente de todos é só jeito do chefe |
 | sáb 02/01 | 19:00 | Reels | Acervo de Reels: Gestante demitida: o que fazer (pausado) |
-| dom 03/01 | 12:00 | Frase | Amamentação no trabalho: 2 pausas de 30 minutos até 6 meses |
-| seg 04/01 | 12:00 | Frase | Grávida em local insalubre deve ser afastada |
+| dom 03/01 | 12:00 | Frase | 2027 começa com licença-paternidade de 10 dias |
+| seg 04/01 | 12:00 | Carrossel | Férias: 5 regras que pouca gente conhece |
 | seg 04/01 | 19:00 | Reels | Mito ou Lei: Aposentada perde a pensão por morte |
 | ter 05/01 | 12:00 | Estático | Manchete: Vender férias |
 | ter 05/01 | 19:00 | Reels | Reels Flagrante: Férias |
-| qua 06/01 | 12:00 | Frase | Desempregada e grávida: salário-maternidade pelo INSS |
+| qua 06/01 | 12:00 | Carrossel | Rescisão: o que você recebe em cada tipo de saída |
 | qua 06/01 | 19:00 | Reels | Mito ou Lei: BPC dá direito a 13º |
-| qui 07/01 | 12:00 | Estático | Manchete: FGTS |
-| qui 07/01 | 19:00 | Frase | Viagem de férias com os filhos: quando precisa de autorização |
+| qui 07/01 | 12:00 | Pergunta | Amamentação no trabalho: 2 pausas de 30 minutos até 6 meses |
+| qui 07/01 | 19:00 | Frase | Temporária de fim de ano: direitos e estabilidade da gestante (TST 2026) |
 | sex 08/01 | 12:00 | Estático | Manchete: Atestado do SUS |
 | sex 08/01 | 19:00 | Reels | Reels Flagrante: Atestado do posto |
-| sáb 09/01 | 12:00 | Frase | Mãe dona de casa pode contribuir e se aposentar |
+| sáb 09/01 | 12:00 | Estático | Hora extra se paga |
 | sáb 09/01 | 19:00 | Reels | Mito ou Lei: Gestante estável pode pedir demissão sozinha |
-| dom 10/01 | 12:00 | Estático | Letícia Barros, a advogada da mulher que trabalha |
-| seg 11/01 | 12:00 | Estático | Manchete: Rede social como prova no processo |
+| dom 10/01 | 12:00 | Frase | Aposentadoria da mulher em 2027: 94 pontos e 60 anos |
+| seg 11/01 | 12:00 | Carrossel | Atestado médico: o que a empresa pode e não pode |
 | seg 11/01 | 19:00 | Reels | Mito ou Lei: Quem nunca contribuiu não recebe nada do INSS |
 | ter 12/01 | 12:00 | Estático | Manchete: Hora extra no holerite |
 | ter 12/01 | 19:00 | Reels | Reels Flagrante: Holerite |
-| qua 13/01 | 12:00 | Frase | Aposentadoria da mulher em 2027: 94 pontos e 60 anos |
+| qua 13/01 | 12:00 | Carrossel | Contrato de experiência: 5 verdades |
 | qua 13/01 | 19:00 | Reels | Mito ou Lei: Quem foi demitido não recebe 13º |
-| qui 14/01 | 12:00 | Estático | Manchete: Furto em estacionamento |
+| qui 14/01 | 12:00 | Pergunta | Creche ou auxílio-creche: quando a empresa é obrigada |
 | qui 14/01 | 19:00 | Frase | Dezembro Vermelho: HIV no trabalho (sigilo, demissão discriminatória, FGTS) |
 | sex 15/01 | 12:00 | Estático | Manchete: Ponto britânico |
 | sex 15/01 | 19:00 | Reels | Reels Flagrante: Folha de ponto |
 | sáb 16/01 | 12:00 | Estático | Assédio moral: gritar não é cobrar |
 | sáb 16/01 | 19:00 | Reels | Mito ou Lei: Atestado médico reduz o 13º |
-| dom 17/01 | 12:00 | Frase | 2027 começa com licença-paternidade de 10 dias |
-| seg 18/01 | 12:00 | Estático | Manchete: Pedido de demissão |
+| dom 17/01 | 12:00 | Frase | Viagem de férias com os filhos: quando precisa de autorização |
+| seg 18/01 | 12:00 | Carrossel | Salário-maternidade: quem tem direito |
 | seg 18/01 | 19:00 | Reels | Mito ou Lei: Faltar para fazer mamografia dá desconto no salário |
 | ter 19/01 | 12:00 | Estático | Manchete: Contrato de experiência |
 | ter 19/01 | 19:00 | Reels | Reels Flagrante: Contrato de experiência |
-| qua 20/01 | 12:00 | Estático | Grávida? Leia esta linha do art. 391 |
+| qua 20/01 | 12:00 | Carrossel | Pensão alimentícia: 5 dúvidas de começo de ano |
 | qua 20/01 | 19:00 | Reels | Mito ou Lei: Quem tem câncer pode receber do INSS sem cumprir carência |
-| qui 21/01 | 12:00 | Estático | Manchete: Controle de ida ao banheiro no trabalho |
+| qui 21/01 | 12:00 | Pergunta | Grávida em local insalubre deve ser afastada |
 | qui 21/01 | 19:00 | Frase | Direitos Humanos no trabalho: assédio moral, exemplos e como provar |
 | sex 22/01 | 12:00 | Estático | Manchete: Descanso semanal |
 | sex 22/01 | 19:00 | Reels | Reels Flagrante: Sem folga |
 | sáb 23/01 | 12:00 | Estático | "Doutora, é rapidinho" |
 | sáb 23/01 | 19:00 | Reels | Mito ou Lei: Com medida protetiva, a mulher pode se afastar do trabalho sem perder o empre |
-| dom 24/01 | 12:00 | Frase | Racismo no trabalho: injúria racial e como reunir provas |
-| seg 25/01 | 12:00 | Estático | Manchete: Insalubridade |
+| dom 24/01 | 12:00 | Frase | Mãe dona de casa pode contribuir e se aposentar |
+| seg 25/01 | 12:00 | Carrossel | FGTS: quando você pode sacar |
 | seg 25/01 | 19:00 | Reels | Mito ou Lei: Mãe por adoção tem os mesmos 120 dias de licença da mãe biológica |
 | ter 26/01 | 12:00 | Estático | Manchete: Aviso prévio |
 | ter 26/01 | 19:00 | Reels | Reels Flagrante: Aviso prévio |
-| qua 27/01 | 12:00 | Estático | Por que eu nunca prometo que você vai ganhar |
+| qua 27/01 | 12:00 | Carrossel | Hora extra: como calcular e como provar |
 | qua 27/01 | 19:00 | Reels | Mito ou Lei: Salário nunca pode ser penhorado |
-| qui 28/01 | 12:00 | Estático | Manchete: Guarda compartilhada |
-| qui 28/01 | 19:00 | Frase | Temporária de fim de ano: direitos e estabilidade da gestante (TST 2026) |
+| qui 28/01 | 12:00 | Pergunta | Racismo no trabalho: injúria racial e como reunir provas |
+| qui 28/01 | 19:00 | Frase | Desempregada e grávida: salário-maternidade pelo INSS |
 | sex 29/01 | 12:00 | Estático | Manchete: Salário por fora |
 | sex 29/01 | 19:00 | Reels | Reels Flagrante: Salário por fora |
 | sáb 30/01 | 12:00 | Estático | Errata: demitido também recebe 13º |
 | sáb 30/01 | 19:00 | Reels | Mito ou Lei: Depois dos 70, o casamento é sempre com separação de bens |
-| dom 31/01 | 12:00 | Estático | Hora extra se paga |
-| seg 01/02 | 12:00 | Pergunta | Amamentação no trabalho: 2 pausas de 30 minutos até 6 meses |
+| dom 31/01 | 12:00 | Frase | Grávida em local insalubre deve ser afastada |
+| seg 01/02 | 12:00 | Carrossel | Volta às aulas: o que a escola não pode cobrar |
 | seg 01/02 | 19:00 | Reels | Mito ou Lei: A escola pode pedir papel higiênico na lista de material |
-| ter 02/02 | 12:00 | Frase | Frase: Bebê na UTI depois do parto? A licença começa na alta. |
+| ter 02/02 | 12:00 | Estático | Manchete: Intervalo de almoço |
 | ter 02/02 | 19:00 | Reels | Reels Flagrante: Sem carteira assinada |
-| qua 03/02 | 12:00 | Pergunta | Creche ou auxílio-creche: quando a empresa é obrigada |
+| qua 03/02 | 12:00 | Carrossel | Gestante no trabalho: 6 direitos |
 | qua 03/02 | 19:00 | Reels | Mito ou Lei: Com a mensalidade atrasada, a escola pode impedir a criança de fazer prova |
-| qui 04/02 | 12:00 | Frase | Frase: Pensão não acaba sozinha aos 18. Precisa de decisão do juiz. |
-| sex 05/02 | 12:00 | Frase | Frase: Perdeu alguém da família? São 2 dias sem desconto. |
+| qui 04/02 | 12:00 | Pergunta | Alimentos gravídicos: pensão ao pai antes do bebê nascer |
+| qui 04/02 | 19:00 | Frase | Frase: Bebê na UTI depois do parto? A licença começa na alta. |
+| sex 05/02 | 12:00 | Pergunta | Viagem de férias com os filhos: quando precisa de autorização |
 | sex 05/02 | 19:00 | Reels | Reels Flagrante: Pedido de demissão |
 | sáb 06/02 | 12:00 | Estático | Grávida não é motivo |
 | sáb 06/02 | 19:00 | Reels | Mito ou Lei: A empresa pode exigir teste de gravidez na contratação |
-| dom 07/02 | 12:00 | Frase | Frase: Vai casar? São 3 dias de folga sem desconto. |
-| seg 08/02 | 12:00 | Pergunta | Viagem de férias com os filhos: quando precisa de autorização |
+| dom 07/02 | 12:00 | Frase | Frase: Perdeu alguém da família? São 2 dias sem desconto. |
+| seg 08/02 | 12:00 | Carrossel | Carnaval e trabalho: 5 respostas |
 | seg 08/02 | 19:00 | Reels | Mito ou Lei: Carnaval é feriado nacional |
-| ter 09/02 | 12:00 | Pergunta | Racismo no trabalho: injúria racial e como reunir provas |
+| ter 09/02 | 12:00 | Estático | Manchete: Pedido de demissão |
 | ter 09/02 | 19:00 | Reels | Reels Flagrante: Story como prova |
-| qua 10/02 | 12:00 | Pergunta | Alimentos gravídicos: pensão ao pai antes do bebê nascer |
+| qua 10/02 | 12:00 | Carrossel | Pais também têm direitos no trabalho |
 | qua 10/02 | 19:00 | Reels | Mito ou Lei: O pai pode faltar para acompanhar as consultas do pré-natal |
-| qui 11/02 | 12:00 | Frase | Frase: Grávida pode sair para o pré-natal. No mínimo 6 consultas, sem desconto. |
-| sex 12/02 | 12:00 | Estático | Salário tem data |
+| qui 11/02 | 12:00 | Pergunta | Desempregada e grávida: salário-maternidade pelo INSS |
+| qui 11/02 | 19:00 | Frase | Frase: Pensão não acaba sozinha aos 18. Precisa de decisão do juiz. |
+| sex 12/02 | 12:00 | Pergunta | Direitos Humanos no trabalho: assédio moral, exemplos e como provar |
 | sex 12/02 | 19:00 | Reels | Reels Flagrante: FGTS |
-| sáb 13/02 | 12:00 | Pergunta | Grávida em local insalubre deve ser afastada |
+| sáb 13/02 | 12:00 | Estático | Por que eu nunca prometo que você vai ganhar |
 | sáb 13/02 | 19:00 | Reels | Mito ou Lei: Você pode faltar 1 dia por ano para levar o filho ao médico |
-| dom 14/02 | 12:00 | Frase | Frase: Adoeceu por causa do trabalho? Pode ter 12 meses de estabilidade. |
-| seg 15/02 | 12:00 | Estático | Assinar sem ler, não |
+| dom 14/02 | 12:00 | Frase | Frase: Vai casar? São 3 dias de folga sem desconto. |
+| seg 15/02 | 12:00 | Carrossel | Pedido de demissão: o que você perde e o que recebe |
 | seg 15/02 | 19:00 | Reels | Mito ou Lei: Quem pede demissão saca o FGTS |
-| ter 16/02 | 12:00 | Pergunta | Direitos Humanos no trabalho: assédio moral, exemplos e como provar |
+| ter 16/02 | 12:00 | Estático | Manchete: FGTS |
 | ter 16/02 | 19:00 | Reels | Reels Flagrante: Controle de banheiro |
-| qua 17/02 | 12:00 | Pergunta | Mãe dona de casa pode contribuir e se aposentar |
+| qua 17/02 | 12:00 | Carrossel | Holerite: 5 linhas que você precisa conferir |
 | qua 17/02 | 19:00 | Reels | Mito ou Lei: O aviso prévio é sempre de 30 dias |
-| qui 18/02 | 12:00 | Frase | Frase: Pediu demissão? O seguro-desemprego não vem. |
+| qui 18/02 | 12:00 | Pergunta | Mãe dona de casa pode contribuir e se aposentar |
+| qui 18/02 | 19:00 | Frase | Frase: Grávida pode sair para o pré-natal. No mínimo 6 consultas, sem desconto. |
 | sex 19/02 | 12:00 | Pergunta | Trabalho escravo hoje: jornada exaustiva, dívida e o caso das domésticas |
 | sex 19/02 | 19:00 | Reels | Reels Flagrante: Horário de almoço |
 | sáb 20/02 | 12:00 | Estático | Burnout tem nome |
 | sáb 20/02 | 19:00 | Reels | Mito ou Lei: Hora extra frequente aumenta o 13º e as férias |
-| dom 21/02 | 12:00 | Frase | Frase: Trabalha em casa de família? Hora extra também é paga. |
-| seg 22/02 | 12:00 | Pergunta | Dezembro Vermelho: HIV no trabalho (sigilo, demissão discriminatória, FGTS) |
+| dom 21/02 | 12:00 | Frase | Frase: Adoeceu por causa do trabalho? Pode ter 12 meses de estabilidade. |
+| seg 22/02 | 12:00 | Carrossel | Trabalho doméstico: direitos de quem trabalha em casa de família |
 | seg 22/02 | 19:00 | Reels | Mito ou Lei: A empresa pode descontar o uniforme do salário |
-| ter 23/02 | 12:00 | Estático | Pensão antes de nascer |
+| ter 23/02 | 12:00 | Estático | Manchete: Controle de ida ao banheiro no trabalho |
 | ter 23/02 | 19:00 | Reels | Reels Flagrante: Exame preventivo |
-| qua 24/02 | 12:00 | Pergunta | Aposentadoria da mulher em 2027: 94 pontos e 60 anos |
+| qua 24/02 | 12:00 | Carrossel | Aviso prévio: tudo o que você precisa saber |
 | qua 24/02 | 19:00 | Reels | Mito ou Lei: O desconto do vale-transporte pode chegar a 6% do salário |
-| qui 25/02 | 12:00 | Frase | Frase: O trabalho faz mal à gravidez? Ela pode mudar de função. |
-| sex 26/02 | 12:00 | Pergunta | Burnout é doença do trabalho: afastamento e 12 meses de estabilidade |
+| qui 25/02 | 12:00 | Pergunta | Dezembro Vermelho: HIV no trabalho (sigilo, demissão discriminatória, FGTS) |
+| qui 25/02 | 19:00 | Frase | Frase: Pediu demissão? O seguro-desemprego não vem. |
+| sex 26/02 | 12:00 | Pergunta | Aposentadoria da mulher em 2027: 94 pontos e 60 anos |
 | sex 26/02 | 19:00 | Reels | Reels Flagrante: Preço no caixa |
-| sáb 27/02 | 12:00 | Pergunta | Desempregada e grávida: salário-maternidade pelo INSS |
+| sáb 27/02 | 12:00 | Estático | Grávida? Leia esta linha do art. 391 |
 | sáb 27/02 | 19:00 | Reels | Mito ou Lei: Empregada doméstica tem FGTS obrigatório |
-| dom 28/02 | 12:00 | Estático | Deu positivo: a estabilidade também |
+| dom 28/02 | 12:00 | Frase | Frase: Trabalha em casa de família? Hora extra também é paga. |
+| seg 01/03 | 12:00 | Pergunta | Burnout é doença do trabalho: afastamento e 12 meses de estabilidade |
+| ter 02/03 | 12:00 | Estático | Manchete: Rede social como prova no processo |
+| ter 02/03 | 19:00 | Reels | Reels Flagrante: Guarda compartilhada |
+| qua 03/03 | 12:00 | Frase | Amamentação no trabalho: 2 pausas de 30 minutos até 6 meses |
+| qui 04/03 | 12:00 | Estático | Salário tem data |
+| sex 05/03 | 12:00 | Estático | Manchete: Furto em estacionamento |
+| sex 05/03 | 19:00 | Reels | Reels Flagrante: Pausa no banheiro |
+| sáb 06/03 | 12:00 | Estático | Deu positivo: a estabilidade também |
+| dom 07/03 | 12:00 | Frase | Racismo no trabalho: injúria racial e como reunir provas |
+| seg 08/03 | 12:00 | Estático | Manchete: Insalubridade |
+| ter 09/03 | 12:00 | Estático | Assinar sem ler, não |
+| ter 09/03 | 19:00 | Reels | Reels Flagrante: Furto no estacionamento |
+| qua 10/03 | 12:00 | Frase | Frase: O trabalho faz mal à gravidez? Ela pode mudar de função. |
+| qui 11/03 | 12:00 | Estático | Manchete: Guarda compartilhada |
+| sex 12/03 | 12:00 | Estático | Pensão antes de nascer |

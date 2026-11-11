@@ -33,6 +33,8 @@ def secao(a):
         return None
     if a.get("estilo") == "manchete":
         return "manchete"
+    if a.get("estilo") == "carrossel-ouro-editorial":
+        return "novo"
     if a.get("estilo") == "flagrante":
         return None  # aprovados em 09/11/2026
     if a.get("estilo") == "mito-ou-lei" and a["dia"] < "2027-02-01":
@@ -54,7 +56,11 @@ def cartao(a, pasta):
     d = date.fromisoformat(a["dia"])
     img = a.get("capa") or a.get("arquivo") or a.get("nova_imagem")
     fig = f'<img src="{miniatura(img, pasta)}" alt="Arte de {html.escape(a.get("titulo", ""))}" loading="lazy">' if img else ""
-    tipo = "Reels" if a.get("formato") == "reels" else "Post"
+    if a.get("imagens"):  # carrossel: capa grande e as 7 páginas em tira
+        fig = (f'<img src="{miniatura(a["imagens"][0], pasta)}" alt="Capa: {html.escape(a["titulo"])}" loading="lazy">'
+               '<div class=tira>' + "".join(f'<img src="{miniatura(x, pasta, 300)}" alt="Página {i + 1}" loading="lazy">'
+                                            for i, x in enumerate(a["imagens"])) + '</div>')
+    tipo = {"reels": "Reels", "carrossel": "Carrossel"}.get(a.get("formato"), "Post")
     video = (f'<a class=vid href="{MIDIA}{a["video"]}" target="_blank" rel="noreferrer">▶ Assistir o vídeo</a>'
              if a.get("video") else "")
     leg = html.escape(a.get("legenda", "")) or "<i>Texto já aprovado (mesma legenda de antes).</i>"

@@ -95,3 +95,18 @@ Conferir no Orbit (`ver_feed.py`) e na página do caderno; para janeiro, produzi
 - **Feito:** `pagina_conferencia.py` + `.html` (lê os JSON do editorial e as artes da mídia do Orbit). Primeira conferência,
   89 peças (35 textos novos, 34 Manchetes com citação a conferir, 20 artes novas com texto aprovado):
   https://claude.ai/artifact/UQfXHmqpQQ8F9kAoDJaM7Z. Regra gravada no `CLAUDE.md` e na memória.
+
+## Continuação (11/11/2026): carrosséis e semana balanceada
+
+- **Pedido:** "está faltando carrossel, precisamos de postagens durante a semana de todos os formatos e estilos ... balanceado
+  até final de fevereiro - TODOS OS FORMATOS".
+- **Feito:** 16 carrosséis novos no padrão v5 aprovado (`carrosseis_jan_fev.py`, `DADOS=janfev` em `carrossel_v5.py`),
+  segunda e quarta 12h de 04/01 a 24/02; `rebalancear_jan_fev.py` + `aplicar_rebalanceamento.py` reorganizaram as 54
+  peças estáticas na grade semanal (ver `docs/EDITORIAL_DO_FEED.md`); sobras em 01 a 12/03 e 3 Flagrantes em 02, 05 e 09/03.
+  Backup: `/root/orbit-backups/antes-rebalanceamento-20261111.sql.gz`.
+- **Verificado:** nenhuma vaga com 2 posts; segunda simulação sem mudanças; toda semana de 04/01 a 28/02 tem
+  2 carrosséis, Manchete, pergunta, 2 frases, peça de marca, 3 Mito ou Lei e 2 Flagrantes.
+- **Conferência:** https://claude.ai/artifact/KXZg1KCjpZDnpZ2HXybyuF (16 carrosséis com as 7 páginas). Textos novos:
+  conferência jurídica da Dra. pendente.
+- **Observação técnica:** a máquina estava com ~1 GB de memória livre e a captura do carrossel (15120×2700) passou de 30 s;
+  `carrossel_v5.py` agora espera até 240 s.

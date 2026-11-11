@@ -32,6 +32,10 @@ if os.environ.get("DADOS") in ("nov", "dez"):  # planos mensais (conteudo_nov.py
     # cada mês continua o rodízio de onde o anterior parou, sem repetir retrato dentro do mês
     _INICIO = {"nov": 11, "dez": 4}[os.environ["DADOS"]]
     RODIZIO = capa_fecho.ORDEM_RETRATOS[_INICIO:] + capa_fecho.ORDEM_RETRATOS[:_INICIO] + ["estudio-livros"]
+elif os.environ.get("DADOS") == "janfev":  # carrosséis de janeiro e fevereiro de 2027 (11/11/2026)
+    import carrosseis_jan_fev as _JF  # noqa: E402
+    CARROSSEIS = {t["chave"]: {**t["carrossel"], "foto5": _JF.FOTO5[t["chave"]]} for t in _JF.TEMAS}
+    RODIZIO = capa_fecho.ORDEM_RETRATOS[8:] + capa_fecho.ORDEM_RETRATOS[:8] + capa_fecho.ORDEM_RETRATOS[8:] + ["estudio-livros"]
 else:
     from carrosseis_v5_dados import CARROSSEIS  # noqa: E402
     RODIZIO = None
@@ -201,7 +205,7 @@ async def renderizar(chave: str, page) -> None:
     await page.evaluate("document.fonts.ready")
     await page.evaluate("""() => { const el=document.getElementById('big'); let fs=150; el.style.fontSize=fs+'px';
         while (el.offsetWidth > 620 && fs > 70) { fs -= 4; el.style.fontSize = fs + 'px'; } }""")
-    pano = Image.open(io.BytesIO(await page.screenshot(type="png"))).convert("RGB")
+    pano = Image.open(io.BytesIO(await page.screenshot(type="png", timeout=240000))).convert("RGB")  # máquina com pouca memória
     for i in range(7):
         destino = AQUI / "pecas" / f"{chave}-v5-{i + 1}.png"
         pano.crop((i * 2160, 0, (i + 1) * 2160, 2700)).resize((1080, 1350), Image.LANCZOS).save(destino)
