@@ -51,7 +51,7 @@ assert len(set(FOTOS.values())) == len(FOTOS), "foto repetida entre capas"
 
 
 def fotos_por_tema():
-    return {t["chave"]: t.get("pergunta", {}) for d in (mito_lei.conteudo_nov, mito_lei.conteudo_dez, mito_lei.conteudo_jan, mito_lei.conteudo_fev) for t in d.TEMAS}
+    return {t["chave"]: t.get("pergunta", {}) for d in (mito_lei.conteudo_nov, mito_lei.conteudo_dez, mito_lei.conteudo_jan, mito_lei.conteudo_fev, mito_lei.conteudo_mar) for t in d.TEMAS}
 
 
 def data_uri(im, fmt):

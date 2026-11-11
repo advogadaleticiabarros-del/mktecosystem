@@ -14,6 +14,7 @@ sys.path.insert(0, str(AQUI.parents[3] / "apps" / "api" / "_saida_producao_1510"
 import conteudo_dez  # noqa: E402
 import conteudo_jan  # noqa: E402  (janeiro de 2027, pedido de 10/11/2026)
 import conteudo_fev  # noqa: E402  (fevereiro de 2027, pedido de 11/11/2026)
+import conteudo_mar  # noqa: E402  (março de 2027, pedido de 11/11/2026; TELA própria)
 import conteudo_nov  # noqa: E402
 
 # data: (frase na tela, número/destaque, linha de apoio, chip (título, texto) ou None, pergunta em marca-texto)
@@ -68,6 +69,8 @@ TELA = {
     "02-24": ("O vale-transporte pode descontar até 6% do salário.", "6%", "do salário básico, no máximo", ("PASSOU DISSO", "a empresa paga"), "Quanto é o seu?"),
     "02-27": ("Empregada doméstica tem FGTS obrigatório.", "Desde 2015", "FGTS e indenização todo mês", ("PELO", "eSocial"), "Está em dia?"),
 }
+
+TELA.update(conteudo_mar.TELA)
 
 # gancho (10/11/2026): afirmação na tela já no 1º segundo + desafio "responda antes da roleta parar"; roleta de 2,4 a 7,6 s
 SONS_FIXOS = [(0, "whoosh"), (.1, "pop"), (.25, "digita", .6), (.75, "boom", .8), (1.25, "sino", .5), (2.3, "whoosh", .6),
@@ -163,7 +166,7 @@ function cena(t){
 
 
 def itens():
-    for mes, dados in (("nov", conteudo_nov), ("dez", conteudo_dez), ("jan", conteudo_jan), ("fev", conteudo_fev)):
+    for mes, dados in (("nov", conteudo_nov), ("dez", conteudo_dez), ("jan", conteudo_jan), ("fev", conteudo_fev), ("mar", conteudo_mar)):
         for m in dados.MITO_OU_LEI:
             md = m[0][5:]
             if md in TELA and TELA[md]:
