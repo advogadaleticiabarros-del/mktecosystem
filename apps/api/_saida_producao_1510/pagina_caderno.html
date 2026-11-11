@@ -1,0 +1,129 @@
+<title>Caderno da marca Letícia Barros</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;1,500&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: caderno de revista em papel — capa, grade semanal, estilos com exemplos, perfil simulado e lista dia a dia. */
+:root{--papel:#F3ECE1;--folha:#FBF7F0;--tinta:#1E1814;--cinza:#6B5D4E;--fio:#E0D3BF;--ouro:#8A6420;
+--ouro-brilho:linear-gradient(112deg,#7a5418 0%,#b88a32 22%,#e8cf86 38%,#a8792a 55%,#7a5418 72%,#c9a14e 88%,#8a6420 100%);
+--mito:#A3302A;--flag:#4A3B2E;--dra:#8A6420;--carr:#2E5A7A;--est:#4E6B4A;--frase:#8C7A62;
+--serif:'EB Garamond',Georgia,'Times New Roman',serif;--sans:Inter,system-ui,-apple-system,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--papel:#1C1713;--folha:#26201B;--tinta:#EFE6D9;--cinza:#B8AC9C;--fio:#3E352D;--ouro:#D8B566;--mito:#E58A80;--flag:#C9B79E;--dra:#D8B566;--carr:#8DB4DA;--est:#9CC5A3;--frase:#CDBB9F;color-scheme:dark}}
+:root[data-theme="dark"]{--papel:#1C1713;--folha:#26201B;--tinta:#EFE6D9;--cinza:#B8AC9C;--fio:#3E352D;--ouro:#D8B566;--mito:#E58A80;--flag:#C9B79E;--dra:#D8B566;--carr:#8DB4DA;--est:#9CC5A3;--frase:#CDBB9F;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--papel);color:var(--tinta);font:400 15px/1.55 var(--sans);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.faixa{height:6px;background:var(--ouro-brilho);margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)))}
+main{max-width:1000px;margin:0 auto;padding-block:40px 80px;display:grid;gap:56px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;text-wrap:balance;margin:0}
+h1{font-size:clamp(40px,7vw,68px);line-height:1}
+h1 em,h2 em{font-style:italic;background:var(--ouro-brilho);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:clamp(28px,4.4vw,38px);line-height:1.1;margin-bottom:6px}
+h3{font-size:22px}
+.olho{font:600 12px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ouro)}
+.lead{font-size:18px;max-width:62ch;color:var(--cinza);margin:14px 0 0}
+.capa{display:grid;gap:10px;padding-top:8px}
+.nota{color:var(--cinza);max-width:68ch;margin:6px 0 0}
+.tabela{overflow-x:auto;margin-top:16px}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;background:var(--folha)}
+th,td{border-bottom:1px solid var(--fio);padding:10px 12px;text-align:left;vertical-align:top}
+th{font:600 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--cinza)}
+td:first-child{font-weight:600}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid currentColor}
+.c-mito{color:var(--mito)}.c-flag{color:var(--flag)}.c-dra{color:var(--dra)}.c-carr{color:var(--carr)}.c-est{color:var(--est)}.c-frase{color:var(--frase)}
+.totais{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:14px}
+.totais b{font-family:var(--serif);font-size:26px;font-weight:500;margin-right:4px}
+.estilos{display:grid;gap:18px;margin-top:16px}
+.est{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:20px;align-items:center;background:var(--folha);padding:18px;border-top:2px solid var(--fio)}
+.est p{margin:6px 0 0;color:var(--cinza)}
+.ex{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ex img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;max-width:100%}
+@media (max-width:680px){.est{grid-template-columns:1fr}}
+.abas{display:inline-flex;border:1px solid var(--fio);border-radius:999px;overflow:hidden;margin:14px 0 6px}
+.abas button{font:500 14px var(--sans);padding:8px 18px;border:0;background:transparent;color:var(--tinta);cursor:pointer}
+.abas button[aria-pressed="true"]{background:var(--tinta);color:var(--papel)}
+.abas button:focus-visible{outline:2px solid var(--ouro);outline-offset:-2px}
+.leg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;margin:8px 0 12px}
+.leg span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;background:currentColor;vertical-align:-1px}
+.grade{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;max-width:600px}
+.g{margin:0;position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--folha);max-width:100%}
+.g img,.g .sem{width:100%;height:100%;object-fit:cover;display:block}
+.g figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 6px 4px;font:600 11px var(--sans);color:#fff;background:linear-gradient(transparent,rgb(0 0 0/.62))}
+.g .ico{position:absolute;top:5px;right:7px;color:#fff;font-size:14px;text-shadow:0 1px 3px rgb(0 0 0/.6)}
+.g.pausado{opacity:.5}
+.sem{display:flex;align-items:center;justify-content:center;color:var(--cinza);font-size:12px;background:repeating-linear-gradient(45deg,var(--folha) 0 8px,var(--fio) 8px 16px)}
+body.semrot .g figcaption{display:none}
+#vlista{display:none}body.lista #vlista{display:block}body.lista #vgrade{display:none}
+#vlista h3{margin:26px 0 4px;padding-bottom:6px;border-bottom:1px solid var(--fio)}
+.dia{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;padding:10px 0;border-bottom:1px solid var(--fio)}
+.dt{color:var(--cinza);font-variant-numeric:tabular-nums}.dt b{display:block;color:var(--tinta);text-transform:uppercase;font-size:12px;letter-spacing:.08em}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+li{display:grid;grid-template-columns:54px minmax(0,1fr);gap:12px;align-items:start}
+.th{width:54px;aspect-ratio:3/4;object-fit:cover;display:block;background:var(--folha)}
+li p{margin:2px 0 0}
+.tag{font-size:12px;font-weight:600;margin-left:4px}
+li.mito .tag{color:var(--mito)}li.flag .tag{color:var(--flag)}li.dra .tag{color:var(--dra)}li.carr .tag{color:var(--carr)}li.est .tag{color:var(--est)}li.frase .tag{color:var(--frase)}
+.pa{font-size:11px;font-weight:600;color:var(--cinza);border:1px solid var(--fio);border-radius:999px;padding:1px 8px}
+.pend{display:grid;gap:10px;margin:14px 0 0;padding:0;list-style:none}
+.pend li{display:block;background:var(--folha);padding:12px 14px;border-left:3px solid var(--ouro)}
+@media (prefers-reduced-motion:no-preference){.g img{transition:transform .3s}.g:hover img{transform:scale(1.03)}}
+</style>
+<div class=faixa></div>
+<main>
+<header class=capa>
+ <span class=olho>Caderno da marca · 10/11/2026</span>
+ <h1>Letícia Barros, <em>a advogada da mulher que trabalha</em></h1>
+ <p class=lead>Tudo o que construímos, num lugar só: identidade, voz, estilos de peça, Reels, quadros e o feed até 31 de janeiro. O feed pega a vida real no flagra e responde com a lei citada, em papel claro e ouro.</p>
+ <p class=nota>O mesmo conteúdo, em texto, está no Orbit em <b>Caderno da marca</b> e no repositório em <code>docs/CADERNO_DA_MARCA.md</code> e <code>docs/EDITORIAL_ATE_JAN_2027.md</code>.</p>
+</header>
+
+<section>
+ <span class=olho>A grade</span>
+ <h2>Duas publicações por dia: <em>12h e 19h</em></h2>
+ <p class=nota>Post ao meio-dia (o melhor horário de carrossel do perfil, 412 contas de alcance médio) e Reels às 19h. No domingo, o vídeo gravado pela Dra. sai às 15h30, o horário em que os Reels de domingo mais alcançaram.</p>
+ <div class=tabela><table>
+  <thead><tr><th>Dia</th><th>12h</th><th>19h</th></tr></thead>
+  <tbody>
+  <tr><td>seg</td><td>Carrossel ou estático</td><td><span class="pill c-mito">Mito ou Lei</span></td></tr>
+  <tr><td>ter</td><td>Manchete, par do Flagrante</td><td><span class="pill c-flag">Flagrante</span></td></tr>
+  <tr><td>qua</td><td>Carrossel ou estático</td><td><span class="pill c-mito">Mito ou Lei</span></td></tr>
+  <tr><td>qui</td><td>Carrossel ou Manchete</td><td><span class="pill c-frase">Frase em papel claro</span></td></tr>
+  <tr><td>sex</td><td>Manchete, par do Flagrante</td><td><span class="pill c-flag">Flagrante</span></td></tr>
+  <tr><td>sáb</td><td>Carrossel ou Manchete</td><td><span class="pill c-mito">Mito ou Lei</span></td></tr>
+  <tr><td>dom</td><td>Frase ou estático</td><td><span class="pill c-dra">Domingo com a Dra. · 15h30</span></td></tr>
+  </tbody></table></div>
+ <div class=totais><span><b>6</b>Reels por semana</span><span><b>3</b>Manchetes</span><span><b>3</b>carrosséis ou estáticos</span><span><b>2</b>frases</span><span><b>14</b>no feed</span></div>
+</section>
+
+<section>
+ <span class=olho>Os estilos</span>
+ <h2>Uma família, <em>seis caras</em></h2>
+ <p class=nota>Papel claro predomina; café e foto escura entram como acento. Faixa dourada no topo e no rodapé de toda peça, dourado sempre metálico, EB Garamond nos títulos.</p>
+ <div class=estilos>{{ESTILOS}}</div>
+</section>
+
+<section>
+ <span class=olho>O feed até 31/01/2027</span>
+ <h2>Como o perfil <em>vai ficar</em></h2>
+ <p class=nota>Lido agora da agenda do Orbit: {{TOTAL}} publicações agendadas. {{CONT}}.</p>
+ <div class=abas role=group aria-label="Modo de ver"><button id=a1 aria-pressed=true>Grade do perfil</button><button id=a2 aria-pressed=false>Dia a dia, com hora</button></div>
+ <div class=leg><span class=c-mito>Mito ou Lei</span><span class=c-flag>Flagrante</span><span class=c-dra>Domingo com a Dra.</span><span class=c-carr>Carrossel</span><span class=c-est>Estático</span><span class=c-frase>Frase</span></div>
+ <div id=vgrade><p class=nota>Recorte 3:4, o mais novo no topo, como no Instagram. ▶ = Reels, ❐ = carrossel. Esmaecido = pausado. <label><input type=checkbox id=rot> esconder datas</label></p><div class=grade>{{GRADE}}</div></div>
+ <div id=vlista>{{LISTA}}</div>
+</section>
+
+<section>
+ <span class=olho>Depende de alguém</span>
+ <h2>O que falta <em>para fechar</em></h2>
+ <ul class=pend>
+  <li><b>Dra.:</b> conferir as citações legais das 34 Manchetes e das 8 legendas novas de marca.</li>
+  <li><b>Domingos com a Dra.:</b> os 7 vídeos estão na agenda pausados, com capa nova. Cada um sai quando a versão editada no motor moderno for aprovada; para os domingos de janeiro ela precisa gravar 5 vídeos.</li>
+  <li><b>Carrosséis de janeiro:</b> ainda não produzidos. Até lá, segundas, quartas e sábados às 12h têm estáticos.</li>
+ </ul>
+</section>
+</main>
+<div class=faixa></div>
+<script>
+const a1=document.getElementById('a1'),a2=document.getElementById('a2');
+function v(l){document.body.classList.toggle('lista',l);a1.setAttribute('aria-pressed',String(!l));a2.setAttribute('aria-pressed',String(l))}
+a1.onclick=()=>v(false);a2.onclick=()=>v(true);
+document.getElementById('rot').onchange=e=>document.body.classList.toggle('semrot',e.target.checked);
+</script>

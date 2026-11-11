@@ -274,3 +274,20 @@ body {
   --fmt-carrossel: #3b8fd2;
   --fmt-imagem: #cc6690;
 }
+
+/* Caderno da marca (/caderno): documentos do repositório em Markdown */
+.caderno { max-width: 70rem; line-height: 1.6; }
+.caderno h1 { font-size: 2rem; font-weight: 600; margin: 0 0 .75rem; }
+.caderno h2 { font-size: 1.4rem; font-weight: 600; margin: 2.25rem 0 .75rem; padding-bottom: .35rem; border-bottom: 1px solid var(--border); }
+.caderno h3 { font-size: 1.1rem; font-weight: 600; margin: 1.5rem 0 .5rem; }
+.caderno p, .caderno ul, .caderno ol, .caderno blockquote { margin: 0 0 .9rem; }
+.caderno ul { list-style: disc; padding-left: 1.25rem; }
+.caderno ol { list-style: decimal; padding-left: 1.25rem; }
+.caderno code { font-size: .85em; padding: .1em .35em; border-radius: .3rem; background: var(--muted); }
+.caderno a { text-decoration: underline; }
+.caderno .tabela { overflow-x: auto; margin: 0 0 1.25rem; }
+.caderno table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.caderno th, .caderno td { border: 1px solid var(--border); padding: .45rem .6rem; text-align: left; vertical-align: top; }
+.caderno th { background: var(--muted); font-weight: 600; }
+.caderno img { display: inline-block; width: 150px; aspect-ratio: 3/4; object-fit: cover; margin: 0 .4rem .4rem 0; border-radius: .35rem; }
+.caderno blockquote { border-left: 3px solid var(--border); padding-left: .9rem; font-style: italic; }

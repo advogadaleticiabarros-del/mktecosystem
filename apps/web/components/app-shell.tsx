@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Bell,
+  BookOpen,
   Briefcase,
   Clapperboard,
   Gauge,
@@ -38,6 +39,7 @@ const NAV_ITEMS = [
   // to Planejamento, where they pick a pauta to generate content for.
   { href: "/aprovacao", label: "Aprovação", icon: ShieldCheck, matchPrefix: "/aprovacao" },
   { href: "/calendario", label: "Calendário editorial", icon: CalendarDays },
+  { href: "/caderno", label: "Caderno da marca", icon: BookOpen },
   { href: "/criativos", label: "Estúdio de criativos", icon: ImageIcon },
   { href: "/emails", label: "E-mails", icon: Mail },
   { href: "/configuracoes", label: "Configurações", icon: Settings },

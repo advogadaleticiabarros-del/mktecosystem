@@ -133,6 +133,6 @@ Você é o **diretor**: cada quadro tem função (informar, prender, levar ao en
 11. Orbit:
     - subir o mp4 para a mídia (`docker compose cp` para `api:/app/media`);
     - criar a peça `tipo="reels"` com `corpo.video`, `legenda`, `primeiro_comentario`, `programacao`;
-    - aprovar e criar o ScheduledPost `formato="reels"`, às **19h** (no máximo; desde 10/11/2026 nenhum Reels depois das 19h), em dia sem nenhum outro post (regra de 1 publicação por dia, 16/10/2026);
+    - aprovar e criar o ScheduledPost `formato="reels"`, às **19h** (no máximo; desde 10/11/2026 nenhum Reels depois das 19h), em dia sem outro Reels (desde 10/11/2026 o feed tem 2 por dia: post às 12h e Reels às 19h);
     - backup do banco antes.
     - O Orbit publica sozinho.

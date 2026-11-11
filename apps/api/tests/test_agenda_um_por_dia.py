@@ -1,5 +1,5 @@
-"""Instagram: 1 publicação por dia (pedido da Letícia, 16/10/2026). Em dia de Reels, só o Reels, à noite.
-Horários pelo alcance real do perfil: Reels 19h (no máximo); feed 14h de segunda a sexta e 11h no sábado e no domingo."""
+"""Instagram: até 2 publicações no feed por dia (pedido da Jessica, 10/11/2026: "quando sair reels pode sair as outras
+publicações ao meio dia"): 1 post (estático ou carrossel) às 12h e 1 Reels às 19h (no máximo)."""
 from datetime import date, timedelta
 
 import pytest
@@ -33,29 +33,39 @@ async def _aprovar(db, tenant, tipo, titulo="Gestante", corpo=None):
     return agendamento
 
 
-def test_horarios_reels_a_noite_feed_14h_na_semana_e_11h_no_fim_de_semana():
+def test_horarios_reels_19h_e_feed_ao_meio_dia_todos_os_dias():
     sexta, sabado, domingo = date(2026, 10, 16), date(2026, 10, 17), date(2026, 10, 18)
     assert horario_instagram("reels", sexta) == horario_instagram("reels", domingo) == "19:00"
-    assert horario_instagram("carrossel", sexta) == "14:00"
-    assert horario_instagram("frase", sabado) == horario_instagram("estatico", domingo) == "11:00"
+    assert horario_instagram("carrossel", sexta) == "12:00"
+    assert horario_instagram("frase", sabado) == horario_instagram("estatico", domingo) == "12:00"
 
 
 @pytest.mark.anyio
-async def test_cada_peca_aprovada_vai_para_o_proximo_dia_sem_post(db_session):
+async def test_cada_peca_aprovada_vai_para_o_proximo_dia_sem_post_de_feed(db_session):
     tenant = await _tenant(db_session)
     pergunta = await _aprovar(db_session, tenant, "pergunta")
     frase = await _aprovar(db_session, tenant, "frase")
     carrossel = await _aprovar(db_session, tenant, "carrossel")
 
-    esperado, dia = [], AMANHA
-    while len(esperado) < 3:
-        if dia.weekday() not in (1, 4):  # terça e sexta ficam para os Reels
-            esperado.append(dia)
-        dia += timedelta(days=1)
+    esperado = [AMANHA + timedelta(days=i) for i in range(3)]
     assert [a.data_agendada for a in (pergunta, frase, carrossel)] == esperado
     assert carrossel.formato == "carrossel" and pergunta.formato == frase.formato == "post"
-    for a in (pergunta, frase, carrossel):
-        assert a.horario == horario_instagram(a.formato, a.data_agendada)
+    assert {a.horario for a in (pergunta, frase, carrossel)} == {"12:00"}
+
+
+@pytest.mark.anyio
+async def test_em_dia_de_reels_o_post_sai_ao_meio_dia(db_session):
+    """Reels às 19h não impede o post do dia às 12h."""
+    tenant = await _tenant(db_session)
+    reels = await _aprovar(db_session, tenant, "reels")
+    dia = reels.data_agendada
+    for d in range((dia - AMANHA).days):  # ocupa os dias antes do Reels
+        db_session.add(ScheduledPost(tenant_id=tenant.id, titulo="x", canal="instagram", formato="post",
+                                     data_agendada=AMANHA + timedelta(days=d), horario="12:00", status="pronto"))
+    await db_session.flush()
+    estatico = await _aprovar(db_session, tenant, "estatico")
+    assert (estatico.data_agendada, estatico.horario) == (dia, "12:00")
+    assert reels.horario == "19:00"
 
 
 def _proximo(dia: date, dias_semana: set[int]) -> date:
@@ -65,7 +75,7 @@ def _proximo(dia: date, dias_semana: set[int]) -> date:
 
 
 @pytest.mark.anyio
-async def test_reels_so_terca_e_sexta_e_o_feed_nos_outros_dias(db_session):
+async def test_reels_so_terca_e_sexta_e_o_feed_todo_dia(db_session):
     """Pedido de 23/10/2026: Reels só 2 vezes por semana, para cada um ter tempo de se destacar."""
     tenant = await _tenant(db_session)
     r1 = await _aprovar(db_session, tenant, "reels")
@@ -77,23 +87,21 @@ async def test_reels_so_terca_e_sexta_e_o_feed_nos_outros_dias(db_session):
     assert all(d.weekday() in (1, 4) for d in dias) and len(set(dias)) == 3
     assert dias[0] == _proximo(AMANHA, {1, 4}) and dias == sorted(dias)
     assert {r.horario for r in (r1, r2, r3)} == {"19:00"} and r1.formato == "reels"
-    assert estatico.data_agendada.weekday() not in (1, 4)
-    assert estatico.data_agendada == _proximo(AMANHA, {0, 2, 3, 5, 6})
+    assert estatico.data_agendada == AMANHA and estatico.horario == "12:00"
 
 
 @pytest.mark.anyio
 async def test_reels_com_data_combinada_fora_de_terca_ou_sexta_vai_para_a_proxima(db_session):
     tenant = await _tenant(db_session)
-    quarta = date(2026, 10, 28)
+    quarta = _proximo(AMANHA, {2})
     a = await _aprovar(db_session, tenant, "reels", corpo={"programacao": {"data": quarta.isoformat(), "hora": "21:00"}})
-    assert (a.data_agendada, a.horario) == (date(2026, 10, 30), "19:00")
+    assert (a.data_agendada, a.horario) == (quarta + timedelta(days=2), "19:00")
 
 
 @pytest.mark.anyio
 async def test_pula_o_dia_que_ja_tem_post_e_ignora_blog_e_stories(db_session):
     tenant = await _tenant(db_session)
-    primeiro = _proximo(AMANHA, {0, 2, 3, 5, 6})
-    segundo = _proximo(primeiro + timedelta(days=1), {0, 2, 3, 5, 6})
+    primeiro, segundo = AMANHA, AMANHA + timedelta(days=1)
     for dia, canal, formato in [(primeiro, "instagram", "post"), (segundo, "blog", "artigo"),
                                 (segundo, "instagram", "story")]:
         db_session.add(ScheduledPost(tenant_id=tenant.id, titulo="x", canal=canal, formato=formato,
@@ -122,7 +130,7 @@ async def test_artigo_continua_no_blog(db_session):
 async def test_trial_reels_nao_ocupa_o_dia_dos_seguidores(db_session):
     """Trial Reels só aparece para quem não segue: não conta na regra de 1 publicação por dia."""
     tenant = await _tenant(db_session)
-    dia = _proximo(AMANHA, {0, 2, 3, 5, 6})
+    dia = AMANHA
     db_session.add(ScheduledPost(tenant_id=tenant.id, titulo="x", canal="instagram", formato="trial",
                                  data_agendada=dia, horario="12:00", status="pronto"))
     await db_session.flush()

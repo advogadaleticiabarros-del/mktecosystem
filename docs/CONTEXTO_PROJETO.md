@@ -1273,3 +1273,24 @@ Página com as 6 opções (V2 e A a E) para a Dra. escolher: https://claude.ai/a
 Regras novas da Jessica:
 - capa sempre com foto do assunto e última página sempre a Dra.;
 - todo dourado em degradê metálico com reflexo e brilho (constantes `METAL`/`GLOW` em `gerar_v3.py`).
+
+## Caderno da marca e editorial até 31/01/2027 (10/11/2026)
+
+Pedido da Jessica: organizar a semana, montar um caderno com os estilos, feed harmônico, claro e completo até o fim de
+janeiro, 2 posts por dia (outros posts ao meio-dia quando há Reels), Reels gravado pela Dra. no domingo, e salvar todo o
+contexto no Orbit.
+- **Regra nova da agenda** (`agenda.py`, testes em `tests/test_agenda_um_por_dia.py`): até 2 no feed por dia, post às
+  12:00 (todos os dias) e Reels às 19:00; post e Reels não disputam a vaga.
+- **Caderno**: `docs/CADERNO_DA_MARCA.md`; página no Orbit `/caderno` (`apps/web/app/(app)/caderno/page.tsx`, lê os docs no
+  build com `apps/web/lib/markdown.ts`; teste `node --experimental-strip-types apps/web/lib/markdown.test.mts`).
+  Página visual: https://claude.ai/artifact/P9qD3jR6JvvRoMj6kZGBWf (`_saida_producao_1510/pagina_caderno.py` + `.html`).
+- **Editorial**: `docs/EDITORIAL_ATE_JAN_2027.md`. Montado por `_saida_producao_1510/montar_editorial_jan.py` (decisões de
+  cada vaga) e aplicado por `aplicar_editorial_jan.py` (container). Backup antes: `/root/orbit-backups/antes-editorial-jan-20261110.sql.gz`.
+  Resultado: 11/11 a 31/01 com post às 12h todo dia (25/12 livre para o Natal) e Reels às 19h; 59 peças novas
+  (34 Manchetes, 8 de marca, 9 Flagrante prontos, 8 Mito ou Lei de janeiro), 17 frases da reserva, carrosséis e frases
+  de 11h/14h passaram para 12h, Mito de 07/01 foi para 06/01.
+- **Mito ou Lei de janeiro**: `conteudo_jan.py` (afirmações já aprovadas como estático) + `mito_lei.py` (TELA 01-13 a 01-30)
+  + capas Moldura Viva (`capas_mito_foto.py`, fotos novas em FOTOS).
+- **Domingo com a Dra.**: 7 Reels gravados por ela em 15/11 a 27/12, 15h30, **pausados** até a versão no motor moderno ser
+  aprovada; capa com retrato real dela sentada em quadro 3D (`producao/reels/capas_dra.py`). Janeiro: ela precisa gravar.
+- Horário de 15h30 no domingo: os dois Reels de domingo com mais alcance do perfil saíram entre 15h29 e 15h46.

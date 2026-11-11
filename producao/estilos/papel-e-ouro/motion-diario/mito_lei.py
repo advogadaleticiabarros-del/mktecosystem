@@ -12,6 +12,7 @@ import motor
 AQUI = Path(__file__).resolve().parent
 sys.path.insert(0, str(AQUI.parents[3] / "apps" / "api" / "_saida_producao_1510"))
 import conteudo_dez  # noqa: E402
+import conteudo_jan  # noqa: E402  (janeiro de 2027, pedido de 10/11/2026)
 import conteudo_nov  # noqa: E402
 
 # data: (frase na tela, número/destaque, linha de apoio, chip (título, texto) ou None, pergunta em marca-texto)
@@ -43,6 +44,15 @@ TELA = {
     "12-26": ("Pensão em salário mínimo aumenta sozinha em janeiro.", "Sobe junto", "com o salário mínimo, sem processo", None, "Vai conferir?"),
     "12-28": ("Os prazos do processo trabalhista param no fim do ano.", "20/12 a 20/01", "prazos suspensos na Justiça do Trabalho", None, "Você sabia?"),
     "12-30": ("Férias coletivas podem ser divididas em 3 partes.", "2 partes", "no máximo, por ano", ("CADA UMA", "com 10 dias ou mais"), "Já está de férias?"),
+    # janeiro de 2027 (conteudo_jan.py): afirmações já aprovadas como estático que ainda não tinham virado Reels
+    "01-13": ("Quem foi demitido não recebe 13º.", "Proporcional", "1/12 por mês trabalhado", ("SÓ PERDE", "quem sai por justa causa"), "Recebeu o seu?"),
+    "01-16": ("Atestado médico reduz o 13º.", "Não reduz", "falta justificada não desconta", ("MAIS DE 15 DIAS", "o INSS paga essa parte"), "Já descontaram?"),
+    "01-18": ("Faltar para fazer mamografia dá desconto no salário.", "3 dias", "por ano, sem desconto", ("LEVE", "o comprovante do exame"), "Já marcou o seu?"),
+    "01-20": ("Quem tem câncer recebe do INSS sem cumprir carência.", "Sem carência", "o câncer dispensa a carência", ("PRECISA", "ser segurada e passar na perícia"), "Você sabia?"),
+    "01-23": ("Com medida protetiva, dá para se afastar do trabalho sem perder o emprego.", "6 meses", "de afastamento, com o emprego mantido", ("EM PERIGO", "ligue 190"), "Você sabia?"),
+    "01-25": ("Mãe por adoção tem os mesmos 120 dias de licença.", "120 dias", "qualquer que seja a idade da criança", None, "Você sabia?"),
+    "01-27": ("Salário nunca pode ser penhorado.", "Em parte", "em caso excepcional, decide o STJ", ("SEMPRE FICA", "o mínimo para viver"), "Achava que não?"),
+    "01-30": ("Depois dos 70, o casamento é sempre com separação de bens.", "Escritura", "permite escolher outro regime", ("SEM ESCRITURA", "vale a separação"), "Conhece um casal?"),
 }
 
 # gancho (10/11/2026): afirmação na tela já no 1º segundo + desafio "responda antes da roleta parar"; roleta de 2,4 a 7,6 s
@@ -139,7 +149,7 @@ function cena(t){
 
 
 def itens():
-    for mes, dados in (("nov", conteudo_nov), ("dez", conteudo_dez)):
+    for mes, dados in (("nov", conteudo_nov), ("dez", conteudo_dez), ("jan", conteudo_jan)):
         for m in dados.MITO_OU_LEI:
             md = m[0][5:]
             if md in TELA and TELA[md]:

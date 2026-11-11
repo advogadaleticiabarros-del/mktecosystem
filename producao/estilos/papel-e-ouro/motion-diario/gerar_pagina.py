@@ -33,6 +33,19 @@ LOTES = [
         ("21-licenca-180", "Licença-maternidade: 120 ou 180?", "O grupo da família diz que o STF deu 180 dias para todas; o contador sobe a 180 e volta a 120.", "180 pra todas?", "ADI 7.495 · Lei 11.770/2008 · artigo entre os mais vistos"),
         ("22-fim-6x1", "Fim da escala 6x1", "A semana de 6 dias de trabalho vira 5 com 2 folgas a partir de 16/12/2026.", "Sua escala muda?", "EC 141/2026 · artigo entre os mais vistos"),
     ]),
+    ("Lote 4 · temas do estilo Manchete, para aprovar", [
+        ("23-gestante", "Gestante que não avisou", "O RH comunica a dispensa; 4 dias depois o exame dá positivo, com o carimbo “não avisou”.", "Tem estabilidade?", "ADCT, art. 10, II, b · Súmula 244, I, do TST"),
+        ("24-assinou", "Gestante assinou o pedido de demissão", "O RH diz que é só formalidade, a assinatura é feita e aparece “sindicato: ninguém”.", "Isso vale?", "CLT, art. 500"),
+        ("25-cabelo", "“Alisa o cabelo”", "A gerente pede cabelo “alinhado” e manda alisar; ela responde que o cabelo dela é assim.", "Ela pode exigir?", "Lei 9.029/1995, art. 1º"),
+        ("26-amigo-secreto", "Amigo secreto obrigatório", "O grupo da firma avisa que quem não entrar terá desconto; o valor sobe até R$ 100.", "Pode descontar?", "CLT, art. 462"),
+        ("27-preco", "Preço diferente no caixa", "Prateleira R$ 9,90, caixa R$ 12,90; a diferença aparece em ouro.", "Qual preço vale?", "Lei 10.962/2004, art. 5º"),
+        ("28-estacionamento", "Furto no estacionamento", "A placa “não nos responsabilizamos”, a mensagem do carro arrombado e a placa riscada.", "A placa livra?", "Súmula 130 do STJ"),
+        ("29-revista", "Revista íntima", "Na saída, mandam abrir a bolsa e levantar a blusa; o contador chega a 87 dias seguidos.", "Isso é rotina?", "CLT, art. 373-A, VI"),
+        ("30-exame", "Falta para exame preventivo", "O chefe quer descontar o dia do exame; três dias do ano ficam dourados.", "Pode descontar?", "CLT, art. 473, XII"),
+        ("31-story", "Story no dia do atestado", "Um story de praia corre na tela e o atestado de repouso aparece por cima.", "Vira prova?", "Prova digital"),
+        ("32-avo", "Pensão: e a avó?", "O pai diz que não tem como pagar; o contador sobe a 8 meses sem pensão.", "E a avó?", "Súmula 596 do STJ · Código Civil, art. 1.698"),
+        ("33-doar-sangue", "Folga para doar sangue", "Ela avisa que vai doar sangue e o gerente diz que vai ser falta; aparece “1 dia a cada 12 meses”.", "Mito ou realidade?", "CLT, art. 473, IV"),
+    ]),
 ]
 
 

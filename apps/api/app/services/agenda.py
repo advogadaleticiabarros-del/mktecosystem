@@ -1,13 +1,14 @@
 """Auto-agendamento: conteúdo aprovado entra na próxima vaga do calendário.
 
-Instagram: 1 publicação por dia (pedido da Letícia em 16/10/2026: com várias por dia, os posts não têm tempo de
-esquentar). Cada peça aprovada vai para o primeiro dia, a partir de amanhã, sem nenhum post do Instagram (Stories não
-contam: o Orbit não publica Stories). Em dia de Reels, só o Reels.
+Instagram: até 2 publicações no feed por dia (pedido da Jessica em 10/11/2026: "quando sair reels pode sair as outras
+publicações ao meio dia"; antes era 1 por dia, regra de 16/10/2026): 1 post (estático ou carrossel) às 12h e 1 Reels às
+19h. Cada post aprovado vai para o primeiro dia, a partir de amanhã, sem outro post do feed; cada Reels, para o primeiro
+dia de Reels sem outro Reels (Stories e Trial Reels não contam: o Orbit não publica Stories).
 Reels só 2 vezes por semana, na terça e na sexta (pedido de 23/10/2026: cada Reels precisa de tempo para se
-destacar); o resto do feed vai para os outros cinco dias. Reels com data combinada fora de terça ou sexta vai para a
+destacar). A série Mito ou Lei sai em Reels seg/qua/sáb 19h por data combinada. Reels com data combinada fora de terça ou sexta vai para a
 próxima terça ou sexta livre.
 Horários: Reels no máximo às 19:00 (pedido de 10/11/2026: às 21h os Reels não tinham visualizações nem curtidas;
-nenhum Reels passa das 19:00, nem com hora combinada), feed 14:00 de segunda a sexta e 11:00 no sábado e no domingo.
+nenhum Reels passa das 19:00, nem com hora combinada); post do feed às 12:00 todos os dias.
 Peça com `corpo.programacao` (data e hora combinadas na produção) vai para essa data e hora.
 
 O resto (artigo, jornal, legenda solta, stories) segue o playbook antigo: 2 vagas por dia (11:00 e 17:00).
@@ -26,7 +27,7 @@ from app.services.agendamento_horario import hoje_brasilia
 
 HORARIOS_PLAYBOOK = ["11:00", "17:00"]
 TIPOS_DO_FEED = {"carrossel", "carousel", "estatico", "frase", "pergunta", "reels"}
-HORARIO_REELS, HORARIO_FEED_SEMANA, HORARIO_FEED_FIM_DE_SEMANA = "19:00", "14:00", "11:00"
+HORARIO_REELS, HORARIO_FEED = "19:00", "12:00"  # pedido de 10/11/2026: feed ao meio dia, Reels às 19h
 HORARIO_MAXIMO_REELS = "19:00"  # pedido de 10/11/2026: Reels nunca depois das 19h
 DIAS_REELS = {1, 4}  # terça e sexta: 2 Reels por semana (pedido de 23/10/2026)
 
@@ -54,9 +55,7 @@ def limitar_horario_reels(horario: str) -> str:
 
 
 def horario_instagram(tipo: str, dia: date) -> str:
-    if tipo == "reels":
-        return HORARIO_REELS
-    return HORARIO_FEED_FIM_DE_SEMANA if dia.weekday() >= 5 else HORARIO_FEED_SEMANA
+    return HORARIO_REELS if tipo == "reels" else HORARIO_FEED
 
 
 async def proxima_vaga(db: AsyncSession, tenant_id: uuid.UUID) -> tuple[date, str]:
@@ -84,16 +83,19 @@ async def proxima_vaga(db: AsyncSession, tenant_id: uuid.UUID) -> tuple[date, st
 async def dia_livre_no_instagram(db: AsyncSession, tenant_id: uuid.UUID, tipo: str = "carrossel",
                                  a_partir: date | None = None) -> date:
     """Primeiro dia livre do Instagram (Stories não contam) a partir de amanhã (ou de `a_partir`).
-    Reels só nos DIAS_REELS; o resto do feed só nos outros dias."""
+    Reels: dia de Reels sem outro Reels. Post do feed: qualquer dia sem outro post do feed (o Reels não ocupa a vaga)."""
     amanha = max(hoje_brasilia() + timedelta(days=1), a_partir or date.min)
-    dias_permitidos = DIAS_REELS if tipo == "reels" else set(range(7)) - DIAS_REELS
+    eh_reels = tipo == "reels"
+    dias_permitidos = DIAS_REELS if eh_reels else set(range(7))
+    filtro_formato = (ScheduledPost.formato == "reels") if eh_reels else ScheduledPost.formato.not_in(
+        ("story", "trial", "reels"))  # Stories e Trial Reels não ocupam o dia
     ocupados = set(
         (
             await db.execute(
                 select(ScheduledPost.data_agendada).where(
                     ScheduledPost.tenant_id == tenant_id,
                     ScheduledPost.canal == "instagram",
-                    ScheduledPost.formato.not_in(("story", "trial")),  # Stories e Trial Reels não ocupam o dia
+                    filtro_formato,
                     ScheduledPost.data_agendada >= amanha,
                 )
             )

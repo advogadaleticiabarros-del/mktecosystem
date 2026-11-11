@@ -121,9 +121,10 @@ APROVADAS = {"manchete-01-te-disseram": te_disseram, "manchete-02-caderno": cade
 
 async def main():
     from fora_da_caixa import LOTE
+    from flagrante_estaticos import LOTE2
 
     so = sys.argv[1:]
-    pecas = APROVADAS | LOTE
+    pecas = APROVADAS | LOTE | LOTE2
     SAIDA.mkdir(exist_ok=True)
     ac = Image.open(ACAB).convert("RGBA").resize((1080, 1440))
     async with async_playwright() as p:

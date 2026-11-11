@@ -2,9 +2,15 @@
 
 Estilo visual aprovado pela Jessica em 05/11/2026 ("pronto, é isso que eu quero!"), a partir de um perfil de referência que ela enviou. É mais um estilo da marca e não substitui os outros. Nenhuma peça foi publicada ainda, e a Dra. Letícia ainda não avaliou o estilo.
 
+**Padrão do estático único desde 09/11/2026** (pedido da Jessica: "vai clarear o perfil, vai chamar a atenção"): toda frase,
+pergunta ou peça avulsa de feed sai neste estilo, com a faixa dourada em cima e embaixo para marcar que é da Dra. Letícia.
+Carrossel, Reels e os outros estilos continuam valendo para os seus formatos. Cada tema de Reels Flagrante ganha o seu
+estático Manchete, e cada estático Manchete ganha o seu Flagrante (`papel-e-ouro/motion-diario/23_*.py` a `33_*.py`).
+As peças 03, 04, 05 e 10 foram mantidas pela Jessica em 09/11/2026.
+
 **A ideia:** um título grande, como manchete de jornal, com uma faixa de destaque e uma imagem forte. A estrutura segue a da referência. As cores são as nossas, e as faixas douradas identificam a marca.
 
-- Código: `producao/estilos/manchete/` (`python gerar.py [prefixo]`). As peças 01 a 03 ficam em `gerar.py`, e as de 04 a 13 em `fora_da_caixa.py`.
+- Código: `producao/estilos/manchete/` (`python gerar.py [prefixo]`). As peças 01 a 03 ficam em `gerar.py`, as de 04 a 13 em `fora_da_caixa.py` e as de 14 a 34 (temas dos Flagrantes) em `flagrante_estaticos.py`, com os layouts em funções com parâmetros: use-as para peça nova.
 - Textos: `producao/estilos/manchete/legendas.md`, com legenda, primeiro comentário e texto alternativo.
 - Peças: `producao/estilos/manchete/pecas/manchete-*.jpg` e `grade.jpg`. Ficam só no computador da Jessica, porque o git ignora JPG em `producao/`. O `gerar.py` as recria.
 
