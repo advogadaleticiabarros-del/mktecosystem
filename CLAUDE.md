@@ -35,6 +35,8 @@ Instagram: **2 publicações no feed por dia: post às 12h e Reels às 19h no m�
 aplica). Reels: Mito ou Lei seg/qua/sáb, Flagrante ter/sex, **Reels gravado pela Dra. no domingo às 15h30**; quinta 19h
 frase em papel claro. Feed **claro** (papel predomina). Mapa da marca: `docs/CADERNO_DA_MARCA.md` (também no Orbit em
 `/caderno`); editorial dia a dia até 31/01/2027: `docs/EDITORIAL_DO_FEED.md`.
+**Toda entrega de peças vai com um arquivo de conferência já com os criativos** (arte, data e hora, legenda, primeiro
+comentário, base legal): `apps/api/_saida_producao_1510/pagina_conferencia.py`, publicado como Artifact (pedido de 11/11/2026).
 TikTok: **agenda e editorial próprios** (pedido de 23/10/2026): `docs/ESTRATEGIA_TIKTOK.md` (5 vídeos por semana na
 `GRADE_TIKTOK`, som comercial "Em alta" a 10-15% sob a voz, séries em dias seguidos, resposta a comentário, revisão
 dos horários em 20/11/2026).

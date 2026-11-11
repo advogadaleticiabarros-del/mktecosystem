@@ -88,3 +88,10 @@ Conferir no Orbit (`ver_feed.py`) e na página do caderno; para janeiro, produzi
 - **Pendente:** conferência jurídica da Dra. dos textos novos de fevereiro (12 Mito ou Lei, 9 frases, 6 acentos);
   quintas e domingos de fevereiro com 1 post; março (14 Mito ou Lei, 6 Flagrantes, posts das 12h, vídeos da Dra.);
   deploy (ainda negado pela permissão automática).
+
+## Continuação (11/11/2026): arquivo de conferência
+
+- **Pedido:** "Me mande um arquivo para conferência sempre e já com os criativos".
+- **Feito:** `pagina_conferencia.py` + `.html` (lê os JSON do editorial e as artes da mídia do Orbit). Primeira conferência,
+  89 peças (35 textos novos, 34 Manchetes com citação a conferir, 20 artes novas com texto aprovado):
+  https://claude.ai/artifact/UQfXHmqpQQ8F9kAoDJaM7Z. Regra gravada no `CLAUDE.md` e na memória.
