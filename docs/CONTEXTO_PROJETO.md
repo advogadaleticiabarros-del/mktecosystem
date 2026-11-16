@@ -100,17 +100,21 @@ com edições anteriores.
     `GOOGLE_CLIENT_SECRET`, `GROQ_API_KEY`, `META_APP_SECRET`,
     `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET`, `TAVILY_API_KEY`, senha do
     SFTP do blog) — não é urgente (baixo risco prático), mas fica registrado.
-- **Site principal migrando para a VPS (16/11/2026):** cópia completa do `public_html` da Hostinger
-  servida pelo nginx da VPS a partir de `/home/siteleticia/domains/advogadaleticiabarros.com.br/public_html`.
-  Quem publica é o usuário `siteleticia`, só SFTP e preso na pasta; a senha fica em `/root/segredos/site-leticia.env`.
-  As pastas `agents/`, `mcps/`, `squads/` e `_expxagents/` respondem 404. (config
-  `deploy/vps/nginx-site-leticia.conf` → `/etc/nginx/sites-available/site-leticia`, regras do `.htaccess`
-  traduzidas). Cópia bruta guardada em `/root/site_leticia_hostinger`. **Ainda não está no ar:** falta trocar o
-  DNS (conta Hostinger do domínio: desligar a CDN, A `@` → `179.199.128.68`, `www` → mesmo IP), rodar
-  `certbot --nginx -d advogadaleticiabarros.com.br -d www.advogadaleticiabarros.com.br` e decidir como o
-  Orbit/scripts publicam na VPS (hoje ainda publicam por SFTP na Hostinger). Relatório:
-  `docs/contexto/relatorios/2026-11-16-site-na-vps.md`.
-- **Blog público** (site separado, NÃO é o Orbit): `advogadaleticiabarros.com.br/blog/`,
+- **Site principal na VPS (16/11/2026):**
+  - **Arquivos:** `/home/siteleticia/domains/advogadaleticiabarros.com.br/public_html`, servidos pelo nginx com a
+    configuração `deploy/vps/nginx-site-leticia.conf`, que reproduz o `.htaccess` antigo.
+  - **Publicação:** usuário `siteleticia`, só SFTP e preso na própria pasta. A senha fica em
+    `/root/segredos/site-leticia.env`.
+  - **Orbit e scripts:** já publicam na VPS. O `.env` do Orbit aponta `BLOG_SFTP_*` para a VPS. Backup do `.env`
+    anterior em `/root/segredos/orbit-env-antes-site-vps-20261116.env`; credenciais antigas da Hostinger em
+    `/root/segredos/hostinger-sftp-antigo.env`.
+  - **Pastas fora do ar:** `agents/`, `mcps/`, `squads/` e `_expxagents/` respondem 404.
+  - **Falta trocar o DNS:** desligar a CDN e apontar `@` e `www` para `179.199.128.68`, na conta Hostinger dona do
+    domínio. Depois, rodar
+    `certbot --nginx -d advogadaleticiabarros.com.br -d www.advogadaleticiabarros.com.br`. Até lá, o que for
+    publicado vai para a VPS e não aparece no site que as pessoas veem, que ainda é o da Hostinger.
+  - Relatório: `docs/contexto/relatorios/2026-11-16-site-na-vps.md`.
+- **Blog público (até 16/11/2026, histórico):** (site separado, NÃO é o Orbit): `advogadaleticiabarros.com.br/blog/`,
   HTML estático hospedado na Hostinger, publicado via SFTP (host `147.93.38.211`,
   porta `65002`, usuário `u528898188`, caminho
   `/home/u528898188/domains/advogadaleticiabarros.com.br/public_html/blog/`).

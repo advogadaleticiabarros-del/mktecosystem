@@ -6,7 +6,8 @@ description: Use quando for escrever E publicar um artigo de blog para a Dra. Le
 # Artigo de blog da Letícia — do tema ao link no ar
 
 Pipeline real: `apps/api/app/services/render_artigo_blog.py` (repo
-`C:\tmp\mktecosystem`) + publicação manual/automática via SFTP na Hostinger.
+`C:\tmp\mktecosystem`) + publicação manual/automática via SFTP na VPS (desde
+16/11/2026; antes era na Hostinger).
 Aprendido com dor em 2026-07-22 — vários bugs reais só apareceram depois do
 primeiro artigo ir pro ar. Siga esta ordem pra não repetir.
 
@@ -59,12 +60,15 @@ from app.services.render_artigo_blog import renderizar_artigo_html, renderizar_c
 
 ## 4. Publicar via SFTP
 
-Credenciais e caminho (confirme antes que a senha não mudou — checar hPanel
-se der `PermissionDenied`):
-- Host `147.93.38.211`, porta `65002`, usuário `u528898188`
-- **Caminho relativo** (a sessão SFTP já abre dentro de `/home/u528898188`,
-  NUNCA repetir esse prefixo):
-  `domains/advogadaleticiabarros.com.br/public_html/blog/`
+Credenciais e caminho (desde 16/11/2026 o site fica na VPS, não mais na Hostinger):
+- Host `179.199.128.68`, porta `22`, usuário `siteleticia`. Esse usuário só tem acesso por SFTP e fica preso em
+  `/home/siteleticia`. A senha está em `/root/segredos/site-leticia.env` na VPS e já vem nas variáveis `BLOG_SFTP_*`
+  do contêiner `vps-api-1`. Os scripts de publicação rodam dentro dele.
+- **Caminho relativo**: a sessão abre em `/`, a raiz da pasta do usuário:
+  `domains/advogadaleticiabarros.com.br/public_html/blog/`. Também vale o absoluto
+  `/domains/advogadaleticiabarros.com.br/public_html/blog/`.
+- Na VPS, os arquivos ficam em `/home/siteleticia/domains/advogadaleticiabarros.com.br/public_html`, servidos pelo
+  nginx, com a configuração em `deploy/vps/nginx-site-leticia.conf`.
 - Sobe: `{slug}.html`, `capas/{slug}.jpg`, `index.html` atualizado (card
   novo), `../sitemap.xml` atualizado e `../llms.txt` regerado do índice
   (`gerar_llms_txt` em `app/services/site_descoberta.py`). Depois avisa o

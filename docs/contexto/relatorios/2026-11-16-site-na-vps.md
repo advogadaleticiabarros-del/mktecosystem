@@ -20,7 +20,22 @@ compartilhada). A Jessica informou que o domínio não tem e-mail ("pode seguir"
   `/etc/nginx/sites-available/site-leticia` e ativada. Ela reproduz o `.htaccess`: os 2 redirecionamentos 301 do
   blog, o `/voto` 302, o bloqueio de arquivos ocultos menos `.well-known`, o gzip e o cache por tipo. Também manda
   `www` para o endereço sem www.
-- `docs/CONTEXTO_PROJETO.md` foi atualizado.
+- **Publicação trocada para a VPS**, pedido da Jessica: "troque tudo que depende de lá".
+  - Antes da troca, o site foi baixado de novo da Hostinger. Não havia conteúdo novo, só dono e permissões.
+  - O `.env` do Orbit (`/home/orbit-src/deploy/vps/.env`) foi trocado: `BLOG_SFTP_*` agora apontam para a VPS
+    (`siteleticia`, porta 22, `BLOG_SFTP_PATH=/domains/advogadaleticiabarros.com.br/public_html/blog/`).
+  - O contêiner `api` foi recriado.
+  - Backup do `.env` anterior: `/root/segredos/orbit-env-antes-site-vps-20261116.env`. As credenciais antigas da
+    Hostinger ficaram em `/root/segredos/hostinger-sftp-antigo.env`.
+  - Isso cobre tudo que publica no site, porque todos usam essas variáveis dentro do contêiner:
+    - `blog_publisher.py`;
+    - `central_google._site_padrao`;
+    - `apps/api/scripts/*`;
+    - `producao/**/publicar_*.py`.
+  - O `.github/workflows/deploy-frontend.yml` e o `scripts/deploy_hostinger.py` são do painel antigo do Orbit, que
+    está aposentado e só roda à mão; ficaram como estavam.
+  - Também foram atualizados a skill `leticia-blog-artigo`, o `deploy/vps/.env.example` e o
+    `docs/CONTEXTO_PROJETO.md`.
 
 ## Verificado
 - `nginx -t` passou, e o reload foi feito sem afetar os sites do CRM e do Orbit.
@@ -33,6 +48,11 @@ compartilhada). A Jessica informou que o domínio não tem e-mail ("pode seguir"
 - O SFTP foi testado a partir do contêiner `vps-api-1`: gravou e apagou um arquivo de teste no `blog/`, a sessão
   abre em `/` e tentar rodar comandos dá erro, ou seja, o acesso a comandos está bloqueado.
 - As quatro pastas respondem 404, e as páginas do site continuam respondendo 200.
+- Depois da troca, o Orbit foi testado com o próprio código, dentro do contêiner:
+  - leu `blog/index.html` (120 KB) e `sitemap.xml` (11 KB) da VPS;
+  - gravou `blog/_teste_orbit.txt`, que o nginx serviu, e o arquivo foi apagado em seguida;
+  - `_site_padrao()` aponta para `/domains/advogadaleticiabarros.com.br/public_html`;
+  - o contêiner `api` está de pé.
 - **Não verificado:** acesso pela internet com o domínio, porque o DNS ainda aponta para a Hostinger, e o HTTPS,
   porque o certificado ainda não foi emitido.
 
@@ -52,15 +72,12 @@ compartilhada). A Jessica informou que o domínio não tem e-mail ("pode seguir"
    - criar o registro A `www` para `179.199.128.68`, ou um CNAME para o domínio.
 2. Depois que o DNS propagar, rodar na VPS
    `certbot --nginx -d advogadaleticiabarros.com.br -d www.advogadaleticiabarros.com.br`.
-3. **Publicação**, na hora da troca: em `/home/orbit-src/deploy/vps/.env`, trocar as variáveis `BLOG_SFTP_*`
-   pelos valores de `/root/segredos/site-leticia.env`, com `BLOG_SFTP_PATH=/domains/advogadaleticiabarros.com.br/public_html/blog/`.
-   Depois, recriar o contêiner `api` e atualizar a skill `leticia-blog-artigo` e o `.env` local dos scripts.
-4. Antes da troca, rodar de novo o `rsync` a partir da Hostinger, para pegar o que tiver sido publicado nesse meio
-   tempo.
+3. ~~Publicação~~: feita em 16/11/2026, ver Feito. Para voltar à Hostinger, restaurar o backup do `.env` e rodar `docker compose up -d api`.
+4. A Hostinger não recebe mais publicações. Não é preciso copiar de novo de lá.
 5. Só cancelar a hospedagem da Hostinger depois de uns dias com o site estável na VPS.
 
 ## Próxima sessão
 Perguntar à Jessica se o DNS já foi trocado. Se ainda não, passar o item 1 acima.
-- Se foi: refazer o download e o rsync com o mesmo procedimento deste relatório; rodar o certbot; testar com
-  `curl -I https://advogadaleticiabarros.com.br`; aplicar o item 3 (publicação).
+- Se foi: rodar o certbot e testar com `curl -I https://advogadaleticiabarros.com.br`. Conferir também `/bio/`,
+  `/voto` e um artigo.
 - Skills: `contexto-orbit`, `leticia-blog-artigo` (atualizar o host do SFTP nela).
