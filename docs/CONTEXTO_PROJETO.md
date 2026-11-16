@@ -115,6 +115,11 @@ com edições anteriores.
     - A hospedagem compartilhada da Hostinger fica de reserva até a Jessica decidir cancelar. O domínio continua
       registrado na Hostinger.
   - Relatório: `docs/contexto/relatorios/2026-11-16-site-na-vps.md`.
+- **Novo visual do site, no estilo da Bio (16/11/2026, só prévia, nada no ar):**
+  - Pedido: "bonito como o link da Bio, fácil de encontrar no Google", sem perder posição.
+  - Prévias Clara e Escura da home em `producao/site/prototipo-home-2026-11-16/`; comparação com 8 concorrentes da Grande Vitória em `comparativo.html`.
+  - A Jessica escolhe a versão e decide a troca do H1 antes de publicar.
+  - Relatório: `docs/contexto/relatorios/2026-11-16-prototipo-site-claro.md`.
 - **Blog público (até 16/11/2026, histórico):** (site separado, NÃO é o Orbit): `advogadaleticiabarros.com.br/blog/`,
   HTML estático hospedado na Hostinger, publicado via SFTP (host `147.93.38.211`,
   porta `65002`, usuário `u528898188`, caminho

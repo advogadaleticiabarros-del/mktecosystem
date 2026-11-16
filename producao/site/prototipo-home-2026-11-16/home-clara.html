@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-tema="claro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- PRÉVIA LOCAL. O base aponta para o site real só para as fotos e os links funcionarem. -->
+<base href="https://advogadaleticiabarros.com.br/">
+
+<!-- Igual ao site no ar (não muda na troca de visual) -->
+<title>Letícia Barros | Advogada em Vitória-ES</title>
+<meta name="description" content="Advogada em Vitória-ES com atuação trabalhista, de família e previdenciária. Direitos da gestante, pensão e INSS explicados sem juridiquês.">
+<link rel="canonical" href="https://advogadaleticiabarros.com.br/">
+<meta property="og:title" content="Letícia Barros | Advocacia e Consultoria Jurídica">
+<meta property="og:description" content="Advocacia humanizada para quem mais precisa. Gestantes, mães solo e trabalhadores. OAB/ES 39.948">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://advogadaleticiabarros.com.br">
+<meta property="og:image" content="https://advogadaleticiabarros.com.br/assets/logo/logo-800x800.png">
+<link rel="icon" type="image/png" href="assets/logo/logo-800x800.png">
+<!-- No site real entram aqui o GA4, o Pixel e o JSON-LD do escritório, sem mudança.
+     Ficam fora da prévia para ela não contar visita falsa no Analytics. -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --papel:#EFE6D9; --papel-2:#E7DCCB; --papel-3:#F6F0E7;
+  --cafe:#231E1A; --cafe-2:#2E2722;
+  --ouro:#B8935A; --ouro-claro:#D4B483; --ouro-texto:#7E5F2E;
+  --tinta:#2A231E; --suave:#62564B;
+  --linha:rgba(184,147,90,.38);
+  --metal:linear-gradient(100deg,#8C6A35 0%,#C9A262 22%,#F3E2B6 42%,#D4B07A 55%,#9C7840 78%,#C9A262 100%);
+  --zap:#0E7A5F; --zap-2:#0B5F4E;
+  --serif:"EB Garamond",Georgia,serif; --sans:Inter,system-ui,sans-serif;
+  --larg:1160px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--papel);color:var(--tinta);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+.miolo{max-width:var(--larg);margin:0 auto;padding:0 20px}
+.fio{height:2px;background:var(--metal);opacity:.9}
+
+/* ---------- topo / menu ---------- */
+.cabeca{position:sticky;top:0;z-index:50;background:rgba(239,230,217,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--linha)}
+[data-tema=escuro] .cabeca{background:rgba(35,30,26,.94);color:var(--papel)}
+.cabeca .miolo{display:flex;align-items:center;justify-content:space-between;height:70px;gap:16px}
+.marca{display:flex;align-items:center;gap:12px;text-decoration:none}
+.marca img{width:42px;height:42px}
+.marca b{display:block;font-family:var(--serif);font-weight:500;font-size:21px;line-height:1.1}
+.marca small{display:block;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ouro-texto)}
+[data-tema=escuro] .marca small{color:var(--ouro-claro)}
+.menu{display:flex;align-items:center;gap:26px;list-style:none}
+.menu a{text-decoration:none;font-size:14.5px;font-weight:500;padding:6px 0;border-bottom:1px solid transparent;transition:border-color .2s}
+.menu a:hover{border-color:var(--ouro)}
+.menu .cta-menu{border:1px solid var(--ouro);padding:9px 18px;border-radius:999px;color:var(--ouro-texto)}
+[data-tema=escuro] .menu .cta-menu{color:var(--ouro-claro)}
+.menu .cta-menu:hover{background:var(--ouro);color:var(--cafe);border-color:var(--ouro)}
+.hamb{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer;color:inherit}
+.hamb span{display:block;width:24px;height:1.5px;background:currentColor;margin:6px auto;transition:transform .25s,opacity .25s}
+@media (max-width:900px){
+  .hamb{display:block}
+  .menu{position:fixed;inset:70px 0 auto 0;flex-direction:column;align-items:stretch;gap:0;background:var(--papel);padding:8px 20px 24px;border-bottom:1px solid var(--linha);transform:translateY(-120%);transition:transform .3s ease;z-index:-1}
+  [data-tema=escuro] .menu{background:var(--cafe)}
+  .menu a{display:block;padding:14px 0;border-bottom:1px solid var(--linha);font-size:17px}
+  .menu .cta-menu{margin-top:16px;text-align:center;border-radius:12px}
+  .aberto .menu{transform:none}
+  .aberto .hamb span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+  .aberto .hamb span:nth-child(2){opacity:0}
+  .aberto .hamb span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+}
+
+/* ---------- abertura ---------- */
+.abertura{position:relative;overflow:hidden}
+[data-tema=escuro] .abertura{background:var(--cafe);color:var(--papel)}
+.faixas{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:4px;pointer-events:none;user-select:none;-webkit-mask-image:linear-gradient(90deg,transparent 0,transparent 52%,#000 72%);mask-image:linear-gradient(90deg,transparent 0,transparent 52%,#000 72%)}
+.faixa{white-space:nowrap;font-family:var(--serif);font-size:clamp(40px,6vw,74px);line-height:1.05;text-transform:uppercase;color:transparent;-webkit-text-stroke:1px rgba(184,147,90,.28);animation:corre 70s linear infinite}
+.faixa:nth-child(even){animation-direction:reverse;-webkit-text-stroke:0;color:rgba(184,147,90,.10)}
+[data-tema=escuro] .faixa{-webkit-text-stroke-color:rgba(212,180,131,.30)}
+[data-tema=escuro] .faixa:nth-child(even){color:rgba(212,180,131,.12)}
+@keyframes corre{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.abertura .miolo{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:end;min-height:620px}
+.texto-abertura{padding:72px 0 64px;align-self:center}
+.selo{display:inline-flex;align-items:center;gap:10px;font-size:12.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ouro-texto);margin-bottom:22px}
+.selo::before{content:"";width:34px;height:1px;background:var(--metal)}
+[data-tema=escuro] .selo{color:var(--ouro-claro)}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(46px,6.2vw,78px);line-height:1.02;letter-spacing:-.01em}
+h1 span{display:block;background:var(--metal);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.06em}
+[data-tema=claro] h1 span{background:linear-gradient(100deg,#6E5126 0%,#9C7840 30%,#B8935A 48%,#8A6A35 70%,#6E5126 100%);-webkit-background-clip:text;background-clip:text}
+.lema{font-family:var(--serif);font-style:italic;font-size:26px;color:var(--suave);margin:14px 0 18px}
+[data-tema=escuro] .lema{color:var(--ouro-claro)}
+.apoio{max-width:520px;color:var(--suave);font-size:17.5px}
+[data-tema=escuro] .apoio{color:#D8CDBE}
+.acoes{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px;align-items:center}
+.zap{display:inline-flex;align-items:center;gap:14px;text-decoration:none;color:#fff;background:linear-gradient(135deg,var(--zap-2),var(--zap));border:1px solid #25D366;border-radius:14px;padding:13px 22px 13px 14px;box-shadow:0 8px 22px rgba(11,95,78,.28);transition:transform .2s,box-shadow .2s}
+.zap:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(11,95,78,.36)}
+.zap .ic{width:40px;height:40px;border-radius:50%;background:#25D366;display:grid;place-items:center;flex:none}
+.zap .ic svg{width:22px;height:22px;fill:#fff}
+.zap b{display:block;font-weight:600;font-size:16px;line-height:1.2}
+.zap small{display:block;font-size:12.5px;color:#CFF5DD}
+.link-ouro{font-weight:500;font-size:15px;text-decoration:none;color:var(--ouro-texto);border-bottom:1px solid var(--ouro);padding-bottom:2px}
+[data-tema=escuro] .link-ouro{color:var(--ouro-claro)}
+.confianca{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:34px;padding-top:22px;border-top:1px solid var(--linha);font-size:13.5px;color:var(--suave);letter-spacing:.03em}
+[data-tema=escuro] .confianca{color:#CBBFAF}
+.confianca span{display:flex;align-items:center;gap:8px}
+.confianca span::before{content:"";width:5px;height:5px;transform:rotate(45deg);background:var(--ouro)}
+.confianca a{text-decoration:none;border-bottom:1px solid var(--linha)}
+.aviso-campanha{display:flex;align-items:center;gap:12px;margin-top:22px;text-decoration:none;padding:12px 16px;border:1px solid var(--linha);border-radius:12px;font-size:14.5px;max-width:520px;background:rgba(184,147,90,.07)}
+.aviso-campanha b{font-weight:600}
+.aviso-campanha::after{content:"→";margin-left:auto;color:var(--ouro)}
+
+.foto-abertura{position:relative;align-self:end;display:flex;justify-content:center}
+.foto-abertura img{position:relative;z-index:2;height:600px;width:auto;object-fit:contain}
+[data-tema=claro] .foto-abertura::after{content:"";position:absolute;z-index:3;left:0;right:0;bottom:0;height:60px;background:linear-gradient(transparent,var(--papel))}
+[data-tema=escuro] .foto-abertura img{filter:drop-shadow(0 0 40px rgba(0,0,0,.55))}
+.arco{position:absolute;z-index:1;bottom:0;left:50%;transform:translateX(-50%);width:min(430px,92%);height:88%;border-radius:999px 999px 0 0;border:1px solid var(--ouro);border-bottom:0}
+[data-tema=claro] .arco{background:linear-gradient(180deg,var(--papel-2),#DCCDB7)}
+[data-tema=escuro] .arco{background:radial-gradient(ellipse at 50% 30%,rgba(212,180,131,.16),transparent 70%);border-color:rgba(212,180,131,.45)}
+.abertura::after{content:"";position:absolute;left:0;right:0;bottom:0;height:70px;pointer-events:none;z-index:3}
+[data-tema=escuro] .abertura::after{background:linear-gradient(transparent,var(--cafe))}
+
+@media (max-width:900px){
+  .abertura .miolo{grid-template-columns:1fr;gap:0;min-height:0}
+  .faixas{bottom:auto;height:400px;-webkit-mask-image:none;mask-image:none}
+  .selo{font-size:11.5px;letter-spacing:.12em}
+  .selo::before{display:none}
+  .foto-abertura{order:-1;height:400px;margin:0 -20px}
+  .foto-abertura img{height:400px}
+  .arco{width:300px;height:92%}
+  .texto-abertura{padding:30px 0 48px;text-align:center}
+  .selo{justify-content:center}
+  .apoio,.aviso-campanha{margin-left:auto;margin-right:auto}
+  .acoes{justify-content:center}
+  .zap{width:100%;justify-content:center}
+  .confianca{justify-content:center}
+  .lema{font-size:23px}
+}
+
+/* ---------- seções ---------- */
+section{padding:96px 0}
+.alt{background:var(--papel-3)}
+.rotulo{font-family:var(--sans);font-weight:500;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ouro-texto);display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.rotulo::after{content:"";flex:1;max-width:120px;height:1px;background:var(--metal)}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(34px,4.2vw,50px);line-height:1.08;letter-spacing:-.005em}
+.sub{color:var(--suave);font-size:18px;margin-top:12px;max-width:620px}
+.topo-secao{margin-bottom:44px}
+@media (max-width:700px){section{padding:68px 0}}
+
+/* lista numerada (a assinatura da Bio) */
+.lista{list-style:none;counter-reset:item;border-bottom:1px solid var(--linha)}
+.lista.duas{display:grid;grid-template-columns:1fr 1fr;column-gap:56px;border-bottom:0}
+.lista.duas li{border-bottom:1px solid var(--linha)}
+.lista li{counter-increment:item}
+.lista a{display:flex;align-items:flex-start;gap:20px;text-decoration:none;padding:24px 6px;border-top:1px solid var(--linha);transition:padding .25s ease,background .25s ease}
+.lista.duas a{border-top:0}
+.lista.duas li:nth-child(-n+2) a{border-top:1px solid var(--linha)}
+.lista a::before{content:counter(item,decimal-leading-zero);flex:none;width:34px;font-family:var(--serif);font-size:19px;color:var(--ouro-texto);padding-top:3px}
+.lista a::after{content:"";flex:none;width:20px;height:1px;background:var(--ouro);margin:16px 0 0 auto;transition:width .25s ease}
+.lista a:hover{padding-left:14px;background:rgba(184,147,90,.08)}
+.lista a:hover::after{width:36px}
+.lista h3{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.15}
+.lista p{color:var(--suave);font-size:15.5px;margin-top:5px;max-width:480px}
+.lista small{display:block;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ouro-texto);margin-bottom:4px}
+@media (max-width:800px){.lista.duas{grid-template-columns:1fr}.lista.duas li:nth-child(2) a{border-top:0}.lista h3{font-size:23px}}
+
+/* sobre */
+.sobre{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
+.retrato{position:relative;border-radius:999px 999px 18px 18px;overflow:hidden;background:linear-gradient(180deg,var(--cafe-2),var(--cafe));aspect-ratio:4/5;display:flex;align-items:flex-end;justify-content:center;box-shadow:0 30px 60px -30px rgba(35,30,26,.55)}
+.retrato::before{content:"";position:absolute;inset:12px;border-radius:999px 999px 10px 10px;border:1px solid rgba(212,180,131,.45);z-index:2;pointer-events:none}
+.retrato img{width:92%;height:auto}
+blockquote{font-family:var(--serif);font-style:italic;font-size:27px;line-height:1.3;color:var(--ouro-texto);margin:22px 0;padding-left:22px;border-left:2px solid var(--ouro)}
+.sobre p{color:var(--suave)}
+.sobre p strong{color:var(--tinta);font-weight:600}
+.fatos{list-style:none;margin:26px 0 30px;display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;font-size:15px}
+.fatos li{display:flex;gap:10px;align-items:baseline}
+.fatos li::before{content:"";flex:none;width:6px;height:6px;transform:rotate(45deg) translateY(-2px);background:var(--ouro)}
+@media (max-width:900px){.sobre{grid-template-columns:1fr;gap:40px}.retrato{max-width:380px;margin:0 auto;width:100%}.fatos{grid-template-columns:1fr}}
+
+/* escritório */
+.escritorio{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.escritorio p{color:var(--suave);margin-top:14px}
+.escritorio p strong{color:var(--tinta);font-weight:600}
+.moldura{border:1px solid var(--linha);padding:12px;border-radius:20px;background:var(--papel-2)}
+.moldura img{border-radius:12px;width:100%;height:auto}
+@media (max-width:900px){.escritorio{grid-template-columns:1fr}}
+
+/* como funciona */
+.passos{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--linha);border-bottom:1px solid var(--linha)}
+.passo{padding:34px 30px 36px}
+.passo+.passo{border-left:1px solid var(--linha)}
+.passo .n{font-family:var(--serif);font-size:64px;line-height:1;background:var(--metal);-webkit-background-clip:text;background-clip:text;color:transparent}
+.passo h3{font-family:var(--serif);font-weight:400;font-size:27px;margin:10px 0 8px}
+.passo p{color:var(--suave);font-size:15.5px}
+.centro{text-align:center;margin-top:36px}
+@media (max-width:800px){.passos{grid-template-columns:1fr}.passo+.passo{border-left:0;border-top:1px solid var(--linha)}.passo{padding:28px 6px}}
+
+/* avaliações */
+.avaliacoes{border:1px solid var(--linha);border-radius:20px;padding:40px;text-align:center;background:var(--papel-3)}
+.estrelas{color:var(--ouro);font-size:22px;letter-spacing:6px}
+.avaliacoes p{color:var(--suave);max-width:560px;margin:10px auto 20px}
+.nota-previa{font-size:12.5px;color:var(--suave);font-style:italic;margin-top:14px}
+
+/* chamada final (acento escuro nas duas versões) */
+.chamada{background:var(--cafe);color:var(--papel);text-align:center;position:relative;overflow:hidden}
+.chamada h2 span{display:block;background:var(--metal);-webkit-background-clip:text;background-clip:text;color:transparent;font-style:italic}
+.chamada p{color:#D8CDBE;max-width:620px;margin:18px auto 30px}
+.chamada .acoes{justify-content:center}
+.chamada .link-ouro{color:var(--ouro-claro)}
+.prazo{font-size:14px;color:var(--ouro-claro);margin-top:24px;letter-spacing:.02em}
+
+/* contato */
+.contato{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px}
+.canais{list-style:none;margin-top:26px;border-bottom:1px solid var(--linha)}
+.canais li{display:flex;gap:18px;padding:18px 4px;border-top:1px solid var(--linha)}
+.canais small{flex:none;width:96px;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ouro-texto);padding-top:4px}
+.canais span{font-size:16px}
+.redes{display:flex;gap:18px;margin-top:22px;font-size:14px}
+.redes a{text-decoration:none;border-bottom:1px solid var(--linha)}
+form{background:var(--papel-3);border:1px solid var(--linha);border-radius:20px;padding:34px}
+form h3{font-family:var(--serif);font-weight:400;font-size:30px}
+form>p{color:var(--suave);font-size:15px;margin:4px 0 22px}
+.par{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.campo{margin-bottom:14px}
+label{display:block;font-size:13px;font-weight:500;margin-bottom:6px}
+input,select,textarea{width:100%;font:inherit;font-size:16px;color:var(--tinta);background:#FBF8F3;border:1px solid rgba(126,95,46,.35);border-radius:10px;padding:12px 14px;outline:none;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--ouro);box-shadow:0 0 0 3px rgba(184,147,90,.2)}
+textarea{min-height:110px;resize:vertical}
+.gotcha{position:absolute;left:-9999px}
+.enviar{width:100%;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--cafe);background:var(--metal);border-radius:12px;padding:16px;margin-top:6px;box-shadow:0 8px 20px -8px rgba(126,95,46,.6)}
+.lgpd{font-size:12.5px;color:var(--suave);margin-top:12px;text-align:center}
+@media (max-width:900px){.contato{grid-template-columns:1fr}.par{grid-template-columns:1fr}form{padding:24px}}
+
+/* rodapé */
+footer{padding:64px 0 28px;font-size:14.5px}
+[data-tema=claro] footer{background:var(--papel-2)}
+[data-tema=escuro] footer{background:var(--cafe);color:#D8CDBE}
+.rod{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:36px}
+footer h4{font-size:11.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ouro-texto);margin-bottom:14px}
+[data-tema=escuro] footer h4{color:var(--ouro-claro)}
+footer ul{list-style:none}
+footer li{margin-bottom:8px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--ouro)}
+.rod p{color:inherit;opacity:.85;margin-top:14px;max-width:320px}
+.base{margin-top:44px;padding-top:20px;border-top:1px solid var(--linha);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:12.5px;opacity:.85}
+@media (max-width:900px){.rod{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.rod{grid-template-columns:1fr}}
+
+/* botão flutuante */
+.flutua{position:fixed;right:18px;bottom:18px;z-index:60;width:58px;height:58px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 10px 26px rgba(11,95,78,.4)}
+.flutua svg{width:30px;height:30px;fill:#fff}
+
+/* barra da prévia (só nesta análise) */
+.previa{position:fixed;left:14px;bottom:18px;z-index:70;display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(35,30,26,.92);font-size:12.5px;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.previa button{border:0;cursor:pointer;font:inherit;border-radius:999px;padding:8px 14px;background:transparent;color:#D8CDBE}
+.previa button.ativo{background:var(--ouro-claro);color:var(--cafe);font-weight:600}
+
+/* entrada suave ao rolar */
+.js .surge{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.js .surge.visto{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.faixa{animation:none}.js .surge{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="cabeca" id="cabeca">
+  <div class="miolo">
+    <a class="marca" href="index.html">
+      <img src="assets/logo/logo-sem-fundo.webp" alt="Letícia Barros" width="42" height="42">
+      <span><b>Letícia Barros</b><small>Advocacia &amp; Consultoria</small></span>
+    </a>
+    <button class="hamb" id="hamb" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <ul class="menu" id="navMenu">
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="escritorio.html">Escritório</a></li>
+      <li><a href="#areas" data-ancora>Áreas de Atuação</a></li>
+      <li><a href="blog/index.html">Blog</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contato.html" class="cta-menu">Contato</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+<!-- ABERTURA -->
+<section class="abertura" id="hero" style="padding:0">
+  <div class="faixas" aria-hidden="true">
+    <div class="faixa"><span>Trabalhador CLT · Gestante · Mãe solo · Pensão · INSS · Trabalhador CLT · Gestante · Mãe solo · Pensão · INSS · </span><span>Trabalhador CLT · Gestante · Mãe solo · Pensão · INSS · Trabalhador CLT · Gestante · Mãe solo · Pensão · INSS · </span></div>
+    <div class="faixa"><span>Direitos · Família · Previdência · Demissão · Direitos · Família · Previdência · Demissão · </span><span>Direitos · Família · Previdência · Demissão · Direitos · Família · Previdência · Demissão · </span></div>
+    <div class="faixa"><span>Gestante · Pensão · Trabalhador CLT · BPC · Mãe solo · Gestante · Pensão · Trabalhador CLT · BPC · Mãe solo · </span><span>Gestante · Pensão · Trabalhador CLT · BPC · Mãe solo · Gestante · Pensão · Trabalhador CLT · BPC · Mãe solo · </span></div>
+    <div class="faixa"><span>Vitória · Espírito Santo · Online · Vitória · Espírito Santo · Online · Vitória · Espírito Santo · Online · </span><span>Vitória · Espírito Santo · Online · Vitória · Espírito Santo · Online · Vitória · Espírito Santo · Online · </span></div>
+    <div class="faixa"><span>Trabalhador CLT · Gestante · Mãe solo · Pensão · INSS · Trabalhador CLT · Gestante · Mãe solo · Pensão · INSS · </span><span>Trabalhador CLT · Gestante · Mãe solo · Pensão · INSS · Trabalhador CLT · Gestante · Mãe solo · Pensão · INSS · </span></div>
+  </div>
+  <div class="miolo">
+    <div class="texto-abertura">
+      <div class="selo">Advogada em Vitória-ES · OAB/ES 39.948</div>
+      <h1>Seus direitos <span>não podem esperar.</span></h1>
+      <p class="lema">Eu luto por você.</p>
+      <p class="apoio">Advocacia humanizada, acolhedora e firme na defesa dos seus direitos. Trabalhista, família e previdenciário, presencial em Vitória e online em todo o Brasil.</p>
+      <div class="acoes">
+        <a class="zap" href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20seus%20servi%C3%A7os." target="_blank" rel="noopener">
+          <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.6 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1a16 16 0 0 1-1.6-.6 12.6 12.6 0 0 1-4.8-4.3c-.4-.5-.9-1.5-.9-2.4 0-.9.5-1.4.7-1.6.2-.2.4-.3.6-.3h.4c.1 0 .3 0 .5.4l.7 1.7c.1.1.1.3 0 .5l-.3.4-.4.4c-.1.1-.3.3-.1.5.1.3.6 1 1.3 1.6.9.8 1.6 1 1.9 1.1.2.1.4.1.5-.1l.7-.9c.2-.2.3-.2.5-.1l1.6.8c.2.1.4.2.4.3.1.1.1.7-.1 1.3Z"/></svg></span>
+          <span><b>Falar com a Dra. no WhatsApp</b><small>(27) 99515-1402 · atendimento direto</small></span>
+        </a>
+        <a class="link-ouro" href="#areas" data-ancora>Conheça as áreas</a>
+      </div>
+      <div class="confianca">
+        <span>OAB/ES 39.948</span>
+        <span>Vitória-ES</span>
+        <span>Online em todo o Brasil</span>
+        <span><a href="https://www.google.com/search?q=Let%C3%ADcia+Barros+Advocacia+Gestantes+Trabalhadores" target="_blank" rel="noopener">Avaliações no Google</a></span>
+      </div>
+      <a class="aviso-campanha" href="/lp/demissao-por-voto.html?utm_source=site&amp;utm_medium=home-hero&amp;utm_campaign=assedio-eleitoral-2026"><span><b>Demitido ou ameaçado por causa do voto?</b> Veja seus direitos e como denunciar</span></a>
+    </div>
+    <div class="foto-abertura">
+      <div class="arco" aria-hidden="true"></div>
+      <img src="bio/leticia-bio.webp" alt="Dra. Letícia Barros — Advogada em Vitória-ES" width="614" height="909" fetchpriority="high">
+    </div>
+  </div>
+</section>
+<div class="fio"></div>
+
+<!-- PARA QUEM É -->
+<section id="publico">
+  <div class="miolo">
+    <div class="topo-secao surge">
+      <div class="rotulo">Como posso ajudar</div>
+      <h2>Você se identifica com alguma dessas situações?</h2>
+      <p class="sub">Se está passando por alguma delas, eu posso ajudar.</p>
+    </div>
+    <ul class="lista duas surge">
+      <li><a href="lp/gestante-clt.html"><span><h3>Gestante CLT</h3><p>Grávida e com medo de perder o emprego? Conheça seus direitos de estabilidade e licença.</p></span></a></li>
+      <li><a href="lp/pensao-alimenticia.html"><span><h3>Mãe solo e pensão alimentícia</h3><p>Seu filho tem direito à pensão alimentícia: pedir, revisar ou cobrar a que está atrasada.</p></span></a></li>
+      <li><a href="lp/insalubridade-clt.html"><span><h3>Trabalhador</h3><p>Horas extras, insalubridade, demissão injusta: seus direitos no trabalho merecem defesa.</p></span></a></li>
+      <li><a href="lp/bpc-loas-criancas.html"><span><h3>BPC/LOAS para crianças</h3><p>Filho com deficiência ou autismo? Ele pode ter direito ao benefício mensal do INSS.</p></span></a></li>
+      <li><a href="lp/assessoria-empresarial.html"><span><h3>Empresário PME</h3><p>Proteja sua empresa de processos com assessoria jurídica preventiva e estratégica.</p></span></a></li>
+      <li><a href="lp/calculadora-13-salario.html"><span><h3>Calculadora do 13º salário 2026</h3><p>Ferramenta gratuita: parcelas, INSS e Imposto de Renda.</p></span></a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" class="alt">
+  <div class="miolo sobre">
+    <div class="retrato surge">
+      <img src="assets/images/leticia-sentada-removebg-preview.webp" alt="Dra. Letícia Barros" loading="lazy" width="600" height="750">
+    </div>
+    <div class="surge">
+      <div class="rotulo">Sobre</div>
+      <h2>Dra. Letícia Barros</h2>
+      <blockquote>“Eu sei o que é não saber a quem recorrer. Por isso faço da sua causa a minha missão.”</blockquote>
+      <p>Sou Letícia Elias Barros, advogada movida pela paixão por justiça social e pelo compromisso com quem mais precisa. Há 5 anos atuo na defesa dos direitos de gestantes, mães solo, trabalhadores e famílias, sempre com um atendimento humano, transparente e próximo. Acredito que todo mundo merece ser ouvido e ter seus direitos garantidos, independentemente da situação. Se você chegou até aqui, saiba: <strong>você não está sozinha.</strong></p>
+      <ul class="fatos">
+        <li>OAB/ES 39.948</li>
+        <li>Atuação em Direito Trabalhista e de Família</li>
+        <li>Presencial em Vitória-ES e online em todo o Brasil</li>
+        <li>Sócia da Santiago Prado &amp; Barros Advogados</li>
+      </ul>
+      <a class="link-ouro" href="sobre.html">Conheça a trajetória da Dra.</a>
+    </div>
+  </div>
+</section>
+
+<!-- ESCRITÓRIO -->
+<section id="escritorio">
+  <div class="miolo escritorio">
+    <div class="surge">
+      <div class="rotulo">Nosso escritório</div>
+      <h2>Santiago Prado &amp; Barros Advogados</h2>
+      <p>Sócia do escritório Santiago Prado &amp; Barros Advogados, localizado em Vitória-ES. Um espaço onde técnica jurídica, humanização e estratégia se encontram para defender seus direitos.</p>
+      <p>Sob a liderança das sócias <strong>Dra. Carolina Prado</strong> (atuação em Direito Criminal e Tribunal do Júri) e <strong>Dra. Letícia Barros</strong> (atuação em Direito Trabalhista, Família e Previdenciário), o escritório oferece soluções jurídicas estratégicas para pessoas físicas e empresas.</p>
+      <p style="margin-top:24px"><a class="link-ouro" href="escritorio.html">Conheça o escritório</a></p>
+    </div>
+    <div class="moldura surge">
+      <img src="assets/images/santiagopradoebarrosescritorioadvogadas.webp" alt="Santiago Prado &amp; Barros Advogados" loading="lazy" width="900" height="900">
+    </div>
+  </div>
+</section>
+
+<!-- ÁREAS -->
+<section id="areas" class="alt">
+  <div class="miolo">
+    <div class="topo-secao surge">
+      <div class="rotulo">Especialidades</div>
+      <h2>Áreas de Atuação</h2>
+      <p class="sub">Atendimento especializado para cada momento da sua vida.</p>
+    </div>
+    <ul class="lista duas surge">
+      <li><a href="areas/direito-trabalhista.html"><span><h3>Direito Trabalhista</h3><p>Demissão injusta, horas extras, assédio, insalubridade e muito mais. Seus direitos no trabalho protegidos.</p></span></a></li>
+      <li><a href="areas/direito-previdenciario.html"><span><h3>Direito Previdenciário</h3><p>Aposentadoria, auxílio-doença, BPC/LOAS. Garanta os benefícios a que você tem direito.</p></span></a></li>
+      <li><a href="areas/direito-familia.html"><span><h3>Direito de Família</h3><p>Divórcio, guarda, pensão, inventário e união estável com sensibilidade e agilidade.</p></span></a></li>
+      <li><a href="areas/direito-consumidor.html"><span><h3>Direito do Consumidor</h3><p>Cobrança indevida, produto defeituoso, negativação. Faça valer seus direitos de consumidor.</p></span></a></li>
+      <li><a href="areas/direito-civil.html"><span><h3>Direito Cível</h3><p>Contratos, responsabilidade civil, indenizações e cobranças com atuação estratégica.</p></span></a></li>
+      <li><a href="areas/assessoria-juridica.html"><span><h3>Assessoria Jurídica</h3><p>Consultoria preventiva e estratégica para empresas e pessoas físicas.</p></span></a></li>
+      <li><a href="areas/extrajudiciais.html"><span><h3>Extrajudiciais</h3><p>Resolução de conflitos sem processo judicial: acordos, mediação, notificações e contratos extrajudiciais.</p></span></a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="processo">
+  <div class="miolo">
+    <div class="topo-secao surge">
+      <div class="rotulo">Simples e transparente</div>
+      <h2>Como funciona o atendimento?</h2>
+      <p class="sub">Três passos simples para garantir seus direitos.</p>
+    </div>
+    <div class="passos surge">
+      <div class="passo"><div class="n">01</div><h3>Contato</h3><p>Preencha o formulário ou me envie uma mensagem pelo WhatsApp contando brevemente o seu caso.</p></div>
+      <div class="passo"><div class="n">02</div><h3>Análise</h3><p>Analiso seu caso com atenção e cuidado, e explico os caminhos jurídicos possíveis para você.</p></div>
+      <div class="passo"><div class="n">03</div><h3>Ação</h3><p>Inicio a defesa dos seus direitos com total transparência e acompanhamento em cada etapa.</p></div>
+    </div>
+    <div class="centro"><a class="link-ouro" href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20gostaria%20de%20uma%20consulta." target="_blank" rel="noopener">Iniciar meu atendimento pelo WhatsApp</a></div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos" class="alt">
+  <div class="miolo">
+    <div class="topo-secao surge" style="text-align:center">
+      <div class="rotulo" style="justify-content:center">Depoimentos</div>
+      <h2>O que dizem sobre o meu trabalho</h2>
+    </div>
+    <div class="avaliacoes surge">
+      <div class="estrelas" aria-hidden="true">★★★★★</div>
+      <p>As avaliações reais de clientes aparecem aqui, direto do Google, carregadas só quando a pessoa chega a esta parte da página.</p>
+      <a class="link-ouro" href="https://www.google.com/search?q=Let%C3%ADcia+Barros+Advocacia+Gestantes+Trabalhadores" target="_blank" rel="noopener">Ver todas as avaliações no Google</a>
+      <p class="nota-previa">Na prévia, o espaço do widget (Elfsight) fica vazio.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CHAMADA FINAL -->
+<section class="chamada">
+  <div class="miolo surge">
+    <h2>Não deixe seus direitos <span>para depois.</span></h2>
+    <p>Cada dia sem agir pode significar um direito perdido. Procure orientação jurídica e dê o primeiro passo para garantir o que é seu por direito.</p>
+    <div class="acoes">
+      <a class="zap" href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20preciso%20de%20ajuda%20jur%C3%ADdica." target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.6 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1a16 16 0 0 1-1.6-.6 12.6 12.6 0 0 1-4.8-4.3c-.4-.5-.9-1.5-.9-2.4 0-.9.5-1.4.7-1.6.2-.2.4-.3.6-.3h.4c.1 0 .3 0 .5.4l.7 1.7c.1.1.1.3 0 .5l-.3.4-.4.4c-.1.1-.3.3-.1.5.1.3.6 1 1.3 1.6.9.8 1.6 1 1.9 1.1.2.1.4.1.5-.1l.7-.9c.2-.2.3-.2.5-.1l1.6.8c.2.1.4.2.4.3.1.1.1.7-.1 1.3Z"/></svg></span>
+        <span><b>Chamar no WhatsApp</b><small>(27) 99515-1402</small></span>
+      </a>
+      <a class="link-ouro" href="#contato" data-ancora>Enviar formulário</a>
+    </div>
+    <p class="prazo">Prazos legais não esperam. Quanto antes você se informar, melhor.</p>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="artigos-do-blog">
+  <div class="miolo">
+    <div class="topo-secao surge">
+      <div class="rotulo">Do blog</div>
+      <h2>Direitos explicados sem juridiquês</h2>
+    </div>
+    <ul class="lista duas surge">
+      <li><a href="blog/fui-demitida-gravida-o-que-fazer.html"><span><small>Trabalhista</small><h3>Fui demitida grávida, tenho direito? O que fazer passo a passo</h3></span></a></li>
+      <li><a href="blog/gravida-demitida-sem-saber-estabilidade-gestante.html"><span><small>Trabalhista</small><h3>Grávida demitida sem saber? A estabilidade pode ser sua mesmo assim</h3></span></a></li>
+      <li><a href="blog/gravida-pode-pedir-demissao-riscos-e-validacao.html"><span><small>Trabalhista</small><h3>Grávida pode pedir demissão? Veja os riscos e como a empresa deve validar</h3></span></a></li>
+      <li><a href="blog/guarda-compartilhada-de-pet-como-funciona-a-lei-no-divorcio.html"><span><small>Família</small><h3>Guarda compartilhada de pet: como funciona a nova lei no divórcio</h3></span></a></li>
+      <li><a href="blog/stf-licenca-maternidade-180-dias-o-que-mudou-de-verdade.html"><span><small>Família</small><h3>STF deu 180 dias de licença-maternidade pra todo mundo? Entenda o que mudou de verdade</h3></span></a></li>
+      <li><a href="blog/licenca-maternidade-mae-adotante-mesmos-direitos-stf.html"><span><small>Família</small><h3>Licença-maternidade da mãe adotante: o STF garantiu os mesmos direitos da mãe biológica</h3></span></a></li>
+    </ul>
+    <div class="centro"><a class="link-ouro" href="blog/">Ver todos os artigos</a></div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="alt">
+  <div class="miolo contato">
+    <div class="surge">
+      <div class="rotulo">Contato</div>
+      <h2>Vamos conversar sobre o seu caso?</h2>
+      <p class="sub">Preencha o formulário ou entre em contato por um dos canais abaixo. Respondemos em até 24 horas úteis.</p>
+      <ul class="canais">
+        <li><small>WhatsApp</small><span>(27) 99515-1402</span></li>
+        <li><small>E-mail</small><span>advogadaleticia.barros@gmail.com</span></li>
+        <li><small>Escritório</small><span>R. José Alexandre Buaiz, 160<br>Enseada do Suá, Vitória - ES<br>CEP 29050-545</span></li>
+        <li><small>Horário</small><span>Segunda a sexta, 8h às 18h</span></li>
+      </ul>
+      <div class="redes">
+        <a href="https://www.instagram.com/adv.leticiabarros2/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/in/leticia-barros-996699158/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="http://facebook.com/profile.php?id=61576777010109" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.google.com/search?q=Let%C3%ADcia+Barros+Advocacia" target="_blank" rel="noopener">Google</a>
+      </div>
+    </div>
+    <form id="contactForm" class="surge">
+      <h3>Envie sua mensagem</h3>
+      <p>Conte brevemente o seu caso e entro em contato.</p>
+      <div class="par">
+        <div class="campo"><label for="name">Nome completo *</label><input type="text" id="name" name="name" placeholder="Seu nome" required></div>
+        <div class="campo"><label for="phone">Telefone / WhatsApp *</label><input type="tel" id="phone" name="phone" placeholder="(27) 99999-9999" required></div>
+      </div>
+      <div class="campo"><label for="email">E-mail</label><input type="email" id="email" name="email" placeholder="seu@email.com"></div>
+      <div class="campo"><label for="area">Área de interesse</label>
+        <select id="area" name="area">
+          <option value="">Selecione uma área</option>
+          <option value="trabalhista">Direito Trabalhista</option>
+          <option value="gestante">Gestante CLT</option>
+          <option value="familia">Direito de Família</option>
+          <option value="pensao">Pensão Alimentícia</option>
+          <option value="previdenciario">Direito Previdenciário</option>
+          <option value="bpc">BPC/LOAS</option>
+          <option value="consumidor">Direito do Consumidor</option>
+          <option value="civel">Direito Cível</option>
+          <option value="insalubridade">Insalubridade CLT</option>
+          <option value="empresarial">Assessoria Empresarial</option>
+          <option value="outro">Outro</option>
+        </select>
+      </div>
+      <div class="campo"><label for="message">Conte brevemente o seu caso</label><textarea id="message" name="message" placeholder="Descreva sua situação em poucas palavras..."></textarea></div>
+      <div class="gotcha"><input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-label="Não preencher"></div>
+      <button type="submit" class="enviar">Enviar mensagem</button>
+      <p class="lgpd">Seus dados estão protegidos conforme a LGPD. Não compartilhamos suas informações.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<div class="fio"></div>
+<footer>
+  <div class="miolo">
+    <div class="rod">
+      <div>
+        <a class="marca" href="index.html"><img src="assets/logo/logo-sem-fundo.webp" alt="LB" width="42" height="42" loading="lazy"><span><b>Letícia Barros</b><small>Advocacia &amp; Consultoria</small></span></a>
+        <p>Advocacia humanizada para quem mais precisa. Presencial em Vitória-ES e online em todo o Brasil.</p>
+      </div>
+      <div><h4>Navegação</h4><ul>
+        <li><a href="index.html">Home</a></li><li><a href="sobre.html">Sobre</a></li><li><a href="escritorio.html">Escritório</a></li>
+        <li><a href="#areas" data-ancora>Áreas de Atuação</a></li><li><a href="blog/index.html">Blog</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contato.html">Contato</a></li>
+      </ul></div>
+      <div><h4>Áreas</h4><ul>
+        <li><a href="areas/direito-trabalhista.html">Trabalhista</a></li><li><a href="areas/direito-previdenciario.html">Previdenciário</a></li>
+        <li><a href="areas/direito-familia.html">Família</a></li><li><a href="areas/direito-consumidor.html">Consumidor</a></li><li><a href="areas/direito-civil.html">Cível</a></li>
+      </ul></div>
+      <div><h4>Contato</h4><ul>
+        <li>R. José Alexandre Buaiz, 160<br>Enseada do Suá, Vitória - ES</li><li>(27) 99515-1402</li><li>advogadaleticia.barros@gmail.com</li>
+      </ul></div>
+    </div>
+    <div class="base">
+      <span>&copy; 2026 Letícia Elias Barros, Advocacia e Consultoria Jurídica. OAB/ES 39.948. Conteúdo informativo: cada caso exige análise individual.</span>
+      <span><a href="politica-privacidade.html">Política de Privacidade</a> · <a href="termos-de-uso.html">Termos de Uso</a></span>
+    </div>
+  </div>
+</footer>
+
+<a class="flutua" href="https://wa.me/5527995151402?text=Ol%C3%A1%20Dra.%20Let%C3%ADcia%2C%20vim%20pelo%20site%20e%20gostaria%20de%20saber%20mais." target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.6 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1a16 16 0 0 1-1.6-.6 12.6 12.6 0 0 1-4.8-4.3c-.4-.5-.9-1.5-.9-2.4 0-.9.5-1.4.7-1.6.2-.2.4-.3.6-.3h.4c.1 0 .3 0 .5.4l.7 1.7c.1.1.1.3 0 .5l-.3.4-.4.4c-.1.1-.3.3-.1.5.1.3.6 1 1.3 1.6.9.8 1.6 1 1.9 1.1.2.1.4.1.5-.1l.7-.9c.2-.2.3-.2.5-.1l1.6.8c.2.1.4.2.4.3.1.1.1.7-.1 1.3Z"/></svg>
+</a>
+
+<div class="previa" role="group" aria-label="Versão da prévia">
+  <button type="button" data-tema="claro">Clara</button>
+  <button type="button" data-tema="escuro">Escura</button>
+</div>
+
+<script>
+(function(){
+  var raiz=document.documentElement; raiz.classList.add('js');
+  // menu do celular
+  var cab=document.getElementById('cabeca'), hamb=document.getElementById('hamb');
+  hamb.addEventListener('click',function(){var a=cab.classList.toggle('aberto');hamb.setAttribute('aria-expanded',a)});
+  // âncoras ficam na própria página (o <base> mandaria para o site real)
+  document.querySelectorAll('[data-ancora]').forEach(function(a){a.addEventListener('click',function(e){
+    var alvo=document.querySelector(a.getAttribute('href')); if(alvo){e.preventDefault();cab.classList.remove('aberto');alvo.scrollIntoView({behavior:'smooth'});}
+  })});
+  // troca de versão na prévia
+  function marca(){document.querySelectorAll('.previa button').forEach(function(b){b.classList.toggle('ativo',b.dataset.tema===raiz.dataset.tema)})}
+  document.querySelectorAll('.previa button').forEach(function(b){b.addEventListener('click',function(){raiz.dataset.tema=b.dataset.tema;marca()})});
+  marca();
+  // o envio funciona só no site real
+  document.getElementById('contactForm').addEventListener('submit',function(e){e.preventDefault();alert('Prévia: no site real esta mensagem vai para o CRM, como hoje.')});
+  // entrada suave
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('visto');io.unobserve(x.target)}})},{rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.surge').forEach(function(el){io.observe(el)});
+  } else document.querySelectorAll('.surge').forEach(function(el){el.classList.add('visto')});
+})();
+</script>
+</body>
+</html>
