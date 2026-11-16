@@ -101,7 +101,9 @@ com edições anteriores.
     `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET`, `TAVILY_API_KEY`, senha do
     SFTP do blog) — não é urgente (baixo risco prático), mas fica registrado.
 - **Site principal migrando para a VPS (16/11/2026):** cópia completa do `public_html` da Hostinger
-  servida pelo nginx da VPS em `/var/www/advogadaleticiabarros.com.br` (config
+  servida pelo nginx da VPS a partir de `/home/siteleticia/domains/advogadaleticiabarros.com.br/public_html`.
+  Quem publica é o usuário `siteleticia`, só SFTP e preso na pasta; a senha fica em `/root/segredos/site-leticia.env`.
+  As pastas `agents/`, `mcps/`, `squads/` e `_expxagents/` respondem 404. (config
   `deploy/vps/nginx-site-leticia.conf` → `/etc/nginx/sites-available/site-leticia`, regras do `.htaccess`
   traduzidas). Cópia bruta guardada em `/root/site_leticia_hostinger`. **Ainda não está no ar:** falta trocar o
   DNS (conta Hostinger do domínio: desligar a CDN, A `@` → `179.199.128.68`, `www` → mesmo IP), rodar
