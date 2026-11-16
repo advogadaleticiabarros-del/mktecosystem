@@ -1,4 +1,4 @@
-# 16/11/2026: site advogadaleticiabarros.com.br para a VPS
+# 16/11/2026: site advogadaleticiabarros.com.br para a VPS (concluído)
 
 ## Pedido
 "Preciso colocar o meu site hospedado dentro da minha VPS". Site escolhido: advogadaleticiabarros.com.br (Hostinger
@@ -53,8 +53,23 @@ compartilhada). A Jessica informou que o domínio não tem e-mail ("pode seguir"
   - gravou `blog/_teste_orbit.txt`, que o nginx serviu, e o arquivo foi apagado em seguida;
   - `_site_padrao()` aponta para `/domains/advogadaleticiabarros.com.br/public_html`;
   - o contêiner `api` está de pé.
-- **Não verificado:** acesso pela internet com o domínio, porque o DNS ainda aponta para a Hostinger, e o HTTPS,
-  porque o certificado ainda não foi emitido.
+- **No ar pela VPS desde 16/11/2026.** A Jessica trocou o DNS:
+  - CDN da Hostinger desligada e retirada da ativação automática;
+  - registros A `@` e `www` → `179.199.128.68`, TTL 300;
+  - sem AAAA, CNAME ou ALIAS nesses nomes.
+- Conferências depois da troca:
+  - O Google e a Cloudflare respondem só o IPv4 da VPS, sem AAAA.
+  - O servidor de DNS do domínio (`ns1.dns-parking.com`) confirma: só o IPv4.
+- O `certbot --nginx` emitiu o certificado Let's Encrypt para o domínio e o `www`, válido até 14/02/2027. O
+  `certbot.timer` está ativo e o `renew --dry-run` deu certo.
+- Teste pela internet, a partir do PC da Jessica, forçando IPv4:
+  - páginas, blog, `/bio/`, LP e sitemap respondem 200;
+  - `/voto` responde 302, e o artigo antigo responde 301;
+  - `.git`, `agents/`, `mcps/` e páginas inexistentes respondem 404;
+  - http e www levam a https sem www;
+  - o servidor que responde é o `nginx` da VPS.
+- Observação: o provedor de internet do PC ainda tinha em cache o IPv6 antigo da Hostinger (servidor LiteSpeed,
+  com o mesmo conteúdo). Esse cache deve expirar sozinho em algumas horas. Não é erro de configuração.
 
 ## Decisões e porquês
 - A troca foi preparada sem mexer no DNS, para que o site atual não saia do ar enquanto a VPS é testada.
@@ -65,19 +80,18 @@ compartilhada). A Jessica informou que o domínio não tem e-mail ("pode seguir"
   exigiria mudar o código e deixaria os scripts do computador sem como publicar.
 
 ## Pendente (Jessica decide)
-1. **DNS**, na conta Hostinger dona do domínio:
+1. ~~**DNS**~~, feito pela Jessica em 16/11/2026, na conta Hostinger dona do domínio:
    - desligar a CDN da Hostinger para o site; hoje o `www` responde por `cdn.hstgr.net`, e foi esse o provável
      motivo do problema de DNS do Orbit;
    - criar o registro A `@` para `179.199.128.68`;
    - criar o registro A `www` para `179.199.128.68`, ou um CNAME para o domínio.
-2. Depois que o DNS propagar, rodar na VPS
-   `certbot --nginx -d advogadaleticiabarros.com.br -d www.advogadaleticiabarros.com.br`.
+2. ~~Certificado HTTPS~~: emitido em 16/11/2026, com renovação automática.
 3. ~~Publicação~~: feita em 16/11/2026, ver Feito. Para voltar à Hostinger, restaurar o backup do `.env` e rodar `docker compose up -d api`.
 4. A Hostinger não recebe mais publicações. Não é preciso copiar de novo de lá.
 5. Só cancelar a hospedagem da Hostinger depois de uns dias com o site estável na VPS.
 
 ## Próxima sessão
-Perguntar à Jessica se o DNS já foi trocado. Se ainda não, passar o item 1 acima.
-- Se foi: rodar o certbot e testar com `curl -I https://advogadaleticiabarros.com.br`. Conferir também `/bio/`,
-  `/voto` e um artigo.
-- Skills: `contexto-orbit`, `leticia-blog-artigo` (atualizar o host do SFTP nela).
+A migração está concluída. Daqui a uns dias, confirmar com a Jessica se está tudo estável e se ela quer cancelar
+a hospedagem compartilhada da Hostinger. O domínio continua na Hostinger e deve ser mantido lá.
+- Para publicar, use a skill `leticia-blog-artigo`; ela já aponta para a VPS.
+- A configuração final do nginx, já com o HTTPS do certbot, está em `deploy/vps/nginx-site-leticia.conf`.

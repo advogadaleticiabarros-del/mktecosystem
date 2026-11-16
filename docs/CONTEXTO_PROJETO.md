@@ -109,10 +109,11 @@ com edições anteriores.
     anterior em `/root/segredos/orbit-env-antes-site-vps-20261116.env`; credenciais antigas da Hostinger em
     `/root/segredos/hostinger-sftp-antigo.env`.
   - **Pastas fora do ar:** `agents/`, `mcps/`, `squads/` e `_expxagents/` respondem 404.
-  - **Falta trocar o DNS:** desligar a CDN e apontar `@` e `www` para `179.199.128.68`, na conta Hostinger dona do
-    domínio. Depois, rodar
-    `certbot --nginx -d advogadaleticiabarros.com.br -d www.advogadaleticiabarros.com.br`. Até lá, o que for
-    publicado vai para a VPS e não aparece no site que as pessoas veem, que ainda é o da Hostinger.
+  - **No ar pela VPS desde 16/11/2026:**
+    - DNS: A `@` e `www` → `179.199.128.68`, sem AAAA; a CDN da Hostinger está desligada e não volta sozinha.
+    - HTTPS: Let's Encrypt, com renovação automática pelo `certbot.timer`.
+    - A hospedagem compartilhada da Hostinger fica de reserva até a Jessica decidir cancelar. O domínio continua
+      registrado na Hostinger.
   - Relatório: `docs/contexto/relatorios/2026-11-16-site-na-vps.md`.
 - **Blog público (até 16/11/2026, histórico):** (site separado, NÃO é o Orbit): `advogadaleticiabarros.com.br/blog/`,
   HTML estático hospedado na Hostinger, publicado via SFTP (host `147.93.38.211`,
