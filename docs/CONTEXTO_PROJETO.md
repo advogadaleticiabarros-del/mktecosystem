@@ -100,6 +100,14 @@ com edições anteriores.
     `GOOGLE_CLIENT_SECRET`, `GROQ_API_KEY`, `META_APP_SECRET`,
     `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET`, `TAVILY_API_KEY`, senha do
     SFTP do blog) — não é urgente (baixo risco prático), mas fica registrado.
+- **Site principal migrando para a VPS (16/11/2026):** cópia completa do `public_html` da Hostinger
+  servida pelo nginx da VPS em `/var/www/advogadaleticiabarros.com.br` (config
+  `deploy/vps/nginx-site-leticia.conf` → `/etc/nginx/sites-available/site-leticia`, regras do `.htaccess`
+  traduzidas). Cópia bruta guardada em `/root/site_leticia_hostinger`. **Ainda não está no ar:** falta trocar o
+  DNS (conta Hostinger do domínio: desligar a CDN, A `@` → `179.199.128.68`, `www` → mesmo IP), rodar
+  `certbot --nginx -d advogadaleticiabarros.com.br -d www.advogadaleticiabarros.com.br` e decidir como o
+  Orbit/scripts publicam na VPS (hoje ainda publicam por SFTP na Hostinger). Relatório:
+  `docs/contexto/relatorios/2026-11-16-site-na-vps.md`.
 - **Blog público** (site separado, NÃO é o Orbit): `advogadaleticiabarros.com.br/blog/`,
   HTML estático hospedado na Hostinger, publicado via SFTP (host `147.93.38.211`,
   porta `65002`, usuário `u528898188`, caminho
