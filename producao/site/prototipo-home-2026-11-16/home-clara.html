@@ -57,6 +57,8 @@ a{color:inherit}
 .menu a:hover{border-color:var(--ouro)}
 .menu .cta-menu{border:1px solid var(--ouro);padding:9px 18px;border-radius:999px;color:var(--ouro-texto)}
 [data-tema=escuro] .menu .cta-menu{color:var(--ouro-claro)}
+.menu .tel{font-variant-numeric:tabular-nums;color:var(--ouro-texto)}
+[data-tema=escuro] .menu .tel{color:var(--ouro-claro)}
 .menu .cta-menu:hover{background:var(--ouro);color:var(--cafe);border-color:var(--ouro)}
 .hamb{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer;color:inherit}
 .hamb span{display:block;width:24px;height:1.5px;background:currentColor;margin:6px auto;transition:transform .25s,opacity .25s}
@@ -86,9 +88,10 @@ a{color:inherit}
 .selo{display:inline-flex;align-items:center;gap:10px;font-size:12.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ouro-texto);margin-bottom:22px}
 .selo::before{content:"";width:34px;height:1px;background:var(--metal)}
 [data-tema=escuro] .selo{color:var(--ouro-claro)}
-h1{font-family:var(--serif);font-weight:400;font-size:clamp(46px,6.2vw,78px);line-height:1.02;letter-spacing:-.01em}
-h1 span{display:block;background:var(--metal);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.06em}
-[data-tema=claro] h1 span{background:linear-gradient(100deg,#6E5126 0%,#9C7840 30%,#B8935A 48%,#8A6A35 70%,#6E5126 100%);-webkit-background-clip:text;background-clip:text}
+h1{font-family:var(--serif);font-weight:500;font-size:clamp(23px,2.3vw,28px);line-height:1.2;margin-bottom:14px}
+.destaque{font-family:var(--serif);font-weight:400;font-size:clamp(46px,6.2vw,78px);line-height:1.02;letter-spacing:-.01em}
+.destaque span{display:block;background:var(--metal);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.06em}
+[data-tema=claro] .destaque span{background:linear-gradient(100deg,#6E5126 0%,#9C7840 30%,#B8935A 48%,#8A6A35 70%,#6E5126 100%);-webkit-background-clip:text;background-clip:text}
 .lema{font-family:var(--serif);font-style:italic;font-size:26px;color:var(--suave);margin:14px 0 18px}
 [data-tema=escuro] .lema{color:var(--ouro-claro)}
 .apoio{max-width:520px;color:var(--suave);font-size:17.5px}
@@ -202,6 +205,25 @@ blockquote{font-family:var(--serif);font-style:italic;font-size:27px;line-height
 .avaliacoes p{color:var(--suave);max-width:560px;margin:10px auto 20px}
 .nota-previa{font-size:12.5px;color:var(--suave);font-style:italic;margin-top:14px}
 
+
+/* onde atendo */
+.onde{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.cidades{list-style:none;display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cidades li{border:1px solid var(--linha);border-radius:999px;padding:7px 16px;font-size:14.5px;background:var(--papel-3)}
+.endereco{border-top:1px solid var(--linha);border-bottom:1px solid var(--linha);padding:22px 0}
+.endereco b{display:block;font-family:var(--serif);font-weight:400;font-size:24px}
+.endereco p{color:var(--suave);margin-top:6px}
+.endereco .link-ouro{display:inline-block;margin-top:14px}
+@media (max-width:900px){.onde{grid-template-columns:1fr;gap:32px}}
+/* perguntas */
+.perguntas{border-bottom:1px solid var(--linha);max-width:860px}
+.perguntas details{border-top:1px solid var(--linha)}
+.perguntas summary{list-style:none;cursor:pointer;display:flex;gap:18px;align-items:baseline;padding:22px 4px;font-family:var(--serif);font-size:23px;line-height:1.25}
+.perguntas summary::-webkit-details-marker{display:none}
+.perguntas summary::after{content:"+";margin-left:auto;color:var(--ouro);font-family:var(--sans);font-size:22px;transition:transform .25s}
+.perguntas details[open] summary::after{transform:rotate(45deg)}
+.perguntas .resp{padding:0 4px 24px;color:var(--suave);max-width:720px}
+.perguntas .resp p+p{margin-top:10px}
 /* chamada final (acento escuro nas duas versões) */
 .chamada{background:var(--cafe);color:var(--papel);text-align:center;position:relative;overflow:hidden}
 .chamada h2 span{display:block;background:var(--metal);-webkit-background-clip:text;background-clip:text;color:transparent;font-style:italic}
@@ -279,6 +301,7 @@ footer a:hover{color:var(--ouro)}
       <li><a href="#areas" data-ancora>Áreas de Atuação</a></li>
       <li><a href="blog/index.html">Blog</a></li>
       <li><a href="faq.html">FAQ</a></li>
+      <li><a href="https://wa.me/5527995151402" class="tel" target="_blank" rel="noopener">(27) 99515-1402</a></li>
       <li><a href="contato.html" class="cta-menu">Contato</a></li>
     </ul>
   </div>
@@ -296,8 +319,9 @@ footer a:hover{color:var(--ouro)}
   </div>
   <div class="miolo">
     <div class="texto-abertura">
-      <div class="selo">Advogada em Vitória-ES · OAB/ES 39.948</div>
-      <h1>Seus direitos <span>não podem esperar.</span></h1>
+      <div class="selo">OAB/ES 39.948 · Atendimento em todo o Brasil</div>
+      <h1>Advogada trabalhista e de família em Vitória-ES</h1>
+      <p class="destaque">Seus direitos <span>não podem esperar.</span></p>
       <p class="lema">Eu luto por você.</p>
       <p class="apoio">Advocacia humanizada, acolhedora e firme na defesa dos seus direitos. Trabalhista, família e previdenciário, presencial em Vitória e online em todo o Brasil.</p>
       <div class="acoes">
@@ -431,6 +455,90 @@ footer a:hover{color:var(--ouro)}
       <p class="nota-previa">Na prévia, o espaço do widget (Elfsight) fica vazio.</p>
     </div>
   </div>
+</section>
+
+<!-- ONDE ATENDO -->
+<section id="onde-atendo">
+  <div class="miolo onde">
+    <div class="surge">
+      <div class="rotulo">Onde atendo</div>
+      <h2>Advogada na Grande Vitória e online em todo o Brasil</h2>
+      <p class="sub">Atendimento presencial no escritório em Vitória, para quem mora em qualquer cidade da Grande Vitória, e por videochamada para quem está longe.</p>
+      <ul class="cidades"><li>Vitória</li><li>Vila Velha</li><li>Serra</li><li>Cariacica</li><li>Viana</li><li>Online em todo o Brasil</li></ul>
+    </div>
+    <div class="endereco surge">
+      <b>Santiago Prado &amp; Barros Advogados</b>
+      <p>R. José Alexandre Buaiz, 160<br>Enseada do Suá, Vitória - ES, CEP 29050-545<br>Segunda a sexta, 8h às 18h</p>
+      <a class="link-ouro" href="https://www.google.com/maps/search/?api=1&amp;query=R.+Jos%C3%A9+Alexandre+Buaiz%2C+160+Enseada+do+Su%C3%A1+Vit%C3%B3ria+ES" target="_blank" rel="noopener">Ver no mapa e traçar rota</a>
+    </div>
+  </div>
+</section>
+
+<!-- PERGUNTAS -->
+<section id="perguntas" class="alt">
+  <div class="miolo">
+    <div class="topo-secao surge">
+      <div class="rotulo">Perguntas frequentes</div>
+      <h2>Dúvidas que chegam todos os dias</h2>
+      <p class="sub">Respostas curtas e gerais. Cada caso tem detalhes e precisa de análise individual.</p>
+    </div>
+    <div class="perguntas surge">
+      <details><summary>Você atende online ou só em Vitória?</summary><div class="resp"><p>Os dois. O atendimento presencial é no escritório na Enseada do Suá, em Vitória, e recebo clientes de toda a Grande Vitória: Vila Velha, Serra, Cariacica e Viana. Para quem mora em outra cidade ou estado, o atendimento é online, por videochamada e WhatsApp.</p></div></details>
+      <details><summary>Fui demitida grávida. Tenho direito a alguma coisa?</summary><div class="resp"><p>A gestante tem estabilidade desde a confirmação da gravidez até cinco meses após o parto (art. 10, II, b, do ADCT), mesmo que a empresa não soubesse da gravidez na hora da demissão (STF, Tema 497). Dependendo do caso, cabe pedir a volta ao trabalho ou a indenização do período. Guarde o exame que confirma a gravidez e os documentos da demissão e procure orientação o quanto antes.</p></div></details>
+      <details><summary>Qual é o prazo para entrar com uma ação trabalhista?</summary><div class="resp"><p>Dois anos a contar do fim do contrato de trabalho. Dentro desse prazo, é possível cobrar direitos dos últimos cinco anos (art. 7º, XXIX, da Constituição). Passados os dois anos, o direito de cobrar se perde.</p></div></details>
+      <details><summary>A pensão do meu filho está atrasada. O que dá para fazer?</summary><div class="resp"><p>A pensão atrasada pode ser cobrada na Justiça. Quando a dívida inclui até as três últimas parcelas, a lei permite pedir a prisão civil de quem deve (art. 528 do Código de Processo Civil e Súmula 309 do STJ); as parcelas mais antigas são cobradas com penhora de bens e valores. Também é possível pedir revisão do valor quando a situação de quem paga ou de quem recebe muda.</p></div></details>
+      <details><summary>Como funcionam os honorários?</summary><div class="resp"><p>Os honorários seguem a tabela da OAB/ES e são combinados por escrito, em contrato, antes de qualquer providência. No primeiro contato pelo WhatsApp você conta o seu caso e recebe a orientação sobre o próximo passo.</p></div></details>
+    </div>
+    <p style="margin-top:24px"><a class="link-ouro" href="faq.html">Ver todas as perguntas</a></p>
+  </div>
+  <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Você atende online ou só em Vitória?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Os dois. O atendimento presencial é no escritório na Enseada do Suá, em Vitória, e recebo clientes de toda a Grande Vitória: Vila Velha, Serra, Cariacica e Viana. Para quem mora em outra cidade ou estado, o atendimento é online, por videochamada e WhatsApp."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Fui demitida grávida. Tenho direito a alguma coisa?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A gestante tem estabilidade desde a confirmação da gravidez até cinco meses após o parto (art. 10, II, b, do ADCT), mesmo que a empresa não soubesse da gravidez na hora da demissão (STF, Tema 497). Dependendo do caso, cabe pedir a volta ao trabalho ou a indenização do período. Guarde o exame que confirma a gravidez e os documentos da demissão e procure orientação o quanto antes."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Qual é o prazo para entrar com uma ação trabalhista?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Dois anos a contar do fim do contrato de trabalho. Dentro desse prazo, é possível cobrar direitos dos últimos cinco anos (art. 7º, XXIX, da Constituição). Passados os dois anos, o direito de cobrar se perde."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "A pensão do meu filho está atrasada. O que dá para fazer?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A pensão atrasada pode ser cobrada na Justiça. Quando a dívida inclui até as três últimas parcelas, a lei permite pedir a prisão civil de quem deve (art. 528 do Código de Processo Civil e Súmula 309 do STJ); as parcelas mais antigas são cobradas com penhora de bens e valores. Também é possível pedir revisão do valor quando a situação de quem paga ou de quem recebe muda."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Como funcionam os honorários?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Os honorários seguem a tabela da OAB/ES e são combinados por escrito, em contrato, antes de qualquer providência. No primeiro contato pelo WhatsApp você conta o seu caso e recebe a orientação sobre o próximo passo."
+   }
+  }
+ ]
+}
+  </script>
 </section>
 
 <!-- CHAMADA FINAL -->

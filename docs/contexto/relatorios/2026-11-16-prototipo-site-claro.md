@@ -32,6 +32,17 @@ Mudanças de texto na prévia, por regra da OAB e da Meta:
 - "maiores suas chances" virou "melhor";
 - o widget Elfsight virou um bloco com link "Ver todas as avaliações no Google". No site real, o widget volta com carregamento sob demanda.
 
+Rodada 2, pedido "nas comparações, vamos copiar o que achar válido e evitar o que está ruim":
+- **H1:** agora é "Advogada trabalhista e de família em Vitória-ES", como fazem Ezequiel, JBDS e Lopes & Campos. "Seus direitos não podem esperar." virou `<p class="destaque">`, com o mesmo tamanho grande.
+- **Telefone no menu:** entrou o link para o WhatsApp.
+- **Seção "Onde atendo":**
+  - cidades da Grande Vitória, endereço e horário;
+  - link de rota para o Google Maps, sem mapa embutido, para não pesar.
+- **Seção "Perguntas frequentes":**
+  - cinco perguntas, com JSON-LD `FAQPage`;
+  - temas: atendimento online, gestante demitida (ADCT art. 10, II, b e STF Tema 497), prazo de 2 anos com cobrança de 5 (CF art. 7º, XXIX), pensão atrasada (CPC art. 528 e Súmula 309 do STJ) e honorários.
+- **`comparativo.html`:** cada lição tem a marca "na prévia" ou "depende", e entrou a lista "O que evitamos de propósito".
+
 ## Verificado
 - Prints no celular (390 px) e no computador (1366 px) das duas versões: sem rolagem horizontal no comparativo.
 - As imagens da prévia existem no site, todas com 200.
@@ -52,7 +63,14 @@ Mudanças de texto na prévia, por regra da OAB e da Meta:
 - Os itens do "Como posso ajudar" usam os mesmos links das LPs de hoje, mais a calculadora do 13º.
 - O H1 foi mantido de propósito. A troca para "Advogada trabalhista e de família em Vitória-ES" é a lição 3 do comparativo e espera o ok dela.
 
+- Rodada 2, conferida nas duas versões em 360, 390, 1024 e 1366 px:
+  - largura sem passar da tela;
+  - um único H1;
+  - JSON-LD da FAQ válido, com 5 perguntas;
+  - menu com o telefone sem quebrar em 1024 px.
+
 ## Pendente (decide a Jessica)
+0. **A Dra. confere as respostas da FAQ antes de publicar.** Principalmente a de honorários ("seguem a tabela da OAB/ES, contrato por escrito"): não sei se a primeira conversa é gratuita, então a resposta não promete isso.
 1. Escolher entre Clara e Escura, ou pedir ajustes.
 2. Aprovar ou não a troca do H1 (lição 3) e a FAQ com schema na home (lição 4).
 3. Depois do ok, publicar a home:
