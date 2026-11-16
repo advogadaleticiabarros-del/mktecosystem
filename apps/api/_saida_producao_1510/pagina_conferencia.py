@@ -46,8 +46,12 @@ def miniatura(arq, pasta, w=540):
     nome = hashlib.sha1(arq.encode()).hexdigest()[:12] + ".jpg"
     alvo = pasta / "img" / nome
     if not alvo.exists():
-        req = urllib.request.Request(MIDIA + arq, headers={"User-Agent": "Mozilla/5.0"})
-        im = Image.open(urllib.request.urlopen(req, timeout=40)).convert("RGB")
+        local = Path(__file__).parent / arq  # peça ainda não enviada ao Orbit (ex.: pecas/<chave>-v5-1.jpg)
+        if local.is_file():
+            im = Image.open(local).convert("RGB")
+        else:
+            req = urllib.request.Request(MIDIA + arq, headers={"User-Agent": "Mozilla/5.0"})
+            im = Image.open(urllib.request.urlopen(req, timeout=40)).convert("RGB")
         ImageOps.fit(im, (w, w * 4 // 3), Image.LANCZOS, centering=(.5, .5)).save(alvo, quality=80)
     return f"img/{nome}"
 

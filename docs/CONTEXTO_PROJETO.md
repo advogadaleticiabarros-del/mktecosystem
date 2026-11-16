@@ -1354,3 +1354,12 @@ Pedido da Jessica: usar APIs da lista `public-apis` no Orbit e nos outros projet
   - PageSpeed sem chave esbarra em 429.
   - Safe Browsing v4 é para uso não comercial; se o Orbit virar SaaS pago, trocar pelo Web Risk.
   - Unsplash ficou de fora (exige aprovação de app); o Openverse cobre parte.
+
+### Série "CLT em 2027" (16/11/2026)
+- 3 artigos novos prontos em `producao/blog/novos-2026-11-16/` (guia de 2027, escala de 42 horas com a liminar do STF de
+  12/11, hora extra com o divisor 210). **Não publicados**: o modo automático barrou a publicação no site, e ela espera
+  o ok da Jessica (`publicar.py` no `vps-api-1`).
+- 3 carrosséis v5 (`carrosseis_2027.py`, `DADOS=c2027`) para as quartas 09, 16 e 30/12 às 12h, no lugar de Manchetes
+  avulsas, que voltam para a reserva. Conferência: https://claude.ai/artifact/X6kounP7zSLTGBRf1Rnb4P.
+- Liminar das ADIs 8.041/8.042 ainda sem referendo do Plenário: reconferir antes de cada data.
+- Relatório: `docs/contexto/relatorios/2026-11-16-serie-clt-2027.md`.

@@ -36,6 +36,10 @@ elif os.environ.get("DADOS") == "janfev":  # carrosséis de janeiro e fevereiro 
     import carrosseis_jan_fev as _JF  # noqa: E402
     CARROSSEIS = {t["chave"]: {**t["carrossel"], "foto5": _JF.FOTO5[t["chave"]]} for t in _JF.TEMAS}
     RODIZIO = capa_fecho.ORDEM_RETRATOS[8:] + capa_fecho.ORDEM_RETRATOS[:8] + capa_fecho.ORDEM_RETRATOS[8:] + ["estudio-livros"]
+elif os.environ.get("DADOS") == "c2027":  # série "CLT em 2027", dezembro de 2026 (16/11/2026)
+    import carrosseis_2027 as _C27  # noqa: E402
+    CARROSSEIS = {t["chave"]: {**t["carrossel"], "foto5": _C27.FOTO5[t["chave"]]} for t in _C27.TEMAS}
+    RODIZIO = capa_fecho.ORDEM_RETRATOS[2:] + capa_fecho.ORDEM_RETRATOS[:2] + ["estudio-livros"]
 else:
     from carrosseis_v5_dados import CARROSSEIS  # noqa: E402
     RODIZIO = None
@@ -175,7 +179,7 @@ def objetos_html(objetos: list) -> str:
 # Fotos de capa sem rosto frontal detectável: ponto de foco manual (fração da foto).
 FOCO_CAPA = {"violencia-domestica-inss": (0.42, 0.30), "mesario-folga": (0.48, 0.32), "separacao-bens-70": (0.5, 0.45),
              "amamentacao-trabalho": (0.42, 0.22), "pensao-13": (0.6, 0.3),
-             "licenca-paternidade-2027": (0.42, 0.62)}
+             "licenca-paternidade-2027": (0.42, 0.62), "clt-2027": (0.38, 0.5)}
 
 
 async def renderizar(chave: str, page) -> None:
