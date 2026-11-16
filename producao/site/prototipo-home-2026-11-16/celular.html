@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prévia no celular</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#2A241F;color:#EFE6D9;font-family:Inter,system-ui,sans-serif;min-height:100vh;padding:28px 16px 40px}
+h1{font-family:"EB Garamond",serif;font-weight:400;font-size:34px;text-align:center}
+p.sub{text-align:center;color:#CBBFAF;font-size:14.5px;margin:6px 0 26px}
+.lado{display:flex;flex-wrap:wrap;justify-content:center;gap:48px}
+.cel{display:flex;flex-direction:column;align-items:center;gap:14px}
+.cel b{font-family:"EB Garamond",serif;font-weight:400;font-size:24px;color:#D4B483}
+.moldura{width:414px;height:868px;border-radius:54px;background:#0c0b0a;padding:12px;box-shadow:0 30px 70px rgba(0,0,0,.55),inset 0 0 0 2px #3a332d;position:relative}
+.moldura::before{content:"";position:absolute;top:22px;left:50%;transform:translateX(-50%);width:110px;height:30px;border-radius:20px;background:#0c0b0a;z-index:2}
+iframe{width:390px;height:844px;border:0;border-radius:42px;background:#EFE6D9;display:block}
+</style>
+</head>
+<body>
+<h1>Como fica no celular</h1>
+<p class="sub">Role dentro de cada telefone. Os botões funcionam, inclusive o menu.</p>
+<div class="lado">
+  <div class="cel"><b>Clara</b><div class="moldura"><iframe src="home-clara.html" title="Versão clara no celular"></iframe></div></div>
+  <div class="cel"><b>Escura</b><div class="moldura"><iframe src="home-escura.html" title="Versão escura no celular"></iframe></div></div>
+</div>
+</body>
+</html>

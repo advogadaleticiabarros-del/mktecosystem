@@ -21,6 +21,8 @@ Nada foi alterado no site no ar. Tudo está em `producao/site/prototipo-home-202
   - **Escura:** topo café com a foto da Bio; o resto continua em papel, com a faixa café da chamada final como acento nas duas.
 - **`comparativo.html`** e a pasta `concorrentes/`: tabela técnica, prints e lições de 8 sites da Grande Vitória.
 - **`_prints.py`:** gera os prints das prévias (Playwright com `channel="chrome"`).
+- **`celular.html`:** as duas versões dentro de molduras de celular (iframes de 390 px), lado a lado. Foi pedida depois de "como vai ficar no celular". Os arquivos `.html` neste computador abrem no VS Code; para ver como página, abrir pelo `chrome.exe`.
+- **Correção no celular:** o e-mail comprido do bloco de Contato empurrava a página para 408 px. Agora tem `overflow-wrap:anywhere` e `min-width:0` nas colunas, e a largura confere em 360, 390 e 430 px nas duas versões.
 
 Mudanças de texto na prévia, por regra da OAB e da Meta:
 - saíram os números "+500 clientes", "100%", "5.0 no Google" e "5+ anos" (selo);
