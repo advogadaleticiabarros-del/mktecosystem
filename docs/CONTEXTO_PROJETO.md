@@ -119,6 +119,10 @@ com edições anteriores.
   - Pedido: "bonito como o link da Bio, fácil de encontrar no Google", sem perder posição.
   - Prévias Clara e Escura da home em `producao/site/prototipo-home-2026-11-16/`; comparação com 8 concorrentes da Grande Vitória em `comparativo.html`.
   - A Jessica escolhe a versão e decide a troca do H1 antes de publicar.
+  - Calculadoras novas, ainda não publicadas:
+    - páginas `lp/calculadora-rescisao.html` e `lp/calculadora-licenca-maternidade.html`, geradas por `lp/_gerar_calculadoras.py`;
+    - cálculos em `lp/js/calculo-rescisao.js` e `calculo-licenca.js`, com testes em node.
+  - Pesquisa das próximas ferramentas: `docs/PESQUISA_FERRAMENTAS_SITE.md`. A primeira é a nova jornada da EC 141, que vale a partir de 16/12.
   - Relatório: `docs/contexto/relatorios/2026-11-16-prototipo-site-claro.md`.
 - **Blog público (até 16/11/2026, histórico):** (site separado, NÃO é o Orbit): `advogadaleticiabarros.com.br/blog/`,
   HTML estático hospedado na Hostinger, publicado via SFTP (host `147.93.38.211`,

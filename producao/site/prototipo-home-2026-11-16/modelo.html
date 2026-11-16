@@ -361,13 +361,28 @@ footer a:hover{color:var(--ouro)}
       <li><a href="lp/insalubridade-clt.html"><span><h3>Trabalhador</h3><p>Horas extras, insalubridade, demissão injusta: seus direitos no trabalho merecem defesa.</p></span></a></li>
       <li><a href="lp/bpc-loas-criancas.html"><span><h3>BPC/LOAS para crianças</h3><p>Filho com deficiência ou autismo? Ele pode ter direito ao benefício mensal do INSS.</p></span></a></li>
       <li><a href="lp/assessoria-empresarial.html"><span><h3>Empresário PME</h3><p>Proteja sua empresa de processos com assessoria jurídica preventiva e estratégica.</p></span></a></li>
-      <li><a href="lp/calculadora-13-salario.html"><span><h3>Calculadora do 13º salário 2026</h3><p>Ferramenta gratuita: parcelas, INSS e Imposto de Renda.</p></span></a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- FERRAMENTAS -->
+<section id="ferramentas" class="alt">
+  <div class="miolo">
+    <div class="topo-secao surge">
+      <div class="rotulo">Ferramentas gratuitas</div>
+      <h2>Faça a conta antes de decidir</h2>
+      <p class="sub">Calculadoras com as regras e as tabelas de 2026. O resultado sai na hora, e a equipe confere o seu caso se você quiser.</p>
+    </div>
+    <ul class="lista duas surge">
+      <li><a href="lp/calculadora-rescisao.html" data-calc><span><h3>Calculadora de rescisão</h3><p>Saldo, aviso prévio, 13º, férias, multa do FGTS e o prazo para a empresa pagar.</p></span></a></li>
+      <li><a href="lp/calculadora-licenca-maternidade.html" data-calc><span><h3>Calculadora da licença-maternidade</h3><p>Começo, fim, volta ao trabalho, estabilidade e pausas para amamentar. Vale para adoção.</p></span></a></li>
+      <li><a href="lp/calculadora-13-salario.html" data-calc><span><h3>Calculadora do 13º salário 2026</h3><p>Parcelas, INSS e Imposto de Renda com a isenção até R$ 5 mil.</p></span></a></li>
     </ul>
   </div>
 </section>
 
 <!-- SOBRE -->
-<section id="sobre" class="alt">
+<section id="sobre">
   <div class="miolo sobre">
     <div class="retrato surge">
       <img src="assets/images/leticia-sentada-removebg-preview.webp" alt="Dra. Letícia Barros" loading="lazy" width="600" height="750">
@@ -389,7 +404,7 @@ footer a:hover{color:var(--ouro)}
 </section>
 
 <!-- ESCRITÓRIO -->
-<section id="escritorio">
+<section id="escritorio" class="alt">
   <div class="miolo escritorio">
     <div class="surge">
       <div class="rotulo">Nosso escritório</div>
@@ -405,7 +420,7 @@ footer a:hover{color:var(--ouro)}
 </section>
 
 <!-- ÁREAS -->
-<section id="areas" class="alt">
+<section id="areas">
   <div class="miolo">
     <div class="topo-secao surge">
       <div class="rotulo">Especialidades</div>
@@ -425,7 +440,7 @@ footer a:hover{color:var(--ouro)}
 </section>
 
 <!-- COMO FUNCIONA -->
-<section id="processo">
+<section id="processo" class="alt">
   <div class="miolo">
     <div class="topo-secao surge">
       <div class="rotulo">Simples e transparente</div>
@@ -442,7 +457,7 @@ footer a:hover{color:var(--ouro)}
 </section>
 
 <!-- DEPOIMENTOS -->
-<section id="depoimentos" class="alt">
+<section id="depoimentos">
   <div class="miolo">
     <div class="topo-secao surge" style="text-align:center">
       <div class="rotulo" style="justify-content:center">Depoimentos</div>
@@ -458,7 +473,7 @@ footer a:hover{color:var(--ouro)}
 </section>
 
 <!-- ONDE ATENDO -->
-<section id="onde-atendo">
+<section id="onde-atendo" class="alt">
   <div class="miolo onde">
     <div class="surge">
       <div class="rotulo">Onde atendo</div>
@@ -475,7 +490,7 @@ footer a:hover{color:var(--ouro)}
 </section>
 
 <!-- PERGUNTAS -->
-<section id="perguntas" class="alt">
+<section id="perguntas">
   <div class="miolo">
     <div class="topo-secao surge">
       <div class="rotulo">Perguntas frequentes</div>
@@ -679,6 +694,8 @@ footer a:hover{color:var(--ouro)}
   function marca(){document.querySelectorAll('.previa button').forEach(function(b){b.classList.toggle('ativo',b.dataset.tema===raiz.dataset.tema)})}
   document.querySelectorAll('.previa button').forEach(function(b){b.addEventListener('click',function(){raiz.dataset.tema=b.dataset.tema;marca()})});
   marca();
+  // na prévia local, as calculadoras abrem da pasta lp/ do repositório
+  if(location.protocol==='file:'){var raizLp=location.href.replace(/producao\/site\/.*$/,'lp/');document.querySelectorAll('[data-calc]').forEach(function(a){a.href=raizLp+a.getAttribute('href').replace(/^lp\//,'')})}
   // o envio funciona só no site real
   document.getElementById('contactForm').addEventListener('submit',function(e){e.preventDefault();alert('Prévia: no site real esta mensagem vai para o CRM, como hoje.')});
   // entrada suave

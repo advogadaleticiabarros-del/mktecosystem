@@ -43,6 +43,21 @@ Rodada 2, pedido "nas comparações, vamos copiar o que achar válido e evitar o
   - temas: atendimento online, gestante demitida (ADCT art. 10, II, b e STF Tema 497), prazo de 2 anos com cobrança de 5 (CF art. 7º, XXIX), pensão atrasada (CPC art. 528 e Súmula 309 do STJ) e honorários.
 - **`comparativo.html`:** cada lição tem a marca "na prévia" ou "depende", e entrou a lista "O que evitamos de propósito".
 
+Rodada 3, pedido "faça tudo e inclua uma pesquisa sobre o que mais podemos fazer; mais calculadoras (rescisão, licença-maternidade)":
+- **Calculadora de rescisão:**
+  - página `lp/calculadora-rescisao.html`, cálculo em `lp/js/calculo-rescisao.js`, 12 testes em `calculo-rescisao.test.js`;
+  - calcula saldo de salário, aviso proporcional, 13º e férias com 1/3, FGTS com depósito, multa e saque, INSS e IR só sobre saldo e 13º, prazo de 10 dias e o aviso para a gestante;
+  - reaproveita o INSS, o IR e os avos de `calculo-13.js`.
+- **Calculadora de licença-maternidade:**
+  - página `lp/calculadora-licenca-maternidade.html`, cálculo em `lp/js/calculo-licenca.js`, 7 testes;
+  - mostra 120 ou 180 dias, início até 28 dias antes do parto, contagem a partir da alta (ADI 6327), adoção (ADI 7.495), estabilidade, amamentação e o prazo para pedir a prorrogação.
+- **As duas páginas saem de `lp/_gerar_calculadoras.py`:**
+  - reaproveita o `<style>` da calculadora do 13º;
+  - captura o contato e envia ao CRM com as tags `[LP calculadora-rescisao]` (área trabalhista) e `[LP calculadora-licenca]` (área gestante);
+  - no `file://`, não envia ao CRM e o Pixel não carrega.
+- **Prévia da home:** entrou a seção "Ferramentas gratuitas" com as três calculadoras. Os fundos das seções foram realternados.
+- **Pesquisa:** `docs/PESQUISA_FERRAMENTAS_SITE.md`, com o Search Console de 28 dias, concorrentes e mercado, e o ranking das próximas ferramentas. O resumo também entrou no `comparativo.html`.
+
 ## Verificado
 - Prints no celular (390 px) e no computador (1366 px) das duas versões: sem rolagem horizontal no comparativo.
 - As imagens da prévia existem no site, todas com 200.
@@ -69,7 +84,19 @@ Rodada 2, pedido "nas comparações, vamos copiar o que achar válido e evitar o
   - JSON-LD da FAQ válido, com 5 perguntas;
   - menu com o telefone sem quebrar em 1024 px.
 
+- Rodada 3:
+  - os testes de cálculo passam (13º com 11, rescisão com 12, licença com 7);
+  - o teste no Chrome, a 390 e 1366 px, percorre as duas calculadoras do começo ao resultado sem erro de JavaScript e sem passar da largura;
+  - os valores na tela batem com os testes (rescisão de exemplo: líquido de R$ 9.675,14, saque do FGTS de R$ 14.845,60);
+  - os links da home abrem as calculadoras;
+  - **não verificado:** o envio real ao CRM, porque a prévia local não envia.
+
 ## Pendente (decide a Jessica)
+- Publicar as calculadoras junto com a home:
+  - subir por SFTP `lp/calculadora-rescisao.html`, `lp/calculadora-licenca-maternidade.html`, `lp/js/calculo-rescisao.js` e `lp/js/calculo-licenca.js`;
+  - incluir no `sitemap.xml` e no `llms.txt`, avisar o IndexNow e testar um envio real ao CRM;
+  - criar a imagem `og:image` das duas.
+- Próxima ferramenta pela pesquisa: **nova jornada da EC 141**, que vale a partir de 16/12/2026.
 0. **A Dra. confere as respostas da FAQ antes de publicar.** Principalmente a de honorários ("seguem a tabela da OAB/ES, contrato por escrito"): não sei se a primeira conversa é gratuita, então a resposta não promete isso.
 1. Escolher entre Clara e Escura, ou pedir ajustes.
 2. Aprovar ou não a troca do H1 (lição 3) e a FAQ com schema na home (lição 4).
