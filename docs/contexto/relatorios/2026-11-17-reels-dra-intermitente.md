@@ -48,8 +48,16 @@ uma página da web para enviar para a Dra. Letícia aprovar". Estilo escolhido p
 - Decisões: o atendimento do R3 entrou porque a Jessica disse que é fictício; no R4 a tela diz "situação hipotética"
   (a própria Dra. fala "vamos colocar 3, 4 anos"). O "danoso" continua fora (contradiz o "não tira direitos").
 
+## Reels de teste (17/11/2026)
+- Pedido: "Em primeiro momento, vamos postar no Reels teste. Todos, e depois vamos escolher 2 ou 3 para postar na grade."
+- Feito: backup do banco (`antes-testes-serie23-20261117-1007.sql.gz`, 1,5 MB), 4 MP4 em `api:/app/media`, 4 peças
+  Trial Reels com graduação MANUAL agendadas para 17/11 (09:30, 11:30, 14:30, 16:30) por
+  `producao/reels/series/23-novos-reels-3/subir_testes.py`.
+- Verificado: o script imprimiu os 4 agendamentos; as 4 URLs de mídia respondem 206 (pedido parcial ok). Não verificado
+  ainda: a publicação na Meta (acontece nos horários).
+
 ## Pendente
-- A Dra. escolhe uma versão de cada vídeo na página (versões A e B).
+- Escolher 2 ou 3 para a grade pelo desempenho dos testes (e pela Dra.).
 - Capa no padrão "Domingo com a Dra." (retrato real sentada em quadro 3D) e envio ao Orbit como rascunho: dom 22/11
   (R1) e dom 29/11 (R2) às 15h30. Precisa do SSH da VPS liberado.
 

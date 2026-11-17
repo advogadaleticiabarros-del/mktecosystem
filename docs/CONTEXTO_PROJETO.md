@@ -1385,5 +1385,9 @@ Pedido da Jessica: usar APIs da lista `public-apis` no Orbit e nos outros projet
   `intermitente-estudo-de-caso-4.mp4` (84,7 s, capítulos o caso / as provas / a lei / o desfecho, ficha do caso, linha do
   tempo, "situação hipotética" na tela). Cortes em `falas_v2.py`; cenas `reel3`/`reel4` no mesmo `serie.py`.
   O "E o que que acontece nesse caso" do início do IMG_2093 tem "que que": a fala entra em "o trabalhador".
-- Pendente: a Dra. escolhe uma versão de cada vídeo na página (https://claude.ai/artifact/BjkSFXaZPJKA9GahNRJbXp, com as
+- **Reels de teste (17/11/2026):** pedido da Jessica "em primeiro momento, vamos postar no Reels teste, todos, e depois
+  escolher 2 ou 3 para a grade". As 4 versões agendadas como Trial Reels (graduação MANUAL) para 17/11: 1B 09:30, 2B
+  11:30, 1A 14:30, 2A 16:30 (`subir_testes.py`, backup `/root/orbit-backups/antes-testes-serie23-20261117-1007.sql.gz`).
+  Capa = quadro do gancho (capa_ms padrão). A grade sai depois como peça nova, com a capa "Domingo com a Dra.".
+- Pendente: escolher 2 ou 3 pelo desempenho dos testes; antes disso, a Dra. ainda pode escolher pela página (https://claude.ai/artifact/BjkSFXaZPJKA9GahNRJbXp, com as
   quatro); depois capa no padrão "Domingo com a Dra." e envio ao Orbit (rascunhos para dom 22/11 e 29/11 às 15h30).
