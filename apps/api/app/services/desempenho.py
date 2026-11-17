@@ -1,4 +1,5 @@
-"""Desempenho: o mês de todos os canais numa tela só (site, Google, Perfil da Empresa, Instagram, LinkedIn, TikTok, blog).
+"""Desempenho: o mês de todos os canais numa tela só (site, Google, Perfil da Empresa, Instagram, Reels de teste,
+LinkedIn, TikTok, blog).
 
 Interface:
 - `consolidar(fontes, hoje) -> dict` — função pura. Recebe o que cada canal já guarda no Orbit e devolve
@@ -12,6 +13,7 @@ Nada aqui chama API externa: os números vêm das coletas diárias (06h) que já
 """
 import uuid
 from datetime import date, datetime, timedelta, timezone
+from statistics import median
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -23,6 +25,7 @@ from app.models.social_connection import SocialConnection
 from app.services.analise_instagram import montar_analise
 from app.services.central_google import ultimo_painel
 from app.services import tiktok as tiktok_servico
+from app.services.teste_reels import MIN_COMPARTILHA_SALVA, FRACAO_DA_MEDIANA, julgar, views_referencia
 
 
 def _kpi(rotulo: str, valor, anterior=None, formato: str = "numero", explicacao: str = "") -> dict:
@@ -153,6 +156,50 @@ def _instagram(analise: dict | None, recentes: list[dict], publicados_30d: int, 
     )
 
 
+def _reels_teste(testes: list[dict], referencia: list[int], agora: datetime) -> dict:
+    """Reels de teste (Trial Reels, só para quem não segue): números de cada teste e se ele já pode ir para a grade.
+    Pedido da Jessica, 17/11/2026: "precisamos de uma seção de Reels de teste para sabermos do desempenho"."""
+    if not testes:
+        return _secao("reels_teste", "Reels de teste", "/calendario", "sem_dados",
+                      "Nenhum Reels de teste ainda. Eles aparecem aqui assim que forem agendados.")
+    meta = round(median(referencia) * FRACAO_DA_MEDIANA) if referencia else None
+    resumo = "Os testes vão primeiro para quem não segue o perfil. " + (
+        f"Meta para ir para a grade: {meta} visualizações (70% da mediana dos últimos {len(referencia)} Reels do feed) "
+        f"ou {MIN_COMPARTILHA_SALVA} envios + salvamentos." if meta is not None else "Ainda não há Reels do feed para comparar.")
+
+    def situacao(t: dict) -> str:
+        if t["status"] != "publicado":
+            return "Não publicou: veja o calendário" if t["status"] in ("erro", "falhou") else f"Agendado para {t['agendado']}"
+        if t.get("views") is None:
+            return "Aguardando a coleta (todo dia de manhã, ou em Atualizar agora)"
+        pub = t.get("publicado_em")
+        if pub and agora - pub < timedelta(hours=24):
+            return "Menos de 24 h no ar: ainda é cedo para julgar"
+        if t["views"] == 0:
+            return "0 visualizações: confira no app se o teste foi entregue"
+        v = julgar({"views": t["views"], "shares": t.get("shares") or 0, "saved": t.get("saved") or 0}, referencia)
+        return "Vai bem: pode ir para a grade" if v.liberado else "Abaixo da meta"
+
+    def n(v):
+        return v if v is not None else "—"
+
+    publicados = [t for t in testes if t.get("views") is not None]
+    linhas = [[t["titulo"], t["publicado_em"].strftime("%d/%m %H:%M") if t.get("publicado_em") else "—", n(t.get("views")),
+               n(t.get("alcance")), n(t.get("shares")), n(t.get("saved")), n(t.get("curtidas")),
+               round(t["tempo_medio_ms"] / 1000, 1) if t.get("tempo_medio_ms") else "—", situacao(t)] for t in testes]
+    return _secao(
+        "reels_teste", "Reels de teste", "/calendario", resumo=resumo,
+        kpis=[_kpi("Testes com números", len(publicados), explicacao=f"{len(testes)} testes nos últimos 60 dias."),
+              _kpi("Melhor teste (visualizações)", max((t["views"] for t in publicados), default=None)),
+              _kpi("Visualizações somadas", sum(t["views"] for t in publicados)),
+              _kpi("Envios + salvamentos", sum((t.get("shares") or 0) + (t.get("saved") or 0) for t in publicados),
+                   explicacao="O sinal mais forte de que o Reels circula.")],
+        listas=[{"titulo": "Reels de teste", "colunas": ["Reels", "Publicado", "Visualizações", "Alcance", "Envios", "Salvos",
+                                                       "Curtidas", "Tempo médio (s)", "Situação"],
+                 "linhas": linhas, "links": [t.get("permalink") for t in testes]}],
+    )
+
+
 def _linkedin(conexao: dict | None, posts: list[dict], painel: dict | None, hoje: date) -> dict:
     vindos = ((painel or {}).get("analytics") or {}).get("linkedin") or {}
     publicados = [p for p in posts if p["status"] == "publicado"]
@@ -244,6 +291,8 @@ def consolidar(fontes: dict, hoje: date) -> dict:
         _perfil_google(painel, coletado),
         _instagram(fontes.get("analise_instagram"), fontes.get("instagram_recentes", []),
                    fontes.get("instagram_publicados_30d", 0), fontes.get("instagram_agendados_7d", 0)),
+        _reels_teste(fontes.get("reels_teste", []), fontes.get("reels_teste_referencia", []),
+                     fontes.get("agora") or datetime.now(timezone.utc)),
         _linkedin(fontes.get("linkedin_conexao"), fontes.get("linkedin_posts", []), painel, hoje),
         _tiktok(fontes.get("tiktok", {})),
         _blog(fontes.get("blog_publicados_30d", []), fontes.get("blog_proximos", []), painel),
@@ -283,7 +332,22 @@ async def montar_desempenho(db: AsyncSession, tenant_id: uuid.UUID, hoje: date |
     def _aware(d: datetime) -> datetime:
         return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
 
+    testes = (await db.execute(
+        select(ScheduledPost, InstagramPost).outerjoin(InstagramPost, (InstagramPost.tenant_id == tenant_id)
+                                                       & (InstagramPost.media_id == ScheduledPost.platform_post_id))
+        .where(ScheduledPost.tenant_id == tenant_id, ScheduledPost.formato == "trial",
+               ScheduledPost.data_agendada >= hoje - timedelta(days=60))
+        .order_by(ScheduledPost.data_agendada.desc(), ScheduledPost.horario.desc()).limit(30))).all()
+
     fontes = {
+        "reels_teste": [{
+            "titulo": sp.titulo, "agendado": f"{sp.data_agendada.strftime('%d/%m')} {sp.horario}", "status": sp.status,
+            "publicado_em": _aware(ig.publicado_em) if ig and ig.publicado_em else None,
+            "permalink": ig.permalink if ig else None, "views": ig.visualizacoes if ig else None,
+            "alcance": ig.alcance if ig else None, "shares": ig.compartilhamentos if ig else None,
+            "saved": ig.salvamentos if ig else None, "curtidas": ig.curtidas if ig else None,
+            "tempo_medio_ms": ig.tempo_medio_ms if ig else None} for sp, ig in testes],
+        "reels_teste_referencia": await views_referencia(db, tenant_id),
         "painel_google": painel, "painel_coletado_em": coletado_em.isoformat() if coletado_em else None,
         "analise_instagram": await montar_analise(db, tenant_id),
         "instagram_recentes": [{

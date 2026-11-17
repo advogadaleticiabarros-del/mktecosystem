@@ -17,6 +17,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.instagram_post import InstagramPost
+from app.models.scheduled_post import ScheduledPost
 
 FRACAO_DA_MEDIANA = 0.7
 MIN_COMPARTILHA_SALVA = 3
@@ -44,12 +45,18 @@ def julgar(insights: dict, views_referencia: list[int]) -> Veredito:
     return Veredito(views >= meta or espalha >= MIN_COMPARTILHA_SALVA, texto)
 
 
+async def views_referencia(db: AsyncSession, tenant_id: uuid.UUID, excluir: str | None = None) -> list[int]:
+    """Visualizações dos últimos Reels do feed. Os Reels de teste ficam de fora: eles só vão a quem não segue e
+    puxariam a mediana para baixo (o de 27/10/2026 ficou com 0)."""
+    testes = select(ScheduledPost.platform_post_id).where(
+        ScheduledPost.tenant_id == tenant_id, ScheduledPost.formato == "trial", ScheduledPost.platform_post_id.is_not(None))
+    filtro = [InstagramPost.tenant_id == tenant_id, InstagramPost.formato == "Reels", InstagramPost.media_id.not_in(testes)]
+    if excluir:
+        filtro.append(InstagramPost.media_id != excluir)
+    return list((await db.execute(select(InstagramPost.visualizacoes).where(*filtro)
+                                  .order_by(InstagramPost.publicado_em.desc()).limit(N_REFERENCIA))).scalars().all())
+
+
 async def avaliar(db: AsyncSession, api: LeitorDeInsights, tenant_id: uuid.UUID, media_id: str) -> Veredito:
     insights = await api.insights_reels(media_id)
-    referencia = (await db.execute(
-        select(InstagramPost.visualizacoes)
-        .where(InstagramPost.tenant_id == tenant_id, InstagramPost.formato == "Reels", InstagramPost.media_id != media_id)
-        .order_by(InstagramPost.publicado_em.desc())
-        .limit(N_REFERENCIA)
-    )).scalars().all()
-    return julgar(insights, list(referencia))
+    return julgar(insights, await views_referencia(db, tenant_id, excluir=media_id))
