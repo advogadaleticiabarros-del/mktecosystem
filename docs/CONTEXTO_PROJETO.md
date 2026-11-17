@@ -1379,5 +1379,11 @@ Pedido da Jessica: usar APIs da lista `public-apis` no Orbit e nos outros projet
   envelope de 50 ms do áudio (wav 16 kHz) e marcar `"fixo"`. Rodar `fala.py montar` um Reel por vez (dois em paralelo
   esgotam os 16 GB com 4K HDR).
 - Banco: só o que já estava no disco (a busca no Pexels pelo Orbit precisa de SSH, bloqueado nesta sessão).
-- Pendente: aprovação da Dra. (página de conferência publicada), capa no padrão "Domingo com a Dra." e envio ao Orbit
-  (rascunhos para dom 22/11 e 29/11 às 15h30).
+- **Versões B (17/11/2026)**, pedido da Jessica: "parece o mesmo; o vídeo 1 é o que é o trabalho intermitente, o 2 é
+  estudo de caso (não chegou cliente, é fictício); mantenha os que você fez, no fim escolhemos". R3
+  `o-que-e-o-intermitente-3.mp4` (70 s, abre com "hoje chegou um atendimento", comparação comum x intermitente) e R4
+  `intermitente-estudo-de-caso-4.mp4` (84,7 s, capítulos o caso / as provas / a lei / o desfecho, ficha do caso, linha do
+  tempo, "situação hipotética" na tela). Cortes em `falas_v2.py`; cenas `reel3`/`reel4` no mesmo `serie.py`.
+  O "E o que que acontece nesse caso" do início do IMG_2093 tem "que que": a fala entra em "o trabalhador".
+- Pendente: a Dra. escolhe uma versão de cada vídeo na página (https://claude.ai/artifact/BjkSFXaZPJKA9GahNRJbXp, com as
+  quatro); depois capa no padrão "Domingo com a Dra." e envio ao Orbit (rascunhos para dom 22/11 e 29/11 às 15h30).

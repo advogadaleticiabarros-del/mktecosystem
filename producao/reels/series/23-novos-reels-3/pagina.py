@@ -21,7 +21,18 @@ CORTES = {
         "Saíram as hesitações depois de \u201cartigo 443\u201d, em \u201cdepois da… mudança\u201d e em \u201cse recusar a… ir trabalhar\u201d. A Reforma de 2017 foi para a tela.",
         "Saíram \u201co que que acontece\u201d, \u201co que que aconteceria\u201d e um \u201cné\u201d; as perguntas aparecem escritas na tela.",
         "Saiu a frase sobre \u201cameaça\u201d, que ficou invertida na gravação."],
+    3: ["Abre com “hoje chegou um atendimento” (situação fictícia) e segue a ordem da gravação, como explicação.",
+        "Saiu a opinião “danoso”, que contradiz o “não tira direitos” do meio do vídeo.",
+        "Saiu “e o FGTS” do exemplo dos R$ 150 (o FGTS é depositado à parte, art. 452-A, §8º) e “nada mais vai receber”.",
+        "Saíram um “né” e um começo repetido (“ele retira, não é que ele retira”)."],
+    4: ["Contado em capítulos: o caso, as provas, a lei e o desfecho. Na tela: “Estudo de caso · situação hipotética”.",
+        "Começa em “o trabalhador trabalhou em contrato intermitente”: o “E o que que acontece” do início saiu.",
+        "A parte da lei (art. 443, juízes que validam, julgados que questionam) vem antes do desfecho, para o caso fechar na conclusão.",
+        "Saíram as hesitações, um “né”, o “o que que aconteceria” e a frase sobre “ameaça”, que ficou invertida."],
 }
+# Versões B de 17/11/2026: a Dra. escolhe uma versão de cada vídeo (as versões A ficam guardadas)
+GRUPOS = [("Vídeo 1 · O que é o contrato intermitente", [(3, "Versão B · explicação, abre com o atendimento"), (1, "Versão A · abre com o 13º")]),
+          ("Vídeo 2 · Estudo de caso", [(4, "Versão B · estudo de caso em capítulos"), (2, "Versão A · intermitente de fachada")])]
 DURACAO = {}
 
 
@@ -30,7 +41,7 @@ def quando(txt):
     return f"{DIAS[d.weekday()]}, {d.day:02d}/{d.month:02d} às {d.hour}h{d.minute:02d}"
 
 
-def bloco(n, info):
+def bloco(n, info, versao):
     leg, pc = html.escape(info["legenda"]), html.escape(info["pc"])
     cortes = "".join(f"<li>{html.escape(c)}</li>" for c in CORTES[n])
     titulo = html.escape(info["titulo"].replace("Reels da Dra.: ", ""))
@@ -41,7 +52,7 @@ def bloco(n, info):
     <p class="nota">Prévia leve para assistir aqui. O arquivo final sai em alta qualidade.</p>
   </div>
   <div class="texto">
-    <p class="rotulo">Reels {n} de 2 · {quando(info['quando'])}</p>
+    <p class="rotulo">{html.escape(versao)} · {quando(info['quando'])}</p>
     <h2>{titulo}</h2>
     <h3>Legenda</h3>
     <div class="caixa"><pre id="leg-{n}">{leg}</pre><button type="button" data-copia="leg-{n}">Copiar legenda</button></div>
@@ -54,7 +65,8 @@ def bloco(n, info):
 
 
 def pagina():
-    reels = "".join(bloco(n, LEGENDAS[n]) for n in (1, 2))
+    reels = "".join(f'<h2 class="grupo">{html.escape(g)}</h2>' + "".join(bloco(n, LEGENDAS[n], v) for n, v in itens)
+                    for g, itens in GRUPOS)
     return f"""<title>Contrato intermitente: Reels da Dra.</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -88,6 +100,7 @@ pre {{ margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 15px/1.6
 button {{ justify-self: start; font: 600 14px var(--sans); color: var(--cafe); background: transparent; border: 1px solid var(--ouro); border-radius: 999px; padding: 8px 16px; cursor: pointer; }}
 button:hover {{ background: var(--ouro); color: var(--papel); }}
 button:focus-visible {{ outline: 2px solid var(--ouro); outline-offset: 2px; }}
+h2.grupo {{ margin: 0; padding-top: 8px; font-size: 36px; color: var(--ouro); border-top: 1px solid var(--linha); padding-top: 32px; }}
 .cortes {{ margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--cafe-suave); }}
 footer {{ border-top: 1px solid var(--linha); padding-top: 20px; font-size: 13px; color: var(--cafe-suave); }}
 @media (max-width: 760px) {{ .reel {{ grid-template-columns: minmax(0, 1fr); }} .tela {{ position: static; max-width: 360px; justify-self: center; }} }}
@@ -95,16 +108,16 @@ footer {{ border-top: 1px solid var(--linha); padding-top: 20px; font-size: 13px
 <main class="pagina">
   <header>
     <p class="rotulo">Para aprovação · Dra. Letícia Barros</p>
-    <h1>Dois Reels sobre <em>contrato intermitente</em></h1>
-    <p class="intro">Os dois vídeos que a senhora gravou, editados com cenas, animações e efeitos sonoros. A sua voz e a sua imagem estão como foram gravadas: só tiramos pausas, repetições e frases que não fecharam.</p>
+    <h1>Contrato intermitente: <em>escolha uma versão de cada vídeo</em></h1>
+    <p class="intro">Os dois vídeos que a senhora gravou, cada um em duas versões editadas, com cenas, animações e efeitos sonoros. A sua voz e a sua imagem estão como foram gravadas: só tiramos pausas, repetições e frases que não fecharam.</p>
     <ol class="passos">
       <li>Assista com som.</li>
       <li>Confira a legenda e a base legal de cada um.</li>
-      <li>Responda à Jessica com \u201caprovado\u201d ou com o ajuste que quiser.</li>
+      <li>Responda à Jessica qual versão fica em cada vídeo (por exemplo, “1B e 2A”) ou o ajuste que quiser.</li>
     </ol>
   </header>
   {reels}
-  <footer>Série 23 · gravações IMG_2092 e IMG_2093 · base legal: CLT, arts. 9º, 443, §3º, e 452-A (Lei 13.467/2017).</footer>
+  <footer>Série 23 · gravações IMG_2092 e IMG_2093 · versões A (16/11) e B (17/11) · base legal: CLT, arts. 9º, 443, §3º, e 452-A (Lei 13.467/2017).</footer>
 </main>
 <script>
 document.querySelectorAll("[data-copia]").forEach(function (b) {{

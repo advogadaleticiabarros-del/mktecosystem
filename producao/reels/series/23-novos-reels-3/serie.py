@@ -24,7 +24,7 @@ m.CFG.update({"src": m.AQUI / "videos" / "fala-r1.mp4", "serie": "Contrato inter
 FACE_VEU = "linear-gradient(180deg, rgba(26,21,17,0) 0%, rgba(26,21,17,0) 52%, rgba(26,21,17,.45) 62%, rgba(26,21,17,.8) 100%)"  # rosto intacto
 HOOK_VEU = "linear-gradient(180deg, rgba(26,21,17,.6) 0%, rgba(26,21,17,0) 22%, rgba(26,21,17,0) 52%, rgba(26,21,17,.45) 62%, rgba(26,21,17,.8) 100%)"
 DIAGRAMA_VEU = "linear-gradient(180deg, rgba(26,21,17,.9) 0%, rgba(26,21,17,.76) 25%, rgba(26,21,17,.74) 60%, rgba(26,21,17,.92) 100%)"
-DY = {1: -220, 2: -110}  # rosto baixo e perto nesta gravação: sobe o vídeo para o queixo ficar acima dos textos
+DY = {1: -220, 2: -110, 3: -220, 4: -110}  # rosto baixo e perto nesta gravação: sobe o vídeo para o queixo ficar acima dos textos
 ZB = 1.06
 DESCE = 150
 CORRIGE = {  # erros do Whisper na legenda (o áudio está certo)
@@ -33,7 +33,12 @@ CORRIGE = {  # erros do Whisper na legenda (o áudio está certo)
     # R2
     "ali": "ele", "decimo": "décimo", "no@5.24": "não tinha", "no@17.40": "não tinha", "Trabalhador@6.16": "O trabalhador",
     "em@24.24": "dessa não", "vale": "válido", "do@52.08": "o", "10": "13º,", ".3.,": "", "para@59.54": "pra", "a@59.70": "",
-    "receberia@69.02": "Receberia"}
+    "receberia@69.02": "Receberia",
+    # R3 (versão B do 1)
+    "BIC": "bico,", "o@13.68": "um", "fazia.": "fazia,",
+    # R4 (versão B do 2)
+    "trabalhador@0.00": "O trabalhador", "né,@22.26": "dessa", "em@22.60": "não", "receberia@61.98": "Receberia",
+    "do@49.96": "o", "ele@32.86": ""}
 FFPROBE = str(m.FF).replace("ffmpeg.exe", "ffprobe.exe")
 
 
@@ -183,6 +188,114 @@ def reel2(W, seg, fim):
     ]
 
 
+def reel3(W, seg, fim):
+    """Versão B do 1 (17/11/2026): o que é o contrato intermitente, contado a partir do atendimento (fictício)."""
+    claro, mas = W("Claro"), W("Mas")
+    ele = W("Ele", mas)
+    esse1 = W("Esse", ele)
+    era = W("Era")
+    esse2 = W("Esse", era)
+    nao = W("Não", esse2)
+    otrab = W("o", W("terceiro,", nao) + .3)
+    porque = W("porque", otrab)
+    assim = W("Assim")
+    porque2 = W("porque", assim)
+    se, meu = W("Se", porque2), W("Meu")
+    return [
+        gancho(3, claro, els=[
+            topo("O que é contrato <em>intermitente</em>?", 0.05, size=60),
+            carimbo("Atendimento de hoje", W("atendimento") - .05, 360, 230, rot=-7, size=62)]),
+        rosto(3, 1, claro, mas, kb=(1.06, 1.1), els=[chip("Esse trabalhador sabia", W("sabia"), 560)]),
+        diagrama(3, 2, mas, ele, "cracha", trans="whip", els=dg.titulo("A maioria", mas + .05, "assina sem saber")
+                 + [pilula("Contrato intermitente", W("intermitente.", mas) - .2, 430, left=0, style=centro(560))]),
+        diagrama(3, 3, ele, esse1, "celular", els=dg.titulo("Como funciona", ele + .05)
+                 + dg.etapas([("Convocado com 3 dias", W("três", ele)), ("Pode recusar", W("recusar", ele)),
+                              ("Recusou? Não recebe o dia", W("receberia", ele))], top=320)),
+        diagrama(3, 4, esse1, era, "maos", els=dg.titulo("É o antigo extra,", esse1 + .1, "o antigo bico")
+                 + [carimbo("Bico", W("bico,") - .05, 520, 360, rot=-8, size=110)]),
+        diagrama(3, 5, era, esse2, "trabalhador", els=dg.relogio(W("hora,", era) - .3, 540, 500, acesas=1, size=260)
+                 + [pilula("Pago pela hora", W("hora,", era), 700, left=0, style=centro(440)),
+                    pilula("ou pelo dia trabalhado", W("dia", era), 790, left=0, style=centro(560))]),
+        rosto(3, 6, esse2, nao, kb=(1.04, 1.08), els=[
+            baixo("Agora tem nome: <em>intermitente</em>", esse2 + .05),
+            carimbo("Com carteira assinada", W("nome.", esse2) - .1, 380, 200, rot=-6, size=58)]),
+        diagrama(3, 7, nao, otrab, "empresa", trans="luz", els=dg.titulo("Não tira direitos:", nao + .05, "muda o jeito de pagar", top=150)
+                 + dg.comparacao(W("mas", nao), W("período", nao), top=330)),
+        rosto(3, 8, otrab, porque, kb=(1.08, 1.12), els=[carimbo("Cadê o 13º?", W("tem,", otrab) - .15, 380, 290, rot=-8, size=68)]),
+        diagrama(3, 9, porque, assim, "calculadora", els=dg.contracheque([porque + .3, W("incluso"), W("diária.") + .1, W("diária.") + .5])),
+        rosto(3, 10, assim, porque2, kb=(1.06, 1.1), els=[chip("Férias + ⅓ também vêm junto", W("terço"), 680)]),
+        diagrama(3, 11, porque2, se, "3d-livro", ini=0.0, els=dg.titulo("Já está", porque2 + .05, "no valor da hora")
+                 + [pilula("CLT, art. 452-A, §6º", W("inserido.") - .3, 430, left=0, style=centro(460))]),
+        diagrama(3, 12, se, meu, "3d-cofre9", ini=0.0, els=[
+            contador(0, 150, se + .1, 300, left=170, size=230, sufixo="reais/dia", dur=1.0),
+            pilula("13º ✓", W("terceiro,", se), 640, left=0, style=centro(260)),
+            pilula("Férias + ⅓ ✓", W("férias.", se), 740, left=0, style=centro(360))]
+            + dg.fgts_deposito(W("férias.", se) + .5, top=840)),
+        rosto(3, 13, meu, fim, kb=(1.02, 1.06), els=[chip("Dra. Letícia Barros", meu + .05, 520)]),
+        outro(fim, "Parte 2 · Um caso de intermitente", "quem trabalha por diária"),
+    ]
+
+
+def cap(txt, at):
+    """Capítulo do estudo de caso, no alto do quadro (versão B do 2)."""
+    return pilula(txt, at, 190, left=0, style=centro(520))
+
+
+def reel4(W, seg, fim):
+    """Versão B do 2 (17/11/2026): estudo de caso (hipotético), contado em capítulos: o caso, as provas, a lei, o desfecho."""
+    ia = W("ia")
+    trab = W("trabalhou", ia)
+    cheg = W("chegava", trab)
+    tendo = W("Tendo")
+    alt = W("alternância", tendo)
+    claro, prev, existe = W("Claro"), W("previsto"), W("Existe")
+    mas = W("mas", existe)
+    agente = W("a", W("julgados,"))
+    rec = W("Receberia")
+    ent1 = W("então", rec)
+    ent2 = W("então", ent1 + .5)
+    meu = W("Meu")
+    return [
+        gancho(4, ia, els=[
+            topo("<em>Estudo de caso</em>", 0.05, size=76),
+            chip("Situação hipotética", 0.45, 420),
+            carimbo("Não sabia", W("sabia") - .05, 860, 340, rot=-7, size=70)]),
+        diagrama(4, 1, ia, trab, "notebook", els=[cap("1 · O caso", ia + .05)]
+                 + dg.ficha("Ficha do caso · intermitente", ia + .15, "Sem alternância", W("alternância", ia) - .1, top=300,
+                            nota="Ia trabalhar todos os dias.<br>No contrato: intermitente.")),
+        diagrama(4, 2, trab, cheg, "3d-semana", ini=0.0, els=dg.titulo("Todos os dias,", trab + .05, "por anos")
+                 + dg.linha_tempo([("Ano 1", trab + .3), ("Ano 2", W("colocar", trab)), ("Ano 3", W("três,", trab)),
+                                   ("Ano 4", W("quatro", trab))], top=480)),
+        diagrama(4, 3, cheg, tendo, "janela", trans="luz", els=[
+            texto("No fim de cada ano…", cheg + .05, 300, size=66, align="center", anim="sobe"),
+            carimbo("Sem 13º", W("terceiro,", cheg) - .05, 500, 170, rot=-7, size=80),
+            carimbo("Sem férias", W("férias.", cheg) - .05, 690, 330, rot=6, size=80)]),
+        rosto(4, 4, tendo, alt - .35, kb=(1.08, 1.12), els=[baixo("Capítulo 2: <em>as provas</em>", tendo + .05)]),
+        diagrama(4, 5, alt - .35, claro, "chefe", els=[cap("2 · As provas", alt - .3)]
+                 + dg.etapas([("Subordinado ao chefe", alt - .2), ("Trabalhava todos os dias", W("todos", alt)),
+                              ("Testemunhas confirmam", W("testemunhas"))], top=270)
+                 + [carimbo("Pode ser questionado", W("questionado.") - .1, 700, 170, rot=-6, size=64)]),
+        rosto(4, 6, claro, prev, kb=(1.04, 1.08), els=[baixo("Capítulo 3: <em>a lei</em>", claro + .05),
+                                                       chip("O intermitente é legal", W("CLT,", claro), 520)]),
+        diagrama(4, 7, prev, existe, "3d-livro", ini=0.0, els=dg.titulo("Está na lei", prev + .05, "CLT, art. 443, §3º")
+                 + [pilula("Reforma Trabalhista de 2017", W("parágrafo"), 430, left=0, style=centro(620))]),
+        rosto(4, 8, existe, mas, kb=(1.06, 1.1), els=[chip("Muitos juízes validam o contrato", W("juiz"), 700)]),
+        diagrama(4, 9, mas, agente, "empresa", els=dg.titulo("Mas há julgados", mas + .05, "que questionam")),
+        diagrama(4, 10, agente, rec, "maos", trans="whip", els=[cap("4 · O desfecho", agente + .05)]
+                 + dg.titulo("Dá para levar", agente + .2, "ao Judiciário", top=290)),
+        diagrama(4, 11, rec, ent1, "calculadora", els=dg.titulo("Se a Justiça reconhece:", rec + .02, "a diária vira salário")
+                 + [pilula("CLT, art. 9º", W("diária,", rec), 430, left=0, style=centro(320))]),
+        diagrama(4, 12, ent1, ent2, "contas", els=[
+            texto("Fora do salário,|<em>cobrados à parte</em>:", ent1 + .05, 300, size=62, align="center", anim="sobe"),
+            pilula("13º", W("terceiro,", ent1), 560, left=0, style=centro(220)),
+            pilula("Férias + ⅓", W("férias,", ent1), 660, left=0, style=centro(340)),
+            pilula("FGTS", W("FGTS,", ent1), 760, left=0, style=centro(220))]),
+        rosto(4, 13, ent2, meu, kb=(1.06, 1.1), els=[chip("A diferença se cobra na Justiça", W("cobrar", ent2), 700)]),
+        rosto(4, 14, meu, fim, kb=(1.02, 1.06), els=[chip("Dra. Letícia Barros", meu + .05, 520)]),
+        outro(fim, "Parte 1 · O que é o intermitente", "quem trabalha todo dia"),
+    ]
+
+
 def _reel(n, roteiro, serie, prefixo):
     fim = m.fim_da_fala(m.AQUI / "videos" / f"fala-r{n}.transcricao.json", m.AQUI / "videos" / f"fala-r{n}.mp4")
     return {"src": m.AQUI / "videos" / f"fala-r{n}.mp4", "transcricao": m.AQUI / "videos" / f"fala-r{n}.transcricao.json",
@@ -192,6 +305,8 @@ def _reel(n, roteiro, serie, prefixo):
 REELS = {
     1: _reel(1, reel1, "Contrato intermitente · 1/2", "intermitente-13-na-diaria-"),
     2: _reel(2, reel2, "Contrato intermitente · 2/2", "intermitente-de-fachada-"),
+    3: _reel(3, reel3, "Contrato intermitente · 1/2", "o-que-e-o-intermitente-"),
+    4: _reel(4, reel4, "Intermitente · estudo de caso", "intermitente-estudo-de-caso-"),
 }
 
 if __name__ == "__main__":

@@ -34,8 +34,22 @@ uma página da web para enviar para a Dra. Letícia aprovar". Estilo escolhido p
 - Banco: só clipes já no disco; a busca no Pexels pelo Orbit precisa de SSH, que o modo automático bloqueou.
 - Volume em -17 LUFS (o motor baixa quando há picos fortes, para não comprimir a voz; a regra aceita até -20).
 
+## Versões B (17/11/2026, manhã)
+- Pedido: "Mantenha esses dois vídeos, ficaram bons! Mas parece o mesmo. O vídeo 1 é o que é o trabalho intermitente, o 2
+  é estudo de caso, não chegou nenhum cliente, é fictício, então pode fazer também. [...] No final escolhemos qual utilizar."
+- Feito: R3 `o-que-e-o-intermitente-3.mp4` (70 s) e R4 `intermitente-estudo-de-caso-4.mp4` (84,7 s) na mesma pasta; as
+  versões A ficaram intactas. Cortes em `falas_v2.py` e `falas_v2_r4.py`, cenas `reel3`/`reel4` em `serie.py`, legendas
+  3 e 4 em `legendas.py` (mesmas datas das versões A que substituem), página refeita com as quatro versões agrupadas por
+  vídeo (mesmo link).
+- Verificado: `fala.py montar` (os avisos que sobraram são os mesmos trocados do Whisper aceitos na versão A), cor
+  BT.709, `--checar` ok, `conferir.py` sem avisos nos dois (-17,6 e -17,0 LUFS, pico -1,9 e -1,6 dBTP, 11 Mbps), folhas
+  de quadros revisadas; o R3 foi renderizado de novo porque um rótulo do relógio caía sobre a legenda. Não verificado:
+  escuta com som.
+- Decisões: o atendimento do R3 entrou porque a Jessica disse que é fictício; no R4 a tela diz "situação hipotética"
+  (a própria Dra. fala "vamos colocar 3, 4 anos"). O "danoso" continua fora (contradiz o "não tira direitos").
+
 ## Pendente
-- Aprovação da Dra. pela página (Jessica envia).
+- A Dra. escolhe uma versão de cada vídeo na página (versões A e B).
 - Capa no padrão "Domingo com a Dra." (retrato real sentada em quadro 3D) e envio ao Orbit como rascunho: dom 22/11
   (R1) e dom 29/11 (R2) às 15h30. Precisa do SSH da VPS liberado.
 
