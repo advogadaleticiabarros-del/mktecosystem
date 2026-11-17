@@ -1,0 +1,6 @@
+Série 23 · vídeos de banco (Pexels, licença livre) reaproveitados de séries anteriores, mesmos arquivos:
+celular, trabalhador, espera, chefe, recusa: ver ../19-contrato-intermitente/creditos-pexels.txt e ../18-limbo-previdenciario/creditos-pexels.txt
+notebook: ver ../22-assedio-eleitoral-motion/creditos-pexels.txt
+assinatura (Pexels 7821798): ver créditos da série 15 (guarda compartilhada)
+calculadora: banco das séries anteriores
+3D (semana, cofre, livro): motor3d/clip3d.py, feito no projeto

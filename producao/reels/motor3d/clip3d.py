@@ -29,7 +29,12 @@ CLIPES = {
     # moedas caindo no cofre: o FGTS depositado
     "cofre": {"total": 6.0, "camera": [[0, COFRE], [6.0, COFRE_PERTO]],
               "trilhas": {"moedas": [[0.3, 0], [3.8, 1]]}},
-}
+    # o mesmo cofre, mais longo, para cenas de até 8,5 s (série 23)
+    "cofre9": {"total": 9.0, "camera": [[0, COFRE], [9.0, COFRE_PERTO]],
+               "trilhas": {"moedas": [[0.3, 0], [4.5, 1]]}},
+    # o livro da lei abre e a caneta assina: artigo da CLT, contrato assinado (série 23, 16/11/2026)
+    "livro": {"total": 7.0, "camera": [[0, [20.8, 7.2, 16, 17.6, 1.6, 0]], [7.0, [19.6, 4.8, 10.5, 18.0, 1.2, 0]]],
+              "trilhas": {"livro_abre": [[0.4, 0], [2.0, 1]], "assina": [[2.4, 0], [4.6, 1]]}},}
 
 
 def roteiro(nome: str) -> dict:

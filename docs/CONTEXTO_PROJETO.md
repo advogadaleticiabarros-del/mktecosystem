@@ -1363,3 +1363,21 @@ Pedido da Jessica: usar APIs da lista `public-apis` no Orbit e nos outros projet
   avulsas, que voltam para a reserva. Conferência: https://claude.ai/artifact/X6kounP7zSLTGBRf1Rnb4P.
 - Liminar das ADIs 8.041/8.042 ainda sem referendo do Plenário: reconferir antes de cada data.
 - Relatório: `docs/contexto/relatorios/2026-11-16-serie-clt-2027.md`.
+
+## Série 23 · Reels da Dra. sobre contrato intermitente (16-17/11/2026)
+
+- Gravações `Desktop\NOVOS REELS\3\IMG_2092.MOV` e `IMG_2093.MOV` (4K HLG, convertidas para BT.709). Estilo **inteiro com
+  banco** (escolha da Jessica), com os diagramas da tela dividida descidos para o quadro cheio (como a série 19 motion).
+- R1 "o 13º já vem na diária" (63,6 s) e R2 "intermitente de fachada" (91,5 s): `C:\tmp\videos-reels\23-reels-3\`
+  (`intermitente-13-na-diaria-1.mp4`, `intermitente-de-fachada-2.mp4`), conferir.py sem avisos, -17 LUFS (picos fortes).
+- Gancho: a frase forte da Dra. abre o vídeo com zoom, título no topo e carimbo, e volta depois na fala (pedido dela).
+- Fatos e cortes no docstring de `producao/reels/series/23-novos-reels-3/falas.py`. Cortes jurídicos: FGTS "na diária"
+  (é depositado, art. 452-A §8º), "não tem direito a férias" (§9º), "nada mais vai receber".
+- Esta gravação tem o rosto baixo e perto: `DY` por Reel (-220 e -110) e textos de rosto numa linha só em y=985.
+- `motor3d/clip3d.py` ganhou `livro` (lei que abre e caneta que assina) e `cofre9` (cofre de 9 s).
+- Lição: o Whisper erra o tempo das palavras em até 1 s em trechos com hesitação; para cortar no meio de frase, medir o
+  envelope de 50 ms do áudio (wav 16 kHz) e marcar `"fixo"`. Rodar `fala.py montar` um Reel por vez (dois em paralelo
+  esgotam os 16 GB com 4K HDR).
+- Banco: só o que já estava no disco (a busca no Pexels pelo Orbit precisa de SSH, bloqueado nesta sessão).
+- Pendente: aprovação da Dra. (página de conferência publicada), capa no padrão "Domingo com a Dra." e envio ao Orbit
+  (rascunhos para dom 22/11 e 29/11 às 15h30).
