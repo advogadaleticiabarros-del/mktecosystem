@@ -1397,6 +1397,9 @@ Pedido da Jessica: usar APIs da lista `public-apis` no Orbit e nos outros projet
   últimos 10 Reels do feed ou 3 envios + salvamentos); `views_referencia` tira os testes dessa mediana (o teste zerado
   de 27/10 puxava a meta para baixo, inclusive na liberação automática). Em 18/11 a meta calculada era 50 visualizações.
   O teste de 27/10 tem 0 visualizações também lido direto da Meta: falta conferir no app se ele foi entregue.
+- **Resultado dos testes (18/11/2026):** os 4 testes de 17/11 quase não foram entregues (1A, 1B e 2B com 0 visualizações, 2A com 1;
+  o de 27/10 também 0). A página da Dra. (abaixo) ganhou o número e o link de cada teste e o aviso de que a escolha fica pelo
+  vídeo. Falta conferir no app por que os Trial Reels não são entregues.
 - Pendente: escolher 2 ou 3 pelo desempenho dos testes; antes disso, a Dra. ainda pode escolher pela página (https://claude.ai/artifact/BjkSFXaZPJKA9GahNRJbXp, com as
   quatro); depois capa no padrão "Domingo com a Dra." e envio ao Orbit (rascunhos para dom 22/11 e 29/11 às 15h30).
 

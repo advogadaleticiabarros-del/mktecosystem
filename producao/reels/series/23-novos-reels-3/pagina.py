@@ -34,6 +34,12 @@ CORTES = {
 GRUPOS = [("Vídeo 1 · O que é o contrato intermitente", [(3, "Versão B · explicação, abre com o atendimento"), (1, "Versão A · abre com o 13º")]),
           ("Vídeo 2 · Estudo de caso", [(4, "Versão B · estudo de caso em capítulos"), (2, "Versão A · intermitente de fachada")])]
 DURACAO = {}
+# Resultado dos Reels de teste (Trial Reels, só para quem não segue), lido do Desempenho do Orbit em 18/11/2026
+TESTES_EM = "18/11/2026"
+TESTES = {3: ("17/11 às 9h31", 0, 0, "https://www.instagram.com/reel/Df17zoctEde/"),
+          4: ("17/11 às 11h31", 0, 0, "https://www.instagram.com/reel/Df2JjElPUeg/"),
+          1: ("17/11 às 14h30", 0, 0, "https://www.instagram.com/reel/Df2eIrOBPzq/"),
+          2: ("17/11 às 16h31", 1, 1, "https://www.instagram.com/reel/Df2r9yEAF4r/")}
 
 
 def quando(txt):
@@ -45,6 +51,10 @@ def bloco(n, info, versao):
     leg, pc = html.escape(info["legenda"]), html.escape(info["pc"])
     cortes = "".join(f"<li>{html.escape(c)}</li>" for c in CORTES[n])
     titulo = html.escape(info["titulo"].replace("Reels da Dra.: ", ""))
+    quando_t, views, alcance, link = TESTES[n]
+    teste = (f'<div class="teste"><p><strong>No teste:</strong> publicado em {quando_t} · {views} visualização'
+             f'{"" if views == 1 else "ões"} · alcance {alcance}</p><a href="{link}" target="_blank" rel="noopener">'
+             'Ver o teste no Instagram</a></div>')
     return f"""
 <section class="reel" id="reel-{n}">
   <div class="tela">
@@ -54,6 +64,7 @@ def bloco(n, info, versao):
   <div class="texto">
     <p class="rotulo">{html.escape(versao)} · {quando(info['quando'])}</p>
     <h2>{titulo}</h2>
+    {teste}
     <h3>Legenda</h3>
     <div class="caixa"><pre id="leg-{n}">{leg}</pre><button type="button" data-copia="leg-{n}">Copiar legenda</button></div>
     <h3>Primeiro comentário</h3>
@@ -101,6 +112,11 @@ button {{ justify-self: start; font: 600 14px var(--sans); color: var(--cafe); b
 button:hover {{ background: var(--ouro); color: var(--papel); }}
 button:focus-visible {{ outline: 2px solid var(--ouro); outline-offset: 2px; }}
 h2.grupo {{ margin: 0; padding-top: 8px; font-size: 36px; color: var(--ouro); border-top: 1px solid var(--linha); padding-top: 32px; }}
+.teste {{ display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; font-size: 14px; color: var(--cafe-suave); }}
+.teste p {{ margin: 0; }}
+.teste a, .aviso a {{ color: var(--ouro); font-weight: 600; }}
+.aviso {{ background: var(--cartao); border: 1px solid var(--linha); border-left: 3px solid var(--ouro); border-radius: 10px; padding: 16px 20px; max-width: 70ch; }}
+.aviso p {{ margin: 0 0 6px; }} .aviso p:last-child {{ margin: 0; }}
 .cortes {{ margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--cafe-suave); }}
 footer {{ border-top: 1px solid var(--linha); padding-top: 20px; font-size: 13px; color: var(--cafe-suave); }}
 @media (max-width: 760px) {{ .reel {{ grid-template-columns: minmax(0, 1fr); }} .tela {{ position: static; max-width: 360px; justify-self: center; }} }}
@@ -115,6 +131,10 @@ footer {{ border-top: 1px solid var(--linha); padding-top: 20px; font-size: 13px
       <li>Confira a legenda e a base legal de cada um.</li>
       <li>Responda à Jessica qual versão fica em cada vídeo (por exemplo, “1B e 2A”) ou o ajuste que quiser.</li>
     </ol>
+    <div class="aviso">
+      <p><strong>Como foram os testes (números de {TESTES_EM}):</strong> as quatro versões saíram como Reels de teste em 17/11, mas quase não foram entregues: três estão com 0 visualizações e uma com 1. O teste de 27/10 também ficou em 0.</p>
+      <p>Com esses números não dá para escolher pelo desempenho: a escolha fica pelo vídeo. Vale abrir um dos testes no app e conferir se o Instagram mostra “Em teste” ou algum aviso.</p>
+    </div>
   </header>
   {reels}
   <footer>Série 23 · gravações IMG_2092 e IMG_2093 · versões A (16/11) e B (17/11) · base legal: CLT, arts. 9º, 443, §3º, e 452-A (Lei 13.467/2017).</footer>
