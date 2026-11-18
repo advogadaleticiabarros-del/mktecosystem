@@ -137,7 +137,7 @@ Lido da agenda do Orbit em 11/11/2026, depois do rebalanceamento. (pausado) = s�
 | sex 27/11 | 19:00 | Reels | Reels Flagrante: Licença-maternidade |
 | sáb 28/11 | 12:00 | Carrossel | Mãe dona de casa pode contribuir e se aposentar |
 | sáb 28/11 | 19:00 | Reels | Mito ou Lei: MEI tem salário-maternidade |
-| dom 29/11 | 12:00 | Carrossel | Casamento depois dos 70: separação de bens e herança |
+| dom 29/11 | 12:00 | Estático | Comprei e não recebi. E agora? (referências 18/11, peça 12; o carrossel "Casamento depois dos 70" foi para 22/03) |
 | dom 29/11 | 15:30 | Reels | Série Hora extra (1/3): quanto vale (pausado) |
 | seg 30/11 | 12:00 | Estático | Manchete: 13º salário |
 | seg 30/11 | 19:00 | Reels | Mito ou Lei: Hoje vence a 1ª parcela do 13º |
@@ -171,7 +171,7 @@ Lido da agenda do Orbit em 11/11/2026, depois do rebalanceamento. (pausado) = s�
 | seg 14/12 | 19:00 | Reels | Mito ou Lei: A 2ª parcela do 13º vem sem descontos |
 | ter 15/12 | 12:00 | Carrossel | 2ª parcela do 13º: prazo 18/12, descontos e o que fazer se não pagarem |
 | ter 15/12 | 19:00 | Reels | Reels Flagrante: Amigo secreto da firma |
-| qua 16/12 | 12:00 | Estático | Manchete: Carteira assinada |
+| qua 16/12 | 12:00 | Estático | Se 2027 fosse igual a 2026 no seu trabalho, você ficaria satisfeita? (referências 18/11, peça 09; a "Manchete: Carteira assinada" foi para 29/03) |
 | qua 16/12 | 19:00 | Reels | Mito ou Lei: Hoje é o prazo da 2ª parcela do 13º |
 | qui 17/12 | 12:00 | Carrossel | Temporária de fim de ano: direitos e estabilidade da gestante (TST 2026) |
 | qui 17/12 | 19:00 | Frase | 2ª parcela do 13º: prazo 18/12, descontos e o que fazer se não pagarem |
@@ -323,3 +323,17 @@ Lido da agenda do Orbit em 11/11/2026, depois do rebalanceamento. (pausado) = s�
 | qua 10/03 | 12:00 | Frase | Frase: O trabalho faz mal à gravidez? Ela pode mudar de função. |
 | qui 11/03 | 12:00 | Estático | Manchete: Guarda compartilhada |
 | sex 12/03 | 12:00 | Estático | Pensão antes de nascer |
+| sáb 13/03 | 12:00 | Estático | Prazer, Letícia Barros (peça de marca; referências 18/11, peça 14) |
+| dom 14/03 | 12:00 | Estático | Auxílio-doença negado? (ref. 03) |
+| seg 15/03 | 12:00 | Estático | Contrato de experiência: grávida tem estabilidade? (ref. 08) |
+| ter 16/03 | 12:00 | Estático | Quero sair do meu trabalho e receber todos os meus direitos. É possível? (ref. 05) |
+| qua 17/03 | 12:00 | Estático | Quem tem direito à aposentadoria por incapacidade? (ref. 01) |
+| qui 18/03 | 12:00 | Estático | Quais os requisitos para pedir o salário-maternidade? (ref. 04) |
+| sex 19/03 | 12:00 | Estático | “Assina aqui, é só uma advertência…” (ref. 06) |
+| sáb 20/03 | 12:00 | Estático | Seu acerto pode vir menor se ninguém conferir o aviso prévio proporcional (ref. 10) |
+| dom 21/03 | 12:00 | Estático | Quanto tempo de contribuição você tem? (ref. 07) |
+| seg 22/03 | 12:00 | Carrossel | Casamento depois dos 70: separação de bens e herança (veio de 29/11) |
+| ter 23/03 | 12:00 | Estático | Responder o chefe fora do horário conta como trabalho? (ref. 13) |
+| qui 25/03 | 12:00 | Estático | Divórcio pode ser feito em cartório? (ref. 02) |
+| sáb 27/03 | 12:00 | Estático | Checklist: confira antes de assinar o pedido de demissão (ref. 11) |
+| seg 29/03 | 12:00 | Estático | Manchete: Carteira assinada (veio de 16/12) |

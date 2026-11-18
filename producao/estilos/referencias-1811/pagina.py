@@ -1,6 +1,6 @@
 """Página de conferência das peças feitas a partir das referências de 18/11/2026 (regra de 11/11/2026: toda entrega vai
 com arquivo de conferência já com os criativos). Mostra a referência ao lado da peça, legenda, primeiro comentário,
-base legal e texto alternativo. Uso: python pagina.py → conferencia/index.html + conferencia/img/ (publicar como Artifact)."""
+base legal, texto alternativo e a data agendada (de `plano_agenda.json`, que tem a legenda que foi para o Orbit). Uso: python pagina.py → conferencia/index.html + conferencia/img/ (publicar como Artifact)."""
 import html
 import json
 from pathlib import Path
@@ -11,6 +11,13 @@ AQUI = Path(__file__).resolve().parent
 OUT = AQUI / "conferencia"
 REFS = {"01": [1], "02": [2], "03": [3], "04": [4], "05": [5], "06": [6], "07": [7], "08": [8], "09": [9], "10": [10],
         "11": [11], "12": [11], "13": [12, 13, 14], "14": [15, 16]}
+SEMANA = ["seg", "ter", "qua", "qui", "sex", "sáb", "dom"]
+
+
+def quando(dia):
+    from datetime import date
+    d = date.fromisoformat(dia)
+    return f"{SEMANA[d.weekday()]}, {d:%d/%m/%Y} às 12h"
 
 
 def mini(origem, nome, w):
@@ -24,6 +31,11 @@ def mini(origem, nome, w):
 def main():
     (OUT / "img").mkdir(parents=True, exist_ok=True)
     itens = json.loads((AQUI / "conteudo.json").read_text(encoding="utf-8"))
+    plano = {p["peca"]: p for p in json.loads((AQUI / "plano_agenda.json").read_text(encoding="utf-8"))["pecas"]}
+    for it in itens:  # o texto que vale é o que foi agendado
+        ag = plano[it["peca"]]
+        it.update(dia=ag["dia"], legenda=ag["legenda"], primeiro_comentario=ag["primeiro_comentario"])
+    itens.sort(key=lambda it: it["dia"])
     cards = []
     for it in itens:
         e = html.escape
@@ -33,7 +45,7 @@ def main():
         cards.append(f"""<article class="peca" id="p{it['n']}">
 <figure class="arte"><img src="{peca}" alt="{e(it['alt'])}" loading="lazy"></figure>
 <div class="texto">
-  <p class="num">Peça {it['n']}</p>
+  <p class="num">Peça {it['n']} · <span class="data">{quando(it['dia'])}</span></p>
   <h2>{e(it['titulo'])}</h2>
   <div class="ref"><div class="ref-imgs">{refs}</div><p><b>Referência:</b> {e(it['referencia'])}</p></div>
   <section><div class="cab"><h3>Legenda</h3><button type="button" data-copy="leg{it['n']}">Copiar</button></div><pre id="leg{it['n']}">{e(it['legenda'])}</pre></section>
@@ -44,7 +56,7 @@ def main():
     <dt>Foto</dt><dd>{e(it['foto'])}</dd>
   </dl>
 </div></article>""")
-    indice = "".join(f'<a href="#p{it["n"]}"><b>{it["n"]}</b> {html.escape(it["titulo"])}</a>' for it in itens)
+    indice = "".join(f'<a href="#p{it["n"]}"><b>{it["dia"][8:10]}/{it["dia"][5:7]}</b> {html.escape(it["titulo"])}</a>' for it in itens)
     modelo = (AQUI / "pagina_modelo.html").read_text(encoding="utf-8")
     (OUT / "index.html").write_text(modelo.replace("{{INDICE}}", indice).replace("{{CORPO}}", "".join(cards))
                                     .replace("{{TOTAL}}", str(len(itens))), encoding="utf-8")

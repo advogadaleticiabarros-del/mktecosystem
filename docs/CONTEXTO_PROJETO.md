@@ -1404,5 +1404,13 @@ Pedido da Jessica: usar APIs da lista `public-apis` no Orbit e nos outros projet
 
 A Jessica mandou 16 criativos de outros perfis ("para copiar para os assuntos da Leticia"). Viraram 14 peças em
 `producao/estilos/referencias-1811/` (`gerar.py`, motor do Manchete; textos em `conteudo.json`; conferência com
-`pagina.py`, publicada em https://claude.ai/artifact/SajKU7DkA792SfgysRZ7ny). Nada foi enviado ao Orbit nem agendado:
-esperam aprovação. Copiamos só a estrutura (composição e hierarquia), nunca logo, nome ou frase das referências.
+`pagina.py`, publicada em https://claude.ai/artifact/SajKU7DkA792SfgysRZ7ny). Copiamos só a estrutura (composição e
+hierarquia), nunca logo, nome ou frase das referências.
+
+Agendadas no Orbit no mesmo dia, a pedido da Jessica ("programe as postagens em horarios disponiveis e livres"), com
+`agendar.py` + `plano_agenda.json` (rodam no container; `vagas`, `plano`, `aplicar`; idempotente pela imagem; bloco
+`mover` troca de dia posts já agendados). Todas às 12h, como post do feed. O meio-dia estava ocupado até 12/03/2027,
+então as duas peças de época entraram no lugar de assuntos sem data: a 12 (compra não recebida) em dom 29/11, depois
+da Black Friday, e o carrossel "Casamento depois dos 70" foi para 22/03; a 09 (fim de ano) em qua 16/12, antes do prazo
+da 2ª parcela do 13º, e a "Manchete: Carteira assinada" foi para 29/03. As outras 12 ficam de 13 a 27/03/2027. Backup
+antes: `/root/orbit-backups/antes-referencias-1811-20261118.sql.gz`. Artes em `/media/ref-NN-*.jpg`.
