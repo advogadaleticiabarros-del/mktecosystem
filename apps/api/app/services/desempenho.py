@@ -25,6 +25,7 @@ from app.models.social_connection import SocialConnection
 from app.services.analise_instagram import montar_analise
 from app.services.central_google import ultimo_painel
 from app.services import tiktok as tiktok_servico
+from app.services.agendamento_horario import FUSO_PADRAO
 from app.services.teste_reels import MIN_COMPARTILHA_SALVA, FRACAO_DA_MEDIANA, julgar, views_referencia
 
 
@@ -184,7 +185,7 @@ def _reels_teste(testes: list[dict], referencia: list[int], agora: datetime) -> 
         return v if v is not None else "—"
 
     publicados = [t for t in testes if t.get("views") is not None]
-    linhas = [[t["titulo"], t["publicado_em"].strftime("%d/%m %H:%M") if t.get("publicado_em") else "—", n(t.get("views")),
+    linhas = [[t["titulo"], t["publicado_em"].astimezone(FUSO_PADRAO).strftime("%d/%m %H:%M") if t.get("publicado_em") else "—", n(t.get("views")),
                n(t.get("alcance")), n(t.get("shares")), n(t.get("saved")), n(t.get("curtidas")),
                round(t["tempo_medio_ms"] / 1000, 1) if t.get("tempo_medio_ms") else "—", situacao(t)] for t in testes]
     return _secao(

@@ -56,11 +56,31 @@ uma página da web para enviar para a Dra. Letícia aprovar". Estilo escolhido p
 - Verificado: o script imprimiu os 4 agendamentos; as 4 URLs de mídia respondem 206 (pedido parcial ok). Não verificado
   ainda: a publicação na Meta (acontece nos horários).
 
+## Seção "Reels de teste" no Desempenho (17/11/2026)
+- Pedido: "Se o Orbit não está coletando, precisamos de uma seção de Reels de teste lá, para sabermos do desempenho
+  desses Reels" e "para os próximos".
+- Diagnóstico: o Orbit já coleta o teste (ele vem na lista `/media` da Meta). O de 27/10 (id 18117094946119300) tem
+  0 visualizações e 0 de alcance também quando lido direto da Meta, campo a campo, sem erro: ou o teste não foi
+  entregue, ou a API não conta as visualizações de teste. Só o app do Instagram tira a dúvida.
+- Feito (commit `95793f2`): seção "Reels de teste" na tela Desempenho (`services/desempenho.py`, `_reels_teste`):
+  cada teste dos últimos 60 dias com visualizações, alcance, envios, salvos, curtidas, tempo médio e a situação
+  (agendado, aguardando coleta, menos de 24 h, 0 visualizações, vai bem ou abaixo da meta), mais a meta (70% da
+  mediana dos últimos 10 Reels do feed ou 3 envios + salvamentos). `teste_reels.views_referencia` tira os testes da
+  referência (antes o teste zerado puxava a mediana para baixo, inclusive na liberação automática da grade).
+- Verificado: 401 testes passando (4 novos).
+- Deploy em 18/11/2026 (pedido "publica"): backup `/root/orbit-backups/antes-secao-reels-teste-20261118-1238.sql.gz`
+  (1,6 MB), API refeita com `95793f2`. Em produção, `montar_desempenho` devolveu a seção com os 5 testes (os 4 da série
+  23 e o de 27/10) e meta de 50 visualizações. Os horários saíam em UTC (12:31 em vez de 09:31): corrigido para o
+  horário de Brasília (`FUSO_PADRAO`), com teste, e publicado de novo.
+- Números em 18/11 (menos de 24 h para três deles): 2A com 1 visualização; 1A, 2B e 1B com 0. O 1B já passou de 24 h
+  com 0, como o teste de 27/10.
+
 ## Pendente
+- Conferir no app do Instagram se o teste de 27/10 teve visualizações (decide se a API conta os testes).
 - Escolher 2 ou 3 para a grade pelo desempenho dos testes (e pela Dra.).
-- Capa no padrão "Domingo com a Dra." (retrato real sentada em quadro 3D) e envio ao Orbit como rascunho: dom 22/11
-  (R1) e dom 29/11 (R2) às 15h30. Precisa do SSH da VPS liberado.
+- Capa no padrão "Domingo com a Dra." (retrato real sentada em quadro 3D) para os escolhidos, e peças da grade como
+  post novo.
 
 ## Próxima sessão
-Depois do "aprovado": skill `leticia-reels-premium` passo 7 (backup do banco, mídia em `api:/app/media`, peças em
-rascunho com `legendas.py`), capa com `capas_dra.py`.
+Ver a seção Reels de teste no Desempenho depois de 24 h dos testes; para os escolhidos, skill `leticia-reels-premium`
+passo 7 e capa com `capas_dra.py`.

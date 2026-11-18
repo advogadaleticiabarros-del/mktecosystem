@@ -1389,5 +1389,13 @@ Pedido da Jessica: usar APIs da lista `public-apis` no Orbit e nos outros projet
   escolher 2 ou 3 para a grade". As 4 versões agendadas como Trial Reels (graduação MANUAL) para 17/11: 1B 09:30, 2B
   11:30, 1A 14:30, 2A 16:30 (`subir_testes.py`, backup `/root/orbit-backups/antes-testes-serie23-20261117-1007.sql.gz`).
   Capa = quadro do gancho (capa_ms padrão). A grade sai depois como peça nova, com a capa "Domingo com a Dra.".
+- **Seção "Reels de teste" no Desempenho (17-18/11/2026, no ar desde 18/11):** pedido "precisamos de uma seção de Reels
+  de teste lá, para sabermos do desempenho desses Reels" e "para os próximos". `services/desempenho.py::_reels_teste`
+  lista todo agendamento `formato="trial"` dos últimos 60 dias (junta com `InstagramPost` por `platform_post_id`):
+  visualizações, alcance, envios, salvos, curtidas, tempo médio, horário de Brasília e situação (agendado, aguardando
+  coleta, menos de 24 h, 0 visualizações, vai bem, abaixo da meta). Meta = `teste_reels.julgar` (70% da mediana dos
+  últimos 10 Reels do feed ou 3 envios + salvamentos); `views_referencia` tira os testes dessa mediana (o teste zerado
+  de 27/10 puxava a meta para baixo, inclusive na liberação automática). Em 18/11 a meta calculada era 50 visualizações.
+  O teste de 27/10 tem 0 visualizações também lido direto da Meta: falta conferir no app se ele foi entregue.
 - Pendente: escolher 2 ou 3 pelo desempenho dos testes; antes disso, a Dra. ainda pode escolher pela página (https://claude.ai/artifact/BjkSFXaZPJKA9GahNRJbXp, com as
   quatro); depois capa no padrão "Domingo com a Dra." e envio ao Orbit (rascunhos para dom 22/11 e 29/11 às 15h30).

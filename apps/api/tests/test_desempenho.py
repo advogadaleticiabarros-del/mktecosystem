@@ -136,6 +136,7 @@ def test_reels_de_teste_mostra_numeros_e_veredito_de_cada_teste():
     lista = s["listas"][0]
     assert lista["colunas"][:3] == ["Reels", "Publicado", "Visualizações"]
     bom, fraco = lista["linhas"]
+    assert bom[1] == "17/11 09:30"  # 12:30 UTC no horário de Brasília
     assert bom[2] == 640 and bom[-1].startswith("Vai bem")
     assert fraco[-1].startswith("Abaixo da meta")
     assert lista["links"] == ["https://ig/r", None]
