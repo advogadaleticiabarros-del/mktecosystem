@@ -1399,3 +1399,10 @@ Pedido da Jessica: usar APIs da lista `public-apis` no Orbit e nos outros projet
   O teste de 27/10 tem 0 visualizações também lido direto da Meta: falta conferir no app se ele foi entregue.
 - Pendente: escolher 2 ou 3 pelo desempenho dos testes; antes disso, a Dra. ainda pode escolher pela página (https://claude.ai/artifact/BjkSFXaZPJKA9GahNRJbXp, com as
   quatro); depois capa no padrão "Domingo com a Dra." e envio ao Orbit (rascunhos para dom 22/11 e 29/11 às 15h30).
+
+## Referências adaptadas (18/11/2026)
+
+A Jessica mandou 16 criativos de outros perfis ("para copiar para os assuntos da Leticia"). Viraram 14 peças em
+`producao/estilos/referencias-1811/` (`gerar.py`, motor do Manchete; textos em `conteudo.json`; conferência com
+`pagina.py`, publicada em https://claude.ai/artifact/SajKU7DkA792SfgysRZ7ny). Nada foi enviado ao Orbit nem agendado:
+esperam aprovação. Copiamos só a estrutura (composição e hierarquia), nunca logo, nome ou frase das referências.

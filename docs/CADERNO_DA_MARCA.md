@@ -64,6 +64,7 @@ promessa de resultado, selo de verificado falso.
 | **Objeto em Cena** | Teste (05/11), em espera | Objeto do tema em cena real | `producao/estilos/objeto-em-cena/` |
 | **Carrossel Ouro editorial** | Carrosséis de conteúdo | Capa com foto do tema; última página com retrato real da Dra. | `docs/PROCESSO_PRODUCAO_CARROSSEL.md` |
 | **Carrossel contínuo** | Em espera (6 opções para a Dra. escolher) | Páginas que continuam uma na outra | `producao/estilos/carrossel-referencias/` |
+| **Referências 18/11** | Aguardando a Dra. (14 peças, sem data) | Estrutura de 16 criativos de outros perfis com tema, cores e faixas da marca | `producao/estilos/referencias-1811/` (README) |
 
 Ajuste fino à mão: editor de artes em `producao/editor` (ler `peca.json` antes de continuar uma peça).
 

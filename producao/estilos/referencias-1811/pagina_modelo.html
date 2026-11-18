@@ -1,0 +1,55 @@
+<title>Conferência das referências</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: caderno de revisão — peça grande à esquerda, referência e textos à direita; uma peça por bloco. */
+:root{
+  --papel:#F7F1E7; --cartao:#FFFDF8; --cafe:#231E1A; --cafe-2:#5c4f44; --fio:#e2d6c4; --ouro:#9a7424; --ouro-fundo:#f1e3bf;
+  --serifa:'EB Garamond',Georgia,serif; --texto:Inter,system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--papel:#1b1612;--cartao:#241e19;--cafe:#efe6d9;--cafe-2:#bfb2a2;--fio:#3a3029;--ouro:#e0c37a;--ouro-fundo:#3b3020;color-scheme:dark}}
+:root[data-theme="dark"]{--papel:#1b1612;--cartao:#241e19;--cafe:#efe6d9;--cafe-2:#bfb2a2;--fio:#3a3029;--ouro:#e0c37a;--ouro-fundo:#3b3020;color-scheme:dark}
+body{background:var(--papel);color:var(--cafe);font:15px/1.55 var(--texto);font-variant-numeric:lining-nums}
+.wrap{max-width:1180px;margin:0 auto;padding-block:40px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{border-bottom:1px solid var(--fio);padding-bottom:24px;margin-bottom:8px}
+.kicker{font:600 12px var(--texto);letter-spacing:.14em;text-transform:uppercase;color:var(--ouro)}
+h1{font:600 clamp(32px,5vw,48px)/1.05 var(--serifa);margin:8px 0 12px;text-wrap:balance}
+.intro{max-width:68ch;color:var(--cafe-2);margin:0}
+.aviso{margin-top:16px;max-width:68ch;padding:12px 16px;background:var(--ouro-fundo);border-radius:8px}
+nav{display:flex;flex-wrap:wrap;gap:6px 18px;padding:18px 0;border-bottom:1px solid var(--fio);font-size:13px}
+nav a{color:var(--cafe-2);text-decoration:none}nav a:hover,nav a:focus-visible{color:var(--cafe);text-decoration:underline}
+nav b{color:var(--ouro);font-variant-numeric:tabular-nums}
+.peca{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:36px;padding:40px 0;border-bottom:1px solid var(--fio)}
+.arte{margin:0}.arte img{display:block;width:100%;height:auto;border-radius:6px;box-shadow:0 10px 30px rgb(0 0 0/.18)}
+.texto{min-width:0;display:flex;flex-direction:column;gap:18px}
+.num{margin:0;font:600 12px var(--texto);letter-spacing:.14em;text-transform:uppercase;color:var(--ouro)}
+h2{margin:-10px 0 0;font:500 30px/1.15 var(--serifa);text-wrap:balance}
+.ref{display:flex;gap:14px;align-items:center;padding:12px;border:1px dashed var(--fio);border-radius:8px}
+.ref-imgs{display:flex;gap:6px;flex-shrink:0}.ref-imgs img{width:64px;height:auto;border-radius:4px;opacity:.9}
+.ref p{margin:0;font-size:13px;color:var(--cafe-2);min-width:0}
+section{background:var(--cartao);border:1px solid var(--fio);border-radius:8px;padding:14px 16px}
+.cab{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+h3{margin:0;font:600 12px var(--texto);letter-spacing:.12em;text-transform:uppercase;color:var(--cafe-2)}
+button{font:500 12px var(--texto);color:var(--cafe);background:transparent;border:1px solid var(--fio);border-radius:20px;padding:4px 12px;cursor:pointer}
+button:hover{border-color:var(--ouro)}button:focus-visible{outline:2px solid var(--ouro);outline-offset:2px}
+pre{margin:0;white-space:pre-wrap;font:14px/1.55 var(--texto);overflow-wrap:anywhere}
+dl{margin:0;display:grid;grid-template-columns:150px minmax(0,1fr);gap:8px 16px;font-size:14px}
+dt{font-weight:600;color:var(--cafe-2)}dd{margin:0;min-width:0}
+.tag{display:inline-block;margin-left:4px;font:600 10px var(--texto);letter-spacing:.08em;text-transform:uppercase;background:var(--ouro-fundo);color:var(--ouro);padding:2px 6px;border-radius:4px}
+@media (max-width:760px){.peca{grid-template-columns:1fr}.arte{max-width:420px}dl{grid-template-columns:1fr}dt{margin-top:6px}}
+</style>
+<div class="wrap">
+<header>
+  <p class="kicker">Letícia Barros · referências de 18/11/2026</p>
+  <h1>Referências adaptadas aos assuntos da Dra.</h1>
+  <p class="intro">{{TOTAL}} peças, cada uma com a estrutura de uma das 16 referências enviadas (composição, hierarquia e destaque), mas com tema, texto, cores e letras da marca e com as faixas douradas. Nenhum logo, nome ou frase das referências foi usado. Ainda não há data nem horário: nada foi agendado.</p>
+  <p class="aviso"><b>Antes de aprovar:</b> as bases legais foram escritas de memória. As marcadas com <span class="tag">conferir</span> têm um ponto que precisa da leitura da Dra. A peça 12 é de consumidor, área que o caderno da marca não lista entre as atuais.</p>
+</header>
+<nav aria-label="Peças">{{INDICE}}</nav>
+{{CORPO}}
+</div>
+<script>
+document.addEventListener('click',async e=>{const b=e.target.closest('button[data-copy]');if(!b)return;const el=document.getElementById(b.dataset.copy);
+try{await navigator.clipboard.writeText(el.textContent);b.textContent='Copiado';}catch{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selecionado';}
+setTimeout(()=>b.textContent='Copiar',1600);});
+</script>
