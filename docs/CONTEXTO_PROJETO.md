@@ -1403,6 +1403,19 @@ Pedido da Jessica: usar APIs da lista `public-apis` no Orbit e nos outros projet
 - Pendente: escolher 2 ou 3 pelo desempenho dos testes; antes disso, a Dra. ainda pode escolher pela página (https://claude.ai/artifact/BjkSFXaZPJKA9GahNRJbXp, com as
   quatro); depois capa no padrão "Domingo com a Dra." e envio ao Orbit (rascunhos para dom 22/11 e 29/11 às 15h30).
 
+- **Por que os testes não têm visualizações (investigado em 18/11/2026):** a Meta confirma 0 ou 1 visualização nos 5
+  testes (inclusive o de 27/10, com 22 dias). Status da conta todo verde, opção "Teste" aparece no app, `trial_params`
+  vale "para todas as versões" (changelog de 03/12/2025) e os Reels normais alcançam quem não segue (105 contas em 7 dias).
+  Sem causa provada: ou o envio de teste pela API não é entregue, ou é o tipo de vídeo (todos os 5 eram gravações
+  longas da Dra.). Para separar, os Reels curtos passaram a sair também como teste (abaixo).
+- **Reels curtos em dobro (18/11/2026):** pedido "todos os reels curtos que ainda estão para sair, vamos jogar para reels
+  teste, mas mantenha a data de publicação normal" + "é para publicar duas vezes". Cada Mito ou Lei e Flagrante agendado
+  ganhou uma cópia `formato="trial"` (graduação MANUAL, título "Teste · …") às **10h do mesmo dia**; o normal das 19h
+  ficou igual. 74 testes de 18/11/2026 a 09/03/2027 (o de 18/11 às 17h). Script idempotente
+  `producao/reels/testes/teste_dos_curtos.py` (rodar de novo quando entrarem Reels curtos novos na grade); a cópia não
+  leva `tiktok` nem `programacao`. Backup `/root/orbit-backups/antes-testes-curtos-20261118.sql.gz`.
+  Ler os primeiros resultados na seção "Reels de teste" do Desempenho a partir de 19/11.
+
 ## Referências adaptadas (18/11/2026)
 
 A Jessica mandou 16 criativos de outros perfis ("para copiar para os assuntos da Leticia"). Viraram 14 peças em
