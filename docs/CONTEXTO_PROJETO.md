@@ -1414,7 +1414,9 @@ Pedido da Jessica: usar APIs da lista `public-apis` no Orbit e nos outros projet
   ficou igual. 74 testes de 18/11/2026 a 09/03/2027 (o de 18/11 às 17h). Script idempotente
   `producao/reels/testes/teste_dos_curtos.py` (rodar de novo quando entrarem Reels curtos novos na grade); a cópia não
   leva `tiktok` nem `programacao`. Backup `/root/orbit-backups/antes-testes-curtos-20261118.sql.gz`.
-  Ler os primeiros resultados na seção "Reels de teste" do Desempenho a partir de 19/11.
+  **Cancelado no mesmo dia (16h45, antes do 1º teste):** "se existe esse risco cancele" (o mesmo vídeo duas vezes no
+  dia pode ser tratado como repetido). As 74 cópias foram apagadas por `cancelar_teste_dos_curtos.py`; os 74 Reels
+  normais das 19h seguem como estavam. Não repetir a duplicação.
 
 ## Referências adaptadas (18/11/2026)
 

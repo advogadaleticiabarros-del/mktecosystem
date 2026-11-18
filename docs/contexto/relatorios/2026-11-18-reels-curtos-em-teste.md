@@ -18,3 +18,6 @@
 **Atenção**
 - O mesmo vídeo sai duas vezes no mesmo dia; o Instagram pode tratar a segunda como repetida. Vale comparar o alcance dos Reels normais das próximas semanas com os anteriores (60 a 75 visualizações).
 - Reels curtos novos na grade precisam rodar o script de novo.
+
+## Cancelado (18/11/2026, 16h45)
+Pedido: "se existe esse risco cancele". As 74 cópias de teste foram apagadas (`producao/reels/testes/cancelar_teste_dos_curtos.py`) antes de o primeiro sair; nenhuma foi publicada. Os 74 Reels normais das 19h continuam agendados e 7 seguem pausados, como antes.
