@@ -19,7 +19,13 @@ Letícia é claro". Depois: "pode postar agora" (assunto viral, postar hoje) e "
 - O publicador tira `<script>` do corpo; o FAQPage foi posto no `<head>` da página publicada por `faq_no_head.py`
   (cópia do HTML anterior em `/tmp/bkp_escala-5x2-decreto-duvidas_*.html` no contêiner).
 
+- Carrossel publicado no Instagram pelo Orbit em 19/11/2026 às 19h39 (Brasília), a pedido da Jessica:
+  https://www.instagram.com/p/Df8LFAlDs-u/ (id 17885095143534783). Script `producao/estilos/escala-5x2/postar_agora.py`:
+  artes em `/app/media/escala-5x2-v1-1..8.jpg`, Pauta + ContentPiece (carrossel, publicado) + ScheduledPost
+  (instagram, carrossel, publicado) e primeiro comentário. Só este agendamento foi publicado.
+
 ## Verificado
+- Post conferido pela Graph API: CAROUSEL_ALBUM com 8 páginas, 1 comentário (o primeiro comentário).
 - Decreto assinado em 19/11/2026: notícias do Planalto e do MTE. 14,8 milhões: MTE/eSocial (março de 2026).
 - As 8 artes foram vistas uma a uma depois do render (sem marca de terceiro nem texto estrangeiro visível).
 - O artigo do blog "escala-42-horas-16-de-dezembro…" ainda dá 404, por isso o link saiu do comentário.
@@ -38,15 +44,13 @@ Letícia é claro". Depois: "pode postar agora" (assunto viral, postar hoje) e "
 - Página de salário em café: é o acento escuro do carrossel (feed claro).
 
 ## Pendente
-- Jessica: postar o carrossel hoje pelo app (não há publicação automática de carrossel daqui; a VPS também foi
-  bloqueada para a busca de fotos). Depois, registrar a peça no Orbit como publicada.
 - Jessica: pedir indexação do artigo no Google Search Console ("Inspecionar URL" → "Solicitar indexação") e enviar a
   URL no Bing Webmaster Tools; investigar o 403 do IndexNow (provável reverificação do site no Bing depois da mudança
   para a VPS em 16/11).
 - Dra.: conferir o artigo (texto novo, publicado a pedido da Jessica sem revisão dela).
 - Dra.: conferir os textos (seção "Textos novos" da conferência).
-- Antes de publicar: reconferir a liminar do STF (ADIs 8.041 e 8.042), que vai ao Plenário.
+- Acompanhar o Plenário do STF (ADIs 8.041 e 8.042): se mudar a regra das 8h24, atualizar o artigo.
 
 ## Próxima sessão
-Com a aprovação, subir as 8 artes ao Orbit e trocar a peça de 22/11 na agenda (ver `referencias-1811/agendar.py` como
-modelo). Skills: `leticia-carrossel`, `contexto-orbit`.
+Ver o desempenho do carrossel (salvamentos, compartilhamentos, visitas ao perfil) em 48 h e os cliques do artigo no
+Search Console. Skills: `leticia-carrossel`, `contexto-orbit`.
