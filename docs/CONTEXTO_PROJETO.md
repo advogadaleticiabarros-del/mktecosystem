@@ -1422,7 +1422,10 @@ Pedido da Jessica: usar APIs da lista `public-apis` no Orbit e nos outros projet
   vídeo repetido, já que o mesmo vídeo está no ar como teste desde 17/11; liberar o teste no app era a alternativa).
   https://www.instagram.com/reel/Df-u4sABUo1/ (id 17965152332998780), no feed, com primeiro comentário. Capa própria
   `dra-capa-2026-11-20.jpg` (`capas_dra.py`, que agora aceita rótulo por capa: "Com a Dra." por não ser domingo).
-  Script `series/23-novos-reels-3/publicar_1b.py`. Faltam o vídeo 2 (2A ou 2B) e o horário dele; vale comparar o alcance
+  Script `series/23-novos-reels-3/publicar_1b.py`. **Vídeo 2 (pedido de 20/11):** 2B sáb 21/11 19h30 ("amanhã, mesmo horário")
+  e 2A dom 22/11 15h30 (o limbo 2/2 desse domingo segue pausado), capas `dra-capa-2026-11-21.jpg` ("Com a Dra.") e
+  `dra-capa-2026-11-22-intermitente.jpg`; script `agendar_parte2.py`. Vincular os Reels (1B → 2B) só no app (a API não
+  tem). `capas_dra.py`: folga maior embaixo do itálico (o "f" de "fachada" cortava); vale comparar o alcance
   do 1B com os Reels normais (60 a 75 visualizações) para ver se o Instagram tratou como repetido.
 
 ## Referências adaptadas (18/11/2026)

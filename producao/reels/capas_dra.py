@@ -27,6 +27,9 @@ CAPAS = {
     "2026-12-27": ("escritorio-cafe-blazer-preto", "50% 25%", "Conselhos", "da advogada", "O que eu queria que você soubesse antes."),
     # 20/11/2026 (sexta): série 23, versão 1B, publicada fora do domingo a pedido da Jessica ("post você agora")
     "2026-11-20": ("tablet-blazer-marrom", "50% 25%", "Contrato", "intermitente", "O que é e o que você recebe. Parte 1.", "Com a Dra."),
+    # 21/11 (sábado) 2B e 22/11 (domingo) 2A, a pedido da Jessica em 20/11 (o domingo 22/11 do limbo está pausado)
+    "2026-11-21": ("lendo-documentos", "50% 25%", "Estudo", "de caso", "O intermitente de todo dia. Parte 2.", "Com a Dra."),
+    "2026-11-22-intermitente": ("escritorio-documentos", "50% 25%", "Intermitente", "de fachada", "Trabalhou todo dia? Parte 2."),
 }
 OURO = "linear-gradient(112deg,#7a5418 0%,#b88a32 22%,#f3dc98 38%,#a8792a 55%,#7a5418 72%,#e1c172 88%,#8a6420 100%)"
 
@@ -45,7 +48,7 @@ def pagina(foto, foco, titulo, destaque, apoio, rotulo="Domingo com a Dra."):
 .rot b{{background:{OURO};-webkit-background-clip:text;color:transparent}}
 .fio{{position:absolute;top:350px;left:96px;right:96px;height:3px;background:{OURO}}}
 h1{{position:absolute;top:388px;left:96px;right:96px;font:500 132px/1 'EB Garamond',serif;letter-spacing:-.01em}}
-h1 i{{display:block;font-style:italic;background:{OURO};-webkit-background-clip:text;color:transparent;padding-bottom:8px}}
+h1 i{{display:block;font-style:italic;background:{OURO};-webkit-background-clip:text;color:transparent;padding-bottom:34px}}
 .palco{{position:absolute;top:735px;left:0;right:0;height:760px;perspective:1500px;display:flex;justify-content:center}}
 .jan{{position:relative;width:520px;height:660px;transform:rotateY(-24deg) rotateX(5deg) rotateZ(-1deg);transform-style:preserve-3d}}
 .frente{{position:absolute;inset:0;padding:16px;background:{OURO};box-shadow:inset 0 0 0 2px rgb(255 240 200/.7),inset 0 0 0 7px rgb(122 84 24/.5)}}
