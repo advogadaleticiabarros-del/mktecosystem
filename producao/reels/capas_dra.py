@@ -25,6 +25,8 @@ CAPAS = {
     "2026-12-13": ("estudio-escuro-banco", "50% 25%", "Não bate", "ponto?", "Como provar hora extra. Parte 3 de 3."),
     "2026-12-20": ("escritorio-logo-escrevendo", "50% 25%", "Pediu", "demissão?", "A multa do 477 também vale para você."),
     "2026-12-27": ("escritorio-cafe-blazer-preto", "50% 25%", "Conselhos", "da advogada", "O que eu queria que você soubesse antes."),
+    # 20/11/2026 (sexta): série 23, versão 1B, publicada fora do domingo a pedido da Jessica ("post você agora")
+    "2026-11-20": ("tablet-blazer-marrom", "50% 25%", "Contrato", "intermitente", "O que é e o que você recebe. Parte 1.", "Com a Dra."),
 }
 OURO = "linear-gradient(112deg,#7a5418 0%,#b88a32 22%,#f3dc98 38%,#a8792a 55%,#7a5418 72%,#e1c172 88%,#8a6420 100%)"
 
@@ -33,7 +35,7 @@ def foto(nome):
     return "data:image/jpeg;base64," + base64.b64encode((RETRATOS / f"{nome}.jpg").read_bytes()).decode()
 
 
-def pagina(foto, foco, titulo, destaque, apoio):
+def pagina(foto, foco, titulo, destaque, apoio, rotulo="Domingo com a Dra."):
     return f"""<!doctype html><html><head><meta charset=utf-8>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;1,500&family=Inter:wght@400;500;600&display=swap" rel=stylesheet>
 <style>*{{margin:0;box-sizing:border-box}}body{{width:1080px;height:1920px;position:relative;overflow:hidden;background:#EFE6D9;color:#1E1814;font-family:Inter}}
@@ -56,7 +58,7 @@ h1 i{{display:block;font-style:italic;background:{OURO};-webkit-background-clip:
 .pe{{position:absolute;top:1560px;left:96px;right:96px;display:flex;justify-content:space-between;align-items:center;font:500 26px Inter;letter-spacing:.06em}}
 .pe span:last-child{{background:{OURO};color:#1E1814;padding:12px 26px;border-radius:999px;font-weight:600;letter-spacing:.12em}}
 </style></head><body><div class=fibra></div><div class=fx style="top:0"></div><div class=fx style="bottom:0"></div>
-<div class=rot><span>Domingo com a Dra.</span><b>Vídeo</b></div><div class=fio></div>
+<div class=rot><span>{rotulo}</span><b>Vídeo</b></div><div class=fio></div>
 <h1>{titulo}<i>{destaque}</i></h1><div class=sombra></div><div class=palco><div class=jan><div class=topo></div><div class=lado></div><div class=frente><img src="{foto}"><div class=brilho></div></div></div></div><div class=ap>{apoio}</div>
 <div class=pe><span>Letícia Barros · OAB/ES 39.948</span><span>▶ ASSISTA</span></div></body></html>"""
 
@@ -66,12 +68,12 @@ async def main(saida):
     async with async_playwright() as p:
         b = await p.chromium.launch()
         pg = await b.new_page(viewport={"width": 1080, "height": 1920})
-        for dia, (retrato, foco, tit, dest, apoio) in CAPAS.items():
+        for dia, (retrato, foco, tit, dest, apoio, *rot) in CAPAS.items():
             arq = saida / f"dra-capa-{dia}.jpg"
             if arq.exists():
                 print(dia, "já existe (não sobrescrevo)")
                 continue
-            await pg.set_content(pagina(foto(retrato), foco, tit, dest, apoio), wait_until="networkidle")
+            await pg.set_content(pagina(foto(retrato), foco, tit, dest, apoio, *rot), wait_until="networkidle")
             await pg.evaluate("document.fonts.ready")
             await pg.screenshot(path=str(arq), type="jpeg", quality=92)
             print(dia, arq.name)

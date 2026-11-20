@@ -1418,6 +1418,13 @@ Pedido da Jessica: usar APIs da lista `public-apis` no Orbit e nos outros projet
   dia pode ser tratado como repetido). As 74 cópias foram apagadas por `cancelar_teste_dos_curtos.py`; os 74 Reels
   normais das 19h seguem como estavam. Não repetir a duplicação.
 
+- **1B publicado para os seguidores (20/11/2026, 19h31):** pedido "Publique esse hoje" + "post você agora" (avisada do risco de
+  vídeo repetido, já que o mesmo vídeo está no ar como teste desde 17/11; liberar o teste no app era a alternativa).
+  https://www.instagram.com/reel/Df-u4sABUo1/ (id 17965152332998780), no feed, com primeiro comentário. Capa própria
+  `dra-capa-2026-11-20.jpg` (`capas_dra.py`, que agora aceita rótulo por capa: "Com a Dra." por não ser domingo).
+  Script `series/23-novos-reels-3/publicar_1b.py`. Faltam o vídeo 2 (2A ou 2B) e o horário dele; vale comparar o alcance
+  do 1B com os Reels normais (60 a 75 visualizações) para ver se o Instagram tratou como repetido.
+
 ## Referências adaptadas (18/11/2026)
 
 A Jessica mandou 16 criativos de outros perfis ("para copiar para os assuntos da Leticia"). Viraram 14 peças em
